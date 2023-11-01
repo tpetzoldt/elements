@@ -689,7 +689,7 @@ Chl=chlorophyll concentration ($\mathrm{\mu g L^{-1}}$), PP=annual primary produ
 and simplified "toy version" taken from @Casper1985 and @Koschel1985. 
 
 ```{r, eval=TRUE, echo=FALSE, include=TRUE}
-lakes <- read.csv("lakes.csv")
+lakes <- read.csv("data/lakes.csv")
 kable(lakes)
 ```
 
@@ -719,14 +719,14 @@ in **RStudio** like follows:
 
 After this, data can be retrieved directly from the **working directory **:
 
-```{r eval=TRUE}
+```{r eval=FALSE}
 lakes <- read.csv("lakes.csv", header=TRUE)
 ```
 
 We may also consider to create a sub-folder `data` of the working direktory and put the data in.
 Then we could use for example:
 
-```{r eval=FALSE}
+```{r eval=TRUE}
 lakes <- read.csv("data/lakes.csv", header=TRUE)
 ```
 
@@ -787,7 +787,7 @@ Note also that the Code Preview contains the commands that the wizard created.
 If we copy these commands to the script pane, you can re-read the data several 
 times without going back to the menu system:
 
-```{r}
+```{r, eval=FALSE}
 library(readr)
 lakes <- read_csv("D:/DATA/lakes.csv")
 View(lakes)

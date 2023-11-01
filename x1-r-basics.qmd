@@ -212,7 +212,7 @@ International characters (e.g German umlauts &auml;, &ouml;, &uuml;, ...) are po
 
 ::: {.column width="49%"}
 ```{r, echo=FALSE}
-op <- read.csv("operators.csv")
+op <- read.csv("data/operators.csv")
 kable(op[1:10, ])
 ```
 :::
