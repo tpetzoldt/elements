@@ -23,7 +23,7 @@ library("readr")
 knitr::opts_chunk$set(echo = TRUE, eval=FALSE, comment="")
 ```
 
-This tutorial is available in [HTML](https://tpetzoldt.github.io/RBasics/An-Introductory-R-Session.html) format for screen reading and [PDF](An-Introductory-R-Session.pdf) for printing.
+This tutorial is available in [HTML](https://tpetzoldt.github.io/elements/s1-introductory-r-session.html) format for screen reading and [PDF](https://tpetzoldt.github.io/elements/s1-introductory-r-session.pdf) for printing.
 
 # Introduction
 
