@@ -385,8 +385,15 @@ legend("topleft", c("OLS", "IWLS-M", "IWLS-MM"),
 ```{r iwls-plot, echo=TRUE, eval=FALSE}
 ```
 :::
+
+# Further reading
  
-## 
+ * @kleiber_applied_2008 Applied econometrics with R. Springer Verlag. 
+ * @venables_modern_2013 Modern applied statistics with S-PLUS (3rd ed.). 
+   Springer Science & Business Media. 
+ * @fox_r_2018 An R companion to applied regression. Sage publications. 
+ * @gelman_data_2007 Data analysis using regression and multilevelhierarchical models (Vol. 1).
+   Cambridge University Press New York
 
 ## References
 
