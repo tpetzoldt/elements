@@ -23,7 +23,7 @@ format:
     data-transition-speed: fast
     navigation-mode: linear
     code-line-numbers: false
-bibliography: bib2.bib
+bibliography: bib.bib
 csl: apa
 ---
 
@@ -212,8 +212,8 @@ A predecessor was the so-called "magrittr" pipeline operator  **[%>%]{.blue}**
 
 
 ::: aside
-The `%>%-pipeline was introduced by the user-contributed **magrittr** package [@magrittr] and 
-became very popular. It is automatically loaded by the **dplyr** package [@dplyr].
+The `%>%-pipeline was introduced by the user-contributed **magrittr** package [@bache_magrittr_2022] and 
+became very popular. It is automatically loaded by the **dplyr** package [@wickham_dplyr_2023].
 :::
 
 ## Application of **[`|>`]{.red}**
@@ -951,8 +951,8 @@ Other countries have different regulations.
 
 **Printed books**
 
-* "R for Data Science" [@datascience] 
-* "ggplot Elegant Graphics for Data Analysis" [@ggplot]
+* "R for Data Science" [@wickham_r_2017] 
+* "ggplot Elegant Graphics for Data Analysis" [@wickham_ggplot2_2016]
 
 
 ## References

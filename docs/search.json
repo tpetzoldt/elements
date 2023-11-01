@@ -2489,7 +2489,7 @@
     "href": "x4-pipes-intro.html#pipelines",
     "title": "Pipelines in R - A Small Introduction",
     "section": "3. Pipelines",
-    "text": "3. Pipelines\n\nAim to make code easier to understand:\n\navoids nested parentheses\navoids temporary variables\n\nRecent versions of R (since 4.1) have built-in support for pipelines:\n\nNative pipeline operator |>\n\nA predecessor was the so-called “magrittr” pipeline operator %>%\n\nMost examples from these slides will work with both pipeline operators.\nThere are a few differences regarding use of so-called placeholders.\nI recommended to prefer native pipes |>\n\n\n\nThe `%>%-pipeline was introduced by the user-contributed magrittr package (Bache & Wickham, 2022) and became very popular. It is automatically loaded by the dplyr package (Wickham et al., 2022)."
+    "text": "3. Pipelines\n\nAim to make code easier to understand:\n\navoids nested parentheses\navoids temporary variables\n\nRecent versions of R (since 4.1) have built-in support for pipelines:\n\nNative pipeline operator |>\n\nA predecessor was the so-called “magrittr” pipeline operator %>%\n\nMost examples from these slides will work with both pipeline operators.\nThere are a few differences regarding use of so-called placeholders.\nI recommended to prefer native pipes |>\n\n\n\nThe `%>%-pipeline was introduced by the user-contributed magrittr package (Bache & Wickham, 2022) and became very popular. It is automatically loaded by the dplyr package (Wickham et al., 2023)."
   },
   {
     "objectID": "x4-pipes-intro.html#application-of",
@@ -2727,14 +2727,14 @@
     "href": "x4-pipes-intro.html#further-reading",
     "title": "Pipelines in R - A Small Introduction",
     "section": "Further reading",
-    "text": "Further reading\n\nOnline material\n\n“Welcome to tidyverse: https://dplyr.tidyverse.org/.\n“ggplot Elegant Graphics for Data Analysis: https://ggplot2-book.org/\n“R for Data Science”: https://r4ds.had.co.nz/\nHadley Wickham’s homepage: https://hadley.nz/\n\n\nPrinted books\n\n“R for Data Science” (Wickham & Grolemund, 2016)\n“ggplot Elegant Graphics for Data Analysis” (Wickham, 2016)"
+    "text": "Further reading\n\nOnline material\n\n“Welcome to tidyverse: https://dplyr.tidyverse.org/.\n“ggplot Elegant Graphics for Data Analysis: https://ggplot2-book.org/\n“R for Data Science”: https://r4ds.had.co.nz/\nHadley Wickham’s homepage: https://hadley.nz/\n\n\nPrinted books\n\n“R for Data Science” (Wickham & Grolemund, 2017)\n“ggplot Elegant Graphics for Data Analysis” (Wickham, 2016)"
   },
   {
     "objectID": "x4-pipes-intro.html#references",
     "href": "x4-pipes-intro.html#references",
     "title": "Pipelines in R - A Small Introduction",
     "section": "References",
-    "text": "References\n\n\n\n\n\n\nBache, S. M., & Wickham, H. (2022). Magrittr: A forward-pipe operator for r. https://CRAN.R-project.org/package=magrittr\n\n\nWickham, H. (2016). ggplot2: Elegant graphics for data analysis. Springer-Verlag New York. https://ggplot2.tidyverse.org\n\n\nWickham, H., Francois, R., Henry, L., & Mueller, K. (2022). Dplyr: A grammar of data manipulation. https://CRAN.R-project.org/package=dplyr\n\n\nWickham, H., & Grolemund, G. (2016). R for data science: Import, tidy, transform, visualize, and model data. O’Reilly Media, Inc. https://r4ds.had.co.nz/"
+    "text": "References\n\n\n\n\n\n\nBache, S. M., & Wickham, H. (2022). Magrittr: A forward-pipe operator for r. https://CRAN.R-project.org/package=magrittr\n\n\nWickham, H. (2016). ggplot2: Elegant graphics for data analysis. Springer-Verlag New York. https://ggplot2.tidyverse.org\n\n\nWickham, H., François, R., Henry, L., Müller, K., & Vaughan, D. (2023). Dplyr: A grammar of data manipulation. https://CRAN.R-project.org/package=dplyr\n\n\nWickham, H., & Grolemund, G. (2017). R for data science: Import, tidy, transform, visualize, and model data. O’Reilly Media."
   },
   {
     "objectID": "x5-rmarkdown-intro.html",
