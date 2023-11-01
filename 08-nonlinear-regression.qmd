@@ -1,0 +1,445 @@
+---
+subtitle: "Applied Statistics -- A Practical Course"
+title: "08-Nonlinear Regression"
+author: "Thomas Petzoldt"
+date:   "`r Sys.Date()`"
+date-format: "YYYY-MM-DD"
+title-slide-attributes:
+  data-background-image: "img/tud-title-bg-wide-2021.png"
+  body-color: "#069af22"
+include-in-header:
+  - text: |
+      <style>
+      #title-slide 
+        .title {color: #ee7f00;}
+        .subtitle {color: #ee7f00;}
+        .quarto-title-author {color: #69af22;}
+        .date {color: #69af22;}
+      </style>  
+format: 
+  revealjs:
+    theme: [sky, thpe.scss]
+    css: colors.css
+    transition: fade
+    data-transition-speed: fast
+    navigation-mode: linear
+    code-line-numbers: false
+bibliography: bib.bib
+csl: apa
+--- 
+
+
+# Some Basics of Nonlinear Regression
+
+
+## Nonlinear regression
+
+Many phenomena in nature are non-linear!
+
+**Linear or non-linear?**
+
+* Some non-linear problems can be solved with linear methods
+* e.g., polynomials or periodic (sine and cosine) functions
+* others can be fitted by using transformations
+
+**Example**
+
+$$y = a \cdot x^b$$
+can be transformed to:
+
+$$\ln(y) = \ln(a) + b \cdot \ln(x)$$
+
+* but: linearization transforms also the residuals
+* transformation is sometimes correct and sometimes wrong
+* homogeneity of variances
+
+
+## Linearization or direct nonlinear fitting?
+
+<br>
+
+**Linearising transformations**
+
+* log, square root, reciprocals ...
+* can be applied if the residual variance remains (or is becoming) homogenous.
+* but in some cases: transformations lead to heteroscedasticity<br>
+  $\Rightarrow$ **biased** regression parameters.
+
+**Nonlinear regression**
+
+* very flexible, user-defined functions,
+* no transformation required
+* but: requires **iterative** optimization methods,
+* in theory only local optima can be found,
+* parameters are not in all cases **identifiable**.
+
+
+## Nonlinear regression
+
+<br>
+
+**Iterative search for the minimum of the sum of squares**
+
+![](img/optimization.png)
+
+## How to find the global minimum?
+
+<br>
+
+**Goodness of fit:** Sum of least squares $SQ$:
+
+$$
+SQ = \sum_{i=1}^n\left(y_i- f(\mathbf x_i, \mathbf p)\right)^2 = \min !
+$$
+
+with $y$: dependent variable, $\mathbf x$: matrix of independent variables,<br>
+$\mathbf p$: parameter vector, $n$: sample size.
+
+**Use of an iterative solver**
+
+- see next slides
+
+**Nonlinear coefficient of determination $R^2$**
+
+* not related to the (linear) correlation coefficient
+* can be calculated from the residual and total variances
+
+$$
+R^2 = 1 - \frac{\text{variance of the residuals}}{\text{variance of the y-data}} = 1- \frac{s^2_\varepsilon}{s^2_y}
+$$
+* nonlinear $r^2$ measures the fraction of the explained variance
+* ... other indices can be used in addition, e.g. MSE, RMSE, NSE, ...
+
+## General principle of optimization algorithms
+
+<br>
+
+The minimum of the squared residuals (SQ) is searched by [iteration]{.blue}:
+
+<br>
+
+1. Start from an initial guess for the parameter set.
+2. Try to find a parameter set with lower SQ.
+3. Is the new parameter set better?
+    * No: Reject the new parameters and goto 2
+    * Yes: Accept the new parameters and goto 4
+4. Is the new parameter set good enough?
+    * No: goto 2
+    * Yes: goto 5
+5. Parameter set found.
+
+## Deterministic Methods
+
+<br>
+
+:::{.column width="59%"}
+**Gradient Search**
+
+* go one step into the direction of steepest descent
+* $\rightarrow$ relatively simple
+* $\rightarrow$ relatively robust for "more complicated'' problems
+
+**Newton's Method**
+
+* quadratic approximation of the SQ function
+* try to estimate the minimum
+* $\rightarrow$ takes curvature into account
+* $\rightarrow$ faster for "well behaving" problems
+* several versions:<br> quasi-Newton, Gauss-Newton, L-BFGS, ...
+
+**Levenberg-Marquardt** 
+
+* interpolates between Gauss-Newton and gradient descent.
+
+:::
+
+:::{.column width="39%"}
+
+![](img/newton_optimization_vs_grad_descent.svg)
+
+Newton method ([red]{.red}) uses curvature information to converge faster than gradient descent ([green]{.neongreen}).<br> 
+Source: [Wikipedia](https://en.wikipedia.org/wiki/Newton's_method_in_optimization).
+
+:::
+
+
+## Stochastic Methods
+
+<br>
+
+Use statistical principles (random search)
+
+**Classical methods**
+
+* Simulated annealing: simulates heating and cooling of matter $\rightarrow$ "Crystallisation process".
+* Controlled random search  [@Price1977, @Price1983]
+
+**Evolutionary Algorithms**
+
+* analogy to genetics: mutation and selection
+* follows a "population" of several parameter sets in parallel
+* information exchange ("crossover") between parameter sets
+* $\rightarrow$ for complicated problems with large number of parameters
+* nowadays builtin in Microsoft Excel and LibreOffice Calc
+
+... and many more.
+
+
+# Examples
+
+
+* Enzyme kinetics
+* Growth of organisms
+* Calibration of complex models
+   - in chemistry, biology, engineering, finance business and social sciences
+   - water: hydrology, hydrophysics, groundwater, wastewater, water quality ...
+
+
+## Enzyme Kinetics
+
+<br>
+
+... can be described with the well-known Michaelis-Menten function:
+
+$$
+v = v_{max} \frac{S}{k_m + S}
+$$
+
+```{r enzymekinetics, height=6,width=10}
+S <-c(25, 25, 10, 10, 5, 5, 2.5, 2.5, 1.25, 1.25)
+V <-c(0.0998, 0.0948, 0.076, 0.0724, 0.0557, 
+      0.0575, 0.0399, 0.0381, 0.017, 0.0253)
+model_fit<-nls(V ~ SSmicmen(S, Vm, K))
+
+par(mfrow=c(1,2), las=1, lwd=2)
+## Lineweaver-Burk
+x <- 1/S; y <- 1/V
+
+plot(x, y, xlab="1/S", ylab="1/V", xlim=c(-0.2,1), ylim=c(0, 80), pch=16,
+  main="Linearisation\n(Lineweaver-Burk)")
+abline(h=0, lwd=1, col="grey")
+abline(v=0, lwd=1, col="grey")
+m <- lm(y ~ x)
+abline(m, col = "red")
+Vm_l <- 1/coef(m)[1]
+Km_l <- coef(m)[2] * Vm_l
+#legend("topleft", c("vmax = 1/intercept", "km = slope * vmax"), 
+#        box.lwd=1, bg="white")
+text(0.35, 75, "1/V = 1/vmax + km / vmax * S")
+
+## retransformed, both together
+plot(S, V, xlim = c(0, max(S)),ylim=c(0, max(V)), pch=16, main="No Transformation")
+x1 <-seq(0, 25, length=100)
+lines(x1, Vm_l * x1 / (Km_l + x1), col="red")
+lines(x1, predict(model_fit, data.frame(S=x1)), col="blue")
+legend("bottomright", legend=c("linearisation", "nonlinear"), 
+       box.lwd=1, lwd=2, col=c("red", "blue"))
+text(15, 0.04, "V = S * vmax / (km + S)")
+```
+
+
+## Linearization vs. (true) nonlinear regression
+
+<br>
+
+**Linearizing transformation**
+
+[>] Appropriate if transformation improves homogeneity of variances <br>
+[+] Fast, simple and easy.<br>
+[+] Analytical solution returns the global optimum.<br>
+[-] Only a limited set of functions can be fitted.<br>
+[-] Can lead to wrongly transformed error structure and biased results.
+
+
+
+**Nonlinear Regression**
+
+[>] Appropriate if error structure is already homogeneous and/or analytical solution does not exist.<br>
+[+] Can be used to fit arbitrary functions, given that the parameters are identifiable.<br>
+[-] Needs start values and considerable computation time.<br>
+[-] Best solution (global optimum) is not guaranteed.
+
+
+
+## Nonlinear regression in R: simple exponential
+
+:::{.column width="46%"}
+
+**Code and Plot**
+
+```{r nlregexp, echo = TRUE, eval = TRUE, fig.width=6, fig.height=4}
+# example data
+x <- 1:10
+y <- c(1.6, 1.8, 2.1, 2.8, 3.5, 4.1, 5.1, 5.8, 7.1, 9.0)
+
+# initial parameters for the optimizer
+pstart <- c(a = 1, b = 1)
+
+# nonlinear least squares
+fit <- nls(y ~ a * exp(b * x), start = pstart)
+
+# additional x-values to get a smooth curve
+x1 <- seq(1, 10, 0.1)
+y1 <- predict(fit, data.frame(x = x1))
+
+plot(x, y)
+lines(x1, y1, col = "red")
+```
+:::
+
+:::{.column width="3%"}
+:::
+
+:::{.column width="49%"}
+
+**Fitted parameters**
+
+```{r nlregexp2}
+summary(fit)
+```
+
+* "Estimate": the fitted parameters
+* Str. error: $s_{\bar{x}}$, indicates reliability of the estimate
+* t- and p-values: can be misleading in the nonlinear case<br>
+  because "non-significant" parameters can be structurally necessary
+
+
+**Coefficient of determination $r^2 = 1-\frac{s_\varepsilon}{s_y}$**
+
+```{r echo=TRUE}
+(Rsquared <- 1 - var(residuals(fit))/var(y))
+```
+:::
+
+## Michaelis-Menten-Kinetics
+
+<br>
+
+:::{.column width="49%"}
+
+**Code**
+
+
+```{r mmenten, echo=TRUE, eval = FALSE}
+S <-c(25, 25, 10, 10, 5, 5, 2.5, 2.5, 1.25, 1.25)
+V <-c(0.0998, 0.0948, 0.076, 0.0724, 0.0557,
+      0.0575, 0.0399, 0.0381, 0.017, 0.0253)
+
+## Michaelis-Menten kinetics
+f <- function(S, Vm, K) { Vm * S/(K + S) }
+
+pstart <- c(Vm = 0.1, K = 5)
+model_fit <- nls(V ~ f(S, Vm, K), start = pstart)
+summary(model_fit)
+
+plot(S, V, xlim = c(0, max(S)), ylim = c(0, max(V)))
+x1 <-seq(0, 25, length = 100)
+lines(x1, predict(model_fit, data.frame(S = x1)), col = "red")
+```
+
+<br>
+Coefficient of determination
+
+```{r echo=TRUE}
+(1 - var(residuals(model_fit))/var(V)) # nonlinear r2
+```
+
+
+:::
+
+:::{.column width="3%"}
+:::
+
+:::{.column width="46%"}
+**Results**
+```{r mmenten, fig.width=6, fig.height=4}
+```
+:::
+
+
+## Michaelis-Menten-Kinetics with selfstart
+
+* Function `SSmicmen` determines start parameters automatically.
+* Only few selfstart functions available in R
+
+:::{.column width="49%"}
+**Code**
+
+
+```{r mmselfstart, echo=TRUE, eval = FALSE}
+S <- c(25, 25, 10, 10, 5, 5, 2.5, 2.5, 1.25, 1.25)
+V <- c(0.0998, 0.0948, 0.076, 0.0724, 0.0557,
+       0.0575, 0.0399, 0.0381, 0.017, 0.0253)
+
+model_fit <- nls(V ~ SSmicmen(S, Vm, K))
+
+plot(S, V, xlim = c(0, max(S)), ylim = c(0, max(V)))
+x1 <-seq(0, 25, length = 100)
+lines(x1, predict(model_fit, data.frame(S = x1)), col="red")
+```
+
+**Results**
+
+```{r echo=TRUE}
+summary(model_fit, correlation=TRUE)
+```
+
+:::
+
+:::{.column width="3%"}
+:::
+
+:::{.column width="46%"}
+
+**Plot**
+
+```{r mmselfstart, fig.width=6, fig.height=4}
+```
+
+**Note:** Correlation of parameters
+
+* high absolute values of correlation indicate non-identifiability of parameters
+* critical value depends on the data
+* sometimes, better start values or another optimization algorithm can help
+
+:::
+
+
+## Practical hints
+
+<br>
+
+1. plot data
+2. find good starting values by thinking about it or by trial and error
+3. avoid very small and/or very large numbers<br>
+  $\longrightarrow$ rescale the problem to values between approx 0.001 to 1000
+4. start with a simple function and add terms and parameters sequentially
+5. Don't take significance of parameters too seriously. A non-significant parameter 
+may be necessary for the structure of the model, removal of it will invalidate the whole model.
+
+
+## Further reading
+
+<br>
+
+* Package **growthrates** for growth curves: https://cran.r-project.org/package=growthrates
+* Package **FME** for more complex model fitting tasks (identifiability analysis, constrained optimization, multiple dependent variables and MCMC): [@FME], https://cran.r-project.org/package=FME 
+
+* More about optimization in **R**: https://cran.r-project.org/web/views/Optimization.html
+
+# Appendix
+
+
+
+## Lineweaver-Burk transformation vs. nonlinear fit
+
+<br>
+
+**Code for the comparison slide**
+
+```{r enzymekinetics, eval=FALSE, echo=TRUE}
+```
+
+See: https://en.wikipedia.org/wiki/Lineweaver-Burk_plot
+
+## References

@@ -1,0 +1,392 @@
+---
+subtitle: "Applied Statistics -- A Practical Course"
+title: "06-Linear Regression"
+author: "Thomas Petzoldt"
+date:   "`r Sys.Date()`"
+date-format: "YYYY-MM-DD"
+title-slide-attributes:
+  data-background-image: "img/tud-title-bg-wide-2021.png"
+  body-color: "#069af22"
+include-in-header:
+  - text: |
+      <style>
+      #title-slide 
+        .title {color: #ee7f00;}
+        .subtitle {color: #ee7f00;}
+        .quarto-title-author {color: #69af22;}
+        .date {color: #69af22;}
+      </style>  
+format: 
+  revealjs:
+    theme: [sky, thpe.scss]
+    css: colors.css
+    transition: fade
+    data-transition-speed: fast
+    navigation-mode: linear
+    code-line-numbers: false
+bibliography: bib.bib
+csl: apa
+--- 
+
+<style>
+.add-space{
+  padding-right: 5%;
+}
+</style>
+
+# Linear Regression
+
+## The linear model
+
+$$
+y_i = \alpha + \beta_1 x_{i,1} + \beta_2 x_{i,2} + \cdots + \beta_p x_{i,p} + \varepsilon_i
+$$
+```{r linear-model, fig.align='center', fig.width=8, fig.height=4}
+par(mar=c(4.1, 5.1, 1.1, 1.1), cex=1.4)
+set.seed(123)
+x <- sample(1:20, 20, replace=TRUE)
+y = 3 + 2 * x + rnorm(x, sd=2)
+plot(x,y, pch=16, las=1)
+abline(lm(y~x), col="red")
+```
+
+**Fundamental for many statistical methods**
+
+* linear regression including some (at a first look) "nonlinear" functions
+* ANOVA, ANCOVA, GLM  (simultanaeous testing of multiple samples or multiple factors)
+* multivariate statistics (e.g. PCA)
+* time series analysis (e.g. ARIMA)
+* imputation (estimation of missing values)
+
+
+
+## Method of least squares
+
+$$
+RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2 = \sum_{i=1}^n  \varepsilon^2 \qquad \text{(residual sum of squares)}
+$$
+
+:::{.column width="44%" .add-space}
+```{r linear-model2, fig.width=6, fig.height=5}
+par(mar=c(4.1, 5.1, 1.1, 1.1))
+par(cex=1.4)
+set.seed(345)
+x <- sort(runif(10, min=0, max=10))
+y <- 2 + 2 * x + rnorm(x, sd=3)
+plot(x, y, pch=16, xlim=c(0,10),
+  ylim=c(0, max(y)), las=1)
+reg<- lm(y~x)
+abline(reg, col="red")
+segments(x,y,x,predict(reg), col="blue")
+text(8,4, substitute(s[y]^2 == xxx, list(xxx=round(var(y),1))), cex=2)
+```
+:::
+
+
+:::{.column width="44%"}
+```{r linear-model3, fig.width=6, fig.height=5}
+par(mar=c(4.1, 5.1, 1.1, 1.1))
+par(cex=1.4)
+yres <- y-predict(reg)
+plot(x, yres, pch=16, ylab="Residuals",
+   ylim=c(-5,5), xlim=c(0,10), las=1)
+abline(h=0, col="red")
+segments(x,yres,x,0, col="blue")
+text(8,4, substitute(s[epsilon]^2 == xxx, list(xxx=round(var(yres),1))), cex=2)
+```
+:::
+
+\begin{align}
+  \text{total variance} &= \text{explained variance} &+& \text{residual variance}\\
+                    s^2_y &= s^2_{y|x}               &+& s^2_{\varepsilon}
+\end{align}
+
+
+## The coefficient of determination
+
+\begin{align}
+     r^2 & = \frac{\text{explained variance}}{\text{total variance}}\\
+         & = \frac{s^2_{\varepsilon}}{s^2_{y|x}}\\
+\end{align}
+
+It can also be expressed as ratio of residual (RSS) and total (TSS) sum of squares:
+
+$$
+    r^2 = 1-\frac{s^2_{\varepsilon}}{s^2_{y}} = 1-\frac{RSS}{TSS} =  1- \frac{\sum(y_i -\hat{y}_i)^2}{\sum(y_i - \bar{y})^2}
+$$
+
+* derived from "sum of squares", scaled as relative variance
+* identical to the squared Pearon correlation $r^2$ (in the linear case)
+* very useful interpretation: percentage of variance of the raw data explained by the model
+
+
+For the example: [$r^2= 1-$ `r round(var(yres),1)` $/$ `r round(var(y),1)`
+$=$ `r 1-round(var(yres),1)/round(var(y),1)`]{.blue}
+
+
+## Minimization of RSS
+
+* Analytical solution: minimize sum of squares ($\sum \varepsilon^2$)
+* Linear system of equations
+* Minimum RSS $\longleftarrow$ partial 1st derivatives ($\partial$)
+    
+**For $y=a \cdot x + b$ with 2 parameters:** $\frac{\partial\sum \varepsilon^2}{\partial{a}}=0$, $\frac{\partial\sum \varepsilon^2}{\partial{b}}=0$:
+
+<br>
+
+\begin{align}
+  \frac{\partial \sum(\hat{y_i} - y_i)^2}{\partial a}     &= \frac{\partial \sum(a + b \cdot x_i - y_i)^2}{\partial a} = 0\\
+      \frac{\partial \sum(\hat{y_i} - y_i)^2}{\partial b} &= \frac{\partial \sum(a + b \cdot x_i - y_i)^2}{\partial b} = 0
+\end{align}
+
+Solution of the linear system of equations:
+
+\begin{align}
+b &=\frac {\sum x_iy_i - \frac{1}{n}(\sum x_i \sum y_i)} {\sum x_i^2 - \frac{1}{n}(\sum x_i)^2}\\
+a &=\frac {\sum y_i - b \sum x_i}{n}
+\end{align}
+
+* solution for arbitrary number of parameters with matrix algebra
+
+
+
+## Significance of the regression
+
+<br>
+
+$$
+\hat{F}_{1;n-2;\alpha}= \frac{s^2_{explained}}{s^2_{residual}}
+                         = \frac{r^2(n-2)}{1-r^2}
+$$
+<br>
+
+**Assumptions**
+
+1. **Validity:** the data maps to the research question
+2. **Additivity and linearity:** $y = \alpha + \beta_1 x_1 + \beta_2 x_2 + \cdots$
+3. **Independence of errors:** residuals around the regression line are independent
+4. **Equal variance of errors:** residuals homogeneously distributed around the regression line
+5. **Normality of errors:** the "assumption that is generally [least important]{.blue}"
+
+See: @gelman_data_2007 : Data analysis using regression ...
+
+## Diagnostics
+<br>
+
+```{r lm-diagnostics, fig.width=12, fig.height=4, fig.align='center'}
+par(mar=c(4.1, 5.1, 3.1, 1.1), mfrow=c(1,3), cex=1.2)
+set.seed(132)
+x <- sample(1:20, 20, replace=TRUE)
+y = 3 + 2 * x + rnorm(x, sd=2)
+plot(x,y, pch=16, las=1)
+m <- lm(y~x)
+abline(m, col="red")
+plot(m, which=1)
+plot(m, which=2)
+```
+
+<br>
+
+**No regression analysis without graphical diagnostics!**
+
+* x-y-plot with regression line: is the **variance homogeneous**?
+* Plot of residuals vs. fitted: are there still any **remaining patterns**?
+* Q-Q-plot, histogram, \dots : is distribution of residuals **approximately** normal?
+
+Use graphical methods for normality, don't trust the Shapiro-Wilks in that case.
+
+
+## Confidence intervals of the parameters
+
+* based on standard errors and the t-distribution, similar to CI  of the mean
+
+\begin{align}
+a & \pm t_{1-\alpha/2, n-2} \cdot s_a\\
+b & \pm t_{1-\alpha/2, n-2} \cdot s_b
+\end{align}
+
+```{r echo=TRUE}
+summary(m)
+```
+
+<br>
+[Example: CI of a: $a \pm t_{1-\alpha/2, n-2} \cdot s_a = `r round(coef(m)[1], 5)` \pm 
+`r round(qt(0.975, length(residuals(m))-1), 2)` \cdot `r round(summary(m)$coefficients[1,2], 5)`$]{.blue}
+
+## Confidence interval and prediction interval
+
+```{r conf-and-prediction-interval, fig.width=8, fig.height=4, fig.align='center'}
+par(mar=c(4.1, 5.1, 1.1, 1.1))
+par(cex=1.4, las=1)
+set.seed(123)
+x <- 1:10
+y <- 2 + 0.5*x + 0.5*rnorm(x)
+reg <- lm(y ~ x)
+plot(x,y, xlim=c(0,10), ylim=c(0, 10), pch=16)
+abline(reg, lwd=2)
+newdata <- data.frame(x=seq(-1, 11, length=100))
+conflim <- predict(reg, newdata=newdata, interval="confidence")
+predlim <- predict(reg, newdata=newdata, interval="prediction")
+lines(newdata$x, conflim[,2], col="blue")
+lines(newdata$x, conflim[,3], col="blue")
+lines(newdata$x, predlim[,2], col="red")
+lines(newdata$x, predlim[,3], col="red")
+```
+
+* [**Confidence interval:**]{.blue}
+    - Shows the area where the "true regression line" is expected by 95%.
+    - Width of this band decreses with increasing $n$
+    - analogous to the standard error
+* [**Prediction interval:**]{.red}
+    - Shows the range, in which the prediction for a single value is expected (by 95%).
+    - Width is independent of sample size  $n$
+    - analogous to the standard deviation
+
+
+## Confidence intervals for linear regression: Code
+
+:::{.bigfont}
+```{r lm-conf-predict-code, eval=FALSE, echo=TRUE}
+## generate example data
+x <- 1:10
+y <- 2 + 0.5 * x + 0.5 * rnorm(x)
+
+## fit model
+reg <- lm(y ~ x)
+summary(reg)
+
+## plot data and regression line
+plot(x,y, xlim = c(0, 10), ylim = c(0, 10), pch = 16)
+abline(reg, lwd = 2)
+
+## calcuate and plot intervals
+newdata <- data.frame(x=seq(-1, 11, length=100))
+conflim <- predict(reg, newdata=newdata, interval = "confidence")
+predlim <- predict(reg, newdata=newdata, interval = "prediction")
+
+lines(newdata$x, conflim[,2], col = "blue")
+lines(newdata$x, conflim[,3], col = "blue")
+lines(newdata$x, predlim[,2], col = "red")
+lines(newdata$x, predlim[,3], col = "red")
+```
+:::
+
+* The variable `newdata`:
+    - spans the range of `x` values in small steps to get a smooth curve
+    - single column with exactly the same name `x` as in the model formula
+    - for multiple regression, one column per explanation variable
+
+
+## Problematic cases
+
+```{r}
+library("mvtnorm")
+par(mfrow=c(2,2))
+par(mar=c(4.1, 5.1, 3.1, 1.1))
+set.seed(123)
+x <- exp(rmvnorm(n=100, mean=c(5,5), sigma=matrix(c(1,0.8,0.8,1), ncol=2)))
+plot(x, xlab="x", ylab="y", las=1, pch=16, cex=0.5, main="a) fan-shaped pattern")
+abline(lm(x[,2]~x[,1]), col="red")
+
+x <- seq(1, 10, length=100)
+y <- exp(0.3*x) + rnorm(x, mean=5, sd=1)
+plot(x, y, xlab="x", ylab="y", las=1, pch=16, cex=0.5, main="b) nonlinear dependency")
+abline(lm(y~x), col="red")
+
+x <- rmvnorm(n=100, mean=c(5,5), sigma=matrix(c(1,0.8,0.8,1), ncol=2))
+x[,2] <- exp(x[,2])
+plot(x, xlab="x", ylab="y", las=1, pch=16, cex=0.5, main="c) variance of x depends on x")
+abline(lm(x[,2] ~ x[,1]), col="red")
+
+x <- rmvnorm(n=20, mean=c(5,5), sigma=matrix(c(0.3,0.0,0.0,0.3), ncol=2))
+x[1,] <- c(8,8)
+plot(x, xlab="x", ylab="y", las=1, pch=16, cex=0.5, xlim=c(0,10), ylim=c(0,10), main="d) contains outlier")
+abline(lm(x[,2]~x[,1]), col="red")
+```
+
+## Identification and treatment of problematic cases
+
+<br>
+
+**Rainbow-Test (linearity)**
+
+:::{.bigfont}
+```{r, echo=TRUE}
+## generate test data
+x <- 1:10
+y <- 2 + 0.5 * x + 0.5 * rnorm(x)
+
+library(lmtest)
+raintest(y~x)
+```
+:::
+
+<br>
+
+**Breusch-Pagan-test (variance homogeneity)**
+
+:::{.bigfont}
+```{r, echo=TRUE}
+bptest(y~x)
+```
+:::
+
+
+## Non-normality and outliers
+
+<br>
+
+* Non-normality
+    * less important than many people think (due to the CLT)
+    * transformations (e.g. Box-Cox), polynomials, periodic functions \dots
+    * use of GLM's (generalized linear models)
+    
+<br>
+
+* Outliers [(depends on pattern)]{.gray}
+   * use of transformations (e.g. double log)
+   * use of outlier-tests, e.g. `outlierTest` from package **car** 
+   * robust regression with IWLS (iteratively re-weighted least squares) from package **MASS**
+
+
+## Robust regression with IWLS
+
+```{r iwls-plot, echo=FALSE, fig.align='center'}
+library("MASS")
+
+## test data with 2 "outliers"
+x <- c(1, 2, 3, 3, 4, 5, 7, 7, 7, 8, 8, 9, 10, 14, 15, 15, 16, 17, 18, 18)
+y <- c(8.1, 20, 10.9, 8.4, 9.6, 16.1, 17.3, 15.3, 16, 15.9, 19.3, 
+       21.3, 24.8, 31.3, 4, 31.9, 33.7, 36.5, 42.4, 38.5)
+
+## fit the models
+ssq    <- lm(y ~ x)
+iwls   <- rlm(y ~ x)
+iwlsmm <- rlm(y ~ x, method = "MM")
+
+## plot the models
+plot(x, y, pch = 16, las = 1)
+abline(ssq, col = "blue", lty = "dashed")
+abline(iwls, col = "red")
+abline(iwlsmm, col = "green")
+legend("topleft", c("OLS", "IWLS-M", "IWLS-MM"),
+       col = c("blue", "red", "green"),
+       lty = c("dashed", "solid", "solid"))
+```
+
+* IWLS: iterated re-weighted least squares
+* OLS (ordinary least squares) is "normal" linear regression
+* M-estimation and MM-estimation are two different approaches, details in @venables_mdern_2013
+* robust regression is preferred over outlier exclusion
+
+## Code of the IWLS regression
+
+:::{.bigfont}
+```{r iwls-plot, echo=TRUE, eval=FALSE}
+```
+:::
+ 
+## 
+
+## References
+

@@ -1,0 +1,23 @@
+---
+title: "Course Slides"
+format: html
+---
+
+## Aim and status
+
+This is an alpha version of slides for basic statistics courses.
+
+The selection of topics is somewhat arbitrary and without question very basic. It reflects my experience what I think is useful as door-opener.
+
+The aim is to provide a broad overview and enable students to select and understand particular books and online material  to dig in deeper in the diverse and fascinating field of statistics.
+
+It is based on former PDF slides and other material. It is still in an early stage of development, constructive comments and suggestions for improvement are welcome.
+
+
+## Author
+
+https://tu-dresden.de/Members/thomas.petzoldt
+
+https://github.com/tpetzoldt
+
+2023-10-31

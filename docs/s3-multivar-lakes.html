@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.2.280">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Thomas Petzoldt">
+<meta name="dcterms.date" content="2021-05-12">
+
+<title>Elements of Data Analysis and Statistics - Multivariate Lake Data Example</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1.6em;
+  vertical-align: middle;
+}
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="colors.css">
+</head>
+
+<body class="nav-sidebar docked">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">Multivariate Lake Data Example</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Elements of Data Analysis and Statistics</a> 
+    </div>
+      </div>
+      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+      </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic Statistics</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-introduction.html" class="sidebar-item-text sidebar-link">01-Introduction</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-terminology.html" class="sidebar-item-text sidebar-link">02-Basic Terminology</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-statparams.html" class="sidebar-item-text sidebar-link">03-Statistical Parameters</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-distributions.html" class="sidebar-item-text sidebar-link">04-Distributions</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-classtests.html" class="sidebar-item-text sidebar-link">05-Classical Tests</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-linear.html" class="sidebar-item-text sidebar-link">06-Linear Regression</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-anova.html" class="sidebar-item-text sidebar-link">07-One and two-way ANOVA</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08-nonlinear-regression.html" class="sidebar-item-text sidebar-link">08-Nonlinear Regression</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09-timeseries-basics.html" class="sidebar-item-text sidebar-link">09-Time Series Basics</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Tutorials</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s1-introductory-r-session.html" class="sidebar-item-text sidebar-link">An Introductory R Session</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s2-multivar-3d.html" class="sidebar-item-text sidebar-link">PCA, NMDS and Cluster: a Dimension Reduction Demo</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./s3-multivar-lakes.html" class="sidebar-item-text sidebar-link active">Multivariate Lake Data Example</a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">R Topics</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./x1-r-basics.html" class="sidebar-item-text sidebar-link">x1-R Basics</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./x2-r-graphics.html" class="sidebar-item-text sidebar-link">x2-Graphics with R</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./x3-r-functions.html" class="sidebar-item-text sidebar-link">x3-Functions Everywhere</a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./x4-pipes-intro.html" class="sidebar-item-text sidebar-link">Pipelines in R - A Small Introduction</a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#data-set-and-terms-of-use" id="toc-data-set-and-terms-of-use" class="nav-link" data-scroll-target="#data-set-and-terms-of-use">Data set and terms of use</a></li>
+  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data">Load the data</a></li>
+  <li><a href="#data-inspection" id="toc-data-inspection" class="nav-link" data-scroll-target="#data-inspection">Data inspection</a></li>
+  <li><a href="#multivariate-analysis" id="toc-multivariate-analysis" class="nav-link" data-scroll-target="#multivariate-analysis">Multivariate Analysis</a>
+  <ul class="collapse">
+  <li><a href="#principal-components-pca" id="toc-principal-components-pca" class="nav-link" data-scroll-target="#principal-components-pca">Principal Components: PCA</a></li>
+  <li><a href="#nonmetric-multidimensional-scaling-nmds" id="toc-nonmetric-multidimensional-scaling-nmds" class="nav-link" data-scroll-target="#nonmetric-multidimensional-scaling-nmds">Nonmetric Multidimensional Scaling: NMDS</a></li>
+  <li><a href="#cluster-analysis" id="toc-cluster-analysis" class="nav-link" data-scroll-target="#cluster-analysis">Cluster analysis</a></li>
+  </ul></li>
+  <li><a href="#task" id="toc-task" class="nav-link" data-scroll-target="#task">Task</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title d-none d-lg-block">Multivariate Lake Data Example</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Thomas Petzoldt </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 12, 2021</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The following example demonstrates basic multivariate principles by means of a teaching example. A few more examples are available in the lecture tutorial <span class="citation" data-cites="Petzoldt2014elements">(<a href="#ref-Petzoldt2014elements" role="doc-biblioref">Petzoldt 2014</a>)</span>. The detailed theory and applications is found in excellent books of <span class="citation" data-cites="Legendre1998">Legendre and Legendre (<a href="#ref-Legendre1998" role="doc-biblioref">1998</a>)</span> and <span class="citation" data-cites="Borcard2018">Borcard, Gillet, and Legendre (<a href="#ref-Borcard2018" role="doc-biblioref">2018</a>)</span>. Practical help is found in the tutorials of the <strong>vegan</strong> package <span class="citation" data-cites="Oksanen2020">(<a href="#ref-Oksanen2020" role="doc-biblioref">Oksanen et al. 2020</a>)</span>.</p>
+</section>
+<section id="data-set-and-terms-of-use" class="level2">
+<h2 class="anchored" data-anchor-id="data-set-and-terms-of-use">Data set and terms of use</h2>
+<p>The lake data set originates from the public data repository of the German Umweltbundesamt <span class="citation" data-cites="UBA2020">(<a href="#ref-UBA2020" role="doc-biblioref">Umweltbundesamt 2021</a>)</span>. The data set provided can be used freely according to the <a href="https://www.umweltbundesamt.de/datenschutz-haftung#c-urheber-und-kennzeichenrecht">terms and conditions</a> published at the <a href="https://www.umweltbundesamt.de/">UBA web site</a>, that refer to § 12a EGovG with respect of the data, and to the <a href="https://creativecommons.org/licenses/by-nd/4.0/deed.de">Creative Commons CC-BY ND International License 4.0</a> with respect to other objects directly created by UBA.</p>
+<p>The document and codes provided here can be shared according to <a href="https://creativecommons.org/licenses/by/4.0/deed.en">CC BY 4.0</a>.</p>
+</section>
+<section id="load-the-data" class="level2">
+<h2 class="anchored" data-anchor-id="load-the-data">Load the data</h2>
+<p>Here we load the data set and add English column names and abbreviated lake identifiers as row names to the table, that are useful for the multivariate plotting functions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>) <span class="co"># read Excel files directly</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"vegan"</span>)  <span class="co"># multivariate statistics in ecology</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>lakes <span class="ot">&lt;-</span> <span class="fu">as.data.frame</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_excel</span>(<span class="st">"data/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx"</span>, <span class="at">sheet=</span><span class="st">"Tabelle1"</span>, <span class="at">skip=</span><span class="dv">3</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(lakes) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"name"</span>, <span class="st">"state"</span>, <span class="st">"drainage"</span>, <span class="st">"population"</span>, <span class="st">"altitude"</span>, </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"z_mean"</span>, <span class="st">"z_max"</span>, <span class="st">"t_ret"</span>, <span class="st">"volume"</span>, <span class="st">"area"</span>, <span class="st">"shore_length"</span>, </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"shore_devel"</span>, <span class="st">"drain_ratio"</span>, <span class="st">"wfd_type"</span>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">rownames</span>(lakes) <span class="ot">&lt;-</span> <span class="fu">paste0</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(lakes), <span class="fu">substr</span>(lakes<span class="sc">$</span>name, <span class="dv">1</span>, <span class="dv">4</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Text columns, e.g Federal State names and lake type are removed and rows with missing data excluded. If population is not used, the analysis can be repeated with more lakes.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>valid_columns <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"drainage"</span>, <span class="st">"population"</span>, <span class="st">"altitude"</span>, <span class="st">"z_mean"</span>,</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"z_max"</span>, <span class="st">"t_ret"</span>, <span class="st">"volume"</span>, <span class="st">"area"</span>, <span class="st">"shore_length"</span>, </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"shore_devel"</span>, <span class="st">"drain_ratio"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">#valid_columns &lt;- c("drainage", "altitude", "z_mean",</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co">#                   "z_max", "t_ret", "volume", "area", "shore_length", </span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co">#                   "shore_devel","drain_ratio")</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> lakes[valid_columns]</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>dat <span class="ot">&lt;-</span> <span class="fu">na.omit</span>(dat)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="data-inspection" class="level2">
+<h2 class="anchored" data-anchor-id="data-inspection">Data inspection</h2>
+<p>It is alwas a good idea to plot the data first, as time series or boxplots for example, dependingon the type of data. Here we use boxplots, that we scale (z-transform) to a mean zero and standard deviation one to have comparable values.</p>
+<p>As we can see a number of high extreme values, we apply also a square root transformation, that is less extreme than log transform and not sensitive against zero values, but because altitude contains a negative value (below sea level) we replace this with zero. As it is a small value, it does not influence our analysis, but we should always be very careful to document such workarounds.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>) <span class="sc">+</span> .<span class="dv">1</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">scale</span>(dat), <span class="at">las =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s3-multivar-lakes_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>altitude <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(dat<span class="sc">$</span>altitude <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>, dat<span class="sc">$</span>altitude)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">scale</span>(<span class="fu">sqrt</span>(dat)), <span class="at">las=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s3-multivar-lakes_files/figure-html/unnamed-chunk-3-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="multivariate-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="multivariate-analysis">Multivariate Analysis</h2>
+<section id="principal-components-pca" class="level3">
+<h3 class="anchored" data-anchor-id="principal-components-pca">Principal Components: PCA</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>pc <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(<span class="fu">scale</span>(dat))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Importance of components:
+                         PC1    PC2    PC3    PC4     PC5     PC6     PC7
+Standard deviation     2.305 1.4737 1.1459 1.0686 0.84953 0.50024 0.24164
+Proportion of Variance 0.483 0.1974 0.1194 0.1038 0.06561 0.02275 0.00531
+Cumulative Proportion  0.483 0.6805 0.7998 0.9036 0.96925 0.99200 0.99731
+                           PC8     PC9    PC10    PC11
+Standard deviation     0.12590 0.08400 0.07563 0.03077
+Proportion of Variance 0.00144 0.00064 0.00052 0.00009
+Cumulative Proportion  0.99875 0.99939 0.99991 1.00000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s3-multivar-lakes_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(pc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s3-multivar-lakes_files/figure-html/unnamed-chunk-4-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As the PCA with the untransformed data looks somewhat asymmetric, we repeat it with square transformed data. In addition, also the 3rd PC is plotted.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>dat2 <span class="ot">&lt;-</span> <span class="fu">sqrt</span>(dat)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>pc2 <span class="ot">&lt;-</span> <span class="fu">prcomp</span>(<span class="fu">scale</span>(dat2))</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(pc2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Importance of components:
+                          PC1    PC2    PC3    PC4     PC5     PC6     PC7
+Standard deviation     2.1886 1.5906 1.2499 1.0634 0.79782 0.44854 0.28572
+Proportion of Variance 0.4354 0.2300 0.1420 0.1028 0.05786 0.01829 0.00742
+Cumulative Proportion  0.4354 0.6654 0.8075 0.9103 0.96812 0.98641 0.99383
+                           PC8     PC9    PC10    PC11
+Standard deviation     0.17665 0.13833 0.12041 0.05528
+Proportion of Variance 0.00284 0.00174 0.00132 0.00028
+Cumulative Proportion  0.99666 0.99840 0.99972 1.00000</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>) <span class="sc">+</span> <span class="fl">0.1</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(pc2, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(pc2, <span class="at">cex=</span><span class="fl">0.6</span>, <span class="at">choices=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s3-multivar-lakes_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>A PCA is also possible with the <code>rda</code> function of the <strong>vegan</strong> package. The syntax of the plot functions is somewhat different. Instead of <code>biplot</code> as above, we can directly use <code>plot</code>. Details are found in the <strong>vegan</strong> documentation.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">1</span>))</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>pc3 <span class="ot">&lt;-</span> <span class="fu">rda</span>(dat2, <span class="at">scale =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>pc3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call: rda(X = dat2, scale = TRUE)
+
+              Inertia Rank
+Total              11     
+Unconstrained      11   11
+Inertia is correlations 
+
+Eigenvalues for unconstrained axes:
+  PC1   PC2   PC3   PC4   PC5   PC6   PC7   PC8   PC9  PC10  PC11 
+4.790 2.530 1.562 1.131 0.637 0.201 0.082 0.031 0.019 0.014 0.003 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(pc3)</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s3-multivar-lakes_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="nonmetric-multidimensional-scaling-nmds" class="level3">
+<h3 class="anchored" data-anchor-id="nonmetric-multidimensional-scaling-nmds">Nonmetric Multidimensional Scaling: NMDS</h3>
+<p>Lt’s now perform an NMDS for the data set. Function <code>metaMDS</code> runs a series of NMDS fits with different start values to avoid local minima. It has also some automatic transformations built in and works usually with the Bray-Curtis dissimilarity, that is used for plants and animal species abundance data. As we work with physical data here, we set the distance measure to “euclidean”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>md <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(dat2, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">distance =</span> <span class="st">"euclid"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Square root transformation
+Wisconsin double standardization
+Run 0 stress 0.1181117 
+Run 1 stress 0.1208972 
+Run 2 stress 0.1181116 
+... New best solution
+... Procrustes: rmse 7.944496e-05  max resid 0.0002310107 
+... Similar to previous best
+Run 3 stress 0.1181118 
+... Procrustes: rmse 0.0002152329  max resid 0.0006669038 
+... Similar to previous best
+Run 4 stress 0.1768603 
+Run 5 stress 0.1208972 
+Run 6 stress 0.1230331 
+Run 7 stress 0.1181118 
+... Procrustes: rmse 0.0001772021  max resid 0.0005170828 
+... Similar to previous best
+Run 8 stress 0.1181116 
+... New best solution
+... Procrustes: rmse 5.494805e-05  max resid 0.0001587942 
+... Similar to previous best
+Run 9 stress 0.1181117 
+... Procrustes: rmse 0.000131296  max resid 0.0003713513 
+... Similar to previous best
+Run 10 stress 0.1768603 
+Run 11 stress 0.185611 
+Run 12 stress 0.1230331 
+Run 13 stress 0.1673797 
+Run 14 stress 0.1181117 
+... Procrustes: rmse 0.0001514447  max resid 0.000428393 
+... Similar to previous best
+Run 15 stress 0.2014737 
+Run 16 stress 0.1230331 
+Run 17 stress 0.1230331 
+Run 18 stress 0.120702 
+Run 19 stress 0.1913648 
+Run 20 stress 0.1230331 
+*** Best solution repeated 3 times</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md, <span class="at">type=</span><span class="st">"text"</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">col=</span><span class="st">"grey"</span>, <span class="at">lty=</span><span class="st">"dotted"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">col=</span><span class="st">"grey"</span>, <span class="at">lty=</span><span class="st">"dotted"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s3-multivar-lakes_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="cluster-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="cluster-analysis">Cluster analysis</h3>
+<p>Here we apply a hierarchical cluster analysis with square root transformed data and two different agglomeration schemes, “complete linkage” and “Ward’s method”.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">1</span>))</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(<span class="fu">scale</span>(dat2)), <span class="at">method=</span><span class="st">"complete"</span>) <span class="co"># the default</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc)</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>hc2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(<span class="fu">scale</span>(dat2)), <span class="at">method=</span><span class="st">"ward.D2"</span>)</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s3-multivar-lakes_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>We can also use the clusters to indicate groups in the NMDS plot. Function <code>rect.hclust</code> indicates a given number of clusters in the dendrogram, then we cut the tree with <code>cutree</code> and use the groups <code>grp</code> as color codes. <strong>R</strong> has 8 standard colors. If we need more, we can define an own palette.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s3-multivar-lakes_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>grp <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hc, <span class="dv">5</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># grp                  # can be used to show the groups</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md, <span class="at">type =</span> <span class="st">"n"</span>)</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(md<span class="sc">$</span>points, <span class="fu">row.names</span>(dat2), <span class="at">col =</span> grp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="s3-multivar-lakes_files/figure-html/unnamed-chunk-9-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Instead of hierarchical clustering, we can also use a non-hierarchical method, e.g.&nbsp;k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.</p>
+<p>Depending on the question, it may be a disadvantage, that the number of clusters needs to be specified beforehand (e.g.&nbsp;from hierarchical clustering) and that we do not get a tree diagramm.</p>
+</section>
+</section>
+<section id="task" class="level2">
+<h2 class="anchored" data-anchor-id="task">Task</h2>
+<ul>
+<li>Try to understand the analysis,</li>
+<li>discuss the results,</li>
+<li>ask questions.</li>
+<li>The idea is to work on this report together and to make it more complete.</li>
+</ul>
+</section>
+<section id="references" class="level2">
+
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-Borcard2018" class="csl-entry" role="doc-biblioentry">
+Borcard, Daniel, François Gillet, and Pierre Legendre. 2018. <em>Numerical <span>Ecology</span> with <span>R</span></em>. Use <span>R</span>! <span>Cham</span>: <span>Springer International Publishing</span>. <a href="https://doi.org/10.1007/978-3-319-71404-2">https://doi.org/10.1007/978-3-319-71404-2</a>.
+</div>
+<div id="ref-Legendre1998" class="csl-entry" role="doc-biblioentry">
+Legendre, P., and L. Legendre. 1998. <em>Numerical <span>Ecology</span></em>. 2nd English ed. <span>Elsevier</span>.
+</div>
+<div id="ref-Oksanen2020" class="csl-entry" role="doc-biblioentry">
+Oksanen, Jari, F. Guillaume Blanchet, Michael Friendly, Roeland Kindt, Pierre Legendre, Dan McGlinn, Peter R. Minchin, et al. 2020. <em>Vegan: Community Ecology Package</em>. <a href="https://CRAN.R-project.org/package=vegan">https://CRAN.R-project.org/package=vegan</a>.
+</div>
+<div id="ref-Petzoldt2014elements" class="csl-entry" role="doc-biblioentry">
+Petzoldt, Thomas. 2014. <em>Data Analysis with <span>R</span> - Selected Topics and Examples</em>.
+</div>
+<div id="ref-UBA2020" class="csl-entry" role="doc-biblioentry">
+Umweltbundesamt. 2021. <em>Kenndaten Ausgewählter Seen Deutschlands</em>. <a href="https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen">https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    target: function(trigger) {
+      return trigger.previousElementSibling;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
