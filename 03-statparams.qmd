@@ -19,7 +19,7 @@ include-in-header:
       </style>  
 format: 
   revealjs:
-    theme: [sky, thpe.scss]
+    theme: [sky, thpe-large.scss]
     css: colors.css
     transition: fade
     data-transition-speed: fast
@@ -207,7 +207,7 @@ $f$: class frequency, $w$: class width
 
 $k$: the index of the most abundant class, $x_{lo}$ its lower limit.
 
-## Density estimation
+## Mode: density estimation
 
 ```{r echo=FALSE, fig.height=4}
 h <- hist(x, main="", col="wheat", axes=FALSE, probability = TRUE)
@@ -346,6 +346,8 @@ where $\Phi^{-1}$ is the quantile function of the normal distribution.
 :::
 
 ## Median absolute deviation
+
+<br>
 
 The median of the absolute differences between median and values.
 
