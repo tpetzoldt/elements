@@ -1,5 +1,5 @@
 ---
-title: "Pipelines in R - A Small Introduction"
+title: "x4-Pipelines in R"
 author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
 date-format: "YYYY-MM-DD"
@@ -38,23 +38,30 @@ library("DiagrammeR")
 knitr::opts_chunk$set(echo = TRUE, eval=TRUE, comment="")
 ```
 
-## Preface
+## Prerequisites
 
 
 
 <br>
 
-The examples contained herein require installation and loading of several R 
-packages:
+The examples in slis slide require the following **R** packages: 
+packages, that must be installed and loaded.
 
 <br>
 
+**Installation**
+
+:::{.bigfont}
 ```{r echo=TRUE, eval=FALSE}
 install.packages(c("dplyr", "tiryr", "lubridate", "readxl", "ggplot2"))
 ```
+:::
 
 <br>
 
+**Loading**
+
+:::{.bigfont}
 ```{r echo=TRUE}
 library("dplyr")
 library("tidyr")
@@ -62,6 +69,7 @@ library("lubridate")
 library("readxl")
 library("ggplot2")
 ```
+:::
 
 <br>
 
@@ -70,7 +78,7 @@ The examples were tested with **R** 4.3.1 and **RStudio** 2023.06.1
 
 ## An introductory example
 
-* two samples of Maple (*Acer platanoides*) leaves, collected by two groups of students
+* In a statistics course, two samples of Maple (*Acer platanoides*) leaves were collected by two groups of students:
 
 * group **HSE**: had the freedom to collect leaves individually from trees close to the institute
 * group **HYB**: got a random sample from the supervisor
@@ -137,6 +145,8 @@ summary(leaves)
 * different ways to calculate summary statistics
 * classical method with `aggregate`
 
+**A few examples**
+
 :::{.bigfont}
 ```{r}
 aggregate(cbind(length, width, stalk) ~ group, mean, data=leaves)
@@ -145,50 +155,42 @@ aggregate(cbind(length, width, stalk) ~ group, min, data=leaves)
 ```
 :::
 
-::: aside
-`aggregate` is very powerful, but the modern "tidyverse" approach is easier to understand.
-:::
 
-## More streamlined 
+`aggregate` is very powerful, but the modern "tidyverse" approach is easier to understand. This is explained in the following.
 
-:::{.column width="49%"}
+## Summary statistics with the `dplyr`-package
+
 Package **dplyr** contains two handy functions:
-:::
 
-:::{.column width="49%"}
 * `group_by`
 * `summarize`
-:::
 
-Three ways of application:
+The functions can be combined in different ways:
 
-<br>
-**1. Separate code lines**
+
+**A) Two separate code lines**
 
 ```{r, eval=FALSE}
-library(dplyr)
 leaves_grouped <- group_by(leaves, group)
-summarize(leaves_grouped, mean=mean(width), sd=sd(width), 
-                          min=min(width), max=max(width))
+summarize(leaves_grouped, mean = mean(width), sd = sd(width), min = min(width), max = max(width))
 ```
 
-$\ominus$ needs a temporary variable: `leaves_grouped`
+[$\ominus$]{.red} needs a temporary variable: `leaves_grouped`
 
 <br>
-**2. Enclose in parentheses**
+**B) One line, `group_by` enclosed in parentheses**
 
 ```{r, eval=FALSE}
-summarize(group_by(leaves, group), 
-        mean=mean(width), sd=sd(width), min=min(width), max=max(width))
+summarize(group_by(leaves, group), mean = mean(width), sd = sd(width), min = min(width), max = max(width))
 ```
 
-$\oplus$ no temporary variables necessary <br>
-$\ominus$ nested parentheses
+[$\oplus$]{.red} no temporary variables necessary <br>
+[$\ominus$]{.red} nested parentheses
 
 
 
 
-## 3. Pipelines
+## More streamlined: pipelines
 
 <br>
 
@@ -212,8 +214,10 @@ A predecessor was the so-called "magrittr" pipeline operator  **[%>%]{.blue}**
 
 
 ::: aside
-The `%>%-pipeline was introduced by the user-contributed **magrittr** package [@bache_magrittr_2022] and 
-became very popular. It is automatically loaded by the **dplyr** package [@wickham_dplyr_2023].
+The `%>%-pipeline was introduced by the user-contributed **magrittr** package
+[@bache_magrittr_2022] and became very popular.
+It is automatically loaded by the **dplyr** package [@wickham_dplyr_2023].
+In his new book, Hadley Wickham recommends native pipes [@wickham_r_2023].
 :::
 
 ## Application of **[`|>`]{.red}**

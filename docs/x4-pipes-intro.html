@@ -10,8 +10,8 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2023-10-31">
-  <title>Elements of Data Analysis and Statistics - Pipelines in R - A Small Introduction</title>
+  <meta name="dcterms.date" content="2023-11-02">
+  <title>Elements of Data Analysis and Statistics - x4-Pipelines in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -420,7 +420,7 @@
     <div class="slides">
 
 <section id="title-slide" body-color="#069af22" data-background-image="img/tud-title-bg-wide-2021.png" class="quarto-title-block center">
-  <h1 class="title">Pipelines in R - A Small Introduction</h1>
+  <h1 class="title">x4-Pipelines in R</h1>
 
 <div class="quarto-title-authors">
 <div class="quarto-title-author">
@@ -430,17 +430,22 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2023-10-31</p>
+  <p class="date">2023-11-02</p>
 </section>
-<section id="preface" class="slide level2">
-<h2>Preface</h2>
+<section id="prerequisites" class="slide level2">
+<h2>Prerequisites</h2>
 <p><br></p>
-<p>The examples contained herein require installation and loading of several R packages:</p>
+<p>The examples in slis slide require the following <strong>R</strong> packages: packages, that must be installed and loaded.</p>
 <p><br></p>
+<p><strong>Installation</strong></p>
+<div class="bigfont">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">"dplyr"</span>, <span class="st">"tiryr"</span>, <span class="st">"lubridate"</span>, <span class="st">"readxl"</span>, <span class="st">"ggplot2"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p><br></p>
+<p><strong>Loading</strong></p>
+<div class="bigfont">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"dplyr"</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyr"</span>)</span>
@@ -448,13 +453,14 @@ Thomas Petzoldt
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readxl"</span>)</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p><br></p>
 <p>The examples were tested with <strong>R</strong> 4.3.1 and <strong>RStudio</strong> 2023.06.1</p>
 </section>
 <section id="an-introductory-example" class="slide level2">
 <h2>An introductory example</h2>
 <ul>
-<li><p>two samples of Maple (<em>Acer platanoides</em>) leaves, collected by two groups of students</p></li>
+<li><p>In a statistics course, two samples of Maple (<em>Acer platanoides</em>) leaves were collected by two groups of students:</p></li>
 <li><p>group <strong>HSE</strong>: had the freedom to collect leaves individually from trees close to the institute</p></li>
 <li><p>group <strong>HYB</strong>: got a random sample from the supervisor</p></li>
 </ul>
@@ -531,6 +537,7 @@ Thomas Petzoldt
 <li>different ways to calculate summary statistics</li>
 <li>classical method with <code>aggregate</code></li>
 </ul>
+<p><strong>A few examples</strong></p>
 <div class="bigfont">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">aggregate</span>(<span class="fu">cbind</span>(length, width, stalk) <span class="sc">~</span> group, mean, <span class="at">data=</span>leaves)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -553,39 +560,30 @@ Thomas Petzoldt
 </div>
 </div>
 </div>
-
-<aside><div>
-<p><code>aggregate</code> is very powerful, but the modern “tidyverse” approach is easier to understand.</p>
-</div></aside></section>
-<section id="more-streamlined" class="slide level2">
-<h2>More streamlined</h2>
-<div class="column" style="width:49%;">
+<p><code>aggregate</code> is very powerful, but the modern “tidyverse” approach is easier to understand. This is explained in the following.</p>
+</section>
+<section id="summary-statistics-with-the-dplyr-package" class="slide level2">
+<h2>Summary statistics with the <code>dplyr</code>-package</h2>
 <p>Package <strong>dplyr</strong> contains two handy functions:</p>
-</div>
-<div class="column" style="width:49%;">
 <ul>
 <li><code>group_by</code></li>
 <li><code>summarize</code></li>
 </ul>
-</div>
-<p>Three ways of application:</p>
-<p><br> <strong>1. Separate code lines</strong></p>
+<p>The functions can be combined in different ways:</p>
+<p><strong>A) Two separate code lines</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>leaves_grouped <span class="ot">&lt;-</span> <span class="fu">group_by</span>(leaves, group)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(leaves_grouped, <span class="at">mean=</span><span class="fu">mean</span>(width), <span class="at">sd=</span><span class="fu">sd</span>(width), </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>                          <span class="at">min=</span><span class="fu">min</span>(width), <span class="at">max=</span><span class="fu">max</span>(width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>leaves_grouped <span class="ot">&lt;-</span> <span class="fu">group_by</span>(leaves, group)</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(leaves_grouped, <span class="at">mean =</span> <span class="fu">mean</span>(width), <span class="at">sd =</span> <span class="fu">sd</span>(width), <span class="at">min =</span> <span class="fu">min</span>(width), <span class="at">max =</span> <span class="fu">max</span>(width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><span class="math inline">\(\ominus\)</span> needs a temporary variable: <code>leaves_grouped</code></p>
-<p><br> <strong>2. Enclose in parentheses</strong></p>
+<p><span class="red"><span class="math inline">\(\ominus\)</span></span> needs a temporary variable: <code>leaves_grouped</code></p>
+<p><br> <strong>B) One line, <code>group_by</code> enclosed in parentheses</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="fu">group_by</span>(leaves, group), </span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">mean=</span><span class="fu">mean</span>(width), <span class="at">sd=</span><span class="fu">sd</span>(width), <span class="at">min=</span><span class="fu">min</span>(width), <span class="at">max=</span><span class="fu">max</span>(width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summarize</span>(<span class="fu">group_by</span>(leaves, group), <span class="at">mean =</span> <span class="fu">mean</span>(width), <span class="at">sd =</span> <span class="fu">sd</span>(width), <span class="at">min =</span> <span class="fu">min</span>(width), <span class="at">max =</span> <span class="fu">max</span>(width))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><span class="math inline">\(\oplus\)</span> no temporary variables necessary <br> <span class="math inline">\(\ominus\)</span> nested parentheses</p>
+<p><span class="red"><span class="math inline">\(\oplus\)</span></span> no temporary variables necessary <br> <span class="red"><span class="math inline">\(\ominus\)</span></span> nested parentheses</p>
 </section>
-<section id="pipelines" class="slide level2">
-<h2>3. Pipelines</h2>
+<section id="more-streamlined-pipelines" class="slide level2">
+<h2>More streamlined: pipelines</h2>
 <p><br></p>
 <p>Aim to make code easier to understand:</p>
 <ul>
@@ -604,7 +602,7 @@ Thomas Petzoldt
 </ul>
 
 <aside><div>
-<p>The `%&gt;%-pipeline was introduced by the user-contributed <strong>magrittr</strong> package <span class="citation" data-cites="magrittr">(<a href="#/references" role="doc-biblioref" onclick="">Bache &amp; Wickham, 2022</a>)</span> and became very popular. It is automatically loaded by the <strong>dplyr</strong> package <span class="citation" data-cites="dplyr">(<a href="#/references" role="doc-biblioref" onclick="">Wickham et al., 2022</a>)</span>.</p>
+<p>The `%&gt;%-pipeline was introduced by the user-contributed <strong>magrittr</strong> package <span class="citation" data-cites="bache_magrittr_2022">(<a href="#/references" role="doc-biblioref" onclick="">Bache &amp; Wickham, 2022</a>)</span> and became very popular. It is automatically loaded by the <strong>dplyr</strong> package <span class="citation" data-cites="wickham_dplyr_2023">(<a href="#/references" role="doc-biblioref" onclick="">Wickham, François, et al., 2023</a>)</span>. In his new book, Hadley Wickham recommends native pipes <span class="citation" data-cites="wickham_r_2023">(<a href="#/references" role="doc-biblioref" onclick="">Wickham, Çetinkaya-Rundel, et al., 2023</a>)</span>.</p>
 </div></aside></section>
 <section id="application-of" class="slide level2">
 <h2>Application of <strong><span class="red"><code>|&gt;</code></span></strong></h2>
@@ -642,8 +640,8 @@ Thomas Petzoldt
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-19bd50c0234e59a4a0bc" style="width:432px;height:384px;"></div>
-<script type="application/json" data-for="htmlwidget-19bd50c0234e59a4a0bc">{"x":{"diagram":"digraph functional {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg1, arg2, ...)\"\n           edge [penwidth=1.5]\n              output -> \"function(arg1, arg2, ...)\"[dir=back]\n           edge [penwidth=0.7, tailport = \"e\", headport = \"n\", constraint = false, color=\"tomato\"]\n              \"input\" -> \"function(arg1, arg2, ...)\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-246aae6df9d9fc664e63" style="width:432px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-246aae6df9d9fc664e63">{"x":{"diagram":"digraph functional {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg1, arg2, ...)\"\n           edge [penwidth=1.5]\n              output -> \"function(arg1, arg2, ...)\"[dir=back]\n           edge [penwidth=0.7, tailport = \"e\", headport = \"n\", constraint = false, color=\"tomato\"]\n              \"input\" -> \"function(arg1, arg2, ...)\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -654,8 +652,8 @@ Thomas Petzoldt
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-94853579a9c21367c5ca" style="width:432px;height:384px;"></div>
-<script type="application/json" data-for="htmlwidget-94853579a9c21367c5ca">{"x":{"diagram":"digraph pipes {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg2, ...)\"\n           node [shape=none]\n             \"|>\"\n           edge [penwidth=1.5]\n              input -> \"|>\" -> \"function(arg2, ...)\" -> output\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-98ff78b60ef504a4d1a4" style="width:432px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-98ff78b60ef504a4d1a4">{"x":{"diagram":"digraph pipes {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg2, ...)\"\n           node [shape=none]\n             \"|>\"\n           edge [penwidth=1.5]\n              input -> \"|>\" -> \"function(arg2, ...)\" -> output\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -1819,8 +1817,8 @@ pivot_wider(elbe,
 <p><br></p>
 <p><strong>Printed books</strong></p>
 <ul>
-<li>“R for Data Science” <span class="citation" data-cites="datascience">(<a href="#/references" role="doc-biblioref" onclick="">Wickham &amp; Grolemund, 2016</a>)</span></li>
-<li>“ggplot Elegant Graphics for Data Analysis” <span class="citation" data-cites="ggplot">(<a href="#/references" role="doc-biblioref" onclick="">Wickham, 2016</a>)</span></li>
+<li>“R for Data Science” <span class="citation" data-cites="wickham_r_2017">(<a href="#/references" role="doc-biblioref" onclick="">Wickham &amp; Grolemund, 2017</a>)</span></li>
+<li>“ggplot Elegant Graphics for Data Analysis” <span class="citation" data-cites="wickham_ggplot2_2016">(<a href="#/references" role="doc-biblioref" onclick="">Wickham, 2016</a>)</span></li>
 </ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
@@ -1830,17 +1828,20 @@ pivot_wider(elbe,
 
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
-<div id="ref-magrittr" class="csl-entry" role="doc-biblioentry">
+<div id="ref-bache_magrittr_2022" class="csl-entry" role="doc-biblioentry">
 Bache, S. M., &amp; Wickham, H. (2022). <em>Magrittr: A forward-pipe operator for r</em>. <a href="https://CRAN.R-project.org/package=magrittr">https://CRAN.R-project.org/package=magrittr</a>
 </div>
-<div id="ref-ggplot" class="csl-entry" role="doc-biblioentry">
+<div id="ref-wickham_ggplot2_2016" class="csl-entry" role="doc-biblioentry">
 Wickham, H. (2016). <em>ggplot2: Elegant graphics for data analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>
 </div>
-<div id="ref-dplyr" class="csl-entry" role="doc-biblioentry">
-Wickham, H., Francois, R., Henry, L., &amp; Mueller, K. (2022). <em>Dplyr: A grammar of data manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>
+<div id="ref-wickham_r_2023" class="csl-entry" role="doc-biblioentry">
+Wickham, H., Çetinkaya-Rundel, M., &amp; Grolemund, G. (2023). <em><span>R</span> for data science</em> (2nd ed.). O’Reiley. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a>
 </div>
-<div id="ref-datascience" class="csl-entry" role="doc-biblioentry">
-Wickham, H., &amp; Grolemund, G. (2016). <em>R for data science: Import, tidy, transform, visualize, and model data</em>. O’Reilly Media, Inc. <a href="https://r4ds.had.co.nz/">https://r4ds.had.co.nz/</a>
+<div id="ref-wickham_dplyr_2023" class="csl-entry" role="doc-biblioentry">
+Wickham, H., François, R., Henry, L., Müller, K., &amp; Vaughan, D. (2023). <em>Dplyr: A grammar of data manipulation</em>. <a href="https://CRAN.R-project.org/package=dplyr">https://CRAN.R-project.org/package=dplyr</a>
+</div>
+<div id="ref-wickham_r_2017" class="csl-entry" role="doc-biblioentry">
+Wickham, H., &amp; Grolemund, G. (2017). <em><span>R</span> for data science: Import, tidy, transform, visualize, and model data</em>. O’Reilly Media.
 </div>
 </div>
 </section></section>
