@@ -3,8 +3,7 @@ project:
   output-dir: docs
   render: 
     - "*.qmd"
-    - "*.Rmd"
-    - "!x5-rmarkdown-intro.Rmd"
+  
 
 website:
   title: "Elements of Data Analysis and Statistics"
@@ -58,7 +57,7 @@ include-in-header:
       </style>  
 format: 
   revealjs:
-    theme: [sky, thpe-large-white.scss]
+    theme: [sky, thpe-large.scss]
     css: colors.css
     transition: fade
     data-transition-speed: fast

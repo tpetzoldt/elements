@@ -5,12 +5,13 @@
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.2.280">
+  <meta name="generator" content="quarto-1.3.433">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2023-10-31">
+  <meta name="dcterms.date" content="2023-11-03">
   <title>Elements of Data Analysis and Statistics - 05-Classical Tests</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -26,9 +27,10 @@
     ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
       width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -94,7 +96,7 @@
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto.css" id="theme">
+  <link rel="stylesheet" href="site_libs/revealjs/dist/theme/quarto.css">
   <link rel="stylesheet" href="colors.css">
   <link href="site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -138,44 +140,44 @@
     font-weight: 400;
   }
 
-  .callout.callout-captioned.callout-style-simple .callout-body {
+  .callout.callout-titled.callout-style-simple .callout-body {
     margin-top: 0.2em;
   }
 
-  .callout:not(.callout-captioned) .callout-body {
+  .callout:not(.callout-titled) .callout-body {
       display: flex;
   }
 
-  .callout:not(.no-icon).callout-captioned.callout-style-simple .callout-content {
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
     padding-left: 1.6em;
   }
 
-  .callout.callout-captioned .callout-header {
+  .callout.callout-titled .callout-header {
     padding-top: 0.2em;
     margin-bottom: -0.2em;
   }
 
-  .callout.callout-captioned .callout-caption  p {
+  .callout.callout-titled .callout-title  p {
     margin-top: 0.5em;
     margin-bottom: 0.5em;
   }
     
-  .callout.callout-captioned.callout-style-simple .callout-content  p {
+  .callout.callout-titled.callout-style-simple .callout-content  p {
     margin-top: 0;
   }
 
-  .callout.callout-captioned.callout-style-default .callout-content  p {
+  .callout.callout-titled.callout-style-default .callout-content  p {
     margin-top: 0.7em;
   }
 
-  .callout.callout-style-simple div.callout-caption {
+  .callout.callout-style-simple div.callout-title {
     border-bottom: none;
     font-size: .9rem;
     font-weight: 600;
     opacity: 75%;
   }
 
-  .callout.callout-style-default  div.callout-caption {
+  .callout.callout-style-default  div.callout-title {
     border-bottom: none;
     font-weight: 600;
     opacity: 85%;
@@ -207,7 +209,7 @@
     background-size: 0.9rem 0.9rem;
   }
 
-  .callout-caption {
+  .callout-title {
     display: flex
   }
     
@@ -220,16 +222,16 @@
     display: none !important;
   }
 
-  .callout.callout-captioned .callout-body > .callout-content > :last-child {
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
     margin-bottom: 0.5rem;
   }
 
-  .callout.callout-captioned .callout-icon::before {
+  .callout.callout-titled .callout-icon::before {
     margin-top: .5rem;
     padding-right: .5rem;
   }
 
-  .callout:not(.callout-captioned) .callout-icon::before {
+  .callout:not(.callout-titled) .callout-icon::before {
     margin-top: 1rem;
     padding-right: .5rem;
   }
@@ -244,7 +246,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
   }
 
-  div.callout-note.callout-style-default .callout-caption {
+  div.callout-note.callout-style-default .callout-title {
     background-color: #dae6fb
   }
 
@@ -256,7 +258,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
   }
 
-  div.callout-important.callout-style-default .callout-caption {
+  div.callout-important.callout-style-default .callout-title {
     background-color: #f7dddc
   }
 
@@ -268,7 +270,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
   }
 
-  div.callout-warning.callout-style-default .callout-caption {
+  div.callout-warning.callout-style-default .callout-title {
     background-color: #fcefdc
   }
 
@@ -280,7 +282,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
   }
 
-  div.callout-tip.callout-style-default .callout-caption {
+  div.callout-tip.callout-style-default .callout-title {
     background-color: #ccf1e3
   }
 
@@ -292,7 +294,7 @@
     background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
   }
 
-  div.callout-caution.callout-style-default .callout-caption {
+  div.callout-caution.callout-style-default .callout-title {
     background-color: #ffe5d0
   }
 
@@ -385,12 +387,12 @@
     }
   </style>
   <style>
-  #title-slide
+  #title-slide 
     .title {color: #ee7f00;}
     .subtitle {color: #ee7f00;}
     .quarto-title-author {color: #69af22;}
     .date {color: #69af22;}
-  </style>
+  </style>  
 </head>
 <body class="quarto-light">
   <div class="reveal">
@@ -408,7 +410,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2023-10-31</p>
+  <p class="date">2023-11-03</p>
 </section>
 <section>
 <section id="hypotheses-errors-and-the-p-value" class="title-slide slide level1 center">
@@ -419,6 +421,7 @@ ToDo: insert formulae and algorithms from the slides
 </section>
 <section id="statistical-test" class="slide level2">
 <h2>Statistical test</h2>
+<p><br></p>
 <p>A statistical hypothesis test is a method of statistical inference.</p>
 <ul>
 <li>Commonly, two samples are compared, or a sample is compared against properties from an idealized model.</li>
@@ -582,6 +585,7 @@ under the assumption that the null hypothesis is to be true.
 </section>
 <section id="take-home-messages" class="slide level2">
 <h2>Take home messages</h2>
+<p><br></p>
 <ul>
 <li>A p-value measures the probability that a purely random effect would be equally or more extreme than an observed effect.</li>
 <li>“Significant” means that an observed result is unlikely to have occurred by chance alone.</li>
@@ -594,7 +598,7 @@ under the assumption that the null hypothesis is to be true.
 <section>
 <section id="differences-between-mean-values" class="title-slide slide level1 center">
 <h1>Differences between mean values</h1>
-
+<p><br></p>
 </section>
 <section id="one-sample-t-test" class="slide level2">
 <h2>One sample t-Test</h2>
@@ -634,9 +638,9 @@ s_{\bar{x}} = \frac{s}{\sqrt{n}} \qquad \text{(standard error)}
 <li><p>Let <span class="math inline">\(\alpha = 0.05\)</span>, we get a two-sided 95% confidence interval with:</p></li>
 </ol>
 <p><span class="math display">\[\bar{x} \pm t_{0,975, n-1} \cdot \frac{s}{\sqrt{n}}\]</span></p>
-<div class="hugefont">
+<div class="bigfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fl">5.5</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">10-1</span>) <span class="sc">*</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fl">5.5</span> <span class="sc">+</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">1</span>) <span class="sc">*</span> <span class="fu">qt</span>(<span class="fl">0.975</span>, <span class="dv">10-1</span>) <span class="sc">*</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">sqrt</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4.784643 6.215357</code></pre>
 </div>
@@ -658,8 +662,8 @@ t_{obs} = |\bar{x}-\mu | \cdot \frac{1}{s_{\bar{x}}} = \frac{|\bar{x}-\mu |}{s} 
 \]</span></p>
 <p>We can calculate this in <strong>R</strong>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>t <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fl">5.5</span> <span class="sc">-</span> <span class="fl">5.0</span>) <span class="sc">/</span> <span class="fl">1.0</span> <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">10</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>t <span class="ot">&lt;-</span> <span class="fu">abs</span>(<span class="fl">5.5</span> <span class="sc">-</span> <span class="fl">5.0</span>) <span class="sc">/</span> <span class="fl">1.0</span> <span class="sc">*</span> <span class="fu">sqrt</span>(<span class="dv">10</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>t</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.581139</code></pre>
 </div>
@@ -681,12 +685,10 @@ t_{obs} = |\bar{x}-\mu | \cdot \frac{1}{s_{\bar{x}}} = \frac{|\bar{x}-\mu |}{s} 
 <li><span class="math inline">\(t = t_{obs}\)</span> and the degrees of freedom (<span class="math inline">\(n-1\)</span>):</li>
 </ul>
 <p><br></p>
-<div class="bigfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(t, <span class="at">df =</span> <span class="dv">10</span> <span class="sc">-</span> <span class="dv">1</span>)) <span class="co"># 2 * (1 - p) is re-arranged from 1-alpha/2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="dv">2</span> <span class="sc">*</span> (<span class="dv">1</span> <span class="sc">-</span> <span class="fu">pt</span>(t, <span class="at">df =</span> <span class="dv">10</span> <span class="sc">-</span> <span class="dv">1</span>)) <span class="co"># 2 * (1 - p) is re-arranged from 1-alpha/2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1483047</code></pre>
-</div>
 </div>
 </div>
 <p>This p-value = 0.1483047 is greater than <span class="math inline">\(0.05\)</span> so we consider the difference as not significant.</p>
@@ -725,13 +727,12 @@ t_{obs} = |\bar{x}-\mu | \cdot \frac{1}{s_{\bar{x}}} = \frac{|\bar{x}-\mu |}{s} 
 <h2>Method 4: Built-in t-test function in R</h2>
 <p>The same can be done much easier with the computer in <strong>R</strong>.</p>
 <p>Let’s assume we have a sample with <span class="math inline">\(\bar{x}=5, s=1\)</span>:</p>
-<div class="bigfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="do">## define sample</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.5</span>, <span class="fl">3.5</span>, <span class="fl">5.4</span>, <span class="fl">5.3</span>, <span class="dv">6</span>, <span class="fl">7.2</span>, <span class="fl">5.4</span>, <span class="fl">6.3</span>, <span class="fl">4.5</span>, <span class="fl">5.9</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="do">## perform one-sample t-test</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x, <span class="at">mu=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="do">## define sample</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.5</span>, <span class="fl">3.5</span>, <span class="fl">5.4</span>, <span class="fl">5.3</span>, <span class="dv">6</span>, <span class="fl">7.2</span>, <span class="fl">5.4</span>, <span class="fl">6.3</span>, <span class="fl">4.5</span>, <span class="fl">5.9</span>)</span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="do">## perform one-sample t-test</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="fu">t.test</span>(x, <span class="at">mu=</span><span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One Sample t-test
@@ -746,18 +747,16 @@ mean of x
       5.5 </code></pre>
 </div>
 </div>
-</div>
 <p>The test returns the observed t-value, the 95% confidence interval and the p-value.</p>
 <p>An important difference is, that this method needs the original data, while the other methods need only mean, standard deviation and sample size.</p>
 </section>
 <section id="two-sample-t-test" class="slide level2">
 <h2>Two sample t-test</h2>
 <p>The two-sample t-test compares two independent samples:</p>
-<div class="bigfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.3</span>, <span class="fl">6.0</span>, <span class="fl">7.1</span>, <span class="fl">6.4</span>, <span class="fl">5.7</span>, <span class="fl">4.9</span>, <span class="fl">5.0</span>, <span class="fl">4.6</span>, <span class="fl">5.7</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">6.5</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.8</span>, <span class="fl">7.1</span>, <span class="fl">5.8</span>, <span class="fl">7.0</span>, <span class="fl">6.7</span>, <span class="fl">7.7</span>, <span class="fl">9.2</span>, <span class="fl">6.0</span>, <span class="fl">7.2</span>, <span class="fl">7.8</span>, <span class="fl">7.8</span>, <span class="fl">5.7</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x1, x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.3</span>, <span class="fl">6.0</span>, <span class="fl">7.1</span>, <span class="fl">6.4</span>, <span class="fl">5.7</span>, <span class="fl">4.9</span>, <span class="fl">5.0</span>, <span class="fl">4.6</span>, <span class="fl">5.7</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">6.5</span>)</span>
+<span id="cb9-2"><a href="#cb9-2"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.8</span>, <span class="fl">7.1</span>, <span class="fl">5.8</span>, <span class="fl">7.0</span>, <span class="fl">6.7</span>, <span class="fl">7.7</span>, <span class="fl">9.2</span>, <span class="fl">6.0</span>, <span class="fl">7.2</span>, <span class="fl">7.8</span>, <span class="fl">7.8</span>, <span class="fl">5.7</span>)</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="fu">t.test</span>(x1, x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -772,11 +771,11 @@ mean of x mean of y
  5.475000  6.983333 </code></pre>
 </div>
 </div>
-</div>
 <p>That means that both samples differ significantly (<span class="math inline">\(p &lt; 0.05\)</span>). It has to be mentioned that <strong>R</strong> did not perform the “ordinary” t-test but the Welch test (also termed heteroscedastic t-test), for which the variances of both samples are not required to be identical.</p>
 </section>
 <section id="hypothesis-and-formula-of-the-two-sample-t-test" class="slide level2">
 <h2>Hypothesis and formula of the two-sample t-test</h2>
+<p><br></p>
 <div class="column" style="width:49%;">
 <p><span class="math inline">\(H_0\)</span> <span class="math inline">\(\mu_1 = mu_2\)</span></p>
 <p><span class="math inline">\(H_a\)</span> the two means are different</p>
@@ -820,7 +819,7 @@ s_{\bar{x}_i} = \frac{s_i}{\sqrt{n_i}}
 <h1>Welch test in R</h1>
 <div class="bigfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x1, x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">t.test</span>(x1, x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -868,15 +867,9 @@ mean of x mean of y
 <h2>Homogeneity of variances with &gt; 2 samples</h2>
 <p><br></p>
 <div class="column" style="width:59%;">
-<div class="cell">
-
-</div>
-<div class="cell">
-
-</div>
 <p><strong>Bartlett’s test:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">bartlett.test</span>(<span class="fu">list</span>(x1, x2, x3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">bartlett.test</span>(<span class="fu">list</span>(x1, x2, x3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Bartlett test of homogeneity of variances
@@ -887,7 +880,7 @@ Bartlett's K-squared = 7.7136, df = 2, p-value = 0.02114</code></pre>
 </div>
 <p><br> <strong>Fligner-Killeen test</strong> (recommended):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fligner.test</span>(<span class="fu">list</span>(x1, x2, x3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">fligner.test</span>(<span class="fu">list</span>(x1, x2, x3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Fligner-Killeen test of homogeneity of variances
@@ -1007,9 +1000,9 @@ Zimmerman, D. W. (2004). "A note on preliminary tests of equality of variances".
 </ul>
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x1, x2, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="cb17-2"><a href="#cb17-2"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="fu">t.test</span>(x1, x2, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -1028,9 +1021,9 @@ mean of x mean of y
 </div>
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(x1, x2, <span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
+<span id="cb19-2"><a href="#cb19-2"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="fu">t.test</span>(x1, x2, <span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Paired t-test
@@ -1090,10 +1083,10 @@ mean difference
 <h2>Mann-Whitney - Wilcoxon-test in R</h2>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>)</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>)</span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.test</span>(A, B) <span class="co"># use optional argument `paired = TRUE` for paired data.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>)</span>
+<span id="cb21-2"><a href="#cb21-2"></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>)</span>
+<span id="cb21-3"><a href="#cb21-3"></a></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="fu">wilcox.test</span>(A, B) <span class="co"># use optional argument `paired = TRUE` for paired data.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Wilcoxon rank sum exact test
@@ -1105,14 +1098,16 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 </div>
 <p><br></p>
 <p><strong>Mann-Whitney - Wilcoxon-test with tie correction</strong></p>
-<p>The rank differences contain doubled values:</p>
+<ul>
+<li>applied if the rank differences contain doubled values</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>)</span>
+<span id="cb23-2"><a href="#cb23-2"></a>B <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>, <span class="dv">11</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"exactRankTests"</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wilcox.exact</span>(A, B, <span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">library</span>(<span class="st">"exactRankTests"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">wilcox.exact</span>(A, B, <span class="at">paired=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Exact Wilcoxon signed rank test
@@ -1131,7 +1126,7 @@ alternative hypothesis: true mu is not equal to 0</code></pre>
 <li>Where does <span class="math inline">\(x_{est}\)</span> appear within the ordered series of simulated values <span class="math inline">\(x_{i, sim}\)</span>?</li>
 </ul>
 
-<img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-23-1.png" width="960" class="r-stretch"><p>Let <span class="math inline">\(x_{obs}\)</span> be <span class="math inline">\(4.5\)</span> in our example, then <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(p= 0.97\)</span>.</p>
+<img data-src="05-classtests_files/figure-revealjs/permutation-1.png" width="960" class="r-stretch quarto-figure-center"><p>Let <span class="math inline">\(x_{obs}\)</span> be <span class="math inline">\(4.5\)</span> in our example, then <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(p= 0.97\)</span>.</p>
 </section></section>
 <section>
 <section id="test-for-distributions" class="title-slide slide level1 center">
@@ -1329,7 +1324,7 @@ alternative hypothesis: two.sided</code></pre>
 <section id="favorite-numbers-of-hse-students" class="slide level2">
 <h2>Favorite numbers of HSE students</h2>
 
-<img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-27-1.png" width="960" class="r-stretch"><ul>
+<img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-26-1.png" width="960" class="r-stretch"><ul>
 <li>Numbers from 1..9, <span class="math inline">\(n=34\)</span></li>
 <li><span class="math inline">\(H_0\)</span>: equal probability of all numbers <span class="math inline">\(1/9\)</span> (discrete uniform distribution)</li>
 <li><span class="math inline">\(H_A\)</span>: some numbers are favored <span class="math inline">\(\rightarrow\)</span> departure from discrete uniform</li>
@@ -1366,34 +1361,31 @@ X-squared = 13.647, df = NA, p-value = 0.0969</code></pre>
 <section id="cramér-von-mises-test" class="slide level2">
 <h2>Cramér-von-Mises-Test</h2>
 
-<img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-29-1.png" width="960" class="r-stretch"><p><span class="math display">\[
+<img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-28-1.png" width="960" class="r-stretch"><p><span class="math display">\[
 T = n \omega^2 = \frac{1}{12n} + \sum_{i=1}^n \left[ \frac{2i-1}{2n}-F(x_i) \right]^2
 \]</span></p>
 </section>
 <section id="cramér-von-mises-test-in-r" class="slide level2">
 <h2>Cramér-von-Mises-Test in <strong>R</strong></h2>
-<div class="bigfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dgof)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>obsfreq <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">3</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="do">## CvM-test needs individual values, not class frequencies</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(obsfreq), obsfreq)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">library</span>(dgof)</span>
+<span id="cb31-2"><a href="#cb31-2"></a>obsfreq <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">3</span>)</span>
+<span id="cb31-3"><a href="#cb31-3"></a></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="do">## CvM-test needs individual values, not class frequencies</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(obsfreq), obsfreq)</span>
+<span id="cb31-6"><a href="#cb31-6"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 1 2 3 3 3 3 3 3 4 4 5 5 6 6 6 6 6 7 7 7 7 7 7 7 7 8 8 8 8 8 8 9 9 9</code></pre>
 </div>
 </div>
-</div>
 <p><br></p>
-<div class="bigfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create a cumulative function with equal probability of all cases</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>cdf <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="fu">cumsum</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span>, <span class="dv">9</span>))))</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>cdf <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="do">## perform the test</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cvm.test</span>(x, cdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="do">## create a cumulative function with equal probability of all cases</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>cdf <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="fu">cumsum</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span>, <span class="dv">9</span>))))</span>
+<span id="cb33-3"><a href="#cb33-3"></a>cdf <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb33-4"><a href="#cb33-4"></a></span>
+<span id="cb33-5"><a href="#cb33-5"></a><span class="do">## perform the test</span></span>
+<span id="cb33-6"><a href="#cb33-6"></a><span class="fu">cvm.test</span>(x, cdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Cramer-von Mises - W2
@@ -1403,16 +1395,15 @@ W2 = 0.51658, p-value = 0.03665
 alternative hypothesis: Two.sided</code></pre>
 </div>
 </div>
-</div>
 <ul>
 <li>The Cramér-von-Mises-test works with the original, unbinned values</li>
 <li>Use of cumulative function <span class="blue">respects order of classes</span> <span class="math inline">\(\rightarrow\)</span> more powerful, than <span class="math inline">\(\chi^2\)</span>-test.</li>
 </ul>
 </section>
-<section id="distribution-of-metric-variables" class="slide level2">
-<h2>Distribution of <strong>metric</strong> variables</h2>
+<section id="test-distribution-type-of-metric-variables" class="slide level2">
+<h2>Test distribution type of metric variables</h2>
 
-<img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-32-1.png" width="960" class="r-stretch"><p><br></p>
+<img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-31-1.png" width="960" class="r-stretch quarto-figure-center"><p><br></p>
 <ul>
 <li>histogram, boxplot, quantile-quantile plot</li>
 <li>Shapiro Wilk W-test</li>
@@ -1472,7 +1463,7 @@ alternative hypothesis: Two.sided</code></pre>
 <div class="column" style="width:39%;">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-33-1.png" width="288"></p>
+<p><img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-32-1.png" width="288"></p>
 </div>
 </div>
 </div>
@@ -1519,7 +1510,7 @@ r_P=\frac {\sum xy - \sum y \sum y / n}
 <div class="column" style="width:29%;">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-34-1.png" width="384"></p>
+<p><img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-33-1.png" width="384"></p>
 </div>
 </div>
 </div>
@@ -1529,7 +1520,7 @@ r_P=\frac {\sum xy - \sum y \sum y / n}
 <div class="column" style="width:49%;">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-35-1.png" width="480"></p>
+<p><img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-34-1.png" width="480"></p>
 </div>
 </div>
 <p><span class="math inline">\(r=0.4, \quad p=0.0039\)</span></p>
@@ -1537,7 +1528,7 @@ r_P=\frac {\sum xy - \sum y \sum y / n}
 <div class="column" style="width:49%;">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-36-1.png" width="480"></p>
+<p><img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-35-1.png" width="480"></p>
 </div>
 </div>
 <p><span class="math inline">\(r=0.85, \quad p=0.07\)</span></p>
@@ -1548,8 +1539,8 @@ r_P=\frac {\sum xy - \sum y \sum y / n}
 <p><span class="math display">\[
 \hat{t}_{\alpha/2;n-2} =\frac{|r_P|\sqrt{n-2}}{\sqrt{1-r^2_P}}
 \]</span></p>
-<p><span class="math inline">\(t=0.829 * \sqrt{1000-2}/\sqrt{1-0.829^2}=46.86, df=998\)</span></p>
-<p><strong>Quick test: critical values for <span class="math inline">\(r_P\)</span></strong></p>
+<p><span class="math inline">\(t=0.829 \cdot \sqrt{1000-2}/\sqrt{1-0.829^2}=46.86, df=998\)</span></p>
+<p><br> <strong>Quick test: critical values for <span class="math inline">\(r_P\)</span></strong></p>
 <table>
 <tbody>
 <tr class="odd">
@@ -1602,7 +1593,11 @@ r_P=\frac {\sum xy - \sum y \sum y / n}
 </section>
 <section id="rank-correlation-according-to-spearman" class="slide level2">
 <h2>Rank-correlation according to Spearman</h2>
-<p><br> * measures **monotonous (and not necessarily linear) dependence, * estimation from rank differences:</p>
+<p><br></p>
+<ul>
+<li>measures <strong>monotonous</strong> (and not necessarily linear) dependence</li>
+<li>estimation from rank differences:</li>
+</ul>
 <p><span class="math display">\[
 r_S=1-\frac{6 \sum d^2_i}{n(n^2-1)}
 \]</span></p>
@@ -1615,8 +1610,10 @@ r_S=1-\frac{6 \sum d^2_i}{n(n^2-1)}
    \hat{t}_{1-\frac{\alpha}{2};n-2}
       =\frac{|r_S|}{\sqrt{1-r^2_S}} \sqrt{n-2}
 \]</span></p>
-<p><span class="gray">Computer statistics packages use a special algorithm (algorithm AS 89 according to Best and Roberts, 1975).</span></p>
-</section>
+
+<aside><div>
+<p>Computer statistics packages use a special algorithm (algorithm AS 89 according to Best and Roberts, 1975).</p>
+</div></aside></section>
 <section id="example" class="slide level2">
 <h2>Example</h2>
 <table>
@@ -1718,9 +1715,9 @@ r_S=1-\frac{6 \cdot 2}{5\cdot (25-1)}=1-\frac{12}{120}=0.9
 <li>Spearman’s rank correlation coefficient</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>,  <span class="dv">9</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">11</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(x, y, <span class="at">method=</span><span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>,  <span class="dv">9</span>)</span>
+<span id="cb35-2"><a href="#cb35-2"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">11</span>)</span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="fu">cor.test</span>(x, y, <span class="at">method=</span><span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -1737,7 +1734,7 @@ sample estimates:
 </div>
 <p>If linearity or normality of residuals is doubtful, use a rank correlation</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(x, y, <span class="at">method=</span><span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">cor.test</span>(x, y, <span class="at">method=</span><span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Spearman's rank correlation rho
@@ -1754,7 +1751,7 @@ sample estimates:
 <section id="problematic-cases" class="slide level2">
 <h2>Problematic cases</h2>
 
-<img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-39-1.png" width="576" class="r-stretch"></section>
+<img data-src="05-classtests_files/figure-revealjs/unnamed-chunk-38-1.png" width="576" class="r-stretch"></section>
 <section id="outlook-more-than-two-independent-variables" class="slide level2">
 <h2>Outlook: More than two independent variables</h2>
 <p><br></p>
@@ -1818,7 +1815,7 @@ n= (1.96 \pm 0.84)^2 \cdot 1/\delta^2 \approx 8 /\delta^2
 <h2>Power of the t-test</h2>
 <p>The power of a t-test, or the minimum sample size, can be calculated with: <code>power.t.test()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="dv">5</span>, <span class="at">delta=</span><span class="fl">0.5</span>, <span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="dv">5</span>, <span class="at">delta=</span><span class="fl">0.5</span>, <span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Two-sample t test power calculation 
@@ -1836,11 +1833,11 @@ NOTE: n is number in *each* group</code></pre>
 <p><span class="math inline">\(\rightarrow\)</span> power = 0.10 * for <span class="math inline">\(n=5\)</span> an existing effect of <span class="math inline">\(0.5\sigma\)</span> is only detected in 1 out of 10 cases.</p>
 <p>For a power of 80% at <span class="math inline">\(n=5\)</span> we need an effect size of at least <span class="math inline">\(2\sigma\)</span>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="dv">5</span>, <span class="at">power=</span><span class="fl">0.8</span>, <span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="dv">5</span>, <span class="at">power=</span><span class="fl">0.8</span>, <span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For a weak effect of <span class="math inline">\(0.5\sigma\)</span> we need a sample size of <span class="math inline">\(n\ge64\)</span> in each group:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">delta=</span><span class="fl">0.5</span>,<span class="at">power=</span><span class="fl">0.8</span>,<span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">power.t.test</span>(<span class="at">delta=</span><span class="fl">0.5</span>,<span class="at">power=</span><span class="fl">0.8</span>,<span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><span class="darkred"><span class="math inline">\(\Rightarrow\)</span> either a large sample size or a large effect size.</span></p>
 
@@ -1879,7 +1876,7 @@ NOTE: n is number in *each* group</code></pre>
 'autoAnimateEasing': "ease",
 'autoAnimateDuration': 1,
 'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
 'smaller': false,
  
         // Display controls in the bottom right corner
@@ -2121,9 +2118,23 @@ NOTE: n is number in *each* group</code></pre>
       tabsets.forEach(function(tabset) {
         const tabby = new Tabby('#' + tabset.id);
       });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
       const clipboard = new window.ClipboardJS('.code-copy-button', {
-        target: function(trigger) {
-          return trigger.previousElementSibling;
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
         }
       });
       clipboard.on('success', function(e) {
@@ -2171,7 +2182,7 @@ NOTE: n is number in *each* group</code></pre>
           },
           interactive: true,
           interactiveBorder: 10,
-          theme: 'quarto-reveal',
+          theme: 'light-border',
           placement: 'bottom-start'
         };
           config['offset'] = [0,0];
