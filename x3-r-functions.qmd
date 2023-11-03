@@ -394,11 +394,3 @@ More details in the official R manuals, especially in [**An Introduction to R**]
 **Videos**
 
 Many videos can be found on [Youtube](https://www.youtube.com), at the [Posit](https://https://posit.co) webpage and somewhere else.
-
-This tutorial was made with [Quarto](https://quarto.org/)
-
-**Contact**
-
-Author: tpetzoldt +++
-[Homepage](https://www.tu-dresden.de/Members/thomas.petzoldt) +++
-[Github page](https://tpetzoldt.github.io)

@@ -1,31 +1,7 @@
 ---
 subtitle: "Applied Statistics -- A Practical Course"
 title: "08-Nonlinear Regression"
-author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
-date-format: "YYYY-MM-DD"
-title-slide-attributes:
-  data-background-image: "img/tud-title-bg-wide-2021.png"
-  body-color: "#069af22"
-include-in-header:
-  - text: |
-      <style>
-      #title-slide 
-        .title {color: #ee7f00;}
-        .subtitle {color: #ee7f00;}
-        .quarto-title-author {color: #69af22;}
-        .date {color: #69af22;}
-      </style>  
-format: 
-  revealjs:
-    theme: [sky, thpe.scss]
-    css: colors.css
-    transition: fade
-    data-transition-speed: fast
-    navigation-mode: linear
-    code-line-numbers: false
-bibliography: bib.bib
-csl: apa
 --- 
 
 
@@ -92,12 +68,9 @@ $$
 SQ = \sum_{i=1}^n\left(y_i- f(\mathbf x_i, \mathbf p)\right)^2 = \min !
 $$
 
-with $y$: dependent variable, $\mathbf x$: matrix of independent variables,<br>
-$\mathbf p$: parameter vector, $n$: sample size.
+with $y$: dependent var, $\mathbf x$: matrix of independent vars,$\mathbf p$: parameter vector, $n$: sample size
 
-**Use of an iterative solver**
-
-- see next slides
+**Use of an iterative solver** $\rightarrow$ see next slides
 
 **Nonlinear coefficient of determination $R^2$**
 
@@ -107,6 +80,7 @@ $\mathbf p$: parameter vector, $n$: sample size.
 $$
 R^2 = 1 - \frac{\text{variance of the residuals}}{\text{variance of the y-data}} = 1- \frac{s^2_\varepsilon}{s^2_y}
 $$
+
 * nonlinear $r^2$ measures the fraction of the explained variance
 * ... other indices can be used in addition, e.g. MSE, RMSE, NSE, ...
 
@@ -132,8 +106,8 @@ The minimum of the squared residuals (SQ) is searched by [iteration]{.blue}:
 
 <br>
 
-:::{.column width="59%"}
-**Gradient Search**
+:::{.column width="64%"}
+**Gradient Descent**
 
 * go one step into the direction of steepest descent
 * $\rightarrow$ relatively simple
@@ -153,7 +127,7 @@ The minimum of the squared residuals (SQ) is searched by [iteration]{.blue}:
 
 :::
 
-:::{.column width="39%"}
+:::{.column width="34%"}
 
 ![](img/newton_optimization_vs_grad_descent.svg)
 
@@ -362,10 +336,10 @@ Coefficient of determination
 * Function `SSmicmen` determines start parameters automatically.
 * Only few selfstart functions available in R
 
-:::{.column width="49%"}
+::::{.column width="49%"}
 **Code**
 
-
+:::{.smallfont}
 ```{r mmselfstart, echo=TRUE, eval = FALSE}
 S <- c(25, 25, 10, 10, 5, 5, 2.5, 2.5, 1.25, 1.25)
 V <- c(0.0998, 0.0948, 0.076, 0.0724, 0.0557,
@@ -377,32 +351,35 @@ plot(S, V, xlim = c(0, max(S)), ylim = c(0, max(V)))
 x1 <-seq(0, 25, length = 100)
 lines(x1, predict(model_fit, data.frame(S = x1)), col="red")
 ```
+:::
 
 **Results**
 
+:::{.smallfont}
 ```{r echo=TRUE}
 summary(model_fit, correlation=TRUE)
 ```
-
 :::
+::::
 
 :::{.column width="3%"}
 :::
 
-:::{.column width="46%"}
+::::{.column width="46%"}
 
 **Plot**
 
-```{r mmselfstart, fig.width=6, fig.height=4}
+```{r mmselfstart, fig.width=6, fig.height=3}
 ```
 
+:::{.smallfont}
 **Note:** Correlation of parameters
 
 * high absolute values of correlation indicate non-identifiability of parameters
 * critical value depends on the data
 * sometimes, better start values or another optimization algorithm can help
-
 :::
+::::
 
 
 ## Practical hints
@@ -440,6 +417,7 @@ may be necessary for the structure of the model, removal of it will invalidate t
 ```{r enzymekinetics, eval=FALSE, echo=TRUE}
 ```
 
-See: https://en.wikipedia.org/wiki/Lineweaver-Burk_plot
+See: [https://en.wikipedia.org/wiki/Lineweaver-Burk_plot](https://en.wikipedia.org/wiki/Lineweaver-Burk_plot)
+
 
 ## References

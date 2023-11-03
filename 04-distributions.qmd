@@ -1,30 +1,7 @@
 ---
 subtitle: "Applied Statistics -- A Practical Course"
 title: "04-Distributions"
-author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
-date-format: "YYYY-MM-DD"
-title-slide-attributes:
-  data-background-image: "img/tud-title-bg-wide-2021.png"
-  body-color: "#069af22"
-#  data-background-opacity: "0.5"
-include-in-header:
-  - text: |
-      <style>
-      #title-slide 
-        .title {color: #ee7f00;}
-        .subtitle {color: #ee7f00;}
-        .quarto-title-author {color: #69af22;}
-        .date {color: #69af22;}
-      </style>  
-format: 
-  revealjs:
-    theme: [sky, thpe.scss]
-    css: colors.css
-    transition: fade
-    data-transition-speed: fast
-    navigation-mode: linear
-    link-external-icon: true
 --- 
 
 
@@ -680,20 +657,17 @@ distribution:
 
 ## Shapiro-Wilks-W-Test
 
-<br>
-
 $\rightarrow$ standard test for normality testing
 
 ```{r, include=FALSE}
 set.seed(734)
 ```
 
-:::{.bigfont}
+
 ```{r echo=TRUE}
 x <- rnorm(100)
 shapiro.test(x)
 ```
-:::
 
 <br>
 
@@ -705,10 +679,8 @@ Interpration of the Shapiro-Wilks-test needs to be done with care:
 * for small $n$, the tes is not sensitive enough
 * far large $n$ it is over-sensitive
 
-Recommendation: Don't use Shapiro-Wilks if you don't know the details. Use graphical checks like the Q-Q-Plot instead.
-
 ::: aside
-The $\chi^2$ (Chi-squared) or Kolmogorov-Smirnov-tests are nowadays rarely used for this purpose, but still important for other test problems
+The $\chi^2$ (Chi-squared) or Kolmogorov-Smirnov-tests are nowadays rarely used for this purpose, but still important for other test problems.
 :::
 
 ## Graphical examination of normality
@@ -832,34 +804,29 @@ boxcox(biovol ~ group, data=dat)
 
 **Example:** Spearman correlation
 
-:::: {.column width="49%"}
+::: {.column width="49%"}
 <br>
 Data set
 
-::: {.bigfont}
+
 ```{r, echo=TRUE}
 x <- c(1, 2, 3, 5, 4, 5 ,6,  7)
 y <- c(1, 2, 4, 3, 4, 6, 8, 20)
 ```
-:::
-Ranks
 
-::: {.bigfont}
+Ranks
 ```{r, echo=TRUE}
 rank(x)
 rank(y)
 ```
-:::
 
 Two ways of calculation
 
-::: {.bigfont}
 ```{r, echo=TRUE}
 cor(x, y, method = "spearman")
 cor(rank(x), rank(y))
 ```
 :::
-::::
 
 :::{.column width="49%"}
 <br><br><br>
@@ -902,13 +869,11 @@ hist(rowSums(x), xlab="sums of each 100 uniform numbers", main="")
 
 <br>
 
-:::: {.column width="59%"}
-
+::: {.column width="59%"}
 
 1. generate a matrix with 100 rows and 25 columns of uniformly distributed random numbers
 2. compute the row sums
 
-::: {.bigfont}
 ```{r clt-simulation, eval=FALSE, echo=TRUE}
 par(mfrow=c(2, 1), las=1)
 set.seed(42)
@@ -920,11 +885,10 @@ xs <- colSums(x)
 hist(x)
 hist(xs)
 ```
-:::
 
 <br>[
 $\rightarrow$ row sums are approximately normal distributed]{.blue}
-::::
+:::
 
 
 ::: {.column width="39%"}
@@ -994,7 +958,6 @@ $$
 Example with  $\mu=50$ and $\sigma=10$:
 
 
-:::{.bigfont}
 ```{r, echo=TRUE}
 set.seed(123)
 n <- 10
@@ -1004,7 +967,6 @@ se <- s/sqrt(n)
 # lower and upper confidence limits
 m + qt(c(0.025, 0.975), n-1) * se
 ```
-:::
 
 The true mean ($\mu$=50) is in the interval CI = (`r  round(m + qt(c(0.025, 0.975), n-1) * se, 1)`).
 
@@ -1038,13 +1000,13 @@ without the potential outlier.
 
 * For linear models and GLMs we can use the Bonferroni outlier test from package **car**. 
 
-:::{.bigfont}
+
 ```{r, echo=TRUE}
 library(car)
 x <- c(rnorm(20), 12) # the 21st value (=12) is an outlier
 outlierTest(lm(x~1))  # x ~ 1 is the null model
 ```
-:::
+
 $\rightarrow$ The 21st value is identified as an outlier:
 
 <br>

@@ -1,6 +1,10 @@
 project:
   type: website
   output-dir: docs
+  render: 
+    - "*.qmd"
+    - "*.Rmd"
+    - "!x5-rmarkdown-intro.Rmd"
 
 website:
   title: "Elements of Data Analysis and Statistics"
@@ -31,10 +35,37 @@ website:
           - x3-r-functions.qmd
           - x4-pipes-intro.qmd
 
-format:
-  html:
-    theme: cosmo
+#format:
+#  html:
+#    theme: cosmo
+#    css: colors.css
+#    toc: true
+    
+author: "Thomas Petzoldt"
+date-format: "YYYY-MM-DD"
+title-slide-attributes:
+  data-background-image: "img/tud-title-bg-wide-2021.png"
+  body-color: "#069af22"
+#  data-background-opacity: "0.5"
+include-in-header:
+  - text: |
+      <style>
+      #title-slide 
+        .title {color: #ee7f00;}
+        .subtitle {color: #ee7f00;}
+        .quarto-title-author {color: #69af22;}
+        .date {color: #69af22;}
+      </style>  
+format: 
+  revealjs:
+    theme: [sky, thpe-large-white.scss]
     css: colors.css
-    toc: true
+    transition: fade
+    data-transition-speed: fast
+    navigation-mode: linear     
+bibliography: bib.bib
+csl: apa
+
+
 
 

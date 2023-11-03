@@ -1,31 +1,7 @@
 ---
 subtitle: "Applied Statistics -- A Practical Course"
 title: "09-Time Series Basics"
-author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
-date-format: "YYYY-MM-DD"
-title-slide-attributes:
-  data-background-image: "img/tud-title-bg-wide-2021.png"
-  body-color: "#069af22"
-include-in-header:
-  - text: |
-      <style>
-      #title-slide 
-        .title {color: #ee7f00;}
-        .subtitle {color: #ee7f00;}
-        .quarto-title-author {color: #69af22;}
-        .date {color: #69af22;}
-      </style>  
-format: 
-  revealjs:
-    theme: [sky, thpe.scss]
-    css: colors.css
-    transition: fade
-    data-transition-speed: fast
-    navigation-mode: linear
-    code-line-numbers: false
-bibliography: bib.bib
-csl: apa
 --- 
 
 
@@ -106,39 +82,39 @@ x_t &= \beta_0 + \beta_1 t + u_t \label{ts:trendstat} \\
 x_t &= x_{t-1} + c + u_t          \label{ts:diffstat}
 \end{align}
 
+<br>
 
 ```{r}
-set.seed(1237) # makes random number generator reproducible
+set.seed(1237)
 ```
 
 
 
 * **TSP:** trend stationary process, linear regression model
 
-:::{.bigfont}
 ```{r, echo=TRUE}
 time <- 1:100
 TSP <- 2 + 0.2 * time + rnorm(time)
 ```
-:::
+
 
 * **DSP:** difference stationary process (random walk)
 
-:::{.bigfont}
+
 ```{r, echo=TRUE}
 DSP <- numeric(length(time))
 DSP[1] <- rnorm(1)
 for (tt in time[-1])
   DSP[tt] <- DSP[tt-1] + 0.2 + rnorm(1)
 ```
-:::
+
 
 ## Time series classes in R
 
 * `ts` for regularly spaced time series,
 * `zoo` irregularly spaced time series.
 
-:::{.bigfont}
+
 ```{r ts-example1, echo=TRUE, fig.height=5, fig.width=12, fig.align='center'}
 par(mfrow=c(1, 2), las=1)
 TSP <- ts(TSP)
@@ -147,7 +123,6 @@ DSP <- ts(DSP)
 plot(TSP, main="trend stationary process")
 plot(DSP, main="difference stationary process")
 ```
-:::
 
 
 ## A Simulation Experiment
@@ -156,7 +131,7 @@ plot(DSP, main="difference stationary process")
 
 * Define two functions to generate time series with specific properties:
 
-:::{.bigfont}
+
 ```{r, echo=TRUE}
 genTSP <- function(time, beta0, beta1)
   as.ts(beta0 + beta1 * time + rnorm(time))
@@ -168,14 +143,12 @@ genDSP <- function(time, c) {
   as.ts(DSP)
 }
 ```
-:::
 
 
 ## Run the experiment
 
 * set the trend to zero, so  `count.signif` counts `a` false positive results.
 
-::: {.bigfont}
 ```{r, echo=TRUE}
 count.signif <- function(N, time, FUN, ...) {
   a <- 0
@@ -190,18 +163,15 @@ count.signif <- function(N, time, FUN, ...) {
   a
 }
 ```
-:::
 
 * test for the number of significant F-values,
 * run loop 100 ... 1000  times for both types of time series,
 
-::: {.bigfont}
 ```{r, echo=TRUE, fig.align='center'}
 Nruns <- 100 # better 1000 !!!
 count.signif(N=Nruns, time=time, FUN=genTSP, beta0=0, beta1=0) / Nruns
 count.signif(N=Nruns, time=time, FUN=genDSP, c=0) / Nruns
 ```
-:::
 
 ## Autocorrelation function (ACF)
 
@@ -239,10 +209,10 @@ acf(residuals(lm(DSP ~ time(DSP))))
 
 <br>
 
-::: {.bigfont}
+
 ```{r acfpatterns, echo=TRUE, eval=FALSE}
 ```
-:::
+
 
 
 
@@ -257,13 +227,12 @@ acf(residuals(lm(DSP ~ time(DSP))))
 $\rightarrow$ This is done automatically by the test.
 
 
-::: {.bigfont}
+
 ```{r, echo=TRUE}
 library(tseries)
 adf.test(TSP)
 adf.test(DSP)
 ```
-:::
 
 
 ## DSP: presence of unit root
@@ -274,11 +243,9 @@ adf.test(DSP)
 * $\rightarrow$ non-stationary.
 * But, after differencing, there are no objections against stationarity:
 
-::: {.bigfont}
 ```{r, echo=TRUE}
 adf.test(diff(DSP))
 ```
-:::
 
 
 ## KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test
@@ -288,26 +255,27 @@ adf.test(diff(DSP))
 ... tests directly for stationarity or trend stationarity:
 
 
-::: {.bigfont}
 ```{r, echo=TRUE}
 kpss.test(TSP)                # non-stationary
 kpss.test(TSP, null="Trend")  # stationary after trend removal
 ```
-:::
+
 <br>
+
 * detrending made the series stationary
 
 ## KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test II
 
 <br>
 
-::: {.bigfont}
+
 ```{r, echo=TRUE}
 kpss.test(DSP)                # non-stationary
 kpss.test(DSP, null="Trend")  # still non-stationary
 ```
-:::
+
 <br>
+
 * detrending does not cure non-stationarity
 
 ## Trend Tests
@@ -320,20 +288,16 @@ kpss.test(DSP, null="Trend")  # still non-stationary
 
 * $\Rightarrow$ Test stationarity (or autocorrelation) before testing trend !!!
 
-::: {.bigfont}
 ```{r, echo=TRUE}
 library("Kendall")
 MannKendall(TSP)
 ```
-:::
 
 Significant trend. 
 <br>
 
-::: {.bigfont}
 ```{r, echo=TRUE}
 MannKendall(DSP)
 ```
-:::
 
 Indicates significant trend, but as process is DSP, interpretation is wrong.

@@ -51,17 +51,17 @@ packages, that must be installed and loaded.
 
 **Installation**
 
-:::{.bigfont}
+
 ```{r echo=TRUE, eval=FALSE}
 install.packages(c("dplyr", "tiryr", "lubridate", "readxl", "ggplot2"))
 ```
-:::
+
 
 <br>
 
 **Loading**
 
-:::{.bigfont}
+
 ```{r echo=TRUE}
 library("dplyr")
 library("tidyr")
@@ -69,7 +69,7 @@ library("lubridate")
 library("readxl")
 library("ggplot2")
 ```
-:::
+
 
 <br>
 
@@ -132,11 +132,11 @@ boxplot(width ~ group, data=leaves)
 
 <br>
 
-::: {.bigfont}
+
 ```{r}
 summary(leaves)
 ```
-:::
+
 
 ## Summary statistics per group
 
@@ -147,14 +147,15 @@ summary(leaves)
 
 **A few examples**
 
-:::{.bigfont}
+
 ```{r}
 aggregate(cbind(length, width, stalk) ~ group, mean, data=leaves)
 aggregate(cbind(length, width, stalk) ~ group, sd, data=leaves)
 aggregate(cbind(length, width, stalk) ~ group, min, data=leaves)
 ```
-:::
 
+
+<br>
 
 `aggregate` is very powerful, but the modern "tidyverse" approach is easier to understand. This is explained in the following.
 
@@ -181,7 +182,7 @@ summarize(leaves_grouped, mean = mean(width), sd = sd(width), min = min(width), 
 **B) One line, `group_by` enclosed in parentheses**
 
 ```{r, eval=FALSE}
-summarize(group_by(leaves, group), mean = mean(width), sd = sd(width), min = min(width), max = max(width))
+summarize(group_by(leaves, group), mean=mean(width), sd=sd(width), min=min(width), max=max(width))
 ```
 
 [$\oplus$]{.red} no temporary variables necessary <br>
@@ -341,8 +342,7 @@ If you are used to working with LibeOffiice or Excel, you will probably prefer
 "wide" tables that fit well on the computer screen. However, this is not such
 a good idea for data bases and scripted data science.
 
-Most modern data analysis packages like **dplyr** (explained here) and the
-popular **ggplot2** package for graphics  mandatorily require the long format.
+Modern data analysis packages like **dplyr** and **ggplot2** mandatorily require the long format.
 
 :::
 
@@ -364,8 +364,10 @@ leaves |> head(10) |> knitr::kable()
 
 ```{r echo=FALSE}
 library("tidyr")
-leaves |> pivot_longer(c("length", "width", "stalk")) |> head(11) |> knitr::kable()
+leaves |> pivot_longer(c("length", "width", "stalk")) |> head(10) |> knitr::kable()
 ```
+
+... ... ...
 :::
 
 

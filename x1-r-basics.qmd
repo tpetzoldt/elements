@@ -618,12 +618,12 @@ Several options are available:
 ## From text (base)
 
 
-![From text (base)](img/rstudio-import-base.png)
+![](img/rstudio-import-base.png)
 
 ## From text (readr)
 
 
-![From text (readr)](img/rstudio-import-readr.png)
+![](img/rstudio-import-readr.png)
 
 
 ## Save data to Excel-compatible format
@@ -639,7 +639,7 @@ German number format ("," as decimal):
 write.table(cities, "output.csv", row.names = FALSE, sep=";", dec=",")
 ```
 
-![Data frame in Excel](img/dataframe-excel.png)
+![](img/dataframe-excel.png)
 
 # Lists
 
@@ -790,6 +790,7 @@ names(L)
 ```
 
 The `names`-functions works also with vectors. The pre-defined vectors `letters` contains lower case and `LETTERS` uppercase letters:
+
 ```{r}
 x <- 1:5
 names(x) <- letters[1:5]
@@ -823,7 +824,6 @@ df2
 
 
 ::: {.column width="44%"}
-
 
 
 Example data frame

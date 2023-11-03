@@ -98,7 +98,6 @@ The famous (Fisher's or Anderson's) `iris` data set contains measurements (in ce
 
 ::: {.column width="49%"}
 ```{r iris1, fig.width=4, fig.height=4, fig.align='center'}
-# the $ is used to access a colmn of a data frame
 plot(iris$Sepal.Length, iris$Petal.Length)
 ```
 :::
@@ -110,9 +109,11 @@ plot(iris$Sepal.Length, iris$Petal.Length,
 ```
 :::
 
-A column of a `data.frame is accessed with `$`.
+A column of a `data.frame` is accessed with `$`.
 
-## The use of `with` saves dollars
+## The use of `with()` saves dollars
+
+<br>
 
 ::: {.column width="49%"}
 ```{r iris3, fig.width=4, fig.height=4, fig.align='center'}
@@ -208,12 +209,14 @@ legend("topleft", legend=c("Iris setosa", "Iris versicolor", "Iris virginica"),
   col=mycolors, pch=16)
 ```
 
-* see ?legend for more options (e.g. line styles, position of the legend)
+* see `?legend` for more options (e.g. line styles, position of the legend)
 
 
 ## Global parameters, font size, margins, ...
 
-* Many figure options can be specified globally with `par()`, see ?par
+<br>
+
+* Many figure options can be specified globally with `par()`
 * `par(lwd=2)` all lines have double width
 * `par(mfrow=c(2,2))` subdivides the graphics area in 2 x 2 fields
 * `par(las=1)`  numbers at y axis upright
@@ -222,6 +225,11 @@ legend("topleft", legend=c("Iris setosa", "Iris versicolor", "Iris virginica"),
 * $\rightarrow$ sometimes it is better to leave font size as is and change size
   of the figure instead
 
+<br>
+
+::: {.bigfont}
+[Read the `?par` help page!]{.red}
+:::
 
 ## Example
 
@@ -258,6 +266,7 @@ par(opar)
 * Easiest way ist to use the RStudio's **Export --> Save as Image** (or copy to clipboard)
 * **Important:** Select correct image format and image size!
 
+
 |Format       | Type   | Usage                         | Notes                                                |
 |-------------|--------|-------------------------------|------------------------------------------------------|
 | PNG         | bitmap | general purpose               | fixed size, use at least 300 pixels per inch         |
@@ -268,6 +277,7 @@ par(opar)
 | SVG         | vector | can be edited                 | allows editing graphics with Inkscape                |
 | EPS         | vector | PDF is easier                 | required by some journals                            |
 | PDF         | vector | best quality                  | perfect for LaTex, RMarkdown and Quarto, MS Office requires conversion     |
+
 
 
 ## Writing figures directly to PDF
@@ -294,7 +304,7 @@ $\rightarrow$ Inkscape, SumatraPDF, ImageMagick
 
 <br>
 
-:::{.bigfont}
+
 ```{r, eval=FALSE}
 png("myfile.png", width=1600, height=1200, res=300)  # good for Word
 #png("myfile.png", width=800, height=600, res=150)   # good for Powerpoint
@@ -303,7 +313,6 @@ par(mar=c(5, 5, 1, 1))
 plot(iris$Sepal.Length, iris$Petal.Length)
 dev.off()
 ```
-:::
 
 * width and height given in pixels
 * **Hint:** play with `res` to change nominal resolution and font size
@@ -425,7 +434,9 @@ the data frame with a `data` argument.
 
 # More about Plotting
 
-## Different plotting packages available with different philosophies
+## Different plotting packages with different philosophies
+
+<br>
 
 * **base graphics**
 * package **lattice**

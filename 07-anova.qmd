@@ -1,30 +1,7 @@
 ---
 title: "07-One and two-way ANOVA"
 subtitle: "Applied Statistics -- A Practical Course" 
-author: "Thomas Petzoldt"
-date: "2023-10-23"
-bibliography: bib.bib
-date-format: "YYYY-MM-DD"
-title-slide-attributes:
-  data-background-image: "img/tud-title-bg-wide-2021.png"
-  body-color: "#069af22"
-#  data-background-opacity: "0.5"
-include-in-header:
-  - text: |
-      <style>
-      #title-slide 
-        .title {color: #ee7f00;}
-        .subtitle {color: #ee7f00;}
-        .quarto-title-author {color: #69af22;}
-        .date {color: #69af22;}
-      </style>  
-format: 
-  revealjs:
-    theme: [sky, thpe.scss]
-    css: [colors.css]
-    transition: fade
-    data-transition-speed: fast
-    navigation-mode: linear
+date:   "`r Sys.Date()`"
 ---
 
 
@@ -120,8 +97,10 @@ mypar <- list(las=1, cex.lab=1.4, cex.axis=1.4, lwd=2)
 Fertilizer -- Open Bottle -- F. + Sugar -- F. + CaCO3 -- Basal medium -- A. dest -- Tap water
 </div>
 
-The data set
---------------------------------
+
+## The data set
+
+<br>
 
 ```{r, echo=FALSE}
 algae <- data.frame(
@@ -149,7 +128,7 @@ xalgae <-
 #| label: tbl-algae-growth
 #| tbl-cap: "Growth from day 2 to day 6 (relative units)"
 
-algae |>
+xalgae |>
   kable('html') |> 
   kable_styling(bootstrap_options = "striped", full_width = FALSE)
 ```
@@ -178,10 +157,10 @@ algae |>
 ::: {.column width="39%"}
 ```{r}
 algae |> 
+  head(12) |>
   kable('html') |>
   kable_styling(bootstrap_options = c("striped"), full_width = FALSE)
 ```
-
 :::
 
 
@@ -296,7 +275,6 @@ We want to know whether the premium brand ("P") and the basic brand ("B") have
 a different weight.
 
 
-:::{.bigfont}
 ```{r, echo=TRUE, eval=TRUE}
 clem <- data.frame(
   brand = c("EP", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", 
@@ -304,17 +282,16 @@ clem <- data.frame(
   weight = c(88, 96, 100, 96, 90, 100, 92, 92, 102, 99, 86, 89, 99, 89, 75, 80, 
              81, 96, 82, 98, 80, 107, 88))
 ```
-:::
 
 <br>
 We encode one sample ("EB") with 1 and the other sample ("EP") with 2: 
 
-:::{.bigfont}
+
 ```{r, echo=TRUE, eval=TRUE}
 clem$code <- as.numeric(factor(clem$brand))
 clem$code
 ```
-:::
+
 ## Then we fit a linear regression:
 
 
@@ -465,7 +442,8 @@ plot(m)
 * Recommended: Fligner-Killeen-test
 
 ```{r, echo=TRUE}
-fligner.test(growth ~ treat, data = algae)
+fligner.test(growth ~ treat, 
+             data = algae)
 ```
 
 :::
@@ -476,8 +454,9 @@ fligner.test(growth ~ treat, data = algae)
 * The Shapiro-Wilks test can be misleading.
 * Use a graphical method!
 
-```{r, echo=TRUE}
-qqnorm(residuals(m)); qqline(residuals(m))
+```{r, echo=TRUE, fig.width=6, fig.height=3}
+qqnorm(residuals(m))
+qqline(residuals(m))
 ```
 
 :::
@@ -500,11 +479,11 @@ oneway.test(growth ~ treat, data = algae)
 
 ```{r}
 hams <- data.frame(No=1:12,
-                   growth=c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,
-                            8.3, 8.7, 8.1, 8.5, 9.1, 9.0),
-                   diet= rep(c("A", "B", "C"), each=2),
-                   coat= rep(c("light", "dark"), each=6)
-                   )
+  growth =c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,
+           8.3, 8.7, 8.1, 8.5, 9.1, 9.0),
+  diet = rep(c("A", "B", "C"), each=2),
+  coat = rep(c("light", "dark"), each=6)
+)
 ```
 
 
@@ -585,9 +564,11 @@ with(hams, interaction.plot(diet, coat, growth,
 2. Variance homogeneity of residuals
 3. Normal distribution of residuals
 
-[**Test of assumptions needs residuals of the fitted model.**]{.blue}
+<br>
+[Test of assumptions needs residuals of the fitted model.]{.red}
+$\Rightarrow$ Fit the ANOVA model first, then check if it was correct!
 
-⇒ Fit the ANOVA model first, then check if it was correct!
+<br>
 
 **Diagnostic tools**
 
@@ -818,11 +799,11 @@ the t-test ignores important information: the pregnancy week.
 
 
 ```{r, echo=TRUE}
-m <- lm(weight ~ week * sex, data=dobson)
+m <- lm(weight ~ week * sex, data = dobson)
 anova(m)
 ```
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.align='center'}
 plot(weight ~ week, data=dobson, col=c("blue","red")[as.numeric(sex)], pch=16)
 p <- coef(m)
 abline(a=p[1], b=p[2], col="red")
@@ -872,18 +853,21 @@ abline(mal, col="black", lty="dashed")
 
 ## Type II and type III ANOVA
 
+<br>
 
 * function `Anova` (with upper case `A`) in package **car**
-* Help of function Anova:
-"Type-II tests are calculated according to the principle of
-marginality, testing each term after all others, except ignoring
-the term’s higher-order relatives; so-called type-III tests violate
-marginality, testing each term in the model after all of the others."
-* Conclusion:
+* Help file of function `Anova`:
+
+> "Type-II tests are calculated according to the principle of
+> marginality, testing each term after all others, except ignoring
+> the term’s higher-order relatives; so-called type-III tests violate
+> marginality, testing each term in the model after all of the others."
+
+* Conclusion:<br>
 use Type II and don’t try to interpret single terms in case of significant 
 interactions.
 
-## Type II and Type III ANOVA: Example
+## Type II ANOVA: Example
 
 
 ```{r, echo=FALSE, fig.height=3}
@@ -1048,6 +1032,8 @@ problem is not our maths, but ourselves." Leek et al. (2017)
 
 
 ## Five ways to fix statistics. Comment on Nature
+
+<br>
 
 Leek et al. (2017) [https://doi.org/10.1038/d41586-017-07522-z](https://doi.org/10.1038/d41586-017-07522-z)
 

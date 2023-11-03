@@ -1,29 +1,7 @@
 ---
 subtitle: "Applied Statistics -- A Practical Course"
 title: "03-Statistical Parameters"
-author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
-date-format: "YYYY-MM-DD"
-title-slide-attributes:
-  data-background-image: "img/tud-title-bg-wide-2021.png"
-  body-color: "#069af22"
-#  data-background-opacity: "0.5"
-include-in-header:
-  - text: |
-      <style>
-      #title-slide 
-        .title {color: #ee7f00;}
-        .subtitle {color: #ee7f00;}
-        .quarto-title-author {color: #69af22;}
-        .date {color: #69af22;}
-      </style>  
-format: 
-  revealjs:
-    theme: [sky, thpe-large.scss]
-    css: colors.css
-    transition: fade
-    data-transition-speed: fast
-    navigation-mode: linear
 ---
 
 
@@ -35,15 +13,16 @@ library("ggplot2")
 library("readr")
 library("gplots")
 library("simecol")
-knitr::opts_chunk$set(echo = TRUE, eval=TRUE, comment="")
+knitr::opts_chunk$set(echo = TRUE, eval=TRUE, fig.align="center", comment="")
 ```
-
 
 
 
 ## Statistical Parameters
 
-$\rightarrow$ Remember: calculation of statistical parameters is called [estimation]{.blue}
+<br>
+
+$\rightarrow$ Remember: calculation of statistical parameters is called [**estimation**]{.blue}
 
 
 **Properties of statistical parameters**
@@ -168,7 +147,7 @@ $\rightarrow$ trimmed mean: $\bar{x}_{t, 0.1}=`r mean(x, trim = 0.1)`$
 
 
 
-```{r echo=FALSE, fig.height=4}
+```{r modal-value, echo=FALSE, fig.height=4}
 set.seed(123)
 x <- rnorm(100, mean=20, sd=3)
 h <- hist(x, main="", col="wheat", axes=FALSE, ylim=c(0,32))
@@ -186,7 +165,7 @@ First guess: middle of most-frequent class.
 
 ## Mode: weighting formula
 
-```{r echo=FALSE, fig.height=4}
+```{r mode-weighted, echo=FALSE, fig.height=4, fig.align='center'}
 h <- hist(x, main="", col="wheat", axes=FALSE, ylim=c(0,32))
 axis(1, at=seq(12,30,2))
 axis(2, las=1)
@@ -209,7 +188,7 @@ $k$: the index of the most abundant class, $x_{lo}$ its lower limit.
 
 ## Mode: density estimation
 
-```{r echo=FALSE, fig.height=4}
+```{r mode-density, echo=FALSE, fig.height=4}
 h <- hist(x, main="", col="wheat", axes=FALSE, probability = TRUE)
 axis(1, at=seq(12,30,2))
 axis(2, las=1)
@@ -232,7 +211,7 @@ The mode from the density estimate is then $D=`r round(mode, 2)`$.
 ## Multi-modal distribution
 
 
-```{r dens2, echo=FALSE}
+```{r mode-dens2, echo=FALSE}
 library(simecol)            # contains a simple function to detect peaks
 x <- c(rnorm(50, mean=10), rnorm(20, mean=14))
 hist(x, prob=TRUE, col="wheat")
@@ -289,15 +268,16 @@ $$
 Let's assume we have the discharge of two rivers, one with a $cv=0.3$, another 
 one with $cv=0.8$. We see that the 2nd has more extreme variation.
 
-# Range
+## Range
 
 The **range** measures the difference between maximum and
 minimum of a sample:
 
+:::{bigfont}
 $$
   r_x = x_{max}-x_{min}
 $$
-
+:::
 **Disadvantage:** very sensitive against outliers. 
 
 ## Interquartile range
@@ -320,7 +300,7 @@ $$
 :::
 
 ::: {.column width="30%"}
-```{r eval=TRUE, echo=FALSE, fig.height=3, fig.width=3}
+```{r boxplot-legend, eval=TRUE, echo=FALSE, fig.height=3, fig.width=3}
 par(mar=c(1,2.8,1,1))
 set.seed(132)
 x <- rnorm(100, mean=50, sd=10)

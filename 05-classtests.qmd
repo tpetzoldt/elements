@@ -1,30 +1,7 @@
 ---
 subtitle: "Applied Statistics -- A Practical Course"
 title: "05-Classical Tests"
-author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
-date-format: "YYYY-MM-DD"
-title-slide-attributes:
-  data-background-image: "img/tud-title-bg-wide-2021.png"
-  body-color: "#069af22"
-#  data-background-opacity: "0.5"
-include-in-header:
-  - text: |
-      <style>
-      #title-slide 
-        .title {color: #ee7f00;}
-        .subtitle {color: #ee7f00;}
-        .quarto-title-author {color: #69af22;}
-        .date {color: #69af22;}
-      </style>  
-format: 
-  revealjs:
-    theme: [sky, thpe.scss]
-    css: colors.css
-    transition: fade
-    data-transition-speed: fast
-    navigation-mode: linear
-    code-line-numbers: false
 --- 
 
 
@@ -42,6 +19,8 @@ ToDo: insert formulae and algorithms from the slides
 
 
 ## Statistical test
+
+<br>
 
 A statistical hypothesis test is a method of statistical inference.
 
@@ -207,6 +186,7 @@ study with a large number of people. But as it is highly relevant, it is worth t
 
 ## Take home messages
 
+<br>
 
 * A p-value measures the probability that a purely random effect
   would be equally or more extreme than an observed effect.
@@ -221,6 +201,8 @@ study with a large number of people. But as it is highly relevant, it is worth t
 
 
 # Differences between mean values
+
+<br>
 
 ## One sample t-Test
 
@@ -282,7 +264,7 @@ The test is based on the distribution of the means, not the original data.
 
 $$\bar{x} \pm t_{0,975, n-1} \cdot \frac{s}{\sqrt{n}}$$
 
-:::{.hugefont}
+:::{.bigfont}
 ```{r, echo=TRUE}
 5.5 + c(-1, 1) * qt(0.975, 10-1) * 1/sqrt(10)
 ```
@@ -327,11 +309,11 @@ Comparison: $`r round(t, 2)` < `r round(qt(0.975, 9), 2)`$ $\Rightarrow$ no sign
 
 <br>
 
-:::{.bigfont}
+
 ```{r, echo=TRUE}
 2 * (1 - pt(t, df = 10 - 1)) # 2 * (1 - p) is re-arranged from 1-alpha/2
 ```
-:::
+
 
 This p-value = `r 2 * (1 - pt(t, df=10-1))` is greater than $0.05$ so we consider 
 the difference as not significant.
@@ -353,7 +335,7 @@ The same can be done much easier with the computer in **R**.
 
 Let's assume we have a sample with $\bar{x}=5, s=1$:
 
-:::{.bigfont}
+
 ```{r, echo=TRUE}
 ## define sample
 x <- c(5.5, 3.5, 5.4, 5.3, 6, 7.2, 5.4, 6.3, 4.5, 5.9)
@@ -361,7 +343,7 @@ x <- c(5.5, 3.5, 5.4, 5.3, 6, 7.2, 5.4, 6.3, 4.5, 5.9)
 ## perform one-sample t-test
 t.test(x, mu=5)
 ```
-:::
+
 
 The test returns the observed t-value, the 95% confidence interval and the p-value.
 
@@ -373,13 +355,13 @@ methods need only mean, standard deviation and sample size.
 
 The two-sample t-test compares two independent samples:
 
-:::{.bigfont}
+
 ```{r, echo=TRUE}
 x1 <- c(5.3, 6.0, 7.1, 6.4, 5.7, 4.9, 5.0, 4.6, 5.7, 4.0, 4.5, 6.5)
 x2 <- c(5.8, 7.1, 5.8, 7.0, 6.7, 7.7, 9.2, 6.0, 7.2, 7.8, 7.8, 5.7)
 t.test(x1, x2)
 ```
-:::
+
 
 That means that both samples differ significantly ($p < 0.05$). It has
 to be mentioned that **R** did not perform the "ordinary" t-test but the
@@ -387,6 +369,8 @@ Welch test (also termed heteroscedastic t-test), for which the
 variances of both samples are not required to be identical.
 
 ## Hypothesis and formula of the two-sample t-test
+
+<br>
 
 ::: {.column width="49%"}
 
@@ -665,7 +649,7 @@ wilcox.test(A, B) # use optional argument `paired = TRUE` for paired data.
 
 **Mann-Whitney - Wilcoxon-test with tie correction**
 
-The rank differences contain doubled values:
+* applied if the rank differences contain doubled values
 
 ```{r, echo=TRUE}
 A <- c(1, 3, 4, 5, 7)
@@ -685,8 +669,7 @@ wilcox.exact(A, B, paired=TRUE)
 * Resampling: Simulate many $x_{i, sim}$ from randomly permuted data set ($n = 999$ or more)
 * Where does $x_{est}$ appear within the ordered series of simulated values $x_{i, sim}$?
 
-```{r}
-
+```{r permutation, fig.align='center'}
   par(mar=c(4.1, 5.1, 1.1, 1.1))
   set.seed(123)
   x<-rgamma(100, 2, 1)
@@ -860,7 +843,6 @@ $$
 
 ## Cramér-von-Mises-Test in **R**
 
-:::{.bigfont}
 ```{r, echo=TRUE}
 library(dgof)
 obsfreq <- c(1, 1, 6, 2, 2, 5, 8, 6, 3)
@@ -869,11 +851,8 @@ obsfreq <- c(1, 1, 6, 2, 2, 5, 8, 6, 3)
 x <- rep(1:length(obsfreq), obsfreq)
 x
 ```
-:::
 
 <br>
-
-:::{.bigfont}
 ```{r, echo=TRUE}
 ## create a cumulative function with equal probability of all cases
 cdf <- stepfun(1:9, cumsum(c(0, rep(1/9, 9))))
@@ -882,14 +861,13 @@ cdf <- ecdf(1:9)
 ## perform the test
 cvm.test(x, cdf)
 ```
-:::
 
 *  The Cramér-von-Mises-test works with the original, unbinned values
 *  Use of cumulative function [respects order of classes]{.blue} $\rightarrow$ more powerful, than $\chi^2$-test.
 
-## Distribution of **metric** variables
+## Test distribution type of metric variables
 
-```{r}
+```{r fig.align='center'}
 set.seed(123)
 par(mfrow=c(1, 3))
 x <- rnorm(100, mean=50, sd=10)
@@ -975,7 +953,6 @@ xy <- rmvnorm(n=100, mean=c(5,5), sigma=matrix(c(1,0.8,0.8,1), ncol=2))
 plot(xy, pch=16, xlab="x", ylab="y")
 ```
 
-
 :::
 
 ## Correlation coefficient after Pearson
@@ -1054,8 +1031,9 @@ $$
 $$
 
 
-$t=0.829 * \sqrt{1000-2}/\sqrt{1-0.829^2}=46.86, df=998$
+$t=0.829 \cdot \sqrt{1000-2}/\sqrt{1-0.829^2}=46.86, df=998$
 
+<br>
 **Quick test: critical values for $r_P$**
 
 |     |     |         |
@@ -1073,7 +1051,8 @@ $t=0.829 * \sqrt{1000-2}/\sqrt{1-0.829^2}=46.86, df=998$
 ## Rank-correlation according to Spearman
 
 <br>
-* measures **monotonous (and not necessarily linear) dependence,
+
+* measures **monotonous** (and not necessarily linear) dependence
 * estimation from rank differences:
 
 $$
@@ -1090,8 +1069,9 @@ $$
       =\frac{|r_S|}{\sqrt{1-r^2_S}} \sqrt{n-2}
 $$
 
-[Computer statistics packages use a special algorithm (algorithm AS 89 according to Best and Roberts, 1975).]{.gray}
-
+::: aside
+Computer statistics packages use a special algorithm (algorithm AS 89 according to Best and Roberts, 1975).
+:::
 
 ## Example
 

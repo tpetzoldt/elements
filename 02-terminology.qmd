@@ -1,29 +1,7 @@
 ---
 subtitle: "Applied Statistics -- A Practical Course"
 title: "02-Basic Terminology"
-author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
-date-format: "YYYY-MM-DD"
-title-slide-attributes:
-  data-background-image: "img/tud-title-bg-wide-2021.png"
-  body-color: "#069af22"
-##  data-background-opacity: "0.5"
-include-in-header:
-  - text: |
-      <style>
-      #title-slide 
-        .title {color: #ee7f00;}
-        .subtitle {color: #ee7f00;}
-        .quarto-title-author {color: #69af22;}
-        .date {color: #69af22;}
-      </style>  
-format: 
-  revealjs:
-    theme: [sky, thpe.scss]
-    css: colors.css
-    transition: fade
-    data-transition-speed: fast
-    navigation-mode: linear
 ---
 
 ```{r setup, include=FALSE}
@@ -152,9 +130,9 @@ always possible to convert a higher to a lower level. This results in a
 certain amount of information loss but sometimes helps to do proper
 analysis.
 
-* metric $\righarrow$ ordinal: ranking
-* metric or ordinal $\righarrow$ binary: threshold
-* nominal $\righarrow$ binary: assign to two groups
+* metric $\rightarrow$ ordinal: ranking
+* metric or ordinal $\rightarrow$ binary: threshold
+* nominal $\rightarrow$ binary: assign to two groups
 
 
 ## Probability

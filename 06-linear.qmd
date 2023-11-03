@@ -1,31 +1,7 @@
 ---
 subtitle: "Applied Statistics -- A Practical Course"
 title: "06-Linear Regression"
-author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
-date-format: "YYYY-MM-DD"
-title-slide-attributes:
-  data-background-image: "img/tud-title-bg-wide-2021.png"
-  body-color: "#069af22"
-include-in-header:
-  - text: |
-      <style>
-      #title-slide 
-        .title {color: #ee7f00;}
-        .subtitle {color: #ee7f00;}
-        .quarto-title-author {color: #69af22;}
-        .date {color: #69af22;}
-      </style>  
-format: 
-  revealjs:
-    theme: [sky, thpe.scss]
-    css: colors.css
-    transition: fade
-    data-transition-speed: fast
-    navigation-mode: linear
-    code-line-numbers: false
-bibliography: bib.bib
-csl: apa
 --- 
 
 <style>
@@ -245,7 +221,6 @@ lines(newdata$x, predlim[,3], col="red")
 
 ## Confidence intervals for linear regression: Code
 
-:::{.bigfont}
 ```{r lm-conf-predict-code, eval=FALSE, echo=TRUE}
 ## generate example data
 x <- 1:10
@@ -269,7 +244,6 @@ lines(newdata$x, conflim[,3], col = "blue")
 lines(newdata$x, predlim[,2], col = "red")
 lines(newdata$x, predlim[,3], col = "red")
 ```
-:::
 
 * The variable `newdata`:
     - spans the range of `x` values in small steps to get a smooth curve
@@ -310,7 +284,6 @@ abline(lm(x[,2]~x[,1]), col="red")
 
 **Rainbow-Test (linearity)**
 
-:::{.bigfont}
 ```{r, echo=TRUE}
 ## generate test data
 x <- 1:10
@@ -319,17 +292,14 @@ y <- 2 + 0.5 * x + 0.5 * rnorm(x)
 library(lmtest)
 raintest(y~x)
 ```
-:::
 
 <br>
 
 **Breusch-Pagan-test (variance homogeneity)**
 
-:::{.bigfont}
 ```{r, echo=TRUE}
 bptest(y~x)
 ```
-:::
 
 
 ## Non-normality and outliers
@@ -376,15 +346,15 @@ legend("topleft", c("OLS", "IWLS-M", "IWLS-MM"),
 
 * IWLS: iterated re-weighted least squares
 * OLS (ordinary least squares) is "normal" linear regression
-* M-estimation and MM-estimation are two different approaches, details in @venables_mdern_2013
+* M-estimation and MM-estimation are two different approaches, details in @venables_modern_2013
 * robust regression is preferred over outlier exclusion
 
 ## Code of the IWLS regression
 
-:::{.bigfont}
+
 ```{r iwls-plot, echo=TRUE, eval=FALSE}
 ```
-:::
+
 
 # Further reading
  

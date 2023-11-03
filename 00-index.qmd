@@ -1,6 +1,10 @@
 ---
 title: "Course Slides"
-format: html
+format:
+  html:
+    theme: cosmo
+    css: colors.css
+    toc: true
 ---
 
 ## Aim and status
