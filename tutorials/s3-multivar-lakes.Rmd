@@ -1,7 +1,7 @@
 ---
 title: "Multivariate Lake Data Example"
 author: "Thomas Petzoldt"
-date: "2021-05-12"
+date: "2023-11-04"
 output: html_document
 bibliography: ../bib.bib
 csl: ../apa.csl
@@ -19,8 +19,7 @@ knitr::opts_chunk$set(echo = TRUE, eval=TRUE)
 ## Introduction
 
 The following example demonstrates basic multivariate principles by means of a 
-teaching example. A few more examples are available in  the lecture tutorial
-[@Petzoldt2014elements]. The detailed theory and applications is found in 
+teaching example. A detailed description of theory and applications is found in 
 excellent books of @Legendre1998 and @Borcard2018. Practical help is found in the
 tutorials of the **vegan** package [@Oksanen2020].
 
@@ -80,7 +79,7 @@ zero values, but because altitude contains a negative value (below sea level) we
 replace this with zero. As it is a small value, it does not influence our analysis,
 but we should always be very careful to document such workarounds.
 
-```{r}
+```{r lakes-boxplot}
 par(mfrow = c(1, 1))
 par(mar = c(7, 4, 2, 1) + .1)
 boxplot(scale(dat), las = 2)
@@ -92,7 +91,7 @@ boxplot(scale(sqrt(dat)), las=2)
 
 ### Principal Components: PCA
 
-```{r}
+```{r lakes-pca1}
 pc <- prcomp(scale(dat))
 summary(pc)
 plot(pc)
@@ -102,7 +101,7 @@ biplot(pc)
 As the PCA with the untransformed data looks somewhat asymmetric, we repeat it with
 square transformed data. In addition, also the 3rd PC is plotted.
 
-```{r}
+```{r lakes-pca2}
 dat2 <- sqrt(dat)
 pc2 <- prcomp(scale(dat2))
 summary(pc2)
@@ -117,7 +116,7 @@ A PCA is also possible with the `rda` function of the **vegan** package. The
 syntax of the plot functions is somewhat different. Instead of `biplot` as 
 above, we can directly use `plot`. Details are found in the **vegan** documentation.
 
-```{r}
+```{r lakes-pca-rda}
 par(mfrow=c(1,1))
 pc3 <- rda(dat2, scale = TRUE)
 pc3
@@ -133,7 +132,7 @@ transformations built in and works usually with the Bray-Curtis dissimilarity,
 that is used for plants and animal species abundance data. As we work with
 physical data here, we set the distance measure to "euclidean".
 
-```{r}
+```{r lakes-nmds}
 md <- metaMDS(dat2, scale = TRUE, distance = "euclid")
 plot(md, type="text")
 abline(h=0, col="grey", lty="dotted")
@@ -145,7 +144,7 @@ abline(v=0, col="grey", lty="dotted")
 Here we apply a hierarchical cluster analysis with square root transformed data 
 and two different agglomeration schemes, "complete linkage" and "Ward's method".
 
-```{r  fig.height=10}
+```{r lakes-hclust1, fig.height=10}
 par(mfrow=c(2,1))
 hc <- hclust(dist(scale(dat2)), method="complete") # the default
 plot(hc)
@@ -159,7 +158,7 @@ We can also use the clusters to indicate groups in the NMDS plot. Function
 the tree with `cutree` and use the groups `grp` as color codes. **R** has 8 
 standard colors. If we need more, we can define an own palette.
 
-```{r}
+```{r lakes-hclust2}
 plot(hc, hang = -1)
 rect.hclust(hc, 5)
 grp <- cutree(hc, 5)

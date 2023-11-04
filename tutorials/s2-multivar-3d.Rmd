@@ -50,7 +50,7 @@ The data set has three columns, so we can, in  principle, plot all column variab
 graphics interface package **rgl** and the multivariate 3D visualisation package
 **vegan3d**.
 
-```{r, fig.width=8, fig.height=3.2}
+```{r data3d, fig.width=8, fig.height=3.2}
 nsamp    <- nrow(A) / 3  # number of points in each of the 3 samples
 mycolors <- rep(c("#e41a1c", "#377eb8", "#4daf4a"), each = nsamp)
 
@@ -84,7 +84,7 @@ package. The result is, that the coordinate system is rotated in the direction o
 Each principal component represents then a specific fraction of the total variance of the
 data in ascending order. This can be plotted as bar chart or printed with `summary`.
 
-```{r}
+```{r data3d-variances}
 pc <- prcomp(A)
 plot(pc)
 box()
@@ -128,7 +128,7 @@ does not matter much either. However, the value of stress
 is most important and the data points should be close to the red line.
 
 
-```{r}
+```{r data3d-stressplot}
 stressplot(mds)
 ```
 
@@ -159,7 +159,7 @@ The methods discussd so far try to map high dimensional structures to lower dime
 Cluster analysis takes another route. It shows the distance, not the location. Many different cluster analysis methods exist, here we show just an example of hierarchical clustering
 with "ward.D2" as agglomeration scheme. More about this will be discussed later.
 
-```{r}
+```{r data3d-hclust}
 hc <- hclust(dist(A), method="ward.D2")
 plot(hc)
 ```

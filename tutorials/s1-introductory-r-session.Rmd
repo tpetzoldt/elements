@@ -414,7 +414,7 @@ lines(xx, dnorm(xx, 0, 1), col = "red")
 ```
 
 <!-- and the same as hidden code chunk for a figure -->
-```{r eval=TRUE, echo=FALSE}
+```{r histograms, eval=TRUE, echo=FALSE}
 par(mfrow = c(2, 2))
 set.seed(123)
 x <- rnorm(100)
@@ -1016,7 +1016,7 @@ packages.
 
 In addition to the plot functions we used so far, other plot packages exist, for example **lattice** or **ggplot2**. Here a few small examples with the very popular **ggplot2* package:
 
-```{r eval=TRUE, plot=TRUE, fig.height=3}
+```{r fruits-boxplot, eval=TRUE, plot=TRUE, fig.height=3}
 library("ggplot2")
 fruits |>
   ggplot(aes(brand, weight)) + geom_boxplot()
@@ -1024,13 +1024,13 @@ fruits |>
 
 Or a scatterplot to compare weight and width of the fruits
 
-```{r eval=TRUE, plot=TRUE, fig.height=3}
+```{r fruits-points, eval=TRUE, plot=TRUE, fig.height=3}
 fruits |> ggplot(aes(weight, width)) + geom_point(aes(color=brand))
 ```
 
 where the brand is indicated as color. Another option could be:
 
-```{r eval=TRUE, plot=TRUE, fig.height=3}
+```{r fruits-lm, eval=TRUE, plot=TRUE, fig.height=3}
 fruits |> ggplot(aes(weight, width)) + 
   geom_point() + 
   geom_smooth(method="lm") + 
