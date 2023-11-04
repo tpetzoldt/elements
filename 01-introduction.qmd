@@ -65,7 +65,7 @@ Questions?
 * A very well understandable introduction into many fields:
    of statistics, especially regression and time series analysis:
   - Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R,
-    Springer, New York.
+    Springer Verlag, New York. [https://link.springer.com/book/10.1007/978-0-387-77318-6](https://link.springer.com/book/10.1007/978-0-387-77318-6)
 
 **R Programming**
     

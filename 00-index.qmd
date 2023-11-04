@@ -1,5 +1,6 @@
 ---
-title: "Course Slides"
+title: "Elements of applied statistics -- a practical course"
+subtitle: "Teaching material"
 format:
   html:
     theme: cosmo
@@ -7,15 +8,32 @@ format:
     toc: true
 ---
 
-## Aim and status
+## Introduction
+
+This website contains a collection of material for introductory statistics 
+courses with **R**. The aim is to provide insight in fundamental principles and 
+a broad overview and enable students to select and understand particular books 
+and online material to dig in deeper in the diverse and fascinating field of statistics.
+
+
+## Further reading
+
+- Dalgaard, P., 2008: Introductory Statistics with **R**. Springer, New York, 2nd edition. 
+      [https://link.springer.com/book/10.1007/b97671](https://link.springer.com/book/10.1007/b97671)
+- Verzani, J. (2019). Using R for introductory statistics. CRC press. 
+      [https://doi.org/10.1111/anzs.12146](https://doi.org/10.1111/anzs.12146)
+- Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R,
+    Springer Verlag, New York. [https://link.springer.com/book/10.1007/978-0-387-77318-6](https://link.springer.com/book/10.1007/978-0-387-77318-6)
+- Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science.
+  [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
+
+## Status
 
 This is an alpha version of slides for basic statistics courses.
-
 The selection of topics is somewhat arbitrary and without question very basic. It reflects my experience what I think is useful as door-opener.
 
-The aim is to provide a broad overview and enable students to select and understand particular books and online material  to dig in deeper in the diverse and fascinating field of statistics.
-
-It is based on former PDF slides and other material. It is still in an early stage of development, constructive comments and suggestions for improvement are welcome.
+It is based on former PDF slides and other material. It is still in an early 
+stage of development, constructive comments and suggestions for improvement are welcome.
 
 
 ## Author
@@ -24,4 +42,4 @@ https://tu-dresden.de/Members/thomas.petzoldt
 
 https://github.com/tpetzoldt
 
-2023-10-31
+2023-11-05

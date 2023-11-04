@@ -1,7 +1,7 @@
 ---
-title: "PCA, NMDS and Cluster: a Dimension Reduction Demo"
+title: "Ordination and Clustering"
 author: "Thomas Petzoldt"
-date: "2021-02-02"
+date: "2023-11-04"
 output: html_document
 bibliography: ../bib.bib
 csl: ../apa.csl
@@ -13,7 +13,7 @@ The following demo demonstrates the reduction of a three dimensional data set in
 two dimensions by principal component analysis (PCA) and nonmetric multidimensional scaling.
 
 The demo uses artificial data and a 3D plotting package, so the code may look somewhat 
-technical. But don't worry. This is for demonstration of the main principles only.
+technical. But don't worry. This is for demonstration of the main principles.
 Practical demonstrations with real data will follow.
 
 
