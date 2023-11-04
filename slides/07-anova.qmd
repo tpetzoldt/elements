@@ -81,7 +81,7 @@ mypar <- list(las=1, cex.lab=1.4, cex.axis=1.4, lwd=2)
 
 
 
-![](../img/ruettler.jpg)
+![](../img/ruettler.jpg){fig-align="center" fig-alt="bottles with algae on a shaker"}
 
 * each treatment with 3 replicates
 * randomized placement on a shaker
@@ -189,14 +189,14 @@ algae <- data.frame(
 
 ## Boxplot
 
-```{r echo=TRUE}
+```{r algae-boxplot, echo=TRUE}
 boxplot(growth ~ treat, data = algae)
 abline(h = 0, lty = "dashed", col = "grey")
 ```
 
 ## Stripchart
 
-```{r echo=TRUE}
+```{r algae-stripchart, echo=TRUE}
 stripchart(growth ~ treat, data = algae, vertical = TRUE)
 ```
 Better, because we have only 2-3 replicates. Boxplot needs more.
@@ -295,7 +295,7 @@ clem$code
 ## Then we fit a linear regression:
 
 
-```{r, echo=TRUE, eval=TRUE}
+```{r eb-ep-linear, echo=TRUE, eval=TRUE}
 plot(weight ~ code, data = clem, axes = FALSE)
 m <- lm(weight ~ code, data = clem)
 axis(1, at = c(1,2), labels = c("EB", "EP")); axis(2); box()
@@ -396,7 +396,7 @@ tk
 
 ## Graphical output
 
-```{r, echo=TRUE}
+```{r algae-tukey, echo=TRUE}
 par(las = 1)             # las = 1 make y annotation horizontal
 par(mar = c(4, 10, 3, 1)) # more space at the left for axis annotation
 plot(tk)
@@ -423,7 +423,7 @@ Graphical checks are preferred.
 :::
 
 ::: {.column width="49%"}
-```{r echo=TRUE, fig.height=5, fig.width=5}
+```{r algae-diagnostics, echo=TRUE, fig.height=5, fig.width=5}
 par(mfrow=c(2, 2))
 plot(m)
 ```
@@ -454,7 +454,7 @@ fligner.test(growth ~ treat,
 * The Shapiro-Wilks test can be misleading.
 * Use a graphical method!
 
-```{r, echo=TRUE, fig.width=6, fig.height=3}
+```{r algae-qqnorm, echo=TRUE, fig.width=6, fig.height=3}
 qqnorm(residuals(m))
 qqline(residuals(m))
 ```
@@ -535,7 +535,7 @@ hams %>%
 
 ## Linear model and ANOVA
 
-```{r fig.align='center'}
+```{r hams-boxplot, fig.align='center'}
 par(mfrow=c(1, 2))
 boxplot(growth ~ diet, data = hams, col = "wheat")
 boxplot(growth ~ coat, data = hams, col = "wheat")
@@ -550,7 +550,7 @@ anova(m)
 
 ## Interaction plot
 
-```{r, echo=TRUE}
+```{r hams-interaction, echo=TRUE}
 with(hams, interaction.plot(diet, coat, growth, 
                             col = c("brown", "orange"), lty = 1, lwd = 2))
 ```
@@ -579,7 +579,7 @@ $\Rightarrow$ Fit the ANOVA model first, then check if it was correct!
 
 ## Diagnostics II
 
-```{r, echo=TRUE, fig.align='center'}
+```{r hams-diagnostics, echo=TRUE, fig.align='center'}
 par(mfrow=c(1, 2))
 par(cex=1.2, las=1)
 qqnorm(residuals(m))
@@ -656,7 +656,7 @@ mcyst <-  data.frame(treat = factor(c(rep("Control", 5),
 
 ## Approach 1: one-way ANOVA
 
-```{r, echo=TRUE}
+```{r mcyst-tukey, echo=TRUE}
 par(mar=c(4, 8, 2, 1), las=1)
 m <- lm(mu ~ treat, data=mcyst)
 anova(m)
@@ -732,7 +732,7 @@ Annette Dobson's birthweight data. A data set from a statistics textbook
 [@Dobson2013], birth weight of boys and girls in dependence of the
 pregnancy week.
 
-```{r, echo=FALSE}
+```{r dobson-lines, echo=FALSE}
 ## Birth Weight Data see stats/demo/lm.glm.R
 dobson <- data.frame(
   week = c(40, 38, 40, 35, 36, 37, 41, 40, 37, 38, 40, 38,
@@ -786,7 +786,7 @@ linear models (GLM).
 
 Why not just using a t-test?
 
-```{r, echo=TRUE}
+```{r dobson-boxplot, fig.align='center', echo=TRUE}
 boxplot(weight ~ sex,data=dobson, ylab="weight")
 t.test(weight ~ sex, data=dobson, var.equal=TRUE)
 ```
@@ -803,7 +803,7 @@ m <- lm(weight ~ week * sex, data = dobson)
 anova(m)
 ```
 
-```{r, echo=FALSE, fig.align='center'}
+```{r dobson-ancova, echo=FALSE, fig.align='center'}
 plot(weight ~ week, data=dobson, col=c("blue","red")[as.numeric(sex)], pch=16)
 p <- coef(m)
 abline(a=p[1], b=p[2], col="red")
@@ -818,7 +818,7 @@ abline(mal, col="black", lty="dashed")
 <!---------------------
 ## How this works
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, eval=FALSE}
 plot(weight ~ week, data=dobson, col=c("blue","red")[as.numeric(sex)], pch=16)
 
 #summary(m)
@@ -834,7 +834,6 @@ mal <- lm(weight ~ week, data=dobson, subset = sex=="M")
 abline(fem, col="black", lty="dashed")
 abline(mal, col="black", lty="dashed")
 ```
-
 --------------------------->
 
 ## Pitfalls of ANOVA and ANCOVA described so far
@@ -870,7 +869,7 @@ interactions.
 ## Type II ANOVA: Example
 
 
-```{r, echo=FALSE, fig.height=3}
+```{r hams-boxplot-ancova, echo=FALSE, fig.height=3}
 par(mar=c(4.1, 5.1, 1.1, 1.1))
 par(cex=1.2, las=1)
 par(mfrow=c(1,2))

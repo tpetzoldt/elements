@@ -70,7 +70,7 @@ rnorm(n, mean = 0, sd = 1)
 ```
 
 
-|         |            |
+|          |            |
 ---------- | -----------
 x, q       | vector of quantiles.
 p          | vector of probabilities.
@@ -94,7 +94,7 @@ lower.tail | if TRUE (default), ...
 <br>
 
 ::: {.bigfont}
-```{r,eval=FALSE}
+```{r, eval=FALSE}
 rnorm(10)                       # x given, other arguments = defaults
 rnorm(10, 0, 1)                 # order matters
 rnorm(n = 10, mean = 0, sd = 1) # use argument names
@@ -221,7 +221,7 @@ plot(t, rad(t), type = "l")
 
 :::{.column width="49%"}
 
-```{r, echo =FALSE, fig.width=4, fig.height=3.2}
+```{r solar-sine, echo =FALSE, fig.width=4, fig.height=3.2}
 par(mar=c(4,4,1,1), las=1)
 rad <- function(t) {
   997 - 816 * cos(2 * pi * t / 365) + 126 * sin(2 * pi * t / 365)
@@ -254,7 +254,7 @@ A more precise formula is found in package **marelac**
 
 ```{r}
 library(marelac)
-gas_O2sat(t=20, S=0, method="APHA")
+gas_O2sat(t = 20, S = 0, method = "APHA")
 ```
 
 consult `?gas_O2sat` for citations.
@@ -281,7 +281,7 @@ consult `?gas_O2sat` for citations.
 <br>
 
 ```{r, eval=FALSE}
-rm(list=ls()) # remove all objects
+rm(list = ls()) # remove all objects
 o2sat <- function(t) {
   K <- t + 273.15 # Celsius to Kelvin
   exp(-139.34411 + (157570.1/K) - (66423080/K^2) +
@@ -326,7 +326,7 @@ times <- 1:100
 ```
 ***
 
-```{r}
+```{r logistic}
 plot(times,
      logistic(times, mu, K, N0))
 ```

@@ -123,19 +123,6 @@ even in statistics textbooks, so it is good to refer to a clear definition:
 Psychological Research, Theory Psychology June 2004 vol. 14 no. 3
 295-327. DOI: [10.1177/0959354304043638](https://doi.org/10.1177/0959354304043638)
 
-<!------------------------------------------------------------------------------
-# Take home message
-
-* A p-value measures the probability that a purely random effect
-  would be equally or more extreme than an observed effect.
-
-* If this p-value is small, below a critical value $\alpha=0.05$, we conclude it 
-  is likely than an effect occured.
-
-* The p-value is an important tool in classical statistics, but its abuse
-  can lead to mis-interpreatations.
-------------------------------------------------------------------------------->
-
 
 ## Alpha and beta errors
 
@@ -166,7 +153,8 @@ Psychological Research, Theory Psychology June 2004 vol. 14 no. 3
 
 <br>
 
-Significance is not everything. It is often more important to focus on effect size and relevance.
+Significance is not the only important. 
+It is often more important to focus on effect size and relevance.
 
 When evaluating significant effects, it is always necessary to look also at the 
 effect size. While significance means that the null hypothesis $H_0$ is unlikely 
@@ -228,7 +216,7 @@ Different ways of calculation shown at the next slides
 
 ## Remember: standard deviation and standard error
 
-```{r echo=FALSE, fig.height=2.5}
+```{r sd-and-se, echo=FALSE, fig.height=2.5}
 #| label: fig-one-sample-ttest
 #| fig-cap: "Visualization of a one-sample t-test. Left: original distribution of the data measured by standard deviation, right: distribution of mean values, measured by its standard error."
 
@@ -387,7 +375,7 @@ $$
 
 ::: {.column width="49%"}
 
-```{r}
+```{r twosample-t-test}
 par(cex=1.4)
 x<-seq(0,10, length=100)
 plot(x, dnorm(x, mean=5, sd=1), col="red", type="l", lwd=2, ylab="Density", las=1)
@@ -433,7 +421,7 @@ $$
 # Welch test in R
 
 :::{.bigfont}
-```{r, echo=TRUE}
+```{r f-test, echo=TRUE}
 t.test(x1, x2)
 ```
 :::
@@ -459,7 +447,7 @@ $$F = \frac{s_1^2}{s_2^2} $$
 :::
 
 ::: {.column width="29%"}
-```{r, fig.height=4, fig.width=4}
+```{r var-homogeneity, fig.height=4, fig.width=4}
 par(cex=1.4, mar=c(4,4,1,1))
 x <- seq(0,10, length=100)
 plot(x, dnorm(x, mean=5, sd=1), col="red", type="l", lwd=2, ylab="Density", las=1)
@@ -509,7 +497,7 @@ fligner.test(list(x1, x2, x3))
 
 
 ::: {.column width="39%"}
-```{r, fig.width=3, fig.height=4}
+```{r three-samples, fig.width=3, fig.height=4}
 par(mar=c(3,3,1,1))
 boxplot(x1, x2, x3, las=1, names=c("x1", "x2", "x3"), col="wheat")
 ```
@@ -669,7 +657,7 @@ wilcox.exact(A, B, paired=TRUE)
 * Resampling: Simulate many $x_{i, sim}$ from randomly permuted data set ($n = 999$ or more)
 * Where does $x_{est}$ appear within the ordered series of simulated values $x_{i, sim}$?
 
-```{r permutation, fig.align='center'}
+```{r permutation-test, fig.align='center'}
   par(mar=c(4.1, 5.1, 1.1, 1.1))
   set.seed(123)
   x<-rgamma(100, 2, 1)
@@ -790,7 +778,7 @@ $\rightarrow$ significant correlation between the clones and their location.
 
 ## Favorite numbers of HSE students
 
-```{r}
+```{r favorite-numbers}
 x <- c(1,1,6,2,2,5,8,6,3)
 barplot(x, names.arg=1:9, las=1, ylim=c(0,10))
 text((1:9)*1.2 - 0.5, x+0.5, x, cex=1.2)
@@ -822,7 +810,7 @@ the standard $\chi^2$-test, but both ar not significant.
 ## Cramér-von-Mises-Test
 
 
-```{r, fig=TRUE,echo=FALSE,width=6,height=4}
+```{r von-mises, fig=TRUE,echo=FALSE,width=6,height=4}
 library(dgof)
 par(mar=c(4,5,0.5,0.5)+.1)
 obsfreq <- c(1, 1, 6, 2, 2, 5, 8, 6, 3)
@@ -867,7 +855,7 @@ cvm.test(x, cdf)
 
 ## Test distribution type of metric variables
 
-```{r fig.align='center'}
+```{r normality-graphical,fig.align='center'}
 set.seed(123)
 par(mfrow=c(1, 3))
 x <- rnorm(100, mean=50, sd=10)
@@ -944,10 +932,10 @@ $$
 
 ::: {.column width="39%"}
 
-```{r, fig.width=3, fig.height=6}
+```{r var-covar, fig.width=3, fig.height=6}
 library(mvtnorm)
 set.seed(123)
-par(mfrow=c(2, 1), mar=c(3,3,1,1))
+par(mfrow=c(2, 1), mar=c(4,4,1,1))
 boxplot(rnorm(10), names="x")
 xy <- rmvnorm(n=100, mean=c(5,5), sigma=matrix(c(1,0.8,0.8,1), ncol=2))
 plot(xy, pch=16, xlab="x", ylab="y")
@@ -989,7 +977,7 @@ Range of values: $-1 \le r_P \le +1$
 
 
 ::: {.column width="29%"}
-```{r, fig.width=4, fig.height=4}
+```{r pearson1, fig.width=4, fig.height=4}
 par(mar=c(4,4,1,1))
 plot(xy, pch=16, xlab="x", ylab="y")
 ```
@@ -1000,7 +988,7 @@ plot(xy, pch=16, xlab="x", ylab="y")
 
 ::: {.column width="49%"}  
 
-```{r, fig.width=5,fig.height=5}
+```{r pearson2, fig.width=5,fig.height=5}
 library("mvtnorm")
 par(mar=c(4.1, 5.1, 3.1, 1.1))
 set.seed(1235)
@@ -1013,7 +1001,7 @@ $r=`r round(cor(x1[,1], x1[,2]), 2)`, \quad p=`r round(cor.test(x1[,1], x1[,2])$
 :::
   
 ::: {.column width="49%"}  
-```{r, fig.width=5,fig.height=5}
+```{r pearson3, fig.width=5,fig.height=5}
 par(mar=c(4.1, 5.1, 3.1, 1.1))
 set.seed(345)
 x2 <- rmvnorm(n=5, mean=c(5,5), sigma=matrix(c(1,0.7,0.7,1), ncol=2))
@@ -1132,7 +1120,7 @@ cor.test(x, y, method="spearman")
 
 ## Problematic cases
 
-```{r, fig.width=6,fig.height=4}
+```{r cor-violations, fig.width=6,fig.height=4}
 par(mfrow=c(2,2))
 par(mar=c(4.1, 5.1, 1.1, 1.1))
 x <- exp(rmvnorm(n=100, mean=c(5,5), sigma=matrix(c(1,0.8,0.8,1), ncol=2)))

@@ -283,7 +283,7 @@ trends differ between geographical location.
 
 ## Example: Compare two mean values
 
-```{r}
+```{r dobson-boxplot, fig.align='center'}
 dobson <- data.frame(
   week = c(40, 38, 40, 35, 36, 37, 41, 40, 37, 38, 40, 38,
 	 40, 36, 40, 38, 42, 39, 40, 37, 36, 38, 39, 40),
@@ -302,7 +302,7 @@ babies or is it a purely random fluctuation?
 
 ## Example: Correlation and regression
 
-```{r dobson-boxplot, fig.height=3, fig.width=8}
+```{r regression-example, fig.height=3, fig.width=8}
 par(mfrow=c(1,2))
 dat <- read.table("../data/seen_bb.txt", header=TRUE)
 #dat <- dat[c(1,2,5,6), ]
