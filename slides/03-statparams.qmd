@@ -1,0 +1,391 @@
+---
+subtitle: "Applied Statistics -- A Practical Course"
+title: "03-Statistical Parameters"
+date:   "`r Sys.Date()`"
+---
+
+
+
+```{r setup, include=FALSE}
+library("knitr")
+library("dplyr")
+library("ggplot2")
+library("readr")
+library("gplots")
+library("simecol")
+knitr::opts_chunk$set(echo = TRUE, eval=TRUE, fig.align="center", comment="")
+```
+
+
+
+## Statistical Parameters
+
+<br>
+
+$\rightarrow$ Remember: calculation of statistical parameters is called [**estimation**]{.blue}
+
+
+**Properties of statistical parameters**
+
+* **Unbiasedness:** the estimation converges towards the true value
+  with increasing $n$
+* **Efficiency** a relatively small $n$ is sufficient for a good
+  estimation
+* **Robustness** the estimation is not much influenced by outliers
+  or certain violations of statistical assumptions
+
+Depending on a particular question, different classes of parameters
+exist, especially measures of location (e.g. mean, median), variation
+(e.g. variance, standard deviation) or dependence (e.g. correlation).
+
+## Measures of location I
+
+
+::: {.column width="49%"}
+
+**Arithmetic mean**
+
+$$
+  \bar{x} = \frac{1}{n} \cdot {\sum_{i=1}^n x_i}
+$$
+
+:::
+
+::: {.column width="49%"}
+
+**Geometric mean**
+
+$$
+  G = \sqrt[n]{\prod_{i=1}^n x_i}
+$$
+
+more practical: logarithmic form:
+
+$$
+  G =\exp\Bigg(\frac{1}{n} \cdot {\sum_{i=1}^n \ln{x_i}}\Bigg)
+$$
+
+avoids huge numbers that make problems for the computer.
+:::
+
+## Measures of location II
+
+**Harmonic mean**
+
+$$
+    \frac{1}{H}=\frac{1}{n}\cdot \sum_{i=1}^n \frac{1}{x_i} \quad; x_i>0
+$$
+
+**Example:**
+
+You drive with 50km/h to the university and with 100km/h back home.<br>
+What is the mean velocity?
+
+**Result:**
+
+1/((1/50 + 1/100)/2) = 1/((0.02 + 0.01)/2) = 1/0.015 = 66.67
+
+
+## Median (central value)
+
+<br>
+$n$ uneven: sort data, take the middle value
+
+$$\tilde{x} = x_{(n+1)/2}$$
+$n$ even:   sort data, take average of the two middle values
+
+$$\tilde{x} = \frac{x_{n/2}+x_{n/2+1}}{2}$$
+
+**Example**
+
+```{r eval=TRUE, echo=FALSE}
+set.seed(123)
+x <- round(runif(7, max=10), 1)
+x_sort <- sort(x)
+```
+
+|                       |                                                          |
+|-----------------------|----------------------------------------------------------|
+| sample with 7 values  | `r x`                                                    |
+| ordered sample        | `r x_sort[1:3]`, [`r x_sort[4]`]{.red}, `r x_sort[5:7]` |
+|                       |                                                          |
+
+
+$\Rightarrow$ median: $\tilde{x} = `r median(x)`$
+
+[$\Rightarrow$ mean: $\bar{x} = `r mean(x)`$]{.gray}
+
+## Trimmed mean
+
+<br>
+
+* also called "truncated mean"
+* compromize between the arithmetic mean and  median
+* A certain percentage of smallest and biggest values is ignored
+(e.g. 10% or 25%) before calculating the arithmetic mean
+* used also in sports
+
+**Example:** sample with 20 values, exclude 10% at both sides
+
+```{r echo=FALSE, eval=TRUE}
+set.seed(123)
+x <- sort(c(round(runif(19, max=10), 1), 46))
+```
+
+`r x[1:2]`, [`r x[3:18]`]{.darkred}, `r x[19:20]`
+
+
+$\rightarrow$ arithmetic mean: $\bar{x}=`r mean(x)`$<br>
+$\rightarrow$ trimmed mean: $\bar{x}_{t, 0.1}=`r mean(x, trim = 0.1)`$
+
+
+* median and trimmed mean are less influenced by outliers and skewnes $\rightarrow$ [more robust]{.blue}
+* but somewhat less efficient
+
+
+## Mode (modal value)
+
+
+
+```{r modal-value, echo=FALSE, fig.height=4}
+set.seed(123)
+x <- rnorm(100, mean=20, sd=3)
+h <- hist(x, main="", col="wheat", axes=FALSE, ylim=c(0,32))
+axis(1, at=seq(12,30,2))
+axis(2, las=1)
+abline(v=19, col="blue", lwd=2)
+text(h$mids, h$counts, h$counts, pos=3)
+```
+
+* most frequent value of a sample
+* strict definition only valid for discrete (binary, nominal, ordinal) scales
+* extension to continuous scale: binning or density estimation
+
+First guess: middle of most-frequent class.
+
+## Mode: weighting formula
+
+```{r mode-weighted, echo=FALSE, fig.height=4, fig.align='center'}
+h <- hist(x, main="", col="wheat", axes=FALSE, ylim=c(0,32))
+axis(1, at=seq(12,30,2))
+axis(2, las=1)
+D1 <- 18 + (29 - 15)/(2 * 29 - 15 - 26) * 2
+abline(v= D1, col="forestgreen", lwd=2)
+abline(v=19, col="blue", lwd=2)
+text(h$mids, h$counts, h$counts, pos=3)
+text(h$mids, h$counts, h$counts, pos=3)
+```
+
+\begin{align}
+   D &= x_{lo}+\frac{f_k-f_{k-1}}{2f_k-f_{k-1}-f_{k+1}}\cdot w \\
+   D &= 18 + \frac{29 - 15}{2 \cdot 29 - 15 - 26} \cdot 2 = 19.65
+\end{align}
+
+
+$f$: class frequency, $w$: class width 
+
+$k$: the index of the most abundant class, $x_{lo}$ its lower limit.
+
+## Mode: density estimation
+
+```{r mode-density, echo=FALSE, fig.height=4}
+h <- hist(x, main="", col="wheat", axes=FALSE, probability = TRUE)
+axis(1, at=seq(12,30,2))
+axis(2, las=1)
+abline(v= D1, col="forestgreen", lwd=2)
+abline(v=19, col="blue", lwd=2)
+text(h$mids, h$counts, h$counts, pos=3)
+text(h$mids, h$counts, h$counts, pos=3)
+rug(x)
+dens <- density(x)
+lines(dens, col="red", lwd=2)
+mode <- dens$x[dens$y == max(dens$y)]
+abline(v = mode, col = "red", lwd=2, lty="dashed")
+```
+
+
+Somewhat more computer intensive, where the mode is the maximum of a *kernel density estimate*.
+
+The mode from the density estimate is then $D=`r round(mode, 2)`$.
+
+## Multi-modal distribution
+
+
+```{r mode-dens2, echo=FALSE}
+library(simecol)            # contains a simple function to detect peaks
+x <- c(rnorm(50, mean=10), rnorm(20, mean=14))
+hist(x, prob=TRUE, col="wheat")
+dens <- density(x)
+lines(dens)
+abline(v=peaks(dens, mode = "max")$x, col="red", lwd=2) # outputs the modal values
+```
+**Example:** fish population with several age classes, cohorts)
+
+
+## Measures of variation
+
+**Variance**
+
+$$
+  s^2_x = \frac{SQ}{df}=\frac{\sum_{i=1}^n (x_i-\bar{x})^2}{n-1}
+$$
+
+* $SQ$: sum of squared differences from the mean $\bar{x}$ 
+* $df = n-1$: degrees of freedom, $n$: sample size
+
+**Standard deviation**
+
+$$s=\sqrt{s^2}$$
+$\rightarrow$ same unit as the mean $\bar{x}$, so they can be directly compared.
+
+<hr>
+
+:::{.gray}
+In practice, $s^2$ is often computed with:
+
+$$
+  s^2_x = \frac{\sum{(x_i)^2}-(\sum{x_i})^2/n}{n-1}
+$$
+:::
+
+
+## Coefficient of variation ($cv$)
+
+Is the [relative]{.blue} standard deviation:
+
+:::{.bigfont}
+$$
+  cv=\frac{s}{\bar{x}}
+$$
+:::
+
+* useful to compare variations of different variables, independent of their measurement unit
+* only applicable for data with [ratio scale]{.blue}, i.e. with an absolute zero (like meters) 
+* not for variables like Celsius temperature or pH.
+
+**Example**
+
+Let's assume we have the discharge of two rivers, one with a $cv=0.3$, another 
+one with $cv=0.8$. We see that the 2nd has more extreme variation.
+
+## Range
+
+The **range** measures the difference between maximum and
+minimum of a sample:
+
+:::{bigfont}
+$$
+  r_x = x_{max}-x_{min}
+$$
+:::
+**Disadvantage:** very sensitive against outliers. 
+
+## Interquartile range
+
+::: {.column width="68%"}
+ 
+* IQR or $I_{50}$ omits smallest and biggest 25%
+* sample size of at least 12 values recommended
+
+$$
+  I_{50}=Q_3-Q_1=P_{75}-P_{25}
+$$
+
+**Ordered sample**
+
+* $Q_1$, $Q_3$: 1st and 3rd [quartiles]{.blue}
+* $P_{25}, P_{75}$: 25th and 75th [percentile]{.blue}
+* typically used in boxplots
+
+:::
+
+::: {.column width="30%"}
+```{r boxplot-legend, eval=TRUE, echo=FALSE, fig.height=3, fig.width=3}
+par(mar=c(1,2.8,1,1))
+set.seed(132)
+x <- rnorm(100, mean=50, sd=10)
+boxplot(x, las=2, main="")
+text(rep(0.6, 3), c(min(x), median(x), max(x)), c("min", "median", "max"))
+text(rep(1.3, 3), quantile(x, c(0.25, 0.5, 0.75)), c("25%", "50%", "75%"))
+
+```
+
+:::
+
+
+<hr>
+:::{.gray}
+For normally distributed samples, fixed relationship between $I_{50}$ and $s$:
+
+$$
+  \sigma = E(I_{50}/(2\Phi^{-1}(3/4))) \approx E(I_{50}/1.394) % 2*qnorm(3/4))
+$$
+
+where $\Phi^{-1}$ is the quantile function of the normal distribution.
+
+:::
+
+## Median absolute deviation
+
+<br>
+
+The median of the absolute differences between median and values.
+
+$$
+  MAD = \text{median}(|\text{median} - x_i|)
+$$
+
+* frequently used in some communities, rarely used in our field
+* some programs rescale the MAD with a factor $1.4826$ to approximate the standard deviation. 
+
+$\rightarrow$ Be careful and [check the software docs!]{.red}
+
+
+
+<!--
+
+## Application in **R**
+
+All measures of variation can be easily calculated in **R**:
+
+```{r fig=FALSE,echo=TRUE}
+ x <- rnorm(100, mean=50, sd=10)  # 100 random numbers
+ var(x)                           # variance
+ sd(x)                            # standard deviation
+ range(x)                         # range
+ quantile(x, c(0.25, 0.75))       # quartiles
+ IQR(x)                           # interquartile range
+ diff(quantile(x, c(0.25, 0.75))) # same, calculated from quartiles
+ mad(x)                           # median absolute deviation
+```
+-->
+
+## Standard error of the mean
+
+
+:::{.hugefont}
+$$
+  s_{\bar{x}}=\frac{s}{\sqrt{n}}
+$$
+:::
+
+* measures the [accuracy of the mean]{.red}
+* plays a central role for calculation of confidence intervals and statistical tests
+
+**Rule of thumb** for a sample size of about $n > 30$:
+
+* "Two sigma rule": the true mean is with 95% in the range of $\bar{x} \pm 2 s_\bar{x}$
+
+<hr>
+
+# Important
+
+<br>
+
+:::{.bigfont}
+* standard deviation $s$ measures [variability of the sample]{.darkred}
+* standard error $s_\bar{x}$ measures [accuracy of the mean]{.red}
+
+:::
+
+More about this will be explained in the next sections.

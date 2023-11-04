@@ -1,0 +1,270 @@
+---
+subtitle: "Applied Statistics -- A Practical Course"
+title: "02-Basic Terminology"
+date:   "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+library("knitr")
+library("dplyr")
+library("ggplot2")
+library("readr")
+knitr::opts_chunk$set(echo = TRUE, eval=FALSE, comment="")
+```
+
+## Basic Principles and Terminology
+
+<br>
+
+* Goals of statistical analyses
+* Descriptive and experimental research
+* The principle of parsimony
+* Types of variables
+* Probability
+* Sample and Population
+* Random and systematic errors
+* Population and sample parameters
+
+
+## Goals of statistical analyses
+
+
+1. Summarise, condense and describe data ([descriptive statistics]{.cyan})
+    * work efficiently with large data sets
+    * Estimate statistical parameters, mean values, variation, correlation
+2. Create hypotheses from data ([explorative statistics]{.cyan})
+    * data mining and explorative statistics
+    * graphical methods, multivariate statistics
+3. Test Hypotheses ([statistical inference]{.cyan})
+    * classical tests, ANOVA, correlation, . . .
+    * model selection
+4. Plan research ([experimental design]{.cyan})
+    * effect size compared to random error
+    * experimental layout and required sample size
+5. [Statistical modelling]{.darkred}
+    * measure effect size, find best explanation for a problem
+    * pattern recognition, forecasting, machine learning
+
+## Descriptive or experimental research
+
+**Descriptive Research**
+
+* Find effects and relationships between data.
+    * observation, monitoring, correlations
+    * the research subject is [not manipulated]{.cyan}
+
+**Experimental Research**
+
+* Can an expected effect be reproduced?
+    * manipulation of single conditions
+    * elimination of disturbances ([controlled boundary conditions]{.cyan})
+    * experimental design as simple as possible
+
+**Strong inference** requires clear hypothesis and experimental research.
+
+**Weak inference** derived from observations and data.
+
+$\rightarrow$ descriptive research [delivers the data for creating the hypotheses]{.cyan}.
+
+## The principle of parsimony
+
+Attributed to an English philosopher from the 14th century ("Occams razor")
+
+> When you have two competing theories that make exactly the same
+> predictions, the simpler one is the better.
+
+In the context ofstatistical analysis and modeling:
+
+*  models should have as **few parameters** as possible
+*  **linear models** should be preferred to non-linear models
+*  experiments should rely on only **few assumptions**
+*  models should be **simplified** until they are minimal adequate
+*  simple explanations should be preferred to complex explanations
+
+**One of the most important scientific principles**
+
+[$\rightarrow$ But nature is complex, over-simplification has to be avoided.]{.darkred}
+
+* needs critical reflection and discussion
+
+
+## Variables and parameters
+
+<br>
+
+:::{.r-stack .hugefont}
+[y]{.blue} = [a]{.red} + [b]{.red} $\cdot$ [x]{.blue}
+
+:::
+<br>
+
+* [**variables**]{.blue}: everything that is [measured]{.blue} or experimentally manipulated, e.g phosphorus concentration
+in a lake, air temperature, or abundance of animals.
+
+* [**parameters:**]{.red} values that are [estimated]{.red} by a statistical model, e.g. mean, standard
+deviation, slope of a linear model.
+
+**Independent variables** (explanation variables, [predictors]{.blue})
+
+- are manually controlled or assumed to result from non-controllable factors
+
+**Dependent variables** ([response]{.blue} variables, target variables, predicted variables)
+
+- the variables of interest that we try to understand.
+
+## Scales of variables
+
+
+
+*  **Binary** (boolean variable): exactly two states: true/false, 1/0, present or absent.
+* **Nominal:** named entities, no order, \{red, yellow, green\}, list of species.
+* **Ordinal** variables (ranks, ordered factors): values or terms with an order {1., 2., 3., ...}; \{oligotrophic, mesotrophic, eutrophic, polytrophic, hypertrophic\}, but not "dystrophic"
+* **Metric:** continuous (ideally without steps). Two sub-types:
+    * **Interval scale:** allows comparison and differences, but ratios make no
+      sense. (20°C is 10 degrees warmer than als 10°C, but not double)
+    * **Ratio scale:** data with an absolute zero, ratios make sense.  
+    A tree with 2m has double the hight of a tree with 1m.
+    
+The "level" of variables increases from binary to ratio scale. It is
+always possible to convert a higher to a lower level. This results in a
+certain amount of information loss but sometimes helps to do proper
+analysis.
+
+* metric $\rightarrow$ ordinal: ranking
+* metric or ordinal $\rightarrow$ binary: threshold
+* nominal $\rightarrow$ binary: assign to two groups
+
+
+## Probability
+
+**Classical definition**
+
+* probability $p$ is the chance of a specific event:
+
+$$
+p = \frac{\text{number of selected cases}}{\text{number of all possible cases}}
+$$
+
+* 1 or 6 on a dice $p=2/6$
+* problem if denominator becomes infinite
+
+**Axiomatic definition**
+
+* **Axiom I:** $0 \le p \le 1$
+* **Axiom II:** impossible events have $p=0$, safe events have $p=1$
+* **Axiom III:** for mutually exlusive events $A$ and $B$, 
+  i.e. in set theory $A \bigcap B = \emptyset$ holds: $p(A \bigcup B)= p(A) + p(B)$
+
+
+## Sample and Population
+
+<br>
+
+**Sample**
+
+Subjects, from which [we have]{.blue} measurements or observations
+
+<br>
+
+**Population**
+
+Set of all subjects that had the [same chance]{.blue} to become part of the
+sample. 
+
+$\Rightarrow$ The population is defined by the way how
+samples are taken
+
+$\Rightarrow$  Samples should be [representative]{.blue} for
+our [intended]{.blue} observational subject.
+
+
+## Sampling strategies
+
+<br>
+
+**Random sampling**
+
+* Individuals are selected at random from a given population.
+* Examples: 
+    * Random selection of sample sites on a grid. 
+    * Random placement of experimental units on a shelf.
+
+<br>
+**Stratified sampling**
+
+* The population is subdivided into classes of similar subjects (**strata**).
+* The strata are separately analysed and then the the information is
+weighted and combined to infer about the population.
+* Stratified sampling requires information about the size and
+representativity of the strata.
+
+* Examples: election forecasts, depth layers in a lake, age classes for
+animals.
+
+
+## Random and systematic errors
+
+<br>
+
+**Random errors** 
+
+* can be [estimated with statistical methods]{.blue}
+* are eliminated if sample size is large
+* in large samples, big and small errors average out
+
+**Systematic Errors** also called **bias** 
+
+* can often not easily be estimated with statistical methods alone
+* knowledge about the considered system
+* elimination requires [calibration]{.blue} using standards, blind values or pairing
+
+## Population and sample parameters
+
+<br>
+
+**"True" parameters of the population**
+
+* symbolized with greek letters, ([$\mu, \sigma, \gamma\, \alpha, \beta$]{.blue})
+* usually unknown
+* estimated from a sample
+
+**"Calculated" parameters from a sample**
+
+* symbolized with latin letters ([$\bar{x}$, $s$, $r^2$, ...]{.blue})
+* the calculation is done from a sample
+* statisticians say "estimation" instead of "calculation"
+* parameters can themselves be treated as a random variable
+
+## Expectation value
+
+<br>
+
+A single measurement $x_i$ of a random variable $X$ can be written as the
+sum of the expected value $\mathbf{E}(X)$ of the random variable and a random
+error $\varepsilon_i$.
+
+\begin{align}
+  x_i &= \mathbf{E}(X) + \varepsilon_i\\
+  \mathbf{E}(\varepsilon)&=0
+\end{align}
+
+Example: 
+
+* for a fair dice with 6 eyes, true mean $\mu$ should be 3.5
+* in reality it is not exactly known if the dice is a perfect cubus
+
+**Example:** 3 people with 5 trials:
+
+:::{.bigfont}
+```{r, eval=TRUE, echo=FALSE}
+set.seed(132)
+x1 <- sample(1:6, 5,  replace=TRUE)
+x2 <- sample(1:6, 5,  replace=TRUE)
+x3 <- sample(1:6, 5,  replace=TRUE)
+cat("sample 1: ", x1, " mean:", round(mean(x1), 2))
+cat("sample 2: ", x2, " mean:", round(mean(x2), 2))
+cat("sample 3: ", x3, " mean:", round(mean(x3), 2))
+```
+:::
+
+Overall mean: $\bar{x} = `r round(mean(c(x1, x2, x3)), 2)`$ is close to $\mu = 3.5$.
