@@ -3,6 +3,7 @@ project:
   output-dir: docs
   render: 
     - "*.qmd"
+    - "tutorials/*.Rmd"
   
 
 website:
@@ -24,9 +25,9 @@ website:
           - 09-timeseries-basics.qmd
       - section: Tutorials
         contents:
-          - s1-introductory-r-session.Rmd
-          - s2-multivar-3d.Rmd
-          - s3-multivar-lakes.Rmd
+          - tutorials/s1-introductory-r-session.Rmd
+          - tutorials/s2-multivar-3d.Rmd
+          - tutorials/s3-multivar-lakes.Rmd
       - section: R Topics
         contents:
           - x1-r-basics.qmd
@@ -41,6 +42,7 @@ website:
 #    toc: true
     
 author: "Thomas Petzoldt"
+subtitle: "Applied Statistics -- A Practical Course"
 date-format: "YYYY-MM-DD"
 title-slide-attributes:
   data-background-image: "img/tud-title-bg-wide-2021.png"
@@ -61,7 +63,8 @@ format:
     css: colors.css
     transition: fade
     data-transition-speed: fast
-    navigation-mode: linear     
+    navigation-mode: linear
+    code-line-numbers: false
 bibliography: bib.bib
 csl: apa
 

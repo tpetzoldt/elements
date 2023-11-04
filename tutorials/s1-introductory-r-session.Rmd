@@ -12,7 +12,8 @@ output:
   pdf_document:
     toc: no
     number_sections: true
-bibliography: bib.bib
+bibliography: ../bib.bib
+csl: ../apa.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -68,7 +69,7 @@ independent interface that makes working with R easier. RStudio
 divides the screen into 3 (resp. 4) windows (called panes), where some
 of them have additional tabs to switch between different views.
 
-![](img/rstudio.png)
+![](../img/rstudio.png)
 
 **Figure 1:** R Studio with 4 panes. Use **File -- New R Script** to open the the source 
 code pane (shown top left). Then enter some code and don't forget to explore the help files.
@@ -689,7 +690,7 @@ Chl=chlorophyll concentration ($\mathrm{\mu g L^{-1}}$), PP=annual primary produ
 and simplified "toy version" taken from @Casper1985 and @Koschel1985. 
 
 ```{r, eval=TRUE, echo=FALSE, include=TRUE}
-lakes <- read.csv("data/lakes.csv")
+lakes <- read.csv("../data/lakes.csv")
 kable(lakes)
 ```
 
@@ -714,7 +715,7 @@ in **RStudio** like follows:
 2. Select "More"
 3. Select "Set As Working Directory"
 
-![](img/set-working-directory.png)
+![](../img/set-working-directory.png)
 **Figure2:** Setting the working directory in **RStudio**
 
 After this, data can be retrieved directly from the **working directory **:
@@ -727,7 +728,7 @@ We may also consider to create a sub-folder `data` of the working direktory and 
 Then we could use for example:
 
 ```{r eval=TRUE}
-lakes <- read.csv("data/lakes.csv", header=TRUE)
+lakes <- read.csv("../data/lakes.csv", header=TRUE)
 ```
 
 
@@ -777,7 +778,7 @@ the "Import Dataset From Text (readr)" assistant:
 1. From the menu select: File -- Import DataSet -- From CSV.
 2. Select the requested file and select suitable options like the name of the variable the data are to be assigned to, the delimiter character (comma or Tab) and whether the first row of the file contains variable names.
 
-![](img/rstudio-import-readr.png)
+![](../img/rstudio-import-readr.png)
 
 Import Dataset From Text (readr) assistant of **RStudio**.
 

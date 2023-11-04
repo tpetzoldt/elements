@@ -3,6 +3,8 @@ title: "PCA, NMDS and Cluster: a Dimension Reduction Demo"
 author: "Thomas Petzoldt"
 date: "2021-02-02"
 output: html_document
+bibliography: ../bib.bib
+csl: ../apa.csl
 ---
 
 ## Introduction
@@ -37,7 +39,7 @@ library("rgl")
 library("vegan")
 library("vegan3d")
 
-A <- read.csv("data/multivar.csv")
+A <- read.csv("../data/multivar.csv")
 ```
 
 ## Plotting

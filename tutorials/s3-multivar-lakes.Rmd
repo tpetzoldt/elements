@@ -3,7 +3,8 @@ title: "Multivariate Lake Data Example"
 author: "Thomas Petzoldt"
 date: "2021-05-12"
 output: html_document
-bibliography: bib.bib
+bibliography: ../bib.bib
+csl: ../apa.csl
 ---
 
 ```{r setup, include=FALSE}
@@ -44,7 +45,7 @@ that are useful for the multivariate plotting functions.
 library("readxl") # read Excel files directly
 library("vegan")  # multivariate statistics in ecology
 lakes <- as.data.frame(
-  read_excel("data/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx", sheet="Tabelle1", skip=3)
+  read_excel("../data/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx", sheet="Tabelle1", skip=3)
 )
 names(lakes) <- c("name", "state", "drainage", "population", "altitude", 
                   "z_mean", "z_max", "t_ret", "volume", "area", "shore_length", 
