@@ -23,7 +23,7 @@ include-in-header:
 format: 
   revealjs:
     theme: [sky, ../thpe-large.scss]
-    css: ../colors.css
+    css: ../thpe.css
     transition: fade
     data-transition-speed: fast
     navigation-mode: linear

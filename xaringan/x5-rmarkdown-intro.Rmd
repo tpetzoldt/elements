@@ -29,7 +29,7 @@ output:
     toc: no
     number_sections: yes
 bibliography: bib2.bib
-csl: apa
+csl: ../apa.csl
 always_allow_html: true
 ---
 

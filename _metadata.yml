@@ -4,10 +4,10 @@ date-format: "YYYY-MM-DD"
 format:
   html:
     theme: cosmo
-    css: colors.css
+    css: thpe.css
     toc: true
 bibliography: bib.bib
-csl: apa
+csl: apa.csl
 
 
 

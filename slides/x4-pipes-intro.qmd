@@ -932,7 +932,7 @@ Other countries have different regulations.
 
 **Printed books**
 
-* "R for Data Science" [@wickham_r_2017] 
+* "R for Data Science" [@wickham_r_2023] 
 * "ggplot Elegant Graphics for Data Analysis" [@wickham_ggplot2_2016]
 
 
