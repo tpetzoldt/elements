@@ -112,7 +112,7 @@ It seems that nothing happens, but the result is now saved in the
 variable `a` that can be recalled at any time by entering the
 variable name alone:
 
-```{r fig=FALSE,echo=TRUE,keep.source=TRUE}
+```{r fig=FALSE, echo=TRUE, keep.source=TRUE}
 a
 ```
 
@@ -174,7 +174,7 @@ x
 
 There are many ways to use these functions, try for example:
 
-```{r eval=FALSE,fig=FALSE,echo=TRUE}
+```{r eval=FALSE, fig=FALSE, echo=TRUE}
 seq(0, 10)
 seq(0, 10, by = 2)
 seq(0, pi, length = 12)
@@ -294,7 +294,7 @@ a rule of thumb I always recommend to use about 100...400 small steps
 as a good compromise between smoothness and memory requirements, so
 let's set the step size to 0.1:
 
-```{r eval=TRUE, fig=TRUE, echo=TRUE, keep.source=TRUE}
+```{r sin-curve, eval=TRUE, fig=TRUE, echo=TRUE, keep.source=TRUE}
 x <- seq(0, 10, 0.1)
 y <- sin(x)
 plot(x, y)

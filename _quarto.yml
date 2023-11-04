@@ -3,6 +3,7 @@ project:
   output-dir: docs
   render: 
     - "*.qmd"
+    - "slides/*.qmd"
     - "tutorials/*.Rmd"
   
 
@@ -14,15 +15,15 @@ website:
     contents:
       - section: Basic Statistics
         contents:
-          - 01-introduction.qmd
-          - 02-terminology.qmd
-          - 03-statparams.qmd
-          - 04-distributions.qmd
-          - 05-classtests.qmd
-          - 06-linear.qmd
-          - 07-anova.qmd
-          - 08-nonlinear-regression.qmd
-          - 09-timeseries-basics.qmd
+          - slides/01-introduction.qmd
+          - slides/02-terminology.qmd
+          - slides/03-statparams.qmd
+          - slides/04-distributions.qmd
+          - slides/05-classtests.qmd
+          - slides/06-linear.qmd
+          - slides/07-anova.qmd
+          - slides/08-nonlinear-regression.qmd
+          - slides/09-timeseries-basics.qmd
       - section: Tutorials
         contents:
           - tutorials/s1-introductory-r-session.Rmd
@@ -30,44 +31,7 @@ website:
           - tutorials/s3-multivar-lakes.Rmd
       - section: R Topics
         contents:
-          - x1-r-basics.qmd
-          - x2-r-graphics.qmd
-          - x3-r-functions.qmd
-          - x4-pipes-intro.qmd
-
-#format:
-#  html:
-#    theme: cosmo
-#    css: colors.css
-#    toc: true
-    
-author: "Thomas Petzoldt"
-subtitle: "Applied Statistics -- A Practical Course"
-date-format: "YYYY-MM-DD"
-title-slide-attributes:
-  data-background-image: "img/tud-title-bg-wide-2021.png"
-  body-color: "#069af22"
-#  data-background-opacity: "0.5"
-include-in-header:
-  - text: |
-      <style>
-      #title-slide 
-        .title {color: #ee7f00;}
-        .subtitle {color: #ee7f00;}
-        .quarto-title-author {color: #69af22;}
-        .date {color: #69af22;}
-      </style>  
-format: 
-  revealjs:
-    theme: [sky, thpe-large.scss]
-    css: colors.css
-    transition: fade
-    data-transition-speed: fast
-    navigation-mode: linear
-    code-line-numbers: false
-bibliography: bib.bib
-csl: apa
-
-
-
-
+          - slides/x1-r-basics.qmd
+          - slides/x2-r-graphics.qmd
+          - slides/x3-r-functions.qmd
+          - slides/x4-pipes-intro.qmd
