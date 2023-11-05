@@ -32,7 +32,7 @@
     "href": "slides/01-introduction.html#goals-of-the-course",
     "title": "01-Introduction",
     "section": "Goals of the course",
-    "text": "Goals of the course\n\n\nIntroduction to “Data Science”\nStatistical concepts and selected methods\n\nStatistical parameters\nDistributions and probability\nStatistical tests\nModel selection\n\nPractical experience\n\nData strutures\nBasics of the R language\nApplications with real and simulated data sets\n\n\n\\(\\Rightarrow\\) Practical understanding and “statistical feeling” more important than facts learned by heart."
+    "text": "Goals of the course\n\n\nIntroduction to “Data Science”\nStatistical concepts and selected methods\n\nStatistical parameters\nDistributions and probability\nStatistical tests\nModel selection\n\nPractical experience\n\nData strutures\nBasics of the R language\nApplications with real and simulated data sets\n\n\n\\(\\Rightarrow\\) Practical understanding and “statistical feeling”,\n\\(\\rightarrow\\) More important than facts learned by heart."
   },
   {
     "objectID": "slides/01-introduction.html#topics",
@@ -46,21 +46,21 @@
     "href": "slides/01-introduction.html#material",
     "title": "01-Introduction",
     "section": "Material",
-    "text": "Material\n\n\nSlides\nExercises\nCourse script for self study “Data Analysis with R – Selected Topics and Examples”\nNote: Slides, script and exercises are regularly updated, depending on the progress of the course.\nExam: Written exam at the end of the semester. Attend the labs! \n\n\nQuestions?"
+    "text": "Material\n\n\nSlides\nExercises\nCourse script for self study “Data Analysis with R – Selected Topics and Examples”\nNote: Slides, script and exercises are regularly updated, depending on the progress of the course.\nExam: Written exam at the end of the semester. \\(\\rightarrow\\) Attend the labs!\n\n\n\nQuestions?"
   },
   {
     "objectID": "slides/01-introduction.html#books",
     "href": "slides/01-introduction.html#books",
     "title": "01-Introduction",
     "section": "Books",
-    "text": "Books\nStatistics\n\nWell-readable introductions\n\nDalgaard, P., 2008: Introductory Statistics with R. Springer, New York, 2nd edition. (fulltext of the 1st edition freely available)\nVerzani, J. (2019). Using R for introductory statistics. CRC press. Fulltext available via DOI https://doi.org/10.1111/anzs.12146\n\nA very well understandable introduction into many fields: of statistics, especially regression and time series analysis:\n\nKleiber, C. and Zeileis, A., 2008: Applied Econometrics with R, Springer Verlag, New York. https://link.springer.com/book/10.1007/978-0-387-77318-6\n\n\nR Programming\n\nAn introduction todata science using the modern “tidyverse” approach:\n\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. https://r4ds.hadley.nz/\n\n\n\n\nAnd lots of material available freely on the internet …"
+    "text": "Books\nStatistics\n\nWell-readable introductions\n\nDalgaard, P., 2008: Introductory Statistics with R. Springer, New York, 2nd edition. (fulltext of the 1st edition freely available)\nVerzani, J. (2019). Using R for introductory statistics. CRC press. Fulltext available via DOI https://doi.org/10.1111/anzs.12146\n\nA very well understandable introduction into many fields: of statistics, especially regression and time series analysis:\n\nKleiber, C. and Zeileis, A., 2008: Applied Econometrics with R, Springer Verlag, New York. https://link.springer.com/book/10.1007/978-0-387-77318-6\n\n\nR Programming\n\nAn introduction todata science using the modern “tidyverse” approach:\n\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. https://r4ds.hadley.nz/\n\n\n\n\n\n\n\n\nAnd lots of material available freely on the internet …"
   },
   {
     "objectID": "slides/01-introduction.html#required-software",
     "href": "slides/01-introduction.html#required-software",
     "title": "01-Introduction",
-    "section": "Required Software",
-    "text": "Required Software\n\nA spreadsheet program, Excel or LibreOffice https://www.libreoffice.org/\nThe R system for data analysis and graphics https://www.r-project.org\nRStudio for making R more user-friendly https://posit.co/download/rstudio-desktop/"
+    "section": "Required software",
+    "text": "Required software\n\nA spreadsheet program, Excel or LibreOffice https://www.libreoffice.org/\nThe R system for data analysis and graphics https://www.r-project.org\nRStudio for making R more user-friendly https://posit.co/download/rstudio-desktop/"
   },
   {
     "objectID": "slides/01-introduction.html#why-r",

@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2023-11-04">
+  <meta name="dcterms.date" content="2023-11-05">
   <title>Elements of Data Analysis and Statistics - 01-Introduction</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -344,7 +344,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2023-11-04</p>
+  <p class="date">2023-11-05</p>
 </section>
 <section>
 <section id="preface" class="title-slide slide level1 center" data-background-color="#006ab2">
@@ -370,7 +370,8 @@ Thomas Petzoldt
 <li>Applications with real and simulated data sets</li>
 </ul></li>
 </ol>
-<p><span class="math inline">\(\Rightarrow\)</span> Practical understanding and “statistical feeling” more important than facts learned by heart.</p>
+<p><span class="math inline">\(\Rightarrow\)</span> Practical understanding and “statistical feeling”,</p>
+<p><span class="math inline">\(\rightarrow\)</span> More important than facts learned by heart.</p>
 </section>
 <section id="topics" class="slide level2">
 <h2>Topics</h2>
@@ -394,77 +395,15 @@ Thomas Petzoldt
 <li>Exercises</li>
 <li>Course script for self study “Data Analysis with R – Selected Topics and Examples”</li>
 <li><strong>Note:</strong> Slides, script and exercises are regularly updated, depending on the progress of the course.</li>
-<li><strong>Exam:</strong> Written exam at the end of the semester. <span class="red">Attend the labs!</span> <br></li>
+<li><strong>Exam:</strong> Written exam at the end of the semester.<br> <span class="math inline">\(\rightarrow\)</span> <span class="red">Attend the labs!</span></li>
 </ul>
+<p><br></p>
 <div class="bigfont fragment highlight-red">
 <p>Questions?</p>
 </div>
-</section>
-<section id="books" class="slide level2">
-<h2>Books</h2>
-<p><strong>Statistics</strong></p>
-<ul>
-<li>Well-readable introductions
-<ul>
-<li>Dalgaard, P., 2008: Introductory Statistics with <strong>R</strong>. Springer, New York, 2nd edition. (fulltext of the 1st edition <a href="https://link.springer.com/book/10.1007/b97671">freely available</a>)</li>
-<li>Verzani, J. (2019). Using R for introductory statistics. CRC press. Fulltext available via DOI <a href="https://doi.org/10.1111/anzs.12146">https://doi.org/10.1111/anzs.12146</a></li>
-</ul></li>
-<li>A very well understandable introduction into many fields: of statistics, especially regression and time series analysis:
-<ul>
-<li>Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R, Springer Verlag, New York. <a href="https://link.springer.com/book/10.1007/978-0-387-77318-6">https://link.springer.com/book/10.1007/978-0-387-77318-6</a></li>
-</ul></li>
-</ul>
-<p><strong>R Programming</strong></p>
-<ul>
-<li>An introduction todata science using the modern “tidyverse” approach:
-<ul>
-<li>Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a></li>
-</ul></li>
-</ul>
-
-<aside><div>
-<p>And lots of material available freely on the internet …</p>
-</div></aside></section>
-<section id="required-software" class="slide level2">
-<h2>Required Software</h2>
-<ul>
-<li>A spreadsheet program, Excel or LibreOffice <a href="https://www.libreoffice.org/">https://www.libreoffice.org/</a></li>
-<li>The <strong>R</strong> system for data analysis and graphics <a href="https://www.r-project.org">https://www.r-project.org</a></li>
-<li>RStudio for making R more user-friendly <a href="https://posit.co/download/rstudio-desktop/">https://posit.co/download/rstudio-desktop/</a></li>
-</ul>
-
-<img data-src="../img/r-homepage.png" class="r-stretch quarto-figure-center"></section>
-<section id="why-r" class="slide level2">
-<h2>Why R?</h2>
-<div class="column" style="width:58%;">
-<ol type="1">
-<li>Statisticians call it “lingua franca” in computational statistics.
-<ul>
-<li>Extremely powerful</li>
-<li>No other system has so much statistics</li>
-<li>Used in statistical research</li>
-</ul></li>
-<li>Free (OpenSource)
-<ul>
-<li>Free to use</li>
-<li>Free to modify</li>
-<li>Free to contribute</li>
-</ul></li>
-<li>Less complicated than its first appearance:
-<ul>
-<li>Yes, it needs command line programming</li>
-<li>but: already a single line can do much</li>
-<li>huge number of books and online scripts</li>
-</ul></li>
-</ol>
-</div>
-<div class="column" style="width:41%;">
-<p><img data-src="../img/r-homepage.png"></p>
-</div>
-<p>In contrast to other systems Copy &amp; Paste is allowed! – just cite it.</p>
 </section></section>
 <section>
-<section id="why-statistics" class="title-slide slide level1 center">
+<section id="why-statistics" class="title-slide slide level1 center" data-background-color="#006ab2">
 <h1>Why Statistics?</h1>
 <p><span class="math inline">\(\rightarrow\)</span> a few examples before we begin</p>
 </section>
@@ -608,11 +547,79 @@ Thomas Petzoldt
 <li>Dependence of chlorophyll concentration in lakes on phosphorus, a regional data set from Koschel and Scheffler (1985) (left) and from Vollenweider and Kerekes (1980) (right).</li>
 <li>Which of the two figures has greater predictive power? Why?</li>
 </ul>
+</section></section>
+<section>
+<section id="how-to-do-this-in-practice" class="title-slide slide level1 center" data-background-color="#006ab2">
+<h1>How to do this in practice?</h1>
+
+</section>
+<section id="required-software" class="slide level2">
+<h2>Required software</h2>
+<ul>
+<li>A spreadsheet program, Excel or LibreOffice <a href="https://www.libreoffice.org/">https://www.libreoffice.org/</a></li>
+<li>The <strong>R</strong> system for data analysis and graphics <a href="https://www.r-project.org">https://www.r-project.org</a></li>
+<li>RStudio for making R more user-friendly <a href="https://posit.co/download/rstudio-desktop/">https://posit.co/download/rstudio-desktop/</a></li>
+</ul>
+
+<img data-src="../img/r-homepage.png" class="r-stretch quarto-figure-center"></section>
+<section id="why-r" class="slide level2">
+<h2>Why R?</h2>
+<div class="column" style="width:58%;">
+<ol type="1">
+<li>Statisticians call it “lingua franca” in computational statistics.
+<ul>
+<li>Extremely powerful</li>
+<li>No other system has so much statistics</li>
+<li>Used in statistical research</li>
+</ul></li>
+<li>Free (OpenSource)
+<ul>
+<li>Free to use</li>
+<li>Free to modify</li>
+<li>Free to contribute</li>
+</ul></li>
+<li>Less complicated than its first appearance:
+<ul>
+<li>Yes, it needs command line programming</li>
+<li>but: already a single line can do much</li>
+<li>huge number of books and online scripts</li>
+</ul></li>
+</ol>
+</div>
+<div class="column" style="width:41%;">
+<p><img data-src="../img/r-homepage.png"></p>
+</div>
+<p>In contrast to other systems Copy &amp; Paste is allowed! – just cite it.</p>
+</section>
+<section id="books" class="slide level2">
+<h2>Books</h2>
+<p><strong>Statistics</strong></p>
+<ul>
+<li>Well-readable introductions
+<ul>
+<li>Dalgaard, P., 2008: Introductory Statistics with <strong>R</strong>. Springer, New York, 2nd edition. (fulltext of the 1st edition <a href="https://link.springer.com/book/10.1007/b97671">freely available</a>)</li>
+<li>Verzani, J. (2019). Using R for introductory statistics. CRC press. Fulltext available via DOI <a href="https://doi.org/10.1111/anzs.12146">https://doi.org/10.1111/anzs.12146</a></li>
+</ul></li>
+<li>A very well understandable introduction into many fields: of statistics, especially regression and time series analysis:
+<ul>
+<li>Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R, Springer Verlag, New York. <a href="https://link.springer.com/book/10.1007/978-0-387-77318-6">https://link.springer.com/book/10.1007/978-0-387-77318-6</a></li>
+</ul></li>
+</ul>
+<p><strong>R Programming</strong></p>
+<ul>
+<li>An introduction todata science using the modern “tidyverse” approach:
+<ul>
+<li>Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a></li>
+</ul></li>
+</ul>
+
 
 <div class="footer footer-default">
 
 </div>
-</section></section>
+<aside><div>
+<p>And lots of material available freely on the internet …</p>
+</div></aside></section></section>
     </div>
   </div>
 

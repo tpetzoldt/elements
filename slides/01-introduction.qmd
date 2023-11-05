@@ -22,8 +22,9 @@ date:   "`r Sys.Date()`"
     - Basics of the R language
     - Applications with real and simulated data sets
 
-$\Rightarrow$ Practical understanding and "statistical feeling" more important than facts learned by heart.
+$\Rightarrow$ Practical understanding and "statistical feeling",
 
+$\rightarrow$ More important than facts learned by heart.
 
 ## Topics
 
@@ -38,6 +39,8 @@ $\Rightarrow$ Practical understanding and "statistical feeling" more important t
 7. Time Series Analysis
 6. (Multivariate Statistics)
 
+
+
 ## Material
 
 <br>
@@ -46,74 +49,17 @@ $\Rightarrow$ Practical understanding and "statistical feeling" more important t
 * Exercises
 * Course script for self study "Data Analysis with R – Selected Topics and Examples"
 * **Note:** Slides, script and exercises are regularly updated, depending on the progress of the course.
-* **Exam:** Written exam at the end of the semester. [Attend the labs!]{.red}
+* **Exam:** Written exam at the end of the semester.<br>
+  $\rightarrow$ [Attend the labs!]{.red}
+
 <br>
 
 ::: {.bigfont .fragment .highlight-red}
 Questions?
 :::
 
-## Books
 
-**Statistics**
-
-* Well-readable introductions
-    - Dalgaard, P., 2008: Introductory Statistics with **R**. Springer, New York, 2nd edition. (fulltext of the 1st edition [freely available](https://link.springer.com/book/10.1007/b97671))
-    - Verzani, J. (2019). Using R for introductory statistics. CRC press. Fulltext available via DOI [https://doi.org/10.1111/anzs.12146](https://doi.org/10.1111/anzs.12146)
-
-* A very well understandable introduction into many fields:
-   of statistics, especially regression and time series analysis:
-  - Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R,
-    Springer Verlag, New York. [https://link.springer.com/book/10.1007/978-0-387-77318-6](https://link.springer.com/book/10.1007/978-0-387-77318-6)
-
-**R Programming**
-    
-* An introduction todata science using the modern "tidyverse" approach:
-  - Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science.
-  [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
-
-
-::: aside
-And lots of material available freely on the internet ...
-:::
-
-
-## Required Software
-
-* A spreadsheet program, Excel or LibreOffice [https://www.libreoffice.org/](https://www.libreoffice.org/)
-* The **R** system for data analysis and graphics [https://www.r-project.org](https://www.r-project.org)
-* RStudio for making R more user-friendly [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
-
-![](../img/r-homepage.png){fig-align="center"}
-
-## Why R?
-
-::: {.column width="58%"}
-
-1. Statisticians call it "lingua franca" in computational statistics.
-    * Extremely powerful
-    * No other system has so much statistics
-    * Used in statistical research
-2. Free (OpenSource)
-    * Free to use
-    * Free to modify
-    * Free to contribute
-3. Less complicated than its first appearance:
-    * Yes, it needs command line programming
-    * but: already a single line can do much
-    * huge number of books and online scripts
-    
-:::
-
-::: {.column width="41%"}
-
-![](../img/r-homepage.png)
-::: 
-
-In contrast to other systems Copy & Paste is allowed! – just cite it.
-
-
-# Why Statistics?
+# Why Statistics?{data-background-color="#006ab2"}
 
 $\rightarrow$ a few examples before we begin
 
@@ -322,4 +268,67 @@ abline(m2)
 regional data set from Koschel and Scheffler (1985) (left) and from
 Vollenweider and Kerekes (1980) (right).
 * Which of the two figures has greater predictive power? Why?
+
+
+# How to do this in practice?{data-background-color="#006ab2"}
+
+## Required software
+
+* A spreadsheet program, Excel or LibreOffice [https://www.libreoffice.org/](https://www.libreoffice.org/)
+* The **R** system for data analysis and graphics [https://www.r-project.org](https://www.r-project.org)
+* RStudio for making R more user-friendly [https://posit.co/download/rstudio-desktop/](https://posit.co/download/rstudio-desktop/)
+
+![](../img/r-homepage.png){fig-align="center"}
+
+## Why R?
+
+::: {.column width="58%"}
+
+1. Statisticians call it "lingua franca" in computational statistics.
+    * Extremely powerful
+    * No other system has so much statistics
+    * Used in statistical research
+2. Free (OpenSource)
+    * Free to use
+    * Free to modify
+    * Free to contribute
+3. Less complicated than its first appearance:
+    * Yes, it needs command line programming
+    * but: already a single line can do much
+    * huge number of books and online scripts
+    
+:::
+
+::: {.column width="41%"}
+
+![](../img/r-homepage.png)
+::: 
+
+In contrast to other systems Copy & Paste is allowed! – just cite it.
+
+
+## Books
+
+**Statistics**
+
+* Well-readable introductions
+    - Dalgaard, P., 2008: Introductory Statistics with **R**. Springer, New York, 2nd edition. (fulltext of the 1st edition [freely available](https://link.springer.com/book/10.1007/b97671))
+    - Verzani, J. (2019). Using R for introductory statistics. CRC press. Fulltext available via DOI [https://doi.org/10.1111/anzs.12146](https://doi.org/10.1111/anzs.12146)
+
+* A very well understandable introduction into many fields:
+   of statistics, especially regression and time series analysis:
+  - Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R,
+    Springer Verlag, New York. [https://link.springer.com/book/10.1007/978-0-387-77318-6](https://link.springer.com/book/10.1007/978-0-387-77318-6)
+
+**R Programming**
+    
+* An introduction todata science using the modern "tidyverse" approach:
+  - Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science.
+  [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
+
+
+::: aside
+And lots of material available freely on the internet ...
+:::
+
 
