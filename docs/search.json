@@ -53,7 +53,7 @@
     "href": "slides/01-introduction.html#books",
     "title": "01-Introduction",
     "section": "Books",
-    "text": "Books\nStatistics\n\nWell-readable introductions\n\nDalgaard, P., 2008: Introductory Statistics with R. Springer, New York, 2nd edition. (fulltext of the 1st edition freely available)\nVerzani, J. (2019). Using R for introductory statistics. CRC press. Fulltext available via DOI https://doi.org/10.1111/anzs.12146\n\nA very well understandable introduction into many fields: of statistics, especially regression and time series analysis:\n\nKleiber, C. and Zeileis, A., 2008: Applied Econometrics with R, Springer Verlag, New York. https://link.springer.com/book/10.1007/978-0-387-77318-6\n\n\nR Programming\n\nAn introduction todata science using the modern “tidyverse” approach:\n\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. https://r4ds.hadley.nz/\n\n\n\n\n\n\n\n\nAnd lots of material available freely on the internet …"
+    "text": "Books\nStatistics\n\nWell-readable introductions\n\nDalgaard, P., 2008: Introductory Statistics with R. Springer, New York, 2nd edition. (fulltext of the 1st edition freely available)\nVerzani, J. (2019). Using R for introductory statistics. CRC press. Fulltext available via DOI https://doi.org/10.1111/anzs.12146\n\nA very well understandable introduction into many fields: of statistics, especially regression and time series analysis:\n\nKleiber, C. and Zeileis, A., 2008: Applied Econometrics with R, Springer Verlag, New York. https://link.springer.com/book/10.1007/978-0-387-77318-6\n\n\nR Programming\n\nAn introduction to data science using the modern “tidyverse” approach:\n\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. https://r4ds.hadley.nz/\n\n\n\n\n\n\n\n\nAnd lots of material available freely on the internet …"
   },
   {
     "objectID": "slides/01-introduction.html#required-software",
@@ -130,7 +130,7 @@
     "href": "slides/01-introduction.html#statistical-modeling",
     "title": "01-Introduction",
     "section": "Statistical modeling",
-    "text": "Statistical modeling\nFit a statistical model to the data\n\nSelect proper modelling strategy\nDesign statistical models\nMeasure effect size\nSelect the optimum model between different model candidates\n\nExamples\n\nFit a distribution to annual discharge data to estimate the 100year flood.\nFit an ANOVA model to experimental data to see which factors influence the result most.\nFit a multiple linear model to climate data to see how much climate trends differ between geographical location."
+    "text": "Statistical modeling\nFit a statistical model to the data\n\nSelect proper modelling strategy\nDesign statistical models\nMeasure effect size\nSelect the optimum model between different model candidates\n\nExamples\n\nFit a distribution to annual discharge data to estimate the 100 year flood.\nFit an ANOVA model to experimental data to see which factors influence the result most.\nFit a multiple linear model to climate data to see how much climate trends differ between geographical location."
   },
   {
     "objectID": "slides/01-introduction.html#example-compare-two-mean-values",
@@ -144,7 +144,7 @@
     "href": "slides/01-introduction.html#example-correlation-and-regression",
     "title": "01-Introduction",
     "section": "Example: Correlation and regression",
-    "text": "Example: Correlation and regression\n\n\nDependence of chlorophyll concentration in lakes on phosphorus, a regional data set from Koschel and Scheffler (1985) (left) and from Vollenweider and Kerekes (1980) (right).\nWhich of the two figures has greater predictive power? Why?"
+    "text": "Example: Correlation and regression\n\n\n\n\n\n\nDependence of chlorophyll concentration in lakes on phosphorus, a regional data set from Koschel and Scheffler (1985) (left) and from Vollenweider and Kerekes (1980) (right).\nWhich of the two figures has greater predictive power? Why?\n\n\n\nThe parameter \\(r\\) is the Pearson correlation coefficient."
   },
   {
     "objectID": "slides/02-terminology.html#basic-principles-and-terminology",
@@ -1719,14 +1719,14 @@
     "href": "slides/x1-r-basics.html#data-frames",
     "title": "x1-R Basics",
     "section": "Data frames",
-    "text": "Data frames\n\nrepresent tabular data\nsimilar to matrices, but different types of data in columns possible\ntypically imported from a file with read.table or read.csv\n\n\n\ncities <- read.csv(\"../data/cities.csv\")\ncities\n\n               Name    Country Population Latitude Longitude IsCapital\n1  Fürstenfeldbruck    Germany      34033  48.1690   11.2340     FALSE\n2             Dhaka Bangladesh   13000000  23.7500   90.3700      TRUE\n3       Ulaanbaatar   Mongolia    3010000  47.9170  106.8830      TRUE\n4           Shantou      China    5320000  23.3500  116.6700     FALSE\n5           Kampala     Uganda    1659000   0.3310   32.5830      TRUE\n6           Cottbus    Germany     100000  51.7650   14.3280     FALSE\n7           Nairobi      Kenya    3100000   1.2833   36.8167      TRUE\n8             Hanoi    Vietnam    1452055  21.0300  105.8400      TRUE\n9          Bacgiang    Vietnam      53739  21.2800  106.1900     FALSE\n10       Addis Abba   Ethiopia    2823167   9.0300   38.7400      TRUE\n11        Hyderabad      India    3632094  17.4000   78.4800     FALSE"
+    "text": "Data frames\n\nrepresent tabular data\nsimilar to matrices, but different types of data in columns possible\ntypically imported from a file with read.table or read.csv\n\n\n\ncities <- read.csv(\"cities.csv\")\ncities\n\n\n\n\n               Name    Country Population Latitude Longitude IsCapital\n1  Fürstenfeldbruck    Germany      34033  48.1690   11.2340     FALSE\n2             Dhaka Bangladesh   13000000  23.7500   90.3700      TRUE\n3       Ulaanbaatar   Mongolia    3010000  47.9170  106.8830      TRUE\n4           Shantou      China    5320000  23.3500  116.6700     FALSE\n5           Kampala     Uganda    1659000   0.3310   32.5830      TRUE\n6           Cottbus    Germany     100000  51.7650   14.3280     FALSE\n7           Nairobi      Kenya    3100000   1.2833   36.8167      TRUE\n8             Hanoi    Vietnam    1452055  21.0300  105.8400      TRUE\n9          Bacgiang    Vietnam      53739  21.2800  106.1900     FALSE\n10       Addis Abba   Ethiopia    2823167   9.0300   38.7400      TRUE\n11        Hyderabad      India    3632094  17.4000   78.4800     FALSE\n\n\n\\(\\rightarrow\\) download data set"
   },
   {
     "objectID": "slides/x1-r-basics.html#what-is-a-csv-file",
     "href": "slides/x1-r-basics.html#what-is-a-csv-file",
     "title": "x1-R Basics",
     "section": "What is a CSV file?",
-    "text": "What is a CSV file?\n\ncomma separated values.\nfirst line contains column names\ndecimal is dec=\".\", column separator is sep=\",\"\n\nExample CSV file\nName,Country,Population,Latitude,Longitude\nDhaka,Bangladesh,10278882,23.75,90.37\nUlaanbaatar,Mongolia,1672627,47.917,106.883\nShantou,China,5502031,23.35,116.67\nKampala,Uganda,1680600,0.331,32.583\nBerlin,Germany,3850809,52.52,13.405\nNairobi,Kenya,4672000,1.2833,36.8167\nHanoi,Vietnam,8435700,21.03,105.84\nAddis Abba,Ethiopia,3945000,9.03,38.74\nHyderabad,India,9482000,17.4,78.48\nData from Wikipedia, 2023\nHints\n\nsome countries use dec = \",\" and sep = \";\"\nExcel may export mixed style with dec = \".\" and sep = \";\"\ncomments above the header line can be skipped"
+    "text": "What is a CSV file?\n\ncomma separated values.\nfirst line contains column names\ndecimal is dec=\".\", column separator is sep=\",\"\n\nExample CSV file (Data from Wikipedia, 2023)\n\nName,Country,Population,Latitude,Longitude\nDhaka,Bangladesh,10278882,23.75,90.37\nUlaanbaatar,Mongolia,1672627,47.917,106.883\nShantou,China,5502031,23.35,116.67\nKampala,Uganda,1680600,0.331,32.583\nBerlin,Germany,3850809,52.52,13.405\nNairobi,Kenya,4672000,1.2833,36.8167\nHanoi,Vietnam,8435700,21.03,105.84\nAddis Abba,Ethiopia,3945000,9.03,38.74\nHyderabad,India,9482000,17.4,78.48\n\nHints\n\nsome countries use dec = \",\" and sep = \";\"\nExcel may export mixed style with dec = \".\" and sep = \";\"\ncomments above the header line can be skipped"
   },
   {
     "objectID": "slides/x1-r-basics.html#different-read-funktions",
@@ -1740,7 +1740,7 @@
     "href": "slides/x1-r-basics.html#recommendation",
     "title": "x1-R Basics",
     "section": "Recommendation",
-    "text": "Recommendation\n\nMost of our course examples are plain CSV files, so we can use read.csv() or read_csv().\n\n\nlibrary(\"readr\")\ncities <- read_csv(\"../data/cities.csv\")\ncities\n\n# A tibble: 11 × 6\n   Name             Country    Population Latitude Longitude IsCapital\n   <chr>            <chr>           <dbl>    <dbl>     <dbl> <lgl>    \n 1 Fürstenfeldbruck Germany         34033   48.2        11.2 FALSE    \n 2 Dhaka            Bangladesh   13000000   23.8        90.4 TRUE     \n 3 Ulaanbaatar      Mongolia      3010000   47.9       107.  TRUE     \n 4 Shantou          China         5320000   23.4       117.  FALSE    \n 5 Kampala          Uganda        1659000    0.331      32.6 TRUE     \n 6 Cottbus          Germany        100000   51.8        14.3 FALSE    \n 7 Nairobi          Kenya         3100000    1.28       36.8 TRUE     \n 8 Hanoi            Vietnam       1452055   21.0       106.  TRUE     \n 9 Bacgiang         Vietnam         53739   21.3       106.  FALSE    \n10 Addis Abba       Ethiopia      2823167    9.03       38.7 TRUE     \n11 Hyderabad        India         3632094   17.4        78.5 FALSE"
+    "text": "Recommendation\n\nMost of our course examples are plain CSV files, so we can use read.csv() or read_csv().\n\n\nlibrary(\"readr\")\ncities <- read_csv(\"cities.csv\")\ncities\n\n\n\n\n# A tibble: 11 × 6\n   Name             Country    Population Latitude Longitude IsCapital\n   <chr>            <chr>           <dbl>    <dbl>     <dbl> <lgl>    \n 1 Fürstenfeldbruck Germany         34033   48.2        11.2 FALSE    \n 2 Dhaka            Bangladesh   13000000   23.8        90.4 TRUE     \n 3 Ulaanbaatar      Mongolia      3010000   47.9       107.  TRUE     \n 4 Shantou          China         5320000   23.4       117.  FALSE    \n 5 Kampala          Uganda        1659000    0.331      32.6 TRUE     \n 6 Cottbus          Germany        100000   51.8        14.3 FALSE    \n 7 Nairobi          Kenya         3100000    1.28       36.8 TRUE     \n 8 Hanoi            Vietnam       1452055   21.0       106.  TRUE     \n 9 Bacgiang         Vietnam         53739   21.3       106.  FALSE    \n10 Addis Abba       Ethiopia      2823167    9.03       38.7 TRUE     \n11 Hyderabad        India         3632094   17.4        78.5 FALSE"
   },
   {
     "objectID": "slides/x1-r-basics.html#data-import-assistant-of-rstudio",
@@ -1775,7 +1775,7 @@
     "href": "slides/x1-r-basics.html#lists-1",
     "title": "x1-R Basics",
     "section": "Lists",
-    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL <- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:12] -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 ...\n $ counts  : int [1:11] 1 9 7 11 25 19 16 6 4 1 ...\n $ density : num [1:11] 0.02 0.18 0.14 0.22 0.5 0.38 0.32 0.12 0.08 0.02 ...\n $ mids    : num [1:11] -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25 ...\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\""
+    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL <- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:11] -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 ...\n $ counts  : int [1:10] 1 4 9 16 20 22 15 5 7 1\n $ density : num [1:10] 0.02 0.08 0.18 0.32 0.4 0.44 0.3 0.1 0.14 0.02\n $ mids    : num [1:10] -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\""
   },
   {
     "objectID": "slides/x1-r-basics.html#creation-of-lists",
@@ -1865,8 +1865,8 @@
     "objectID": "slides/x1-r-basics.html#further-reading",
     "href": "slides/x1-r-basics.html#further-reading",
     "title": "x1-R Basics",
-    "section": "Further Reading",
-    "text": "Further Reading\n\nFollow-up presentations:\n\nFunctions everywhere\nGraphics in R\n\nMore details in the official R manuals, especially in An Introduction to R\nMany videos can be found on Youtube, at the Posit webpage and somewhere else.\nThis tutorial was made with Quarto\nAuthor: tpetzoldt +++ Homepage +++ Github page"
+    "section": "Further reading",
+    "text": "Further reading\n\nFollow-up presentations:\n\nFunctions everywhere\nGraphics in R\n\nMore details in the official R manuals, especially in “An Introduction to R”\nMany videos can be found on Youtube, at the Posit webpage and somewhere else.\nThis tutorial was made with Quarto\nAuthor: tpetzoldt +++ Homepage +++ Github page"
   },
   {
     "objectID": "slides/x2-r-graphics.html#table-of-contents",
@@ -2756,5 +2756,12 @@
     "title": "Multivariate Lake Data Example",
     "section": "Task",
     "text": "Task\n\nTry to understand the analysis,\ndiscuss the results,\nask questions.\nThe idea is to work on this report together and to make it more complete."
+  },
+  {
+    "objectID": "slides/x1-r-basics.html#the-most-versatile-read.table",
+    "href": "slides/x1-r-basics.html#the-most-versatile-read.table",
+    "title": "x1-R Basics",
+    "section": "The most versatile: read.table()",
+    "text": "The most versatile: read.table()\n\nread.table(file, header = FALSE, sep = \"\", quote = \"\\\"'\",\n           dec = \".\", numerals = c(\"allow.loss\", \"warn.loss\", \"no.loss\"),\n           row.names, col.names, as.is = !stringsAsFactors, tryLogical = TRUE,\n           na.strings = \"NA\", colClasses = NA, nrows = -1,\n           skip = 0, check.names = TRUE, fill = !blank.lines.skip,\n           strip.white = FALSE, blank.lines.skip = TRUE,\n           comment.char = \"#\",\n           allowEscapes = FALSE, flush = FALSE,\n           stringsAsFactors = FALSE,\n           fileEncoding = \"\", encoding = \"unknown\", text, skipNul = FALSE)\n\nExamples\n\nread.table(\"cities.csv\", sep = \",\",  dec = \".\")  # same as read.csv\nread.table(\"cities.txt\", sep = \"\\t\", dec = \".\")  # tab delimited\nread.table(\"cities.csv\", sep = \";\",  dec = \",\")  # German csv\n\nread.table(\"cities.csv\", sep = \",\", dec = \".\", skip = 5) # skip first 5 lines"
   }
 ]

@@ -31,15 +31,15 @@ This tutorial is available in [HTML](https://tpetzoldt.github.io/elements/s1-int
 The following section is intended to give you a first feeling what **R** [@RCore2021]
 is and how it works. It assumes that the following software is installed:
 
-1. The R system for statistical computing:  https://www.r-project.org
-2. R Studio, a program that makes working with R more convenient: https://www.rstudio.org
+1. The R system for statistical computing:  [https://www.r-project.org](https://www.r-project.org)
+2. R Studio, a program that makes working with R more convenient: [https://www.rstudio.org](https://www.rstudio.org)
 
 Note: please install **R** first before installing **RStudio**.
 
 You may also consider to watch a Youtube video about **R**, a
 good example for the very beginning is the short video
 "R tutorial - The True Basics of R"
-from DataCamp, see https://youtu.be/SWxoJqTqo08. Besides this, 
+from DataCamp, see [https://youtu.be/SWxoJqTqo08](https://youtu.be/SWxoJqTqo08). Besides this, 
 [Datacamp](https://www.datacamp.com/) offers 
 excellent **R** tutorials, part of them free of cost. Another useful **R** tutorial 
 can be found at [W3Schools.com](https://www.w3schools.com/r/).
@@ -694,7 +694,7 @@ lakes <- read.csv("../data/lakes.csv")
 kable(lakes)
 ```
 
-The data can be downloaded from https://github.com/tpetzoldt/datasets/tree/main/data
+The data can be downloaded from [https://github.com/tpetzoldt/datasets/tree/main/data](https://github.com/tpetzoldt/datasets/tree/main/data)
 
 
 ### Set working directory

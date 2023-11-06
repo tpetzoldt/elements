@@ -220,7 +220,7 @@ treatment influence growth of aquatic animals? → ANOVA
 
 **Examples**
 
-* Fit a distribution to annual discharge data to estimate the 100year
+* Fit a distribution to annual discharge data to estimate the 100 year
 flood.
 * Fit an ANOVA model to experimental data to see which factors
 influence the result most.
@@ -268,6 +268,10 @@ abline(m2)
 regional data set from Koschel and Scheffler (1985) (left) and from
 Vollenweider and Kerekes (1980) (right).
 * Which of the two figures has greater predictive power? Why?
+
+::: aside
+The parameter $r$ is the Pearson correlation coefficient.
+:::
 
 
 # How to do this in practice?{data-background-color="#006ab2"}
@@ -322,7 +326,7 @@ In contrast to other systems Copy & Paste is allowed! – just cite it.
 
 **R Programming**
     
-* An introduction todata science using the modern "tidyverse" approach:
+* An introduction to data science using the modern "tidyverse" approach:
   - Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science.
   [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
 
