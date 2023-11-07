@@ -1607,35 +1607,35 @@
     "href": "slides/x1-r-basics.html#expressions-and-assignments",
     "title": "x1-R Basics",
     "section": "Expressions and Assignments",
-    "text": "Expressions and Assignments\n\n\nExpression\n\n1 - pi + exp(1.7)\n\n[1] 3.332355\n\n\n\nresult is printed to the screen\nthe [1] indicates that the value shown at the beginning of the line is the first (and here the only) element\n\n\n\n\n\n\nAssignment\n\na <- 1 - pi + exp(1.7)\n\n\nThe expression on the left hand side is assigned to the variable on the right.\nThe arrow is spelled as “a gets …”\nTo avoid confusion: use <- for assignment and let = for parameter matching"
+    "text": "Expressions and Assignments\n\n\nExpression\n\n\n1 - pi + exp(1.7)\n\n[1] 3.332355\n\n\n\n\nresult is printed to the screen\nthe [1] indicates that the value shown at the beginning of the line is the first (and here the only) element\n\n\n\nAssignment\n\n\na &lt;- 1 - pi + exp(1.7)\n\n\n\nThe expression on the left hand side is assigned to the variable on the right.\nThe arrow is spelled as “a gets …”\nTo avoid confusion: use &lt;- for assignment and let = for parameter matching"
   },
   {
     "objectID": "slides/x1-r-basics.html#constants-variables-and-assignments",
     "href": "slides/x1-r-basics.html#constants-variables-and-assignments",
     "title": "x1-R Basics",
     "section": "Constants, variables and assignments",
-    "text": "Constants, variables and assignments\nAssignment of constants and variables to a variable\n\n\nx <- 1.3      # numeric constant\ny <- \"hello\"  # character constant\na <- x        # a and x both variables\n\nAssignment in opposite direction (rarely used)\n\nx -> b\n\nMultiple assignment\n\nx <- a <- b\n\n\nDo not use the following constructs\n\n# Equal sign has two meanings: parameter matching and assignment\n# - Don't use it for assignment!\nx = a\n\n# Super assignment, useful for programmers in special cases\nx <<- 2"
+    "text": "Constants, variables and assignments\nAssignment of constants and variables to a variable\n\n\nx &lt;- 1.3      # numeric constant\ny &lt;- \"hello\"  # character constant\na &lt;- x        # a and x both variables\n\nAssignment in opposite direction (rarely used)\n\nx -&gt; b\n\nMultiple assignment\n\nx &lt;- a &lt;- b\n\n\nDo not use the following constructs\n\n# Equal sign has two meanings: parameter matching and assignment\n# - Don't use it for assignment!\nx = a\n\n# Super assignment, useful for programmers in special cases\nx &lt;&lt;- 2"
   },
   {
     "objectID": "slides/x1-r-basics.html#objects-constants-variables",
     "href": "slides/x1-r-basics.html#objects-constants-variables",
     "title": "x1-R Basics",
     "section": "Objects, constants, variables",
-    "text": "Objects, constants, variables\n\nEverything stored in R’s memory is an object:\n\ncan be simple or complex\ncan be constants or variables\nconstants: 1, 123, 5.6, 5e7, “hello”\nvariables: can change their value, are referenced by variable names\n\n\n\nx <- 2.0 # x is a variable, 2.0 is a constant\n\nA syntactically valid variable name consists of:\n\nletters, numbers, underline (_), dot (.)\nstarts with a letter or the dot\nif starting with the dot, not followed by a number\n\nSpecial characters, except _ and . (underscore and dot) are not allowed.\nInternational characters (e.g German umlauts ä, ö, ü, …) are possible, but not recommended."
+    "text": "Objects, constants, variables\n\nEverything stored in R’s memory is an object:\n\ncan be simple or complex\ncan be constants or variables\nconstants: 1, 123, 5.6, 5e7, “hello”\nvariables: can change their value, are referenced by variable names\n\n\n\nx &lt;- 2.0 # x is a variable, 2.0 is a constant\n\nA syntactically valid variable name consists of:\n\nletters, numbers, underline (_), dot (.)\nstarts with a letter or the dot\nif starting with the dot, not followed by a number\n\nSpecial characters, except _ and . (underscore and dot) are not allowed.\nInternational characters (e.g German umlauts ä, ö, ü, …) are possible, but not recommended."
   },
   {
     "objectID": "slides/x1-r-basics.html#allowed-and-disallowed-identifiers",
     "href": "slides/x1-r-basics.html#allowed-and-disallowed-identifiers",
     "title": "x1-R Basics",
     "section": "Allowed and disallowed identifiers",
-    "text": "Allowed and disallowed identifiers\n\ncorrect:\n\nx, y, X, x1, i, j, k\nvalue, test, myVariableName, do_something\n`.hidden, .x1``\n\nforbidden:\n\n1x, .1x (starts with a number)\n!, @, \\$, #, space, comma, semicolon and other special characters\n\nreserved words cannot be used as variable names:\n\nif, else, repeat, while, function, for, in, next, break\nTRUE, FALSE, NULL, Inf, NaN, NA, NA\\_integer\\_, NA\\_real\\_, NA\\_complex\\_, NA\\_character\\_\n..., ..1, ..2\n\nNote: R is case sensitive, x and X, value and Value are different."
+    "text": "Allowed and disallowed identifiers\n\ncorrect:\n\nx, y, X, x1, i, j, k\nvalue, test, myVariableName, do_something\n`.hidden, .x1``\n\nforbidden:\n\n1x, .1x (starts with a number)\n!, @, \\$, #, space, comma, semicolon and other special characters\n\nreserved words cannot be used as variable names:\n\nif, else, repeat, while, function, for, in, next, break\nTRUE, FALSE, NULL, Inf, NaN, NA, NA_integer_, NA_real_, NA_complex_, NA_character\\_\n..., ..1, ..2\n\nNote: R is case sensitive, x and X, value and Value are different."
   },
   {
     "objectID": "slides/x1-r-basics.html#operators",
     "href": "slides/x1-r-basics.html#operators",
     "title": "x1-R Basics",
     "section": "Operators",
-    "text": "Operators\n\n\n\n\n\n\noperator\nsymbol\n\n\n\n\nAddition\n+\n\n\nSubtraction\n-\n\n\nNegation\n-\n\n\nMultiplication\n*\n\n\nDivision\n/\n\n\nModulo\n%%\n\n\nInteger Divison\n%/%\n\n\nPower\n^\n\n\nMatrix product\n%*%\n\n\nOuter product\n%o%\n\n\n\n\n\n\n\n\n\n\n\n\noperator\nsymbol\n\n\n\n\nNegation\n!\n\n\nAnd\n&\n\n\nOr\n|\n\n\nEqual\n==\n\n\nUnequal\n!=\n\n\nLess than\n<\n\n\nGreater than\n>\n\n\nLess or equal\n<=\n\n\nGreater or equal\n>=\n\n\nAssignment\n<-\n\n\nElement of a list\n$\n\n\nPipeline\n|>\n\n\n\n\n\n\n… and more"
+    "text": "Operators\n\n\n\n\n\n\noperator\nsymbol\n\n\n\n\nAddition\n+\n\n\nSubtraction\n-\n\n\nNegation\n-\n\n\nMultiplication\n*\n\n\nDivision\n/\n\n\nModulo\n%%\n\n\nInteger Divison\n%/%\n\n\nPower\n^\n\n\nMatrix product\n%*%\n\n\nOuter product\n%o%\n\n\n\n\n\n\n\n\n\n\n\n\noperator\nsymbol\n\n\n\n\nNegation\n!\n\n\nAnd\n&\n\n\nOr\n|\n\n\nEqual\n==\n\n\nUnequal\n!=\n\n\nLess than\n&lt;\n\n\nGreater than\n&gt;\n\n\nLess or equal\n&lt;=\n\n\nGreater or equal\n&gt;=\n\n\nAssignment\n&lt;-\n\n\nElement of a list\n$\n\n\nPipeline\n|&gt;\n\n\n\n\n\n\n… and more"
   },
   {
     "objectID": "slides/x1-r-basics.html#functions",
@@ -1656,49 +1656,49 @@
     "href": "slides/x1-r-basics.html#vectors-matrices-and-arrays",
     "title": "x1-R Basics",
     "section": "Vectors, matrices and arrays",
-    "text": "Vectors, matrices and arrays\n\nvectors = 1D, matrices = 2D and arrays = n-dimensional\ndata are arranged into rows, columns, layers, …\ndata filled in column-wise, can be changed\ncreate vector\n\n\nx <- 1:20\nx\n\n [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20\n\n\n\nconvert it to matrix\n\n\ny <- matrix(x, nrow = 5, ncol = 4)\ny\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    6   11   16\n[2,]    2    7   12   17\n[3,]    3    8   13   18\n[4,]    4    9   14   19\n[5,]    5   10   15   20\n\n\n\nback-convert (flatten) to vector\n\n\nas.vector(y) # flattens the matrix to a vector\n\n [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20"
+    "text": "Vectors, matrices and arrays\n\nvectors = 1D, matrices = 2D and arrays = n-dimensional\ndata are arranged into rows, columns, layers, …\ndata filled in column-wise, can be changed\ncreate vector\n\n\nx &lt;- 1:20\nx\n\n [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20\n\n\n\nconvert it to matrix\n\n\ny &lt;- matrix(x, nrow = 5, ncol = 4)\ny\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    6   11   16\n[2,]    2    7   12   17\n[3,]    3    8   13   18\n[4,]    4    9   14   19\n[5,]    5   10   15   20\n\n\n\nback-convert (flatten) to vector\n\n\nas.vector(y) # flattens the matrix to a vector\n\n [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20"
   },
   {
     "objectID": "slides/x1-r-basics.html#vectors-matrices-and-arrays-ii",
     "href": "slides/x1-r-basics.html#vectors-matrices-and-arrays-ii",
     "title": "x1-R Basics",
     "section": "Vectors, matrices and arrays II",
-    "text": "Vectors, matrices and arrays II\n\nrecycling rule if the number of elements is too small\n\n\nx <- matrix(0, nrow=5, ncol=4)\nx\n\n     [,1] [,2] [,3] [,4]\n[1,]    0    0    0    0\n[2,]    0    0    0    0\n[3,]    0    0    0    0\n[4,]    0    0    0    0\n[5,]    0    0    0    0\n\nx <- matrix(1:4, nrow=5, ncol=4)\nx\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    2    3    4\n[2,]    2    3    4    1\n[3,]    3    4    1    2\n[4,]    4    1    2    3\n[5,]    1    2    3    4"
+    "text": "Vectors, matrices and arrays II\n\nrecycling rule if the number of elements is too small\n\n\nx &lt;- matrix(0, nrow=5, ncol=4)\nx\n\n     [,1] [,2] [,3] [,4]\n[1,]    0    0    0    0\n[2,]    0    0    0    0\n[3,]    0    0    0    0\n[4,]    0    0    0    0\n[5,]    0    0    0    0\n\nx &lt;- matrix(1:4, nrow=5, ncol=4)\nx\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    2    3    4\n[2,]    2    3    4    1\n[3,]    3    4    1    2\n[4,]    4    1    2    3\n[5,]    1    2    3    4"
   },
   {
     "objectID": "slides/x1-r-basics.html#transpose-rows-and-columns",
     "href": "slides/x1-r-basics.html#transpose-rows-and-columns",
     "title": "x1-R Basics",
     "section": "Transpose rows and columns",
-    "text": "Transpose rows and columns\n\nrow-wise creation of a matrix\n\n\nx <- matrix(1:20, nrow = 5, ncol = 4, byrow = TRUE)\nx\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    2    3    4\n[2,]    5    6    7    8\n[3,]    9   10   11   12\n[4,]   13   14   15   16\n[5,]   17   18   19   20\n\n\n\ntranspose of a matrix\n\n\nx <- t(x)\nx\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    1    5    9   13   17\n[2,]    2    6   10   14   18\n[3,]    3    7   11   15   19\n[4,]    4    8   12   16   20"
+    "text": "Transpose rows and columns\n\nrow-wise creation of a matrix\n\n\nx &lt;- matrix(1:20, nrow = 5, ncol = 4, byrow = TRUE)\nx\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    2    3    4\n[2,]    5    6    7    8\n[3,]    9   10   11   12\n[4,]   13   14   15   16\n[5,]   17   18   19   20\n\n\n\ntranspose of a matrix\n\n\nx &lt;- t(x)\nx\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    1    5    9   13   17\n[2,]    2    6   10   14   18\n[3,]    3    7   11   15   19\n[4,]    4    8   12   16   20"
   },
   {
     "objectID": "slides/x1-r-basics.html#access-array-elements",
     "href": "slides/x1-r-basics.html#access-array-elements",
     "title": "x1-R Basics",
     "section": "Access array elements",
-    "text": "Access array elements\n\n\na three dimensional array\nrow, column, layer/page\nsub-matrices (slices)\n\n\nx <- array(1:24, dim=c(3, 4, 2))\nx\n\n, , 1\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    4    7   10\n[2,]    2    5    8   11\n[3,]    3    6    9   12\n\n, , 2\n\n     [,1] [,2] [,3] [,4]\n[1,]   13   16   19   22\n[2,]   14   17   20   23\n[3,]   15   18   21   24\n\n\n\n\n\n\n\n\nelements of a matrix or array\n\n\nx[1, 3, 1] # single element\n\n[1] 7\n\nx[ , 3, 1] # 3rd column of 1st layer\n\n[1] 7 8 9\n\nx[ ,  , 2] # second layer\n\n     [,1] [,2] [,3] [,4]\n[1,]   13   16   19   22\n[2,]   14   17   20   23\n[3,]   15   18   21   24\n\nx[1,  ,  ] # another slice\n\n     [,1] [,2]\n[1,]    1   13\n[2,]    4   16\n[3,]    7   19\n[4,]   10   22"
+    "text": "Access array elements\n\n\na three dimensional array\nrow, column, layer/page\nsub-matrices (slices)\n\n\nx &lt;- array(1:24, dim=c(3, 4, 2))\nx\n\n, , 1\n\n     [,1] [,2] [,3] [,4]\n[1,]    1    4    7   10\n[2,]    2    5    8   11\n[3,]    3    6    9   12\n\n, , 2\n\n     [,1] [,2] [,3] [,4]\n[1,]   13   16   19   22\n[2,]   14   17   20   23\n[3,]   15   18   21   24\n\n\n\n\n\n\n\n\nelements of a matrix or array\n\n\nx[1, 3, 1] # single element\n\n[1] 7\n\nx[ , 3, 1] # 3rd column of 1st layer\n\n[1] 7 8 9\n\nx[ ,  , 2] # second layer\n\n     [,1] [,2] [,3] [,4]\n[1,]   13   16   19   22\n[2,]   14   17   20   23\n[3,]   15   18   21   24\n\nx[1,  ,  ] # another slice\n\n     [,1] [,2]\n[1,]    1   13\n[2,]    4   16\n[3,]    7   19\n[4,]   10   22"
   },
   {
     "objectID": "slides/x1-r-basics.html#reordering-and-indirect-indexing",
     "href": "slides/x1-r-basics.html#reordering-and-indirect-indexing",
     "title": "x1-R Basics",
     "section": "Reordering and indirect indexing",
-    "text": "Reordering and indirect indexing\n\nOriginal matrix\n\n(x <- matrix(1:20, nrow = 4))\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    1    5    9   13   17\n[2,]    2    6   10   14   18\n[3,]    3    7   11   15   19\n[4,]    4    8   12   16   20\n\n\nInverted row order\n\nx[4:1, ]\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    4    8   12   16   20\n[2,]    3    7   11   15   19\n[3,]    2    6   10   14   18\n[4,]    1    5    9   13   17\n\n\n\n\nIndirect index\n\nx[c(1, 2, 1, 2), c(1, 3, 2, 5, 4)]\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    1    9    5   17   13\n[2,]    2   10    6   18   14\n[3,]    1    9    5   17   13\n[4,]    2   10    6   18   14\n\n\nLogical selection\n\nx[c(FALSE, TRUE, FALSE, TRUE), ]\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    2    6   10   14   18\n[2,]    4    8   12   16   20\n\n\nSurprise?\n\nx[c(0, 1, 0, 1), ]\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    1    5    9   13   17\n[2,]    1    5    9   13   17"
+    "text": "Reordering and indirect indexing\n\nOriginal matrix\n\n(x &lt;- matrix(1:20, nrow = 4))\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    1    5    9   13   17\n[2,]    2    6   10   14   18\n[3,]    3    7   11   15   19\n[4,]    4    8   12   16   20\n\n\nInverted row order\n\nx[4:1, ]\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    4    8   12   16   20\n[2,]    3    7   11   15   19\n[3,]    2    6   10   14   18\n[4,]    1    5    9   13   17\n\n\n\n\nIndirect index\n\nx[c(1, 2, 1, 2), c(1, 3, 2, 5, 4)]\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    1    9    5   17   13\n[2,]    2   10    6   18   14\n[3,]    1    9    5   17   13\n[4,]    2   10    6   18   14\n\n\nLogical selection\n\nx[c(FALSE, TRUE, FALSE, TRUE), ]\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    2    6   10   14   18\n[2,]    4    8   12   16   20\n\n\nSurprise?\n\nx[c(0, 1, 0, 1), ]\n\n     [,1] [,2] [,3] [,4] [,5]\n[1,]    1    5    9   13   17\n[2,]    1    5    9   13   17"
   },
   {
     "objectID": "slides/x1-r-basics.html#matrix-multiplication-explained",
     "href": "slides/x1-r-basics.html#matrix-multiplication-explained",
     "title": "x1-R Basics",
     "section": "Matrix multiplication explained",
-    "text": "Matrix multiplication explained\n\n\nTwo matrices: A and B\n\nA <- matrix(c(1, 2, 3,\n              5, 4, 2), \n            nrow = 2, byrow = TRUE)\n\nB <- matrix(c(1, 2, 3, 4,\n              6, 8, 4, 2,\n              3, 1, 3, 2), \n            nrow = 3, byrow = TRUE)\n\nMultiplication: \\(A \\cdot B\\)\n\nA %*% B\n\n     [,1] [,2] [,3] [,4]\n[1,]   22   21   20   14\n[2,]   35   44   37   32"
+    "text": "Matrix multiplication explained\n\n\nTwo matrices: A and B\n\nA &lt;- matrix(c(1, 2, 3,\n              5, 4, 2), \n            nrow = 2, byrow = TRUE)\n\nB &lt;- matrix(c(1, 2, 3, 4,\n              6, 8, 4, 2,\n              3, 1, 3, 2), \n            nrow = 3, byrow = TRUE)\n\nMultiplication: \\(A \\cdot B\\)\n\nA %*% B\n\n     [,1] [,2] [,3] [,4]\n[1,]   22   21   20   14\n[2,]   35   44   37   32"
   },
   {
     "objectID": "slides/x1-r-basics.html#transpose-and-inverse",
     "href": "slides/x1-r-basics.html#transpose-and-inverse",
     "title": "x1-R Basics",
     "section": "Transpose and inverse",
-    "text": "Transpose and inverse\nMatrix\n\nX <- matrix(c(1, 2, 3, \n              4, 3, 2, \n              5, 4, 6),\n            nrow = 3)\nX\n\n     [,1] [,2] [,3]\n[1,]    1    4    5\n[2,]    2    3    4\n[3,]    3    2    6\n\n\nTranspose\n\nt(X)\n\n     [,1] [,2] [,3]\n[1,]    1    2    3\n[2,]    4    3    2\n[3,]    5    4    6\n\n\nInverse (\\(X^{-1}\\))\n\nsolve(X)\n\n\n\n        [,1]    [,2]    [,3]\n[1,] -0.6667  0.9333 -0.0667\n[2,]  0.0000  0.6000 -0.4000\n[3,]  0.3333 -0.6667  0.3333"
+    "text": "Transpose and inverse\nMatrix\n\nX &lt;- matrix(c(1, 2, 3, \n              4, 3, 2, \n              5, 4, 6),\n            nrow = 3)\nX\n\n     [,1] [,2] [,3]\n[1,]    1    4    5\n[2,]    2    3    4\n[3,]    3    2    6\n\n\nTranspose\n\nt(X)\n\n     [,1] [,2] [,3]\n[1,]    1    2    3\n[2,]    4    3    2\n[3,]    5    4    6\n\n\nInverse (\\(X^{-1}\\))\n\nsolve(X)\n\n\n\n        [,1]    [,2]    [,3]\n[1,] -0.6667  0.9333 -0.0667\n[2,]  0.0000  0.6000 -0.4000\n[3,]  0.3333 -0.6667  0.3333"
   },
   {
     "objectID": "slides/x1-r-basics.html#multiplication-of-a-matrix-with-its-inverse",
@@ -1712,14 +1712,14 @@
     "href": "slides/x1-r-basics.html#linear-system-of-equations",
     "title": "x1-R Basics",
     "section": "Linear system of equations",
-    "text": "Linear system of equations\n\n\\[\\begin{align}\n3x && +  && 2y   && -  && z  && =  && 1 \\\\\n2x && -  && 2y   && +  && 4z && =  && -2 \\\\\n-x && +  && 1/2y && -  && z  && =  && 0\n\\end{align}\\]\n\n\nA <- matrix(c(3,  2,   -1,\n             2,  -2,    4,\n            -1,   0.5, -1), nrow=3, byrow=TRUE)\nb <- c(1, -2, 0)\n\n\n\\[\\begin{align}\nAx &= b\\\\\nx  &= A^{-1}b\n\\end{align}\\]\n\n\nsolve(A) %*% b\n\n     [,1]\n[1,]    1\n[2,]   -2\n[3,]   -2"
+    "text": "Linear system of equations\n\n\\[\\begin{align}\n3x && +  && 2y   && -  && z  && =  && 1 \\\\\n2x && -  && 2y   && +  && 4z && =  && -2 \\\\\n-x && +  && 1/2y && -  && z  && =  && 0\n\\end{align}\\]\n\n\nA &lt;- matrix(c(3,  2,   -1,\n             2,  -2,    4,\n            -1,   0.5, -1), nrow=3, byrow=TRUE)\nb &lt;- c(1, -2, 0)\n\n\n\\[\\begin{align}\nAx &= b\\\\\nx  &= A^{-1}b\n\\end{align}\\]\n\n\nsolve(A) %*% b\n\n     [,1]\n[1,]    1\n[2,]   -2\n[3,]   -2"
   },
   {
     "objectID": "slides/x1-r-basics.html#data-frames",
     "href": "slides/x1-r-basics.html#data-frames",
     "title": "x1-R Basics",
     "section": "Data frames",
-    "text": "Data frames\n\nrepresent tabular data\nsimilar to matrices, but different types of data in columns possible\ntypically imported from a file with read.table or read.csv\n\n\n\ncities <- read.csv(\"cities.csv\")\ncities\n\n\n\n\n               Name    Country Population Latitude Longitude IsCapital\n1  Fürstenfeldbruck    Germany      34033  48.1690   11.2340     FALSE\n2             Dhaka Bangladesh   13000000  23.7500   90.3700      TRUE\n3       Ulaanbaatar   Mongolia    3010000  47.9170  106.8830      TRUE\n4           Shantou      China    5320000  23.3500  116.6700     FALSE\n5           Kampala     Uganda    1659000   0.3310   32.5830      TRUE\n6           Cottbus    Germany     100000  51.7650   14.3280     FALSE\n7           Nairobi      Kenya    3100000   1.2833   36.8167      TRUE\n8             Hanoi    Vietnam    1452055  21.0300  105.8400      TRUE\n9          Bacgiang    Vietnam      53739  21.2800  106.1900     FALSE\n10       Addis Abba   Ethiopia    2823167   9.0300   38.7400      TRUE\n11        Hyderabad      India    3632094  17.4000   78.4800     FALSE\n\n\n\\(\\rightarrow\\) download data set"
+    "text": "Data frames\n\nrepresent tabular data\nsimilar to matrices, but different types of data in columns possible\ntypically imported from a file with read.table or read.csv\n\n\n\ncities &lt;- read.csv(\"cities.csv\")\ncities\n\n\n\n\n               Name    Country Population Latitude Longitude IsCapital\n1  Fürstenfeldbruck    Germany      34033  48.1690   11.2340     FALSE\n2             Dhaka Bangladesh   13000000  23.7500   90.3700      TRUE\n3       Ulaanbaatar   Mongolia    3010000  47.9170  106.8830      TRUE\n4           Shantou      China    5320000  23.3500  116.6700     FALSE\n5           Kampala     Uganda    1659000   0.3310   32.5830      TRUE\n6           Cottbus    Germany     100000  51.7650   14.3280     FALSE\n7           Nairobi      Kenya    3100000   1.2833   36.8167      TRUE\n8             Hanoi    Vietnam    1452055  21.0300  105.8400      TRUE\n9          Bacgiang    Vietnam      53739  21.2800  106.1900     FALSE\n10       Addis Abba   Ethiopia    2823167   9.0300   38.7400      TRUE\n11        Hyderabad      India    3632094  17.4000   78.4800     FALSE\n\n\n\\(\\rightarrow\\) download data set"
   },
   {
     "objectID": "slides/x1-r-basics.html#what-is-a-csv-file",
@@ -1740,14 +1740,14 @@
     "href": "slides/x1-r-basics.html#recommendation",
     "title": "x1-R Basics",
     "section": "Recommendation",
-    "text": "Recommendation\n\nMost of our course examples are plain CSV files, so we can use read.csv() or read_csv().\n\n\nlibrary(\"readr\")\ncities <- read_csv(\"cities.csv\")\ncities\n\n\n\n\n# A tibble: 11 × 6\n   Name             Country    Population Latitude Longitude IsCapital\n   <chr>            <chr>           <dbl>    <dbl>     <dbl> <lgl>    \n 1 Fürstenfeldbruck Germany         34033   48.2        11.2 FALSE    \n 2 Dhaka            Bangladesh   13000000   23.8        90.4 TRUE     \n 3 Ulaanbaatar      Mongolia      3010000   47.9       107.  TRUE     \n 4 Shantou          China         5320000   23.4       117.  FALSE    \n 5 Kampala          Uganda        1659000    0.331      32.6 TRUE     \n 6 Cottbus          Germany        100000   51.8        14.3 FALSE    \n 7 Nairobi          Kenya         3100000    1.28       36.8 TRUE     \n 8 Hanoi            Vietnam       1452055   21.0       106.  TRUE     \n 9 Bacgiang         Vietnam         53739   21.3       106.  FALSE    \n10 Addis Abba       Ethiopia      2823167    9.03       38.7 TRUE     \n11 Hyderabad        India         3632094   17.4        78.5 FALSE"
+    "text": "Recommendation\n\nMost of our course examples are plain CSV files, so we can use read.csv() or read_csv().\n\n\nlibrary(\"readr\")\ncities &lt;- read_csv(\"cities.csv\")\ncities\n\n\n\n\n# A tibble: 11 × 6\n   Name             Country    Population Latitude Longitude IsCapital\n   &lt;chr&gt;            &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;lgl&gt;    \n 1 Fürstenfeldbruck Germany         34033   48.2        11.2 FALSE    \n 2 Dhaka            Bangladesh   13000000   23.8        90.4 TRUE     \n 3 Ulaanbaatar      Mongolia      3010000   47.9       107.  TRUE     \n 4 Shantou          China         5320000   23.4       117.  FALSE    \n 5 Kampala          Uganda        1659000    0.331      32.6 TRUE     \n 6 Cottbus          Germany        100000   51.8        14.3 FALSE    \n 7 Nairobi          Kenya         3100000    1.28       36.8 TRUE     \n 8 Hanoi            Vietnam       1452055   21.0       106.  TRUE     \n 9 Bacgiang         Vietnam         53739   21.3       106.  FALSE    \n10 Addis Abba       Ethiopia      2823167    9.03       38.7 TRUE     \n11 Hyderabad        India         3632094   17.4        78.5 FALSE"
   },
   {
     "objectID": "slides/x1-r-basics.html#data-import-assistant-of-rstudio",
     "href": "slides/x1-r-basics.html#data-import-assistant-of-rstudio",
     "title": "x1-R Basics",
     "section": "Data import assistant of RStudio",
-    "text": "Data import assistant of RStudio\n\nFile –> Import Dataset\nSeveral options are available:\n\n“From text (base)” uses the classical R functions\n“From text (readr)” is more modern and uses an add-on package\n“From Excel” can read Excel files if (and only if) they have a clear tabular structure"
+    "text": "Data import assistant of RStudio\n\nFile –&gt; Import Dataset\nSeveral options are available:\n\n“From text (base)” uses the classical R functions\n“From text (readr)” is more modern and uses an add-on package\n“From Excel” can read Excel files if (and only if) they have a clear tabular structure"
   },
   {
     "objectID": "slides/x1-r-basics.html#from-text-base",
@@ -1768,56 +1768,56 @@
     "href": "slides/x1-r-basics.html#save-data-to-excel-compatible-format",
     "title": "x1-R Basics",
     "section": "Save data to Excel-compatible format",
-    "text": "Save data to Excel-compatible format\nEnglish number format (“.” as decimal):\n\nwrite.table(cities, \"output.csv\", row.names = FALSE, sep=\",\")\n\nGerman number format (“,” as decimal):\n\nwrite.table(cities, \"output.csv\", row.names = FALSE, sep=\";\", dec=\",\")"
+    "text": "Save data to Excel-compatible format\nEnglish number format (“.” as decimal):\n\nwrite.table(cities, \"output.csv\", row.names = FALSE, sep=\",\")\n\nGerman number format (“,” as decimal):\n\nwrite.table(cities, \"output.csv\", row.names = FALSE, sep=\";\", dec=\",\")\n\n ## Creation of data frames\n\n\ntypical: read data from external file, e.g. csv-files.\nsmall data frames can be created inline in a script\n\nInline creation of a data frame\n\nclem &lt;- data.frame(\n  brand = c(\"EP\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \n            \"EB\", \"EB\", \"EB\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EB\", \"EP\"),\n  weight = c(88, 96, 100, 96, 90, 100, 92, 92, 102, 99, 86, 89, 99, 89, 75, 80, \n             81, 96, 82, 98, 80, 107, 88)\n)"
   },
   {
     "objectID": "slides/x1-r-basics.html#lists-1",
     "href": "slides/x1-r-basics.html#lists-1",
     "title": "x1-R Basics",
     "section": "Lists",
-    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL <- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:11] -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 ...\n $ counts  : int [1:10] 1 4 9 16 20 22 15 5 7 1\n $ density : num [1:10] 0.02 0.08 0.18 0.32 0.4 0.44 0.3 0.1 0.14 0.02\n $ mids    : num [1:10] -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\""
+    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL &lt;- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:12] -3 -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 ...\n $ counts  : int [1:11] 1 1 4 10 15 17 19 13 13 4 ...\n $ density : num [1:11] 0.02 0.02 0.08 0.2 0.3 0.34 0.38 0.26 0.26 0.08 ...\n $ mids    : num [1:11] -2.75 -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 ...\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\""
   },
   {
     "objectID": "slides/x1-r-basics.html#creation-of-lists",
     "href": "slides/x1-r-basics.html#creation-of-lists",
     "title": "x1-R Basics",
     "section": "Creation of lists",
-    "text": "Creation of lists\n\nL1 <- list(a=1:10, b=c(1,2,3), x=\"hello\")\n\nNested list (lists within a list)\n\nL2 <- list(a=5:7, b=L1)\n\nstr shows tree-like structure\n\nstr(L2)\n\nList of 2\n $ a: int [1:3] 5 6 7\n $ b:List of 3\n  ..$ a: int [1:10] 1 2 3 4 5 6 7 8 9 10\n  ..$ b: num [1:3] 1 2 3\n  ..$ x: chr \"hello\"\n\n\n\nAccess to list elements by names\n\nL2$a\n\n[1] 5 6 7\n\nL2$b$a\n\n [1]  1  2  3  4  5  6  7  8  9 10\n\n\n\n\n\n\n\nor with indices\n\nL2[1]   # a list with 1 element\n\n$a\n[1] 5 6 7\n\nL2[[1]] # content of 1st element\n\n[1] 5 6 7"
+    "text": "Creation of lists\n\nL1 &lt;- list(a=1:10, b=c(1,2,3), x=\"hello\")\n\nNested list (lists within a list)\n\nL2 &lt;- list(a=5:7, b=L1)\n\nstr shows tree-like structure\n\nstr(L2)\n\nList of 2\n $ a: int [1:3] 5 6 7\n $ b:List of 3\n  ..$ a: int [1:10] 1 2 3 4 5 6 7 8 9 10\n  ..$ b: num [1:3] 1 2 3\n  ..$ x: chr \"hello\"\n\n\n\nAccess to list elements by names\n\nL2$a\n\n[1] 5 6 7\n\nL2$b$a\n\n [1]  1  2  3  4  5  6  7  8  9 10\n\n\n\n\n\n\n\nor with indices\n\nL2[1]   # a list with 1 element\n\n$a\n[1] 5 6 7\n\nL2[[1]] # content of 1st element\n\n[1] 5 6 7"
   },
   {
     "objectID": "slides/x1-r-basics.html#lists-ii",
     "href": "slides/x1-r-basics.html#lists-ii",
     "title": "x1-R Basics",
     "section": "Lists II",
-    "text": "Lists II\n\nConvert list to vector\n\n\nL <- unlist(L2)\nstr(L)\n\n Named chr [1:17] \"5\" \"6\" \"7\" \"1\" \"2\" \"3\" \"4\" \"5\" \"6\" \"7\" \"8\" \"9\" \"10\" \"1\" ...\n - attr(*, \"names\")= chr [1:17] \"a1\" \"a2\" \"a3\" \"b.a1\" ...\n\n\n\n\nFlatten list (remove only top level of list)\n\n\nL <- unlist(L2, recursive = FALSE)\nstr(L)\n\nList of 6\n $ a1 : int 5\n $ a2 : int 6\n $ a3 : int 7\n $ b.a: int [1:10] 1 2 3 4 5 6 7 8 9 10\n $ b.b: num [1:3] 1 2 3\n $ b.x: chr \"hello\""
+    "text": "Lists II\n\nConvert list to vector\n\n\nL &lt;- unlist(L2)\nstr(L)\n\n Named chr [1:17] \"5\" \"6\" \"7\" \"1\" \"2\" \"3\" \"4\" \"5\" \"6\" \"7\" \"8\" \"9\" \"10\" \"1\" ...\n - attr(*, \"names\")= chr [1:17] \"a1\" \"a2\" \"a3\" \"b.a1\" ...\n\n\n\n\nFlatten list (remove only top level of list)\n\n\nL &lt;- unlist(L2, recursive = FALSE)\nstr(L)\n\nList of 6\n $ a1 : int 5\n $ a2 : int 6\n $ a3 : int 7\n $ b.a: int [1:10] 1 2 3 4 5 6 7 8 9 10\n $ b.b: num [1:3] 1 2 3\n $ b.x: chr \"hello\""
   },
   {
     "objectID": "slides/x1-r-basics.html#convert-lists",
     "href": "slides/x1-r-basics.html#convert-lists",
     "title": "x1-R Basics",
     "section": "Convert lists",
-    "text": "Convert lists\n\nConvert vector to list\n\nx <- 1:3\nL <- as.list(x)\nstr(L)\n\nList of 3\n $ : int 1\n $ : int 2\n $ : int 3\n\n\nConvert matrix to data frame\n\nx <- matrix(1:16, nrow=4)\ndf <- as.data.frame(x)\ndf\n\n  V1 V2 V3 V4\n1  1  5  9 13\n2  2  6 10 14\n3  3  7 11 15\n4  4  8 12 16\n\nis.list(df)\n\n[1] TRUE\n\n\n\n\n\n\n\nConvert data frame to matrix\n\nas.matrix(df)\n\n     V1 V2 V3 V4\n[1,]  1  5  9 13\n[2,]  2  6 10 14\n[3,]  3  7 11 15\n[4,]  4  8 12 16\n\n\nAppend column to data frame\n\ndf2 <- cbind(df, id = \n   c(\"first\", \"second\", \"third\", \"fourth\"))\n\nData frame with character column\n\nas.matrix(df2)\n\n     V1  V2  V3   V4   id      \n[1,] \"1\" \"5\" \" 9\" \"13\" \"first\" \n[2,] \"2\" \"6\" \"10\" \"14\" \"second\"\n[3,] \"3\" \"7\" \"11\" \"15\" \"third\" \n[4,] \"4\" \"8\" \"12\" \"16\" \"fourth\""
+    "text": "Convert lists\n\nConvert vector to list\n\nx &lt;- 1:3\nL &lt;- as.list(x)\nstr(L)\n\nList of 3\n $ : int 1\n $ : int 2\n $ : int 3\n\n\nConvert matrix to data frame\n\nx &lt;- matrix(1:16, nrow=4)\ndf &lt;- as.data.frame(x)\ndf\n\n  V1 V2 V3 V4\n1  1  5  9 13\n2  2  6 10 14\n3  3  7 11 15\n4  4  8 12 16\n\nis.list(df)\n\n[1] TRUE\n\n\n\n\n\n\n\nConvert data frame to matrix\n\nas.matrix(df)\n\n     V1 V2 V3 V4\n[1,]  1  5  9 13\n[2,]  2  6 10 14\n[3,]  3  7 11 15\n[4,]  4  8 12 16\n\n\nAppend column to data frame\n\ndf2 &lt;- cbind(df, id = \n   c(\"first\", \"second\", \"third\", \"fourth\"))\n\nData frame with character column\n\nas.matrix(df2)\n\n     V1  V2  V3   V4   id      \n[1,] \"1\" \"5\" \" 9\" \"13\" \"first\" \n[2,] \"2\" \"6\" \"10\" \"14\" \"second\"\n[3,] \"3\" \"7\" \"11\" \"15\" \"third\" \n[4,] \"4\" \"8\" \"12\" \"16\" \"fourth\""
   },
   {
     "objectID": "slides/x1-r-basics.html#naming-of-list-elements",
     "href": "slides/x1-r-basics.html#naming-of-list-elements",
     "title": "x1-R Basics",
     "section": "Naming of list elements",
-    "text": "Naming of list elements\nDuring creation\n\nx <- c(a=1.2, b=2.3, c=6)\nL <- list(a=1:3, b=\"hello\")\n\nWith names-function\nOriginal names:\n\nnames(L)\n\n[1] \"a\" \"b\"\n\n\nRename list elements:\n\nnames(L) <- c(\"numbers\", \"text\")\nnames(L)\n\n[1] \"numbers\" \"text\"   \n\n\nThe names-functions works also with vectors. The pre-defined vectors letters contains lower case and LETTERS uppercase letters:\n\nx <- 1:5\nnames(x) <- letters[1:5]\nx\n\na b c d e \n1 2 3 4 5"
+    "text": "Naming of list elements\nDuring creation\n\nx &lt;- c(a=1.2, b=2.3, c=6)\nL &lt;- list(a=1:3, b=\"hello\")\n\nWith names-function\nOriginal names:\n\nnames(L)\n\n[1] \"a\" \"b\"\n\n\nRename list elements:\n\nnames(L) &lt;- c(\"numbers\", \"text\")\nnames(L)\n\n[1] \"numbers\" \"text\"   \n\n\nThe names-functions works also with vectors. The pre-defined vectors letters contains lower case and LETTERS uppercase letters:\n\nx &lt;- 1:5\nnames(x) &lt;- letters[1:5]\nx\n\na b c d e \n1 2 3 4 5"
   },
   {
     "objectID": "slides/x1-r-basics.html#selection-of-data-frame-columns",
     "href": "slides/x1-r-basics.html#selection-of-data-frame-columns",
     "title": "x1-R Basics",
     "section": "Selection of data frame columns",
-    "text": "Selection of data frame columns\nCreate a data frame from a matrix\n\nx <- matrix(1:16, nrow=4)\ndf <- as.data.frame(x)\ndf\n\n  V1 V2 V3 V4\n1  1  5  9 13\n2  2  6 10 14\n3  3  7 11 15\n4  4  8 12 16\n\n\nAdd names to the columns\n\nnames(df) <- c(\"N\", \"P\", \"O2\", \"C\")\ndf\n\n  N P O2  C\n1 1 5  9 13\n2 2 6 10 14\n3 3 7 11 15\n4 4 8 12 16\n\n\nSelect 3 columns and change order\n\ndf2 <- df[c(\"C\", \"N\", \"P\")]\ndf2\n\n   C N P\n1 13 1 5\n2 14 2 6\n3 15 3 7\n4 16 4 8"
+    "text": "Selection of data frame columns\nCreate a data frame from a matrix\n\nx &lt;- matrix(1:16, nrow=4)\ndf &lt;- as.data.frame(x)\ndf\n\n  V1 V2 V3 V4\n1  1  5  9 13\n2  2  6 10 14\n3  3  7 11 15\n4  4  8 12 16\n\n\nAdd names to the columns\n\nnames(df) &lt;- c(\"N\", \"P\", \"O2\", \"C\")\ndf\n\n  N P O2  C\n1 1 5  9 13\n2 2 6 10 14\n3 3 7 11 15\n4 4 8 12 16\n\n\nSelect 3 columns and change order\n\ndf2 &lt;- df[c(\"C\", \"N\", \"P\")]\ndf2\n\n   C N P\n1 13 1 5\n2 14 2 6\n3 15 3 7\n4 16 4 8"
   },
   {
     "objectID": "slides/x1-r-basics.html#apply-a-function-to-multiple-rows-and-columns",
     "href": "slides/x1-r-basics.html#apply-a-function-to-multiple-rows-and-columns",
     "title": "x1-R Basics",
     "section": "Apply a function to multiple rows and columns",
-    "text": "Apply a function to multiple rows and columns\n\nExample data frame\n\ndf  # data frame of previous slide\n\n  N P O2  C\n1 1 5  9 13\n2 2 6 10 14\n3 3 7 11 15\n4 4 8 12 16\n\n\nApply a function to all elements of a list\n\nlapply(df, mean)  # returns list\n\n$N\n[1] 2.5\n\n$P\n[1] 6.5\n\n$O2\n[1] 10.5\n\n$C\n[1] 14.5\n\nsapply(df, mean)  # returns vector\n\n   N    P   O2    C \n 2.5  6.5 10.5 14.5 \n\n\n\n\n\n\n\nRow wise apply\n\napply(df, MARGIN = 1, sum)\n\n[1] 28 32 36 40\n\n\nColumn wise apply\n\napply(df, MARGIN = 2, sum)\n\n N  P O2  C \n10 26 42 58 \n\n\nApply user defined function\n\nse <- function(x)\n  sd(x)/sqrt(length(x))\n\nsapply(df, se)\n\n\n\n     N      P     O2      C \n0.6455 0.6455 0.6455 0.6455"
+    "text": "Apply a function to multiple rows and columns\n\nExample data frame\n\ndf  # data frame of previous slide\n\n  N P O2  C\n1 1 5  9 13\n2 2 6 10 14\n3 3 7 11 15\n4 4 8 12 16\n\n\nApply a function to all elements of a list\n\nlapply(df, mean)  # returns list\n\n$N\n[1] 2.5\n\n$P\n[1] 6.5\n\n$O2\n[1] 10.5\n\n$C\n[1] 14.5\n\nsapply(df, mean)  # returns vector\n\n   N    P   O2    C \n 2.5  6.5 10.5 14.5 \n\n\n\n\n\n\n\nRow wise apply\n\napply(df, MARGIN = 1, sum)\n\n[1] 28 32 36 40\n\n\nColumn wise apply\n\napply(df, MARGIN = 2, sum)\n\n N  P O2  C \n10 26 42 58 \n\n\nApply user defined function\n\nse &lt;- function(x)\n  sd(x)/sqrt(length(x))\n\nsapply(df, se)\n\n\n\n     N      P     O2      C \n0.6455 0.6455 0.6455 0.6455"
   },
   {
     "objectID": "slides/x1-r-basics.html#for-loop",
@@ -1831,35 +1831,35 @@
     "href": "slides/x1-r-basics.html#repeat-and-while-loops",
     "title": "x1-R Basics",
     "section": "repeat and while-loops",
-    "text": "repeat and while-loops\nRepeat until a break condition occurs\n\n\nx <- 1\nrepeat {\n x <- 0.1*x\n cat(x, \"\\n\")\n if (x < 1e-4) break\n}\n\n0.1 \n0.01 \n0.001 \n1e-04 \n1e-05 \n\n\nLoop as long as a whilecondition is TRUE:\n\nj <- 1; x <- 0\nwhile (j > 1e-3) {\n  j <- 0.1 * j\n  x <- x + j\n  cat(j, x, \"\\n\")\n}\n\n0.1 0.1 \n0.01 0.11 \n0.001 0.111 \n1e-04 0.1111 \n\n\n\nIn many cases, loops can be avoided by using vectors and matrices or apply."
+    "text": "repeat and while-loops\nRepeat until a break condition occurs\n\n\nx &lt;- 1\nrepeat {\n x &lt;- 0.1*x\n cat(x, \"\\n\")\n if (x &lt; 1e-4) break\n}\n\n0.1 \n0.01 \n0.001 \n1e-04 \n1e-05 \n\n\nLoop as long as a whilecondition is TRUE:\n\nj &lt;- 1; x &lt;- 0\nwhile (j &gt; 1e-3) {\n  j &lt;- 0.1 * j\n  x &lt;- x + j\n  cat(j, x, \"\\n\")\n}\n\n0.1 0.1 \n0.01 0.11 \n0.001 0.111 \n1e-04 0.1111 \n\n\n\nIn many cases, loops can be avoided by using vectors and matrices or apply."
   },
   {
     "objectID": "slides/x1-r-basics.html#avoidable-loops",
     "href": "slides/x1-r-basics.html#avoidable-loops",
     "title": "x1-R Basics",
     "section": "Avoidable loops",
-    "text": "Avoidable loops\n\nColumn means of a data frame\n\n## a data frame\ndf <- data.frame(\n  N=1:4, P=5:8, O2=9:12, C=13:16\n)\n\n## loop\nm <- numeric(4)\nfor(i in 1:4) {\n m[i] <- mean(df[,i])\n}\nm\n\n[1]  2.5  6.5 10.5 14.5\n\n\n\\(\\rightarrow\\) easier without loop\n\nsapply(df, mean)\n\n   N    P   O2    C \n 2.5  6.5 10.5 14.5 \n\n\n… also possible colMeans\n\n\n\n\n\nAn infinite series:\n\\[\n\\sum_{k=1}^{\\infty}\\frac{(-1)^{k-1}}{2k-1} = 1 - \\frac{1}{3} + \\frac{1}{5} - \\frac{1}{7}\n\\]\n\nx <- 0\nfor (k in seq(1, 1e5)) {\n  enum  <- (-1)^(k-1)\n  denom <- 2*k-1\n  x <- x + enum/denom\n}\n4 * x\n\n[1] 3.141583\n\n\n\\(\\Rightarrow\\) Can you vectorize this?"
+    "text": "Avoidable loops\n\nColumn means of a data frame\n\n## a data frame\ndf &lt;- data.frame(\n  N=1:4, P=5:8, O2=9:12, C=13:16\n)\n\n## loop\nm &lt;- numeric(4)\nfor(i in 1:4) {\n m[i] &lt;- mean(df[,i])\n}\nm\n\n[1]  2.5  6.5 10.5 14.5\n\n\n\\(\\rightarrow\\) easier without loop\n\nsapply(df, mean)\n\n   N    P   O2    C \n 2.5  6.5 10.5 14.5 \n\n\n… also possible colMeans\n\n\n\n\n\nAn infinite series:\n\\[\n\\sum_{k=1}^{\\infty}\\frac{(-1)^{k-1}}{2k-1} = 1 - \\frac{1}{3} + \\frac{1}{5} - \\frac{1}{7}\n\\]\n\nx &lt;- 0\nfor (k in seq(1, 1e5)) {\n  enum  &lt;- (-1)^(k-1)\n  denom &lt;- 2*k-1\n  x &lt;- x + enum/denom\n}\n4 * x\n\n[1] 3.141583\n\n\n\\(\\Rightarrow\\) Can you vectorize this?"
   },
   {
     "objectID": "slides/x1-r-basics.html#unavoidable-loop",
     "href": "slides/x1-r-basics.html#unavoidable-loop",
     "title": "x1-R Basics",
     "section": "Unavoidable loop",
-    "text": "Unavoidable loop\nThe same series:\n\\[\n\\sum_{k=1}^{\\infty}\\frac{(-1)^{k-1}}{2k-1} = 1 - \\frac{1}{3} + \\frac{1}{5} - \\frac{1}{7}\n\\]\n\nx <- 0\nk <- 0\nrepeat {\n  k <- k + 1\n  enum  <- (-1)^(k-1)\n  denom <- 2*k-1\n  delta <- enum/denom\n  x <- x + delta\n  if (abs(delta) < 1e-6) break\n}\n4 * x\n\n[1] 3.141595\n\n\n\nnumber of iterations not known in advance\nconvergence criterium, stop when required precision is reached\nno allocation of long vectors –> less memory than for loop\n\n\n\nNote: there are more efficient methods to calculate \\(\\pi\\)."
+    "text": "Unavoidable loop\nThe same series:\n\\[\n\\sum_{k=1}^{\\infty}\\frac{(-1)^{k-1}}{2k-1} = 1 - \\frac{1}{3} + \\frac{1}{5} - \\frac{1}{7}\n\\]\n\nx &lt;- 0\nk &lt;- 0\nrepeat {\n  k &lt;- k + 1\n  enum  &lt;- (-1)^(k-1)\n  denom &lt;- 2*k-1\n  delta &lt;- enum/denom\n  x &lt;- x + delta\n  if (abs(delta) &lt; 1e-6) break\n}\n4 * x\n\n[1] 3.141595\n\n\n\nnumber of iterations not known in advance\nconvergence criterium, stop when required precision is reached\nno allocation of long vectors –&gt; less memory than for loop\n\n\n\nNote: there are more efficient methods to calculate \\(\\pi\\)."
   },
   {
     "objectID": "slides/x1-r-basics.html#if-clause",
     "href": "slides/x1-r-basics.html#if-clause",
     "title": "x1-R Basics",
     "section": "if-clause",
-    "text": "if-clause\n\nThe example before showed already an if-clause. The syntax is as follows:\n\nif (<condition>)\n  <statement>\nelse if (<condition>)\n  <statement>\nelse\n  <statement>\n\n\nProper indentation improves readability.\nRecommended: 2 characters\nProfessionals indent always.\nPlease do!\n\n\n\n\n\n\nUse of {} to group statements\n\nstatement can of be a compound statement with curly brackets {}\nto avoid common mistakes and be on the safe side, use always {}:\n\nExample:\n\nif (x == 0) {\n  print(\"x is Null\")\n} else if (x < 0) {\n  print(\"x is negative\")\n} else {\n  print(\"x is positive\")\n}"
+    "text": "if-clause\n\nThe example before showed already an if-clause. The syntax is as follows:\n\nif (&lt;condition&gt;)\n  &lt;statement&gt;\nelse if (&lt;condition&gt;)\n  &lt;statement&gt;\nelse\n  &lt;statement&gt;\n\n\nProper indentation improves readability.\nRecommended: 2 characters\nProfessionals indent always.\nPlease do!\n\n\n\n\n\n\nUse of {} to group statements\n\nstatement can of be a compound statement with curly brackets {}\nto avoid common mistakes and be on the safe side, use always {}:\n\nExample:\n\nif (x == 0) {\n  print(\"x is Null\")\n} else if (x &lt; 0) {\n  print(\"x is negative\")\n} else {\n  print(\"x is positive\")\n}"
   },
   {
     "objectID": "slides/x1-r-basics.html#vectorized-if",
     "href": "slides/x1-r-basics.html#vectorized-if",
     "title": "x1-R Basics",
     "section": "Vectorized if",
-    "text": "Vectorized if\nOften, a vectorized ifelse is more appropropriate than an if-function.\nLet’s assume we have a data set of chemical measurements x with missing NA values, and “nondetects” that are encoded with -99. First we want to replace the nontetects with half of the detection limit (e.g. 0.5):\n\nx <- c(3, 6, NA, 5, 4, -99, 7, NA,  8, -99, -99, 9)\nx2 <- ifelse(x == -99, 0.5, x)\nx2\n\n [1] 3.0 6.0  NA 5.0 4.0 0.5 7.0  NA 8.0 0.5 0.5 9.0\n\n\nNow let’s remove the NAs:\n\nx3 <- na.omit(x2)\nx3\n\n [1] 3.0 6.0 5.0 4.0 0.5 7.0 8.0 0.5 0.5 9.0\nattr(,\"na.action\")\n[1] 3 8\nattr(,\"class\")\n[1] \"omit\""
+    "text": "Vectorized if\nOften, a vectorized ifelse is more appropropriate than an if-function.\nLet’s assume we have a data set of chemical measurements x with missing NA values, and “nondetects” that are encoded with -99. First we want to replace the nontetects with half of the detection limit (e.g. 0.5):\n\nx &lt;- c(3, 6, NA, 5, 4, -99, 7, NA,  8, -99, -99, 9)\nx2 &lt;- ifelse(x == -99, 0.5, x)\nx2\n\n [1] 3.0 6.0  NA 5.0 4.0 0.5 7.0  NA 8.0 0.5 0.5 9.0\n\n\nNow let’s remove the NAs:\n\nx3 &lt;- na.omit(x2)\nx3\n\n [1] 3.0 6.0 5.0 4.0 0.5 7.0 8.0 0.5 0.5 9.0\nattr(,\"na.action\")\n[1] 3 8\nattr(,\"class\")\n[1] \"omit\""
   },
   {
     "objectID": "slides/x1-r-basics.html#further-reading",
@@ -2763,5 +2763,33 @@
     "title": "x1-R Basics",
     "section": "The most versatile: read.table()",
     "text": "The most versatile: read.table()\n\nread.table(file, header = FALSE, sep = \"\", quote = \"\\\"'\",\n           dec = \".\", numerals = c(\"allow.loss\", \"warn.loss\", \"no.loss\"),\n           row.names, col.names, as.is = !stringsAsFactors, tryLogical = TRUE,\n           na.strings = \"NA\", colClasses = NA, nrows = -1,\n           skip = 0, check.names = TRUE, fill = !blank.lines.skip,\n           strip.white = FALSE, blank.lines.skip = TRUE,\n           comment.char = \"#\",\n           allowEscapes = FALSE, flush = FALSE,\n           stringsAsFactors = FALSE,\n           fileEncoding = \"\", encoding = \"unknown\", text, skipNul = FALSE)\n\nExamples\n\nread.table(\"cities.csv\", sep = \",\",  dec = \".\")  # same as read.csv\nread.table(\"cities.txt\", sep = \"\\t\", dec = \".\")  # tab delimited\nread.table(\"cities.csv\", sep = \";\",  dec = \",\")  # German csv\n\nread.table(\"cities.csv\", sep = \",\", dec = \".\", skip = 5) # skip first 5 lines"
+  },
+  {
+    "objectID": "slides/x1-r-basics.html#creation-of-data-frames",
+    "href": "slides/x1-r-basics.html#creation-of-data-frames",
+    "title": "x1-R Basics",
+    "section": "Creation of data frames",
+    "text": "Creation of data frames\n\ntypical: read data from external file, e.g. csv-files.\n\nCreation in the script\n\nclem &lt;- data.frame(\n  brand = c(\"EP\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \n            \"EB\", \"EB\", \"EB\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EB\", \"EP\"),\n  weight = c(88, 96, 100, 96, 90, 100, 92, 92, 102, 99, 86, 89, 99, 89, 75, 80, \n             81, 96, 82, 98, 80, 107, 88))"
+  },
+  {
+    "objectID": "slides/x1-r-basics.html#conversion-between-matrices-and-data-frames",
+    "href": "slides/x1-r-basics.html#conversion-between-matrices-and-data-frames",
+    "title": "x1-R Basics",
+    "section": "Conversion between matrices and data frames",
+    "text": "Conversion between matrices and data frames\n\nMatrix to data frame\n\nx &lt;- matrix(1:16, nrow=4)\ndf &lt;- as.data.frame(x)\ndf\n\n  V1 V2 V3 V4\n1  1  5  9 13\n2  2  6 10 14\n3  3  7 11 15\n4  4  8 12 16\n\n\n\nData frame to matrix\n\nas.matrix(df)\n\n     V1 V2 V3 V4\n[1,]  1  5  9 13\n[2,]  2  6 10 14\n[3,]  3  7 11 15\n[4,]  4  8 12 16\n\n\n\n\nAppend column\n\ndf2 &lt;- cbind(df,\n         id = c(\"first\", \"second\", \"third\", \"fourth\")\n       )\n\nOr simply\n\ndf2$id &lt;- c(\"first\", \"second\", \"third\", \"fourth\")\n\n\nData frame with character column\n\nas.matrix(df2)\n\n     V1  V2  V3   V4   id      \n[1,] \"1\" \"5\" \" 9\" \"13\" \"first\" \n[2,] \"2\" \"6\" \"10\" \"14\" \"second\"\n[3,] \"3\" \"7\" \"11\" \"15\" \"third\" \n[4,] \"4\" \"8\" \"12\" \"16\" \"fourth\"\n\n\n\nall columns are now character\nmatrix does not support mixed data"
+  },
+  {
+    "objectID": "slides/x1-r-basics.html#data-frame-indexing",
+    "href": "slides/x1-r-basics.html#data-frame-indexing",
+    "title": "x1-R Basics",
+    "section": "Data frame indexing",
+    "text": "Data frame indexing\n\nData frames can be indexed like matrices\n\n\nA data frame\n\ndf\n\n  N P O2  C\n1 1 5  9 13\n2 2 6 10 14\n3 3 7 11 15\n4 4 8 12 16\n\n\n\nComplete column\n\ndf[,1]\n\n[1] 1 2 3 4\n\n\n\nComplete row\n\ndf[2,]\n\n  N P O2  C\n2 2 6 10 14\n\n\n\nSingle value\n\ndf[2, 3]\n\n[1] 10\n\n\n\n\nLike a data base\n\ndf[df$P &gt; 6, ]\n\n  N P O2  C\n3 3 7 11 15\n4 4 8 12 16"
+  },
+  {
+    "objectID": "slides/x1-r-basics.html#data-frame-indexing-like-a-matrix",
+    "href": "slides/x1-r-basics.html#data-frame-indexing-like-a-matrix",
+    "title": "x1-R Basics",
+    "section": "Data frame indexing like a matrix",
+    "text": "Data frame indexing like a matrix\n\nA data frame\n\ndf\n\n  N P O2  C\n1 1 5  9 13\n2 2 6 10 14\n3 3 7 11 15\n4 4 8 12 16\n\n\nA single value\n\ndf[2, 3]\n\n[1] 10\n\n\nComplete column\n\ndf[,1]\n\n[1] 1 2 3 4\n\n\nComplete row\n\ndf[2,]\n\n  N P O2  C\n2 2 6 10 14\n\n\n\n\nConditional selection of rows\n\ndf[df$P &gt; 6, ]\n\n  N P O2  C\n3 3 7 11 15\n4 4 8 12 16\n\n\n\nDifferences between [], [[]] and $\n\ndf[\"P\"]     # a single column data frame\n\n  P\n1 5\n2 6\n3 7\n4 8\n\ndf[[\"P\"]]   # a vector\n\n[1] 5 6 7 8\n\ndf$P        # a vector\n\n[1] 5 6 7 8"
   }
 ]

@@ -69,31 +69,34 @@ RStudio Team (2022). RStudio: Integrated Development Environment for R. RStudio,
 
 <br>
 
-::: {.column width="47%"}
+::::{.column width="47%" .add-space}
 **Expression**
 
+:::{.bigfont}
 ```{r}
 1 - pi + exp(1.7)
 ```
+:::
 
 - result is printed to the screen
 - the `[1]` indicates that the value shown at the beginning of the line is the first (and here the only) element
-:::
 
-::: {.column width=4%}
-:::
+::::
 
-::: {.column width="47%"}
+
+:::: {.column width="47%"}
 **Assignment**
+
+:::{.bigfont}
 ```{r}
 a <- 1 - pi + exp(1.7)
 ```
+:::
 
 - The expression on the left hand side is assigned to the variable on the right.
-- The arrow is spelled as
-  "a gets ..."
+- The arrow is spelled as "a gets ..."
 - To avoid confusion: use `<-` for assignment and let `=` for parameter matching
-:::
+::::
 
 
 ## Constants, variables and assignments
@@ -179,7 +182,7 @@ International characters (e.g German umlauts &auml;, &ouml;, &uuml;, ...) are po
 **reserved words** cannot be used as variable names:
 
 - `if, else, repeat, while, function, for, in, next, break`
-- `TRUE, FALSE, NULL, Inf, NaN, NA, NA\_integer\_, NA\_real\_, NA\_complex\_, NA\_character\_`
+- `TRUE, FALSE, NULL, Inf, NaN, NA, NA_integer_, NA_real_, NA_complex_, NA_character\_`
 - `..., ..1, ..2`
 
 **Note:** R is case sensitive, `x` and `X`, `value` and `Value` are different.
@@ -658,6 +661,140 @@ write.table(cities, "output.csv", row.names = FALSE, sep=";", dec=",")
 ```
 
 ![](../img/dataframe-excel.png)
+## Creation of data frames
+
+<br>
+
+* typical: read data from external file, e.g. `csv`-files.
+* small data frames can be created **inline** in a script
+
+**Inline creation of a data frame**
+
+```{r, echo=TRUE, eval=TRUE}
+clem <- data.frame(
+  brand = c("EP", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", "EB", 
+            "EB", "EB", "EB", "EP", "EP", "EP", "EP", "EP", "EP", "EP", "EB", "EP"),
+  weight = c(88, 96, 100, 96, 90, 100, 92, 92, 102, 99, 86, 89, 99, 89, 75, 80, 
+             81, 96, 82, 98, 80, 107, 88)
+)
+```
+
+## Conversion between matrices and data frames
+
+:::{.column width="35%" .add-space}
+
+**Matrix to data frame**
+```{r}
+x <- matrix(1:16, nrow=4)
+df <- as.data.frame(x)
+df
+```
+
+<br>
+
+**Data frame to matrix**
+```{r}
+as.matrix(df)
+```
+
+:::
+
+:::{.column width="55%"}
+**Append column**
+```{r}
+df2 <- cbind(df,
+         id = c("first", "second", "third", "fourth")
+       )
+```
+
+**Or simply**
+
+```{r}
+df2$id <- c("first", "second", "third", "fourth")
+```
+
+
+<br>
+
+**Data frame with character column**
+```{r}
+as.matrix(df2)
+```
+
+* all columns are now character
+* matrix does not support mixed data
+
+:::
+
+
+## Selection of data frame columns
+
+Create a data frame from a matrix
+```{r}
+x <- matrix(1:16, nrow=4)
+df <- as.data.frame(x)
+df
+```
+
+Add names to the columns
+```{r}
+names(df) <- c("N", "P", "O2", "C")
+df
+```
+
+Select 3 columns and change order
+```{r}
+df2 <- df[c("C", "N", "P")]
+df2
+```
+
+## Data frame indexing like a matrix
+
+::: {.column width="45%" .add-space}
+
+A data frame
+```{r}
+df
+```
+
+A single value
+```{r}
+df[2, 3]
+```
+
+Complete column
+
+```{r}
+df[,1]
+```
+
+Complete row
+```{r}
+df[2,]
+```
+:::
+
+:::{.column width="45%"}
+
+Conditional selection of rows
+
+```{r}
+df[df$P > 6, ]
+```
+
+<br>
+
+Differences between `[]`, `[[]]` and `$`
+
+```{r}
+df["P"]     # a single column data frame
+df[["P"]]   # a vector
+df$P        # a vector
+```
+
+
+
+:::
 
 # Lists
 
@@ -741,47 +878,18 @@ str(L)
 ```
 :::
 
+<!---
 ## Convert lists
 
-
-::: {.column width="39%"}
+::: {.column width="39%" .add-space}
 Convert vector to list
 ```{r}
 x <- 1:3
 L <- as.list(x)
 str(L)
 ```
-
-Convert matrix to data frame
-```{r}
-x <- matrix(1:16, nrow=4)
-df <- as.data.frame(x)
-df
-is.list(df)
-```
 :::
-
-::: {.column width="5%"}
-:::
-
-::: {.column width="54%"}
-
-Convert data frame to matrix
-```{r}
-as.matrix(df)
-```
-
-Append column to data frame
-```{r}
-df2 <- cbind(df, id = 
-   c("first", "second", "third", "fourth"))
-```
-
-Data frame with character column
-```{r}
-as.matrix(df2)
-```
-:::
+--->
 
 
 ## Naming of list elements
@@ -813,28 +921,6 @@ The `names`-functions works also with vectors. The pre-defined vectors `letters`
 x <- 1:5
 names(x) <- letters[1:5]
 x
-```
-
-
-## Selection of data frame columns
-
-Create a data frame from a matrix
-```{r}
-x <- matrix(1:16, nrow=4)
-df <- as.data.frame(x)
-df
-```
-
-Add names to the columns
-```{r}
-names(df) <- c("N", "P", "O2", "C")
-df
-```
-
-Select 3 columns and change order
-```{r}
-df2 <- df[c("C", "N", "P")]
-df2
 ```
 
 
