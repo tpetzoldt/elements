@@ -535,9 +535,58 @@ sum(y)
 ## Factors
 
 A special kind of mode is `factor`. This is, statistically speaking, a nominal variable
-that appears like characters (e.g. "control", "treatment A", "treatment B" ...),
+that appears like characters, e.g. "control", "treatment A", "treatment B" ...,
 but its **levels** are internally encoded as integer. 
-Conversion of such factors into other data types should be done with care, because
+
+Here a typical example with three **factor levels**. In a first step,let's create a character variable:
+
+
+```{r, eval=TRUE}
+text <- rep(c("control", "treatment A", "treatment B"), each=5)
+text
+```
+
+and then convert it to a factor:
+
+```{r, eval=TRUE}
+f <- factor(text)
+f
+```
+
+We se that the character variable is printed with quotes and the factor without quotes, but with an additional information about the **Levels**. The reason for this is, that the factor is internally encoded as integer values with assigned levels as a translation table:
+
+```{r, eval=TRUE}
+levels(f)
+```
+
+To show encoding, we can convert the factor into an integer
+
+```{r, eval=TRUE}
+as.integer(f)
+```
+
+The encoding is done in alphabetical order by default. It can be changed by using an additional `levels` argument:
+
+```{r, eval=TRUE}
+f2 <- factor(text, levels=c("treatment A", "treatment B", "control"))
+f2
+as.numeric(f2)
+```
+
+Factors are useful for statistical analyses like ANOVA and statistical tests, and also as categories for plotting:
+
+```{r, eval=TRUE}
+x <- c(7.44, 6.45, 6.04, 5.58, 4.5, 8.13, 5.54, 7.34, 8.91, 5.16, 8.7, 7.74, 6.8, 6.49, 6.2)
+plot(x ~ f)
+```
+
+We see that a boxplot is created and no x-y-plot, because the explanation variable is a factor.
+
+
+Numeric variables (especially ordinal) can also be converted to factors. This is useful, if we want to
+make clear, that numbers are to be treated as name without order.
+
+However, conversion of such factors back into numeric variables types should be done with care, because
 a character "123" may be encoded with another value (e.g. 1) and not 123, see the following
 demonstration of a correct and wrong factor conversions:
 
