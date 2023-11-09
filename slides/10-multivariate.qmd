@@ -28,7 +28,9 @@ published at the [UBA web site](https://www.umweltbundesamt.de/), that refer to
 of lakes in Brandenburg and Mecklenburg. The data werde taken from the literature 
 [@casper_lake_1985, @koschel_primary_1985] and adapted to teaching purposes.
 
-3. The document itself, the codes and the ebedded images are own work and can be shared according to [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en).
+3. The "gauernitz" data set contains simplified teaching versions from research data, published by @Winkelmann
+
+4. The document itself, the codes and the ebedded images are own work and can be shared according to [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en).
 
 
 ## An introductory example
@@ -65,6 +67,62 @@ plot(lakes)
 * can lead to "statistical fishing"
 
 * we need methods to extract the main information with a small number of plots
+
+## Another example
+
+<small>
+```{r echo=FALSE}
+benthos <- read.csv("../data/gauernitz.csv") 
+kable(benthos[-(2:4)])
+```
+</small>
+
+* Aggregated part of taxa list from two small streams.
+
+## How to aggregate the data?
+
+<hr></hr>
+
+:::{.column width="44%" .add-space}
+**Simpson index**
+
+$$
+D = \sum_{i=1}^S p_i^2
+$$
+
+* $p_i$: relative abundance of species
+* $0 \leq D \leq 1$
+* inverse Simpson index: $D' = 1 / D$<br> 
+* Simpson-Gini-index: $\tilde{D} = 1 - D$<br>
+  [(large values -- high diversity)]{.gray}
+:::
+
+:::{.column width="48%"}
+
+**Shannon index**
+
+$$
+H = -\sum_{i=1}^S p_i \log p_i
+$$
+  
+  * information theory, log often base 2
+  
+  
+  **Eveness **
+  
+  $$
+  E = \frac{H}{\log(S)}
+  $$
+  
+* $S$: number of species
+
+:::
+
+<hr></hr>
+
+* more indices: species richness, species deficit, Fisher's $\alpha$ ...
+
+$\rightarrow$ always information loss compared to the original list
 
 ## Basic concepts
 
