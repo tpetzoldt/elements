@@ -1,7 +1,7 @@
 ---
 title: "An Introductory R Session"
 author: "Thomas Petzoldt"
-date: '2023-10-28'
+date: '2023-11-09'
 output:
   html_document:
     toc: yes
@@ -575,7 +575,7 @@ as.numeric(f2)
 
 Factors are useful for statistical analyses like ANOVA and statistical tests, and also as categories for plotting:
 
-```{r, eval=TRUE}
+```{r boxplot-factors, eval=TRUE}
 x <- c(7.44, 6.45, 6.04, 5.58, 4.5, 8.13, 5.54, 7.34, 8.91, 5.16, 8.7, 7.74, 6.8, 6.49, 6.2)
 plot(x ~ f)
 ```
