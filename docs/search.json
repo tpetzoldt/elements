@@ -2770,5 +2770,180 @@
     "title": "Multivariate Lake Data Example",
     "section": "Task",
     "text": "Task\n\nTry to understand the analysis,\ndiscuss the results,\nask questions.\nThe idea is to work on this report together and to make it more complete."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#data-set-and-terms-of-use",
+    "href": "slides/10-multivariate.html#data-set-and-terms-of-use",
+    "title": "Multivariate methods",
+    "section": "Data set and terms of use",
+    "text": "Data set and terms of use\n\n\nThe “uba-lakes” data set originates from the public data repository of the German Umweltbundesamt (Umweltbundesamt, 2021). The data set provided can be used freely according to the terms and conditions published at the UBA web site, that refer to § 12a EGovG with respect of the data, and to the Creative Commons CC-BY ND International License 4.0 with respect to other objects directly created by UBA.\nThe “bm-lakes” data set is a teaching data set, derived from historical measurements of lakes in Brandenburg and Mecklenburg. The data werde taken from the literature (koschel_primary_1985?) and adapted to teaching purposes.\nThe document itself, the codes and the ebedded images are own work and can be shared according to CC BY 4.0."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#an-introductory-example",
+    "href": "slides/10-multivariate.html#an-introductory-example",
+    "title": "Multivariate methods",
+    "section": "An introductory example",
+    "text": "An introductory example"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#references",
+    "href": "slides/10-multivariate.html#references",
+    "title": "Multivariate methods",
+    "section": "References",
+    "text": "References\n\n\n\n\n\n\nUmweltbundesamt. (2021). Kenndaten ausgewählter seen deutschlands. https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#correlation-between-all-variables",
+    "href": "slides/10-multivariate.html#correlation-between-all-variables",
+    "title": "Multivariate methods",
+    "section": "Correlation between all variables?",
+    "text": "Correlation between all variables?\n\nlibrary(\"readxl\") # read Excel files directly\nlakes <- as.data.frame(\n  read_excel(\"../data/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx\", sheet=\"Tabelle1\", skip=3)\n)\nnames(lakes) <- c(\"name\", \"state\", \"drainage\", \"population\", \"altitude\", \n                  \"z_mean\", \"z_max\", \"t_ret\", \"volume\", \"area\", \"shore_length\", \n                  \"shore_devel\", \"drain_ratio\", \"wfd_type\")\nstr(lakes)\n\n'data.frame':   56 obs. of  14 variables:\n $ name        : chr  \"Ammersee\" \"Arendsee\" \"Bleilochtalsperre\" \"Bodensee\" ...\n $ state       : chr  \"BY\" \"ST\" \"TH\" \"BW\" ...\n $ drainage    : num  993 29.8 1239.9 11477 28.2 ...\n $ population  : num  114900 3200 180000 1400000 28 ...\n $ altitude    : num  532.9 22.8 404 395.4 13.1 ...\n $ z_mean      : num  37.6 28.6 23.3 85 2.4 ...\n $ z_max       : num  81.1 48.7 55 254 4.8 58.3 32.5 73.4 1.7 18.8 ...\n $ t_ret       : num  2.7 50 0.526 4.2 1.9 16.3 NA 1.26 0.1 2.3 ...\n $ volume      : num  1.75 0.147 0.215 48.522 0.009 ...\n $ area        : num  46.6 5.14 9.2 571.5 3.9 ...\n $ shore_length: num  43 9 NA 273 10.4 13.7 17.5 64 7.5 10.1 ...\n $ shore_devel : num  1.78 1.12 NA 2.26 1.48 2.09 1.64 2.02 2.22 1.6 ...\n $ drain_ratio : num  20.3 5.8 NA 21.9 7.2 ...\n $ wfd_type    : chr  \"Typ 4\" \"Typ 13\" \"Typ 5\" \"Typ 4\" ...\n\n\n\nnames(lakes) replaces the original German column names by abbreviated English abbreviations"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#plot-everything-together",
+    "href": "slides/10-multivariate.html#plot-everything-together",
+    "title": "Multivariate methods",
+    "section": "PLot everything together",
+    "text": "PLot everything together\n\nplot(lakes)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#basic-concepts",
+    "href": "slides/10-multivariate.html#basic-concepts",
+    "title": "Multivariate methods",
+    "section": "Basic concepts",
+    "text": "Basic concepts\n\nMultivariate statistics\n\nunivariate: one variable\nbivariate: one dependent, one independent variable\nmultiple: one dependent, several independent variables\n\nSimilarity and correlation\n\ndistance and similarity: how different or similar are the observations?\ncorrelation and covariance: are variables interdependent?\ndimension reduction: try to show essential parts of information on a lower number of dimensions\ncluster analysis: show which observations are closely together\nordination: plot data at lower dimentsions, so that similar observations are closely together"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#distance-and-dissimilarity",
+    "href": "slides/10-multivariate.html#distance-and-dissimilarity",
+    "title": "Multivariate methods",
+    "section": "Distance and dissimilarity",
+    "text": "Distance and dissimilarity\n\nVariety of measures for distance and similarity\n\nAxiomatic definition\nFor a measure of distance \\(d\\) between the multidimensional points \\(x_i\\) and \\(x_j\\) the following conditions apply:\n\n\\(d(x_i, x_j) \\ge 0\\) (distances are similar or equal to zero),\n\\(d(x_i, x_j)=d(x_j,x_i)\\) (the distance from A to B is the same as from B to A),\n\\(d(x_i, x_i)=0\\) (the distance from a given point to itself is zero).\n\nBeyond that, a distance measure is termed metric, if:\n\n\\(d=0\\) applies in the case of equality only, and\nthe triangle inequality (the indirect route is longer than the direct route) applies too.\n\nIf one or both of the additonal conditions are violated, we speak about nonmetric measures and use the term dissimilarity instead of distance."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#similarity",
+    "href": "slides/10-multivariate.html#similarity",
+    "title": "Multivariate methods",
+    "section": "Similarity",
+    "text": "Similarity\nA measure of similarity \\(s\\) can be defined in a similar way:\n\n\\(s(x_i,x_j) \\le s_{max}\\)\n\\(s(x_i,x_j)=s(x_j,x_i)\\)\n\\(s(x_i,x_i)=s_{max}\\)\n\nand it is metric, if:\n\n\\(s_{max}\\) applies only in the case of equality and\nthe triangle inequality applies too."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#most-important-distance-and-dissimilarity-measures-in-our-field",
+    "href": "slides/10-multivariate.html#most-important-distance-and-dissimilarity-measures-in-our-field",
+    "title": "Multivariate methods",
+    "section": "Most important distance and dissimilarity measures in our field",
+    "text": "Most important distance and dissimilarity measures in our field\n\n\nEuclidean distance (shortest connection between 2 points in space),\nManhattan distance (around the corner, as in Manhattans grid-like streets),\nChi-square distance for comparison of frequencies,\nMahalanobis distance (takes covariance into account),\nBray-Curtis dissimilarity index (created specifically for comparison of species lists in ecology).\nJaccard index for binary (presence-absence) data\nGower dissimilarity is used for mixed-type variables"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#formula",
+    "href": "slides/10-multivariate.html#formula",
+    "title": "Multivariate methods",
+    "section": "Formula",
+    "text": "Formula\nMetric data\nwith \\(x_{ij}, x_{ik}\\) abundance of species \\(i\\) at sites (\\(j, k\\)).\nEuclidean distance:\n[ d_{jk} = ]\nManhattan distance: [ d_{jk} = |x_{ij}-x_{ik}| ]\nGower distance: [ d_{jk} = ]\nBray-Curtis dissimilarity: [ d_{jk} = ]"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#binary-variables",
+    "href": "slides/10-multivariate.html#binary-variables",
+    "title": "Multivariate methods",
+    "section": "Binary variables",
+    "text": "Binary variables\nThe binary form is applicable to binary and factor variables, where:\n\n\\(A, B\\) = numbers of species on compared sites\n\\(J\\) = (joint) is the number of species that occur on both compared sites\n\\(M\\) = number of columns (excluding missing values)\n\nEuclidean: \\(\\sqrt{A+B-2J}\\)\nManhattan: \\(A+B-2J\\)\nGower: \\(\\frac{A+B-2J}{M}\\)\nBray-Curtis: \\(\\frac{A+B-2J}{A+B}\\)\nJaccard: \\(\\frac{2b}{1+b}\\) with \\(b\\) = Bray-Curtis dissimilarity\nApplications\nAdditional distance measures and application suggestions are found in the vegdist help page."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#load-the-data",
+    "href": "slides/10-multivariate.html#load-the-data",
+    "title": "Multivariate methods",
+    "section": "Load the data",
+    "text": "Load the data\nHere we load the data set and add English column names and abbreviated lake identifiers as row names to the table, that are useful for the multivariate plotting functions.\n\nlibrary(\"readxl\") # read Excel files directly\nlibrary(\"vegan\")  # multivariate statistics in ecology\nlakes <- as.data.frame(\n  read_excel(\"../data/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx\", sheet=\"Tabelle1\", skip=3)\n)\nnames(lakes) <- c(\"name\", \"state\", \"drainage\", \"population\", \"altitude\", \n                  \"z_mean\", \"z_max\", \"t_ret\", \"volume\", \"area\", \"shore_length\", \n                  \"shore_devel\", \"drain_ratio\", \"wfd_type\")\nrownames(lakes) <- paste0(1:nrow(lakes), substr(lakes$name, 1, 4))\n\nText columns, e.g Federal State names and lake type are removed and rows with missing data excluded. If population is not used, the analysis can be repeated with more lakes.\n\nvalid_columns <- c(\"drainage\", \"population\", \"altitude\", \"z_mean\",\n                   \"z_max\", \"t_ret\", \"volume\", \"area\", \"shore_length\", \n                   \"shore_devel\", \"drain_ratio\")\n\n#valid_columns <- c(\"drainage\", \"altitude\", \"z_mean\",\n#                   \"z_max\", \"t_ret\", \"volume\", \"area\", \"shore_length\", \n#                   \"shore_devel\",\"drain_ratio\")\ndat <- lakes[valid_columns]\ndat <- na.omit(dat)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#data-inspection",
+    "href": "slides/10-multivariate.html#data-inspection",
+    "title": "Multivariate methods",
+    "section": "Data inspection",
+    "text": "Data inspection\n\npar(mfrow = c(1, 1))\npar(mar = c(7, 4, 2, 1) + .1)\nboxplot(scale(dat), las = 2)\n\n\n\ndat$altitude <- ifelse(dat$altitude < 0, 0, dat$altitude)\nboxplot(scale(sqrt(dat)), las=2)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#multivariate-analysis",
+    "href": "slides/10-multivariate.html#multivariate-analysis",
+    "title": "Multivariate methods",
+    "section": "Multivariate Analysis",
+    "text": "Multivariate Analysis\nPrincipal Components: PCA\n\npc <- prcomp(scale(dat))\nsummary(pc)\n\nImportance of components:\n                         PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.305 1.4737 1.1459 1.0686 0.84953 0.50024 0.24164\nProportion of Variance 0.483 0.1974 0.1194 0.1038 0.06561 0.02275 0.00531\nCumulative Proportion  0.483 0.6805 0.7998 0.9036 0.96925 0.99200 0.99731\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.12590 0.08400 0.07563 0.03077\nProportion of Variance 0.00144 0.00064 0.00052 0.00009\nCumulative Proportion  0.99875 0.99939 0.99991 1.00000\n\nplot(pc)\n\n\n\nbiplot(pc)\n\n\n\n\nAs the PCA with the untransformed data looks somewhat asymmetric, we repeat it with square transformed data. In addition, also the 3rd PC is plotted.\n\ndat2 <- sqrt(dat)\npc2 <- prcomp(scale(dat2))\nsummary(pc2)\n\nImportance of components:\n                          PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.1886 1.5906 1.2499 1.0634 0.79782 0.44854 0.28572\nProportion of Variance 0.4354 0.2300 0.1420 0.1028 0.05786 0.01829 0.00742\nCumulative Proportion  0.4354 0.6654 0.8075 0.9103 0.96812 0.98641 0.99383\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.17665 0.13833 0.12041 0.05528\nProportion of Variance 0.00284 0.00174 0.00132 0.00028\nCumulative Proportion  0.99666 0.99840 0.99972 1.00000\n\npar(mfrow=c(1,2))\npar(mar=c(5, 4, 4, 2) + 0.1)\nbiplot(pc2, cex=0.6)\nbiplot(pc2, cex=0.6, choices=c(3, 2))\n\n\n\n\nA PCA is also possible with the rda function of the vegan package. The syntax of the plot functions is somewhat different. Instead of biplot as above, we can directly use plot. Details are found in the vegan documentation.\n\npar(mfrow=c(1,1))\npc3 <- rda(dat2, scale = TRUE)\npc3\n\nCall: rda(X = dat2, scale = TRUE)\n\n              Inertia Rank\nTotal              11     \nUnconstrained      11   11\nInertia is correlations \n\nEigenvalues for unconstrained axes:\n  PC1   PC2   PC3   PC4   PC5   PC6   PC7   PC8   PC9  PC10  PC11 \n4.790 2.530 1.562 1.131 0.637 0.201 0.082 0.031 0.019 0.014 0.003 \n\n#summary(pc3)\nplot(pc3)\n\n\n\n\nNonmetric Multidimensional Scaling: NMDS\nLt’s now perform an NMDS for the data set. Function metaMDS runs a series of NMDS fits with different start values to avoid local minima. It has also some automatic transformations built in and works usually with the Bray-Curtis dissimilarity, that is used for plants and animal species abundance data. As we work with physical data here, we set the distance measure to “euclidean”.\n\nmd <- metaMDS(dat2, scale = TRUE, distance = \"euclid\")\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1181117 \nRun 1 stress 0.1768603 \nRun 2 stress 0.1188525 \nRun 3 stress 0.1207019 \nRun 4 stress 0.1181118 \n... Procrustes: rmse 7.877917e-05  max resid 0.0002305161 \n... Similar to previous best\nRun 5 stress 0.1230331 \nRun 6 stress 0.1181116 \n... New best solution\n... Procrustes: rmse 0.0001656214  max resid 0.0004659157 \n... Similar to previous best\nRun 7 stress 0.2033062 \nRun 8 stress 0.120702 \nRun 9 stress 0.1181116 \n... New best solution\n... Procrustes: rmse 8.554226e-05  max resid 0.0002946338 \n... Similar to previous best\nRun 10 stress 0.1207021 \nRun 11 stress 0.1208973 \nRun 12 stress 0.1208973 \nRun 13 stress 0.1207022 \nRun 14 stress 0.1181118 \n... Procrustes: rmse 0.0001947428  max resid 0.0005781717 \n... Similar to previous best\nRun 15 stress 0.1230331 \nRun 16 stress 0.1230331 \nRun 17 stress 0.1230331 \nRun 18 stress 0.1208973 \nRun 19 stress 0.1230331 \nRun 20 stress 0.1181117 \n... Procrustes: rmse 0.0001136805  max resid 0.0003839603 \n... Similar to previous best\n*** Best solution repeated 3 times\n\nplot(md, type=\"text\")\nabline(h=0, col=\"grey\", lty=\"dotted\")\nabline(v=0, col=\"grey\", lty=\"dotted\")\n\n\n\n\nCluster analysis\nHere we apply a hierarchical cluster analysis with square root transformed data and two different agglomeration schemes, “complete linkage” and “Ward’s method”.\n\npar(mfrow=c(2,1))\nhc <- hclust(dist(scale(dat2)), method=\"complete\") # the default\nplot(hc)\n\nhc2 <- hclust(dist(scale(dat2)), method=\"ward.D2\")\nplot(hc2)\n\n\n\n\nWe can also use the clusters to indicate groups in the NMDS plot. Function rect.hclust indicates a given number of clusters in the dendrogram, then we cut the tree with cutree and use the groups grp as color codes. R has 8 standard colors. If we need more, we can define an own palette.\n\nplot(hc, hang = -1)\nrect.hclust(hc, 5)\n\n\n\ngrp <- cutree(hc, 5)\n# grp                  # can be used to show the groups\nplot(md, type = \"n\")\ntext(md$points, row.names(dat2), col = grp)\n\n\n\n\nInstead of hierarchical clustering, we can also use a non-hierarchical method, e.g. k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.\nDepending on the question, it may be a disadvantage, that the number of clusters needs to be specified beforehand (e.g. from hierarchical clustering) and that we do not get a tree diagramm."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#task",
+    "href": "slides/10-multivariate.html#task",
+    "title": "Multivariate methods",
+    "section": "Task",
+    "text": "Task\n\nTry to understand the analysis,\ndiscuss the results,\nask questions.\nThe idea is to work on this report together and to make it more complete."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#data-sets-and-terms-of-use",
+    "href": "slides/10-multivariate.html#data-sets-and-terms-of-use",
+    "title": "Multivariate methods",
+    "section": "Data sets and terms of use",
+    "text": "Data sets and terms of use\n\n\nThe “uba-lakes” data set originates from the public data repository of the German Umweltbundesamt (Umweltbundesamt, 2021). The data set provided can be used freely according to the terms and conditions published at the UBA web site, that refer to § 12a EGovG with respect of the data, and to the Creative Commons CC-BY ND International License 4.0 with respect to other objects directly created by UBA.\nThe “bm-lakes” data set is a teaching data set, derived from historical measurements of lakes in Brandenburg and Mecklenburg. The data werde taken from the literature (koschel_primary_1985?) and adapted to teaching purposes.\nThe document itself, the codes and the ebedded images are own work and can be shared according to CC BY 4.0."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#create-pairwise-scatter-plots-for-all-variables",
+    "href": "slides/10-multivariate.html#create-pairwise-scatter-plots-for-all-variables",
+    "title": "Multivariate methods",
+    "section": "Create pairwise scatter plots for all variables?",
+    "text": "Create pairwise scatter plots for all variables?\n\nplot(lakes)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#create-pairwise-scatter-plots-for-all-variables-1",
+    "href": "slides/10-multivariate.html#create-pairwise-scatter-plots-for-all-variables-1",
+    "title": "Multivariate methods",
+    "section": "Create pairwise scatter plots for all variables?",
+    "text": "Create pairwise scatter plots for all variables?\n\n\nnot a good idea, 14 variables would produce 182 (or 91) plots\ncan lead to “statistical fishing”\nwe need methods to extract the main information with a small number of plots"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#conversion-between-dissimilarity-and-similarity",
+    "href": "slides/10-multivariate.html#conversion-between-dissimilarity-and-similarity",
+    "title": "Multivariate methods",
+    "section": "Conversion between dissimilarity and similarity",
+    "text": "Conversion between dissimilarity and similarity\n\n\ndifferent methods, as long as the \\(\\Rightarrow\\) transformation is monotonic.\n\n\n\n\n\nsimilarity\ndissimilarity\n\n\n\n\n\\(s=1-d/d_{max}\\)\n\\(d=1-s/s_{max}\\)\n\n\n\\(s=\\exp(-d)\\)\n\\(d= - \\ln(s-s_{min})\\)\n\n\n\n\n\ndistance goes from \\(0\\) to \\(\\infty\\)\nin most cases \\(s\\) is limited between \\((0, 1)\\) or between 0 and 100%."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#formulae",
+    "href": "slides/10-multivariate.html#formulae",
+    "title": "Multivariate methods",
+    "section": "Formulae",
+    "text": "Formulae\nMetric data\nwith \\(x_{ij}, x_{ik}\\) abundance of species \\(i\\) at sites (\\(j, k\\)).\nEuclidean distance:\n\\[\nd_{jk} = \\sqrt{\\sum (x_{ij}-x_{ik})^2}\n\\]\nManhattan distance: \\[\nd_{jk} = \\sum |x_{ij}-x_{ik}|\n\\]\nGower distance: \\[\nd_{jk} = \\frac{1}{M} \\sum\\frac{|x_{ij}-x_{ik}|}{\\max(x_i)-\\min(x_i)}\n\\]\nBray-Curtis dissimilarity: \\[\nd_{jk} = \\frac{\\sum{|x_{ij}-x_{ik}|}}{\\sum{(x_{ij}+x_{ik})}}\n\\]"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#the-uba-lakes-example",
+    "href": "slides/10-multivariate.html#the-uba-lakes-example",
+    "title": "Multivariate methods",
+    "section": "The UBA-lakes example",
+    "text": "The UBA-lakes example\nHere we load the data set and add English column names and abbreviated lake identifiers as row names to the table, that are useful for the multivariate plotting functions.\n\nlibrary(\"readxl\") # read Excel files directly\nlibrary(\"vegan\")  # multivariate statistics in ecology\nlakes <- as.data.frame(\n  read_excel(\"../data/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx\", sheet=\"Tabelle1\", skip=3)\n)\nnames(lakes) <- c(\"name\", \"state\", \"drainage\", \"population\", \"altitude\", \n                  \"z_mean\", \"z_max\", \"t_ret\", \"volume\", \"area\", \"shore_length\", \n                  \"shore_devel\", \"drain_ratio\", \"wfd_type\")\nrownames(lakes) <- paste0(1:nrow(lakes), substr(lakes$name, 1, 4))\n\nText columns, e.g Federal State names and lake type are removed and rows with missing data excluded. If population is not used, the analysis can be repeated with more lakes.\n\nvalid_columns <- c(\"drainage\", \"population\", \"altitude\", \"z_mean\",\n                   \"z_max\", \"t_ret\", \"volume\", \"area\", \"shore_length\", \n                   \"shore_devel\", \"drain_ratio\")\n\n#valid_columns <- c(\"drainage\", \"altitude\", \"z_mean\",\n#                   \"z_max\", \"t_ret\", \"volume\", \"area\", \"shore_length\", \n#                   \"shore_devel\",\"drain_ratio\")\ndat <- lakes[valid_columns]\ndat <- na.omit(dat)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#principal-components-pca",
+    "href": "slides/10-multivariate.html#principal-components-pca",
+    "title": "Multivariate methods",
+    "section": "Principal Components: PCA",
+    "text": "Principal Components: PCA\n\npc <- prcomp(scale(dat))\nsummary(pc)\n\nImportance of components:\n                         PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.305 1.4737 1.1459 1.0686 0.84953 0.50024 0.24164\nProportion of Variance 0.483 0.1974 0.1194 0.1038 0.06561 0.02275 0.00531\nCumulative Proportion  0.483 0.6805 0.7998 0.9036 0.96925 0.99200 0.99731\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.12590 0.08400 0.07563 0.03077\nProportion of Variance 0.00144 0.00064 0.00052 0.00009\nCumulative Proportion  0.99875 0.99939 0.99991 1.00000\n\nplot(pc)\n\n\n\nbiplot(pc)\n\n\n\n\nAs the PCA with the untransformed data looks somewhat asymmetric, we repeat it with square transformed data. In addition, also the 3rd PC is plotted.\n\ndat2 <- sqrt(dat)\npc2 <- prcomp(scale(dat2))\nsummary(pc2)\n\nImportance of components:\n                          PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.1886 1.5906 1.2499 1.0634 0.79782 0.44854 0.28572\nProportion of Variance 0.4354 0.2300 0.1420 0.1028 0.05786 0.01829 0.00742\nCumulative Proportion  0.4354 0.6654 0.8075 0.9103 0.96812 0.98641 0.99383\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.17665 0.13833 0.12041 0.05528\nProportion of Variance 0.00284 0.00174 0.00132 0.00028\nCumulative Proportion  0.99666 0.99840 0.99972 1.00000"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#nonmetric-multidimensional-scaling-nmds",
+    "href": "slides/10-multivariate.html#nonmetric-multidimensional-scaling-nmds",
+    "title": "Multivariate methods",
+    "section": "Nonmetric Multidimensional Scaling: NMDS",
+    "text": "Nonmetric Multidimensional Scaling: NMDS\nLt’s now perform an NMDS for the data set. Function metaMDS runs a series of NMDS fits with different start values to avoid local minima. It has also some automatic transformations built in and works usually with the Bray-Curtis dissimilarity, that is used for plants and animal species abundance data. As we work with physical data here, we set the distance measure to “euclidean”.\n\nmd <- metaMDS(dat2, scale = TRUE, distance = \"euclid\")\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1181117 \nRun 1 stress 0.1181117 \n... New best solution\n... Procrustes: rmse 0.0002188959  max resid 0.0006138061 \n... Similar to previous best\nRun 2 stress 0.1768603 \nRun 3 stress 0.2228467 \nRun 4 stress 0.1181118 \n... Procrustes: rmse 7.429828e-05  max resid 0.0002491791 \n... Similar to previous best\nRun 5 stress 0.1181117 \n... Procrustes: rmse 0.00020814  max resid 0.0005820668 \n... Similar to previous best\nRun 6 stress 0.1877812 \nRun 7 stress 0.1230331 \nRun 8 stress 0.120702 \nRun 9 stress 0.1181116 \n... New best solution\n... Procrustes: rmse 0.0001509633  max resid 0.0004388941 \n... Similar to previous best\nRun 10 stress 0.1731461 \nRun 11 stress 0.1208973 \nRun 12 stress 0.1768603 \nRun 13 stress 0.1208972 \nRun 14 stress 0.1230331 \nRun 15 stress 0.1230331 \nRun 16 stress 0.1181117 \n... Procrustes: rmse 6.859029e-05  max resid 0.0001820161 \n... Similar to previous best\nRun 17 stress 0.1188524 \nRun 18 stress 0.1230331 \nRun 19 stress 0.1188531 \nRun 20 stress 0.1230331 \n*** Best solution repeated 2 times\n\nplot(md, type=\"text\")\nabline(h=0, col=\"grey\", lty=\"dotted\")\nabline(v=0, col=\"grey\", lty=\"dotted\")"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#cluster-analysis",
+    "href": "slides/10-multivariate.html#cluster-analysis",
+    "title": "Multivariate methods",
+    "section": "Cluster analysis",
+    "text": "Cluster analysis\nHere we apply a hierarchical cluster analysis with square root transformed data and two different agglomeration schemes, “complete linkage” and “Ward’s method”.\n\npar(mfrow=c(2,1))\nhc <- hclust(dist(scale(dat2)), method=\"complete\") # the default\nplot(hc)\n\nhc2 <- hclust(dist(scale(dat2)), method=\"ward.D2\")\nplot(hc2)\n\n\n\n\nWe can also use the clusters to indicate groups in the NMDS plot. Function rect.hclust indicates a given number of clusters in the dendrogram, then we cut the tree with cutree and use the groups grp as color codes. R has 8 standard colors. If we need more, we can define an own palette.\n\nplot(hc, hang = -1)\nrect.hclust(hc, 5)\n\n\n\ngrp <- cutree(hc, 5)\n# grp                  # can be used to show the groups\nplot(md, type = \"n\")\ntext(md$points, row.names(dat2), col = grp)\n\n\n\n\nInstead of hierarchical clustering, we can also use a non-hierarchical method, e.g. k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.\nDepending on the question, it may be a disadvantage, that the number of clusters needs to be specified beforehand (e.g. from hierarchical clustering) and that we do not get a tree diagramm."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#biplot",
+    "href": "slides/10-multivariate.html#biplot",
+    "title": "Multivariate methods",
+    "section": "Biplot",
+    "text": "Biplot\n\npar(mfrow=c(1,2))\npar(mar=c(5, 4, 4, 2) + 0.1)\nbiplot(pc2, cex=0.6)\nbiplot(pc2, cex=0.6, choices=c(3, 2))\n\n\n\n\nA PCA is also possible with the rda function of the vegan package. The syntax of the plot functions is somewhat different. Instead of biplot as above, we can directly use plot. Details are found in the vegan documentation.\n\npar(mfrow=c(1,1))\npc3 <- rda(dat2, scale = TRUE)\npc3\n\nCall: rda(X = dat2, scale = TRUE)\n\n              Inertia Rank\nTotal              11     \nUnconstrained      11   11\nInertia is correlations \n\nEigenvalues for unconstrained axes:\n  PC1   PC2   PC3   PC4   PC5   PC6   PC7   PC8   PC9  PC10  PC11 \n4.790 2.530 1.562 1.131 0.637 0.201 0.082 0.031 0.019 0.014 0.003 \n\n#summary(pc3)\nplot(pc3)"
   }
 ]

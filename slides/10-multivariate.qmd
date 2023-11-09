@@ -1,0 +1,362 @@
+---
+title: "Multivariate methods"
+author: "Thomas Petzoldt"
+date:   "`r Sys.Date()`"
+---
+
+```{r setup, include=FALSE}
+## this code chunk sets some technical details, it is not shown to the user
+library("readxl")
+library("vegan")
+library("knitr")
+#knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
+knitr::opts_chunk$set(echo = TRUE, eval=TRUE)
+#setupKnitr(autoprint = TRUE)
+```
+
+## Data sets and terms of use
+
+<br>
+
+1. The "uba-lakes" data set originates from the public data repository of the German 
+Umweltbundesamt [@UBA2020]. The data set provided can be used freely according
+to the [terms and conditions](https://www.umweltbundesamt.de/datenschutz-haftung#c-urheber-und-kennzeichenrecht) 
+published at the [UBA web site](https://www.umweltbundesamt.de/), that refer to
+§ 12a EGovG with respect of the data, and to the [Creative Commons CC-BY ND International License 4.0 ](https://creativecommons.org/licenses/by-nd/4.0/deed.de) with respect to other objects directly created by UBA.
+
+2. The "bm-lakes" data set is a teaching data set, derived from historical measurements 
+of lakes in Brandenburg and Mecklenburg. The data werde taken from the literature 
+[@casper_lake_1985, @koschel_primary_1985] and adapted to teaching purposes.
+
+3. The document itself, the codes and the ebedded images are own work and can be shared according to [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en).
+
+
+## An introductory example
+
+![](../img/uba-lakes.png)
+
+## Correlation between all variables?
+
+```{r}
+library("readxl") # read Excel files directly
+lakes <- as.data.frame(
+  read_excel("../data/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx", sheet="Tabelle1", skip=3)
+)
+names(lakes) <- c("name", "state", "drainage", "population", "altitude", 
+                  "z_mean", "z_max", "t_ret", "volume", "area", "shore_length", 
+                  "shore_devel", "drain_ratio", "wfd_type")
+str(lakes)
+```
+
+* `names(lakes)` replaces the original German column names by abbreviated English abbreviations
+
+## Create pairwise scatter plots for all variables?
+
+```{r lakes-all-variables}
+plot(lakes)
+```
+
+## Create pairwise scatter plots for all variables?
+
+<br>
+
+* not a good idea, 14 variables would produce 182 (or 91) plots
+
+* can lead to "statistical fishing"
+
+* we need methods to extract the main information with a small number of plots
+
+## Basic concepts
+
+<br>
+
+**Multivariate statistics**
+
+* univariate: one variable
+* bivariate: one dependent, one independent variable
+* multiple: one dependent, several independent variables
+
+**Similarity and correlation**
+
+* distance and similarity: how different or similar are the observations?
+* correlation and covariance: are variables interdependent?
+* dimension reduction: try to show essential parts of information on a lower number of dimensions
+* cluster analysis: show which observations are closely together
+* ordination: plot data at lower dimentsions, so that similar observations are closely together
+
+## Distance and dissimilarity
+
+* Variety of measures for distance and similarity
+
+**Axiomatic definition**
+
+For a measure of distance $d$ between the multidimensional points $x_i$
+and $x_j$ the following conditions apply:
+
+
+1. $d(x_i, x_j) \ge 0$ (distances are similar or equal to zero),
+2. $d(x_i, x_j)=d(x_j,x_i)$ (the distance  from A to B is the
+    same as from B to A),
+3. $d(x_i, x_i)=0$ (the distance from a given point to itself is zero).
+
+Beyond that, a distance measure is termed metric, if:
+
+1. $d=0$ applies in the case of equality  only, and
+2. the triangle inequality (the indirect route is longer than the direct
+  route) applies too.
+
+If one or both of the additonal conditions are violated, we speak about **nonmetric**
+measures and use the term **dissimilarity** instead of distance.
+
+## Similarity
+
+A measure of similarity $s$ can be defined in a similar way:
+
+
+1. $s(x_i,x_j) \le s_{max}$
+2. $s(x_i,x_j)=s(x_j,x_i)$
+3. $s(x_i,x_i)=s_{max}$
+
+and it is metric, if:
+
+* $s_{max}$ applies only in the case of equality and
+* the triangle inequality applies too.
+
+
+## Conversion between dissimilarity and similarity
+
+
+<br>
+
+* different methods, as long as the $\Rightarrow$ transformation is monotonic.
+
+<br>
+
+| similarity     |  dissimilarity        |
+|----------------|-----------------------|
+| $s=1-d/d_{max}$| $d=1-s/s_{max}$       |
+| $s=\exp(-d)$   | $d= - \ln(s-s_{min})$ |
+
+<br>
+
+* distance goes from $0$ to $\infty$
+* in most cases $s$ is limited between $(0, 1)$ or between 0 and 100%.
+
+
+
+## Most important distance and dissimilarity measures in our field
+
+<br>
+
+* **Euclidean** distance (shortest connection between 2 points in space),
+* **Manhattan** distance (around the corner, as in Manhattans grid-like streets),
+* **Chi-square** distance for comparison of frequencies,
+* **Mahalanobis** distance (takes covariance into account),
+* **Bray-Curtis** dissimilarity index (created specifically for comparison of species lists in ecology).
+* **Jaccard** index for binary (presence-absence) data
+* **Gower** dissimilarity is used for mixed-type variables
+
+
+## Formulae
+
+
+**Metric data**
+
+with $x_{ij}, x_{ik}$ abundance of species  $i$ at sites ($j, k$).
+
+Euclidean distance:
+
+$$
+d_{jk} = \sqrt{\sum (x_{ij}-x_{ik})^2}
+$$
+
+Manhattan distance:
+$$
+d_{jk} = \sum |x_{ij}-x_{ik}|
+$$
+
+
+Gower distance:
+$$
+d_{jk} = \frac{1}{M} \sum\frac{|x_{ij}-x_{ik}|}{\max(x_i)-\min(x_i)}
+$$
+
+
+Bray-Curtis dissimilarity:
+$$
+d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
+$$
+
+## Binary variables
+
+The binary form is applicable to binary and factor variables, where: 
+
+* $A, B$ = numbers of species on compared sites
+* $J$ =  (joint) is the number of species that occur on both compared sites
+* $M$ =  number of columns (excluding missing values)
+
+Euclidean: $\sqrt{A+B-2J}$
+
+Manhattan: $A+B-2J$
+
+Gower: $\frac{A+B-2J}{M}$
+
+Bray-Curtis: $\frac{A+B-2J}{A+B}$
+
+Jaccard: $\frac{2b}{1+b}$ with $b$ = Bray-Curtis dissimilarity
+
+**Applications**
+
+Additional distance measures and application suggestions are found in
+the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/vegdist) help page.
+
+
+
+## The UBA-lakes example
+
+Here we load the data set and add English column names and 
+abbreviated lake identifiers as row names to the table,
+that are useful for the multivariate plotting functions.
+
+```{r}
+library("readxl") # read Excel files directly
+library("vegan")  # multivariate statistics in ecology
+lakes <- as.data.frame(
+  read_excel("../data/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx", sheet="Tabelle1", skip=3)
+)
+names(lakes) <- c("name", "state", "drainage", "population", "altitude", 
+                  "z_mean", "z_max", "t_ret", "volume", "area", "shore_length", 
+                  "shore_devel", "drain_ratio", "wfd_type")
+rownames(lakes) <- paste0(1:nrow(lakes), substr(lakes$name, 1, 4))
+```
+
+Text columns, e.g Federal State names and lake type are removed and rows with missing data 
+excluded. If population is not used, the analysis can be repeated with more lakes.
+
+```{r}
+valid_columns <- c("drainage", "population", "altitude", "z_mean",
+                   "z_max", "t_ret", "volume", "area", "shore_length", 
+                   "shore_devel", "drain_ratio")
+
+#valid_columns <- c("drainage", "altitude", "z_mean",
+#                   "z_max", "t_ret", "volume", "area", "shore_length", 
+#                   "shore_devel","drain_ratio")
+dat <- lakes[valid_columns]
+dat <- na.omit(dat)
+```
+
+## Data inspection
+
+```{r uba-lakes-boxplot}
+par(mfrow = c(1, 1))
+par(mar = c(7, 4, 2, 1) + .1)
+boxplot(scale(dat), las = 2)
+dat$altitude <- ifelse(dat$altitude < 0, 0, dat$altitude)
+boxplot(scale(sqrt(dat)), las=2)
+```
+
+# Multivariate Analysis
+
+## Principal Components: PCA
+
+```{r}
+pc <- prcomp(scale(dat))
+summary(pc)
+plot(pc)
+biplot(pc)
+```
+
+As the PCA with the untransformed data looks somewhat asymmetric, we repeat it with
+square transformed data. In addition, also the 3rd PC is plotted.
+
+```{r}
+dat2 <- sqrt(dat)
+pc2 <- prcomp(scale(dat2))
+summary(pc2)
+```
+
+## Biplot
+
+```{r}
+par(mfrow=c(1,2))
+par(mar=c(5, 4, 4, 2) + 0.1)
+biplot(pc2, cex=0.6)
+biplot(pc2, cex=0.6, choices=c(3, 2))
+```
+
+A PCA is also possible with the `rda` function of the **vegan** package. The
+syntax of the plot functions is somewhat different. Instead of `biplot` as 
+above, we can directly use `plot`. Details are found in the **vegan** documentation.
+
+```{r}
+par(mfrow=c(1,1))
+pc3 <- rda(dat2, scale = TRUE)
+pc3
+#summary(pc3)
+plot(pc3)
+```
+
+## Nonmetric Multidimensional Scaling: NMDS
+
+Lt's now perform an NMDS for the data set. Function `metaMDS` runs a series of NMDS fits
+with different start values to avoid local minima. It has also some automatic
+transformations built in and works usually with the Bray-Curtis dissimilarity,
+that is used for plants and animal species abundance data. As we work with
+physical data here, we set the distance measure to "euclidean".
+
+```{r}
+md <- metaMDS(dat2, scale = TRUE, distance = "euclid")
+plot(md, type="text")
+abline(h=0, col="grey", lty="dotted")
+abline(v=0, col="grey", lty="dotted")
+```
+
+## Cluster analysis
+
+Here we apply a hierarchical cluster analysis with square root transformed data 
+and two different agglomeration schemes, "complete linkage" and "Ward's method".
+
+```{r  fig.height=10}
+par(mfrow=c(2,1))
+hc <- hclust(dist(scale(dat2)), method="complete") # the default
+plot(hc)
+
+hc2 <- hclust(dist(scale(dat2)), method="ward.D2")
+plot(hc2)
+```
+
+We can also use the clusters to indicate groups in the NMDS plot. Function 
+`rect.hclust` indicates a given number of clusters in the dendrogram, then we cut
+the tree with `cutree` and use the groups `grp` as color codes. **R** has 8 
+standard colors. If we need more, we can define an own palette.
+
+```{r}
+plot(hc, hang = -1)
+rect.hclust(hc, 5)
+grp <- cutree(hc, 5)
+# grp                  # can be used to show the groups
+plot(md, type = "n")
+text(md$points, row.names(dat2), col = grp)
+```
+
+
+Instead of hierarchical clustering, we can also use a non-hierarchical method,
+e.g. k-means clustering. This is an iterative method, and avoids the problem that 
+cluster assignment depends on the order of clustering and the agglomeration method.
+
+Depending on the question, it may be a disadvantage, that the number of clusters 
+needs to be specified beforehand (e.g. from hierarchical clustering) and that we
+do not get a tree diagramm.
+
+
+## Task
+
+* Try to understand the analysis, 
+* discuss the results, 
+* ask questions.
+* The idea is to work on this report together and to make it more complete.
+
+
+
+## References
+
