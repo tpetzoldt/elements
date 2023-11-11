@@ -129,7 +129,7 @@ $$
 
 ```{r uniform-pdf, fig.align='center', fig.width=6, fig.height=4}
 par(mar=c(4.1,7.1,1,1), las=1)
-x <- seq(-0.2, 1.2, length=500)
+x <- c(-0.2, 0-1e-8, 0+1e-8, 1-1e-8, 1+1e-8, 1.2)
 plot(x, dunif(x), type="l", col="red", lwd=2,
      axes=FALSE,
      xlab="random variable X",
@@ -187,13 +187,14 @@ $$
 ::: {.column width="39%"}
 
 ```{r uniform-cdf, fig.width=4, fig.height=4}
-x <- seq(-0.2, 1.2, length=500)
+par(las=1)
+x <- c(-0.2, 0, 1, 1.2)
 plot(x, punif(x), type="l", lwd=2, col="red",
                   xlab="random variable X",
                   ylab="probability",
      axes=FALSE)
 axis(1, at=c(0, 1), label=c("x_min", "x_max"))
-axis(2, at=c(0, 1), label=c(0, "1/(xmax-xmin)"))
+axis(2, at=c(0, 1), label=c(0, 1))
 box()
 ```
 :::
@@ -215,13 +216,13 @@ box()
 ::: {.column width="49%"}
 
 ```{r uniform-qdf, fig.width=4, fig.height=4}
-x <- seq(-0.2, 1.2, length=500)
+x <- c(-0.2, 0, 1, 1.2)
 plot(y=x, x=punif(x), type="l", lwd=2, col="red",
                   ylab="random variable X",
                   xlab="probability",
      axes=FALSE)
 axis(2, at=c(0, 1), label=c("x_min", "x_max"))
-axis(1, at=c(0, 1), label=c(0, "1/(xmax-xmin)"))
+axis(1, at=c(0, 1), label=c(0, "1"))
 box()
 ```
 [Quantile function]{.blue}
@@ -235,12 +236,12 @@ Example: In which range can we find 95% of a uniform distribution $\mathbf{U}(40
 <br>
 
 ```{r unif-summary, echo=FALSE, fig.align='center'}
-par(mfrow=c(2, 2), mar=c(4,4,1,1)+.1)
+par(mfrow=c(2, 2), mar=c(4,4,1,1)+.1, las=1)
 x <- runif(400)
 h <- hist(x, xlab="random variable X", main="", col="wheat")
 hcum <- cumsum(h$counts)/sum(h$counts)
 
-x <- seq(-0.2, 1.2, length=500)
+x <- c(-0.2, 0-1e-8, 0+1e-8, 1-1e-8, 1+1e-8, 1.2)
 plot(x, dunif(x), type="l",
                   xlab="random variable X",
                   ylab="probability function", col="red")
