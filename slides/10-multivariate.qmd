@@ -9,6 +9,7 @@ date:   "`r Sys.Date()`"
 library("readxl")
 library("vegan")
 library("knitr")
+library("kableExtra")
 #knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 knitr::opts_chunk$set(echo = TRUE, eval=TRUE)
 #setupKnitr(autoprint = TRUE)
@@ -28,7 +29,7 @@ published at the [UBA web site](https://www.umweltbundesamt.de/), that refer to
 of lakes in Brandenburg and Mecklenburg. The data werde taken from the literature 
 [@casper_lake_1985, @koschel_primary_1985] and adapted to teaching purposes.
 
-3. The "gauernitz" data set contains simplified teaching versions from research data, published by @Winkelmann
+3. The "gauernitz" data set contains simplified teaching versions from research data, of the study from @winkelmann_fish_2011
 
 4. The document itself, the codes and the ebedded images are own work and can be shared according to [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en).
 
@@ -91,10 +92,10 @@ D = \sum_{i=1}^S p_i^2
 $$
 
 * $p_i$: relative abundance of species
-* $0 \leq D \leq 1$
-* inverse Simpson index: $D' = 1 / D$<br> 
-* Simpson-Gini-index: $\tilde{D} = 1 - D$<br>
+* in most cases, Simpson index is given as $\tilde{D} = 1 - D$<br>
   [(large values -- high diversity)]{.gray}
+* also possible: inverse Simpson index: $D' = 1 / D$<br> 
+
 :::
 
 :::{.column width="48%"}
@@ -102,10 +103,10 @@ $$
 **Shannon index**
 
 $$
-H = -\sum_{i=1}^S p_i \log p_i
+H = -\sum_{i=1}^S p_i \log_b p_i
 $$
   
-  * information theory, log often base 2
+  * in most cases log base $b=e$ (natural log), some prefer $b=2$ (information theory)
   
   
   **Eveness **
@@ -122,51 +123,135 @@ $$
 
 * more indices: species richness, species deficit, Fisher's $\alpha$ ...
 
-$\rightarrow$ always information loss compared to the original list
+## Diversity indices
+
+:::{.column width="20%"}
+:::
+
+:::{.column width="60%"}
+<small>
+```{r echo=FALSE}
+library("vegan")
+species <- benthos[c("Mollusca", "Diptera", "Baetis", "Plecoptera", 
+                     "Coleoptera", "Turbellaria", "Heptageniidae",
+                     "Ephemeroptera", "Gammarus", "Trichoptera", 
+                     "Acari", "Nematoda", "Oligochaeta")]
+div <- data.frame(
+  shannon = diversity(species, index="shannon"),
+  simpson = diversity(species, index="simpson"),
+  invsimpson = diversity(species, index="invsimpson"),
+  eveness = diversity(species, index="shannon") / log(ncol(species)),
+  fisher_alpha = fisher.alpha(species)
+)
+div <- lapply(div, round, 2)
+kable(cbind(benthos[c("Site", "Habitat", "Stream", "Flood")], div))
+```
+</small>
+:::
+
+* aggregated data but which of the indices tells what?
+* $\rightarrow$ information loss compared to the original list
+
+
+
+## Alternative approach
+
+<br>
+
+
+[Work with the compleze original variables directly]{.bigfont}
+
+<br>
+
+**$\rightarrow$ Multivariate statistics**
+
+
+ * dependent variables [+ explanation variables optional]{.gray}
+ * analyze distance and location in multidimensional space
+ * find way to vizualize relationship in lower dimensions
+
+<br>
+
+For comparison
+
+* univariate: 1 variable
+* bivariate: 1 dependent, 1 independent variable
+* multiple: 1 dependent, >1 independent variables
+
+## Two approches of multivariate statistics
+
+:::{.column width="44%" .add-space}
+
+**Cluster analysis**
+
+```{r approach-cluster, echo=FALSE, fig.width=4, fig.height=4}
+par(mar=c(1,4,1,1))
+rownames(species) <- benthos$Site
+plot(hclust(dist(scale(species))), hang=-1, main="")
+```
+
+* distance and similarity
+
+:::
+
+
+::: {.column width="44%"}
+
+**Ordination**
+
+```{r approach-pca, echo=FALSE, fig.width=4, fig.height=4}
+par(mar=c(4,4,1,1))
+biplot(prcomp(scale(species)))
+```
+
+* dimension reduction
+* relationship between observations and variables
+:::
+
 
 ## Basic concepts
 
 <br>
 
-**Multivariate statistics**
-
-* univariate: one variable
-* bivariate: one dependent, one independent variable
-* multiple: one dependent, several independent variables
-
 **Similarity and correlation**
 
-* distance and similarity: how different or similar are the observations?
-* correlation and covariance: are variables interdependent?
-* dimension reduction: try to show essential parts of information on a lower number of dimensions
-* cluster analysis: show which observations are closely together
-* ordination: plot data at lower dimentsions, so that similar observations are closely together
+* distance and similarity:<br>
+  $\rightarrow$ How different or similar are the observations?
+* correlation and covariance:<br>
+  $\rightarrow$  Are variables interdependent?
+* dimension reduction:<br>
+  $\rightarrow$ Try to show essential parts of information on a lower number of dimensions.
+* cluster analysis:<br>
+  $\rightarrow$  Show which observations are closely together.
+* ordination:<br>
+  $\rightarrow$  Plot data at lower dimensions, similar observations closely together.
 
 ## Distance and dissimilarity
 
-* Variety of measures for distance and similarity
+<br>
 
 **Axiomatic definition**
 
-For a measure of distance $d$ between the multidimensional points $x_i$
-and $x_j$ the following conditions apply:
+Measure of distance $d$ between multidimensional points $x_i$ and $x_j$:
 
 
-1. $d(x_i, x_j) \ge 0$ (distances are similar or equal to zero),
-2. $d(x_i, x_j)=d(x_j,x_i)$ (the distance  from A to B is the
-    same as from B to A),
-3. $d(x_i, x_i)=0$ (the distance from a given point to itself is zero).
+1. $d(x_i, x_j) \ge 0$, distances are similar or equal to zero
+2. $d(x_i, x_j)=d(x_j,x_i)$, the distance  from A to B is the
+    same as from B to A,
+3. $d(x_i, x_i)=0$, the distance from a given point to itself is zero
 
-Beyond that, a distance measure is termed metric, if:
+A distance measure is termed metric, if:
 
 1. $d=0$ applies in the case of equality  only, and
-2. the triangle inequality (the indirect route is longer than the direct
-  route) applies too.
+2. the triangle inequality aapplies.<br>
+  [The indirect route is longer than the direct route]{.gray}
 
-If one or both of the additonal conditions are violated, we speak about **nonmetric**
+If one or both of the additional conditions are violated, we speak about **nonmetric**
 measures and use the term **dissimilarity** instead of distance.
 
 ## Similarity
+
+<br>
 
 A measure of similarity $s$ can be defined in a similar way:
 
@@ -175,10 +260,10 @@ A measure of similarity $s$ can be defined in a similar way:
 2. $s(x_i,x_j)=s(x_j,x_i)$
 3. $s(x_i,x_i)=s_{max}$
 
-and it is metric, if:
+it is metric, if:
 
 * $s_{max}$ applies only in the case of equality and
-* the triangle inequality applies too.
+* the triangle inequality applies
 
 
 ## Conversion between dissimilarity and similarity
@@ -186,39 +271,40 @@ and it is metric, if:
 
 <br>
 
-* different methods, as long as the $\Rightarrow$ transformation is monotonic.
 
 <br>
+
+:::{.bigfont}
 
 | similarity     |  dissimilarity        |
 |----------------|-----------------------|
 | $s=1-d/d_{max}$| $d=1-s/s_{max}$       |
 | $s=\exp(-d)$   | $d= - \ln(s-s_{min})$ |
 
+:::
+
 <br>
 
 * distance goes from $0$ to $\infty$
-* in most cases $s$ is limited between $(0, 1)$ or between 0 and 100%.
+* different transformations, as long as the $\Rightarrow$ transformation is monotonic
+* in most cases similarity $s$ is limited between $(0, 1)$ or between 0 and 100%.
 
 
 
-## Most important distance and dissimilarity measures in our field
+## Common distance and dissimilarity measures
 
 <br>
 
-* **Euclidean** distance (shortest connection between 2 points in space),
-* **Manhattan** distance (around the corner, as in Manhattans grid-like streets),
-* **Chi-square** distance for comparison of frequencies,
-* **Mahalanobis** distance (takes covariance into account),
-* **Bray-Curtis** dissimilarity index (created specifically for comparison of species lists in ecology).
-* **Jaccard** index for binary (presence-absence) data
-* **Gower** dissimilarity is used for mixed-type variables
+* **Euclidean** distance: shortest connection between 2 points in space
+* **Manhattan** distance: around the corner, as in Manhattans grid-like streets
+* **Chi-square** distance: for comparison of frequencies,
+* **Mahalanobis** distance: takes covariance into account
+* **Bray-Curtis** dissimilarity: comparison of species lists in ecology
+* **Jaccard** index: for binary (presence-absence) data
+* **Gower** dissimilarity:  used for mixed-type variables
 
 
-## Formulae
-
-
-**Metric data**
+## Distance and dissimilarity of **metric** variables
 
 with $x_{ij}, x_{ik}$ abundance of species  $i$ at sites ($j, k$).
 
@@ -245,36 +331,35 @@ $$
 d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 $$
 
-## Binary variables
+## Distance and dissimilarity of binary variables
 
-The binary form is applicable to binary and factor variables, where: 
+<br>
+
+* Euclidean: $\sqrt{A+B-2J}$
+* Manhattan: $A+B-2J$
+* Gower: $\frac{A+B-2J}{M}$
+* Bray-Curtis: $\frac{A+B-2J}{A+B}$
+* Jaccard: $\frac{2b}{1+b}$ with $b$ = Bray-Curtis dissimilarity
+
+
+where:
 
 * $A, B$ = numbers of species on compared sites
 * $J$ =  (joint) is the number of species that occur on both compared sites
 * $M$ =  number of columns (excluding missing values)
 
-Euclidean: $\sqrt{A+B-2J}$
-
-Manhattan: $A+B-2J$
-
-Gower: $\frac{A+B-2J}{M}$
-
-Bray-Curtis: $\frac{A+B-2J}{A+B}$
-
-Jaccard: $\frac{2b}{1+b}$ with $b$ = Bray-Curtis dissimilarity
-
+<br>
 **Applications**
 
-Additional distance measures and application suggestions are found in
+Additional distance measures and application suggestions in
 the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/vegdist) help page.
 
 
 
 ## The UBA-lakes example
 
-Here we load the data set and add English column names and 
-abbreviated lake identifiers as row names to the table,
-that are useful for the multivariate plotting functions.
+Load the data set and add English column names and abbreviated lake identifiers as row names to the table.
+These are useful for the multivariate plotting functions.
 
 ```{r}
 library("readxl") # read Excel files directly
@@ -288,36 +373,38 @@ names(lakes) <- c("name", "state", "drainage", "population", "altitude",
 rownames(lakes) <- paste0(1:nrow(lakes), substr(lakes$name, 1, 4))
 ```
 
-Text columns, e.g Federal State names and lake type are removed and rows with missing data 
-excluded. If population is not used, the analysis can be repeated with more lakes.
+<br>
+
+Remove text columns, e.g Federal State names, lake type and rows with missing data:
 
 ```{r}
 valid_columns <- c("drainage", "population", "altitude", "z_mean",
                    "z_max", "t_ret", "volume", "area", "shore_length", 
                    "shore_devel", "drain_ratio")
 
-#valid_columns <- c("drainage", "altitude", "z_mean",
-#                   "z_max", "t_ret", "volume", "area", "shore_length", 
-#                   "shore_devel","drain_ratio")
 dat <- lakes[valid_columns]
 dat <- na.omit(dat)
 ```
 
+::: aside
+UBA = Umweltbundesamt = German Federal Environmental Agency
+:::
+
 ## Data inspection
 
-```{r uba-lakes-boxplot}
+```{r uba-lakes-boxplot, fig.align='center'}
 par(mfrow = c(1, 1))
 par(mar = c(7, 4, 2, 1) + .1)
 boxplot(scale(dat), las = 2)
-dat$altitude <- ifelse(dat$altitude < 0, 0, dat$altitude)
-boxplot(scale(sqrt(dat)), las=2)
 ```
+
+* Note: `scale()` that does normalisation (z-transformation)
 
 # Multivariate Analysis
 
-## Principal Components: PCA
+## Principal Components Analysis: PCA
 
-```{r}
+```{r uba-pca-variance}
 pc <- prcomp(scale(dat))
 summary(pc)
 plot(pc)
@@ -335,35 +422,32 @@ summary(pc2)
 
 ## Biplot
 
-```{r}
+```{r uba-pca-biplot}
 par(mfrow=c(1,2))
 par(mar=c(5, 4, 4, 2) + 0.1)
 biplot(pc2, cex=0.6)
 biplot(pc2, cex=0.6, choices=c(3, 2))
 ```
 
-A PCA is also possible with the `rda` function of the **vegan** package. The
-syntax of the plot functions is somewhat different. Instead of `biplot` as 
-above, we can directly use `plot`. Details are found in the **vegan** documentation.
+## PCA with the vegan package
 
 ```{r}
-par(mfrow=c(1,1))
 pc3 <- rda(dat2, scale = TRUE)
-pc3
-#summary(pc3)
-plot(pc3)
+summary(pc3)
 ```
+
+## Biplot
+
+```{r uba-rda-biplot, fig.width=5, fig.height=5, fig.align='center'}
+plot(pc3)
+
+```
+
 
 ## Nonmetric Multidimensional Scaling: NMDS
 
-Lt's now perform an NMDS for the data set. Function `metaMDS` runs a series of NMDS fits
-with different start values to avoid local minima. It has also some automatic
-transformations built in and works usually with the Bray-Curtis dissimilarity,
-that is used for plants and animal species abundance data. As we work with
-physical data here, we set the distance measure to "euclidean".
-
-```{r}
-md <- metaMDS(dat2, scale = TRUE, distance = "euclid")
+```{r uba-nmds, fig.align='center', fig.width=5, fig.height=5}
+md <- metaMDS(dat2, scale = TRUE, distance = "euclid", trace=FALSE)
 plot(md, type="text")
 abline(h=0, col="grey", lty="dotted")
 abline(v=0, col="grey", lty="dotted")
@@ -371,11 +455,8 @@ abline(v=0, col="grey", lty="dotted")
 
 ## Cluster analysis
 
-Here we apply a hierarchical cluster analysis with square root transformed data 
-and two different agglomeration schemes, "complete linkage" and "Ward's method".
-
-```{r  fig.height=10}
-par(mfrow=c(2,1))
+```{r  fig.height=6, wig.width=12, fig.align='center'}
+par(mfrow=c(1,2))
 hc <- hclust(dist(scale(dat2)), method="complete") # the default
 plot(hc)
 
@@ -383,20 +464,24 @@ hc2 <- hclust(dist(scale(dat2)), method="ward.D2")
 plot(hc2)
 ```
 
-We can also use the clusters to indicate groups in the NMDS plot. Function 
-`rect.hclust` indicates a given number of clusters in the dendrogram, then we cut
-the tree with `cutree` and use the groups `grp` as color codes. **R** has 8 
-standard colors. If we need more, we can define an own palette.
+## Identification of clusters in the tree
 
 ```{r}
-plot(hc, hang = -1)
+plot(hc, hang = -1)    # -1: extend vertical lines to the bottom
 rect.hclust(hc, 5)
 grp <- cutree(hc, 5)
 # grp                  # can be used to show the groups
+```
+
+## Color NMDS according to clusters
+
+```{r}
 plot(md, type = "n")
 text(md$points, row.names(dat2), col = grp)
 ```
 
+
+## Non-hierarchical clustering
 
 Instead of hierarchical clustering, we can also use a non-hierarchical method,
 e.g. k-means clustering. This is an iterative method, and avoids the problem that 
@@ -405,15 +490,6 @@ cluster assignment depends on the order of clustering and the agglomeration meth
 Depending on the question, it may be a disadvantage, that the number of clusters 
 needs to be specified beforehand (e.g. from hierarchical clustering) and that we
 do not get a tree diagramm.
-
-
-## Task
-
-* Try to understand the analysis, 
-* discuss the results, 
-* ask questions.
-* The idea is to work on this report together and to make it more complete.
-
 
 
 ## References
