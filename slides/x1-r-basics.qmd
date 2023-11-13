@@ -1181,8 +1181,8 @@ x3
 
 Follow-up presentations:
 
-* [Functions everywhere](functions.html)
-* [Graphics in R](graphics.html)
+* [Functions everywhere](x3-r-functions.html)
+* [Graphics in R](x2-r-graphics.html)
 
 More details in the official R manuals, especially in "[**An Introduction to R**](https://cran.r-project.org/doc/manuals/r-release/R-intro.html)"
 
