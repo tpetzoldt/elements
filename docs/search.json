@@ -361,21 +361,21 @@
     "href": "slides/04-distributions.html#continuos-uniform-distribution-mathbfu0-1",
     "title": "04-Distributions",
     "section": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)",
-    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\((0, 1)\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.9848991 0.1434716 0.0952776 0.6742983 0.3389204 0.0207042 0.5973770\n [8] 0.9880765 0.4740885 0.1684444\n\n\n\n\n\n \n\nbinning: subdivide values into classes"
+    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.32515493 0.06488878 0.92912687 0.58153205 0.35265470 0.83427942\n [7] 0.93450033 0.49808020 0.10417806 0.20877652\n\n\n\n\n\n \n\nbinning: subdivide values into classes"
   },
   {
     "objectID": "slides/04-distributions.html#density-function-of-mathbfux_min-x_max",
     "href": "slides/04-distributions.html#density-function-of-mathbfux_min-x_max",
     "title": "04-Distributions",
     "section": "Density function of \\(\\mathbf{U}(x_{min}, x_{max})\\)",
-    "text": "Density function of \\(\\mathbf{U}(x_{min}, x_{max})\\)\n\n\ndensity \\(f(X)\\), sometimes abbreviated as “PDF” (probability density function):\n\n\\[\nf(x) = \\begin{cases}\n         \\frac{1}{x_{max}-x_{min}} & \\text{for } x \\in [x_{min},x_{max}] \\\\\n         0                     & \\text{otherwise}\n       \\end{cases}\n\\]\n\narea under the curve (i.e. the integral) = 1.0\n100% of the events are between \\(-\\infty\\) and \\(+\\infty\\) and for \\(\\mathbf{U}(x_{min}, x_{max})\\)in the interval \\((x_{min}, y_{max})\\)"
+    "text": "Density function of \\(\\mathbf{U}(x_{min}, x_{max})\\)\n\n\ndensity \\(f(X)\\), sometimes abbreviated as “pdf” (probability density function):\n\n\\[\nf(x) = \\begin{cases}\n         \\frac{1}{x_{max}-x_{min}} & \\text{for } x \\in [x_{min},x_{max}] \\\\\n         0                     & \\text{otherwise}\n       \\end{cases}\n\\]\n\narea under the curve (i.e. the integral) = 1.0\n100% of the events are between \\(-\\infty\\) and \\(+\\infty\\) and for \\(\\mathbf{U}(x_{min}, x_{max})\\) in the interval \\([x_{min}, y_{max}]\\)"
   },
   {
     "objectID": "slides/04-distributions.html#cumulative-distribution-function-of-mathbfux_min-x_max",
     "href": "slides/04-distributions.html#cumulative-distribution-function-of-mathbfux_min-x_max",
     "title": "04-Distributions",
-    "section": "Cumulative distribution function of \\(\\mathbf{U}(x_{min}, x_{max}\\)",
-    "text": "Cumulative distribution function of \\(\\mathbf{U}(x_{min}, x_{max}\\)\n\n\nIn general: The CDF is the integral of the density function:\n\\[\nF(x) =\\int_{-\\infty}^{x} f(x) dx\n\\] The total area (total probability) is \\(1.0\\):\n\\[\nF(x) =\\int_{-\\infty}^{+\\infty} f(x) dx = 1\n\\]\nFor the uniform distribution, it is:\n\\[\nF(x) = \\begin{cases}\n         0                     & \\text{for } x < x_{min} \\\\\n         \\frac{x-x_{min}}{x_{max}-x_{min}} & \\text{for } x \\in [x_{min},x_{max}] \\\\\n         1                     & \\text{for } x > x_{max}\n       \\end{cases}\n\\]"
+    "section": "Cumulative distribution function of \\(\\mathbf{U}(x_{min}, x_{max})\\)",
+    "text": "Cumulative distribution function of \\(\\mathbf{U}(x_{min}, x_{max})\\)\n\n\nThe cdf is the integral of the density function:\n\\[\nF(x) =\\int_{-\\infty}^{x} f(x) dx\n\\] The total area (total probability) is \\(1.0\\):\n\\[\nF(x) =\\int_{-\\infty}^{+\\infty} f(x) dx = 1\n\\]\nFor the uniform distribution, it is:\n\\[\nF(x) = \\begin{cases}\n         0                     & \\text{for } x < x_{min} \\\\\n         \\frac{x-x_{min}}{x_{max}-x_{min}} & \\text{for } x \\in [x_{min},x_{max}] \\\\\n         1                     & \\text{for } x > x_{max}\n       \\end{cases}\n\\]"
   },
   {
     "objectID": "slides/04-distributions.html#quantile-function",
@@ -438,7 +438,7 @@
     "href": "slides/04-distributions.html#t-distribution-mathbftx-df",
     "title": "04-Distributions",
     "section": "t-Distribution \\(\\mathbf{t}(x, df)\\)",
-    "text": "t-Distribution \\(\\mathbf{t}(x, df)\\)\n\n\nadditional parameter “degrees of freedom” (df); used for statistical tests\nconverges to the normal distribution for \\(df \\rightarrow \\infty\\)"
+    "text": "t-Distribution \\(\\mathbf{t}(x, df)\\)\n\n\nadditional parameter “degrees of freedom” (df)\nused for confidence intervals and statistical tests\nconverges to the normal distribution for \\(df \\rightarrow \\infty\\)"
   },
   {
     "objectID": "slides/04-distributions.html#dependency-of-the-t-value-on-the-number-of-df",
@@ -473,7 +473,7 @@
     "href": "slides/04-distributions.html#poisson-distribution",
     "title": "04-Distributions",
     "section": "Poisson distribution",
-    "text": "Poisson distribution\n\n\ndistribution of rare events, a discrete distribution\nmean and variance are equal (\\(\\mu = \\sigma^2\\)), resulting parameter “Lamda” (\\(\\lambda\\))\n\nExamples: bacteria counting on a grid, waiting queues, failure models\nQuasi-poisson if \\(\\mu \\neq \\sigma^2\\) * If \\(s^2 > \\bar{x}\\): overdispersion * if \\(s^2 < \\bar{x}\\): underdispersion"
+    "text": "Poisson distribution\n\n\ndistribution of rare events, a discrete distribution\nmean and variance are equal (\\(\\mu = \\sigma^2\\)), resulting parameter “lamda” (\\(\\lambda\\))\nExamples: bacteria counting on a grid, waiting queues, failure models\n\nQuasi-poisson if \\(\\mu \\neq \\sigma^2\\)\n\nIf \\(s^2 > \\bar{x}\\): overdispersion\nif \\(s^2 < \\bar{x}\\): underdispersion"
   },
   {
     "objectID": "slides/04-distributions.html#confidence-interval",
@@ -487,14 +487,14 @@
     "href": "slides/04-distributions.html#testing-for-distribution",
     "title": "04-Distributions",
     "section": "Testing for distribution",
-    "text": "Testing for distribution\n\nSometimes we want to know whether a data set belongs to a specific type of distribution. Though this sounds quite easy, it appears quite difficult for theoretical reasons:\n\nstatistical tests check for deviations from the null hypothesis\nbut here we want to test the opposite, if \\(H_0\\) is true\n\nThis is in fact impossible, because “not significant” means only that a potential effect is either not existent or just too small to be detected. On the opposite, “significantly different” includes a certain probability of false positives.\nHowever, most statistical tests do not require perfect agreement with a certain distribution:\n\nt-test and ANOVA assume normality of residuals\ndue to the CLT, the distribution of sums and mean values converges to normal"
+    "text": "Testing for distribution\n\nSometimes we want to know whether a data set belongs to a specific type of distribution. Though this sounds easy, it appears quite difficult for theoretical reasons:\n\nstatistical tests check for deviations from the null hypothesis\nbut here we want to test the opposite, if \\(H_0\\) is true\n\nThis is in fact impossible, because “not significant” means only that a potential effect is either not existent or just too small to be detected. On the opposite, “significantly different” includes a certain probability of false positives.\nHowever, most statistical tests do not require perfect agreement with a certain distribution:\n\nt-test and ANOVA assume normality of residuals\ndue to the CLT, the distribution of sums and mean values converges to normal"
   },
   {
     "objectID": "slides/04-distributions.html#shapiro-wilks-w-test",
     "href": "slides/04-distributions.html#shapiro-wilks-w-test",
     "title": "04-Distributions",
     "section": "Shapiro-Wilks-W-Test",
-    "text": "Shapiro-Wilks-W-Test\n\\(\\rightarrow\\) standard test for normality testing\n\nx <- rnorm(100)\nshapiro.test(x)\n\n\n    Shapiro-Wilk normality test\n\ndata:  x\nW = 0.99064, p-value = 0.7165\n\n\n\n– the \\(p\\)-value is greater than 0.05, so we would keep \\(H_0\\) and conclude that nothing speaks against acceptance of the normal\nInterpration of the Shapiro-Wilks-test needs to be done with care:\n\nfor small \\(n\\), the tes is not sensitive enough\nfar large \\(n\\) it is over-sensitive\n\n\n\nThe \\(\\chi^2\\) (Chi-squared) or Kolmogorov-Smirnov-tests are nowadays rarely used for this purpose, but still important for other test problems."
+    "text": "Shapiro-Wilks-W-Test\n\\(\\rightarrow\\) standard test for normality testing\n\nx <- rnorm(100)\nshapiro.test(x)\n\n\n    Shapiro-Wilk normality test\n\ndata:  x\nW = 0.99064, p-value = 0.7165\n\n\n\n\\(\\rightarrow\\) the \\(p\\)-value is greater than 0.05, so we would keep \\(H_0\\) and conclude that nothing speaks against acceptance of the normal\n\nInterpration of the Shapiro-Wilks-test needs to be done with care:\n\nfor small \\(n\\), the tes is not sensitive enough\nfar large \\(n\\) it is over-sensitive\n\n\n\nThe \\(\\chi^2\\) (Chi-squared) or Kolmogorov-Smirnov-tests are nowadays rarely used for this purpose, but still important for other test problems."
   },
   {
     "objectID": "slides/04-distributions.html#graphical-examination-of-normality",
@@ -550,14 +550,14 @@
     "href": "slides/04-distributions.html#confidence-intervals-of-the-mean",
     "title": "04-Distributions",
     "section": "Confidence intervals of the mean",
-    "text": "Confidence intervals of the mean\n\nStandard error\n\\[\ns_{\\bar{x}} = \\frac{s}{\\sqrt{n}}\n\\]\n\\(\\rightarrow\\) variability of the mean is half, if we increase the sample size four times (\\(2^2\\))\nFurthermore, it is possible to estimate the interval in which the true mean is found with 95,% probability, that is the 95,% confidence interval:\nEstimation of the 95% confidence interval:\n\\[\nCI_{95\\%} = \\bigg(\\bar{x} - z_{0.975} \\cdot \\frac{s}{\\sqrt{n}},\n                 \\bar{x} + z_{0.975} \\cdot \\frac{s}{\\sqrt{n}}\\bigg)\n\\]\nwith \\(z_{1-\\alpha/2} = z_{0.975} =\\) \\(1.96\\).\n\n\\(\\rightarrow\\) \\(2\\sigma\\) rule"
+    "text": "Confidence intervals of the mean\n\nStandard error\n\\[\ns_{\\bar{x}} = \\frac{s}{\\sqrt{n}}\n\\]\n\nvariability of the mean is half, if we increase the sample size four times (\\(2^2\\))\ninterval in which the true mean is found with 95% probability\n\nEstimation of the 95% confidence interval:\n\\[\nCI_{95\\%} = \\bigg(\\bar{x} - z_{0.975} \\cdot \\frac{s}{\\sqrt{n}},\n                 \\bar{x} + z_{0.975} \\cdot \\frac{s}{\\sqrt{n}}\\bigg)\n\\]\nwith \\(z_{1-\\alpha/2} = z_{0.975} =\\) \\(1.96\\).\n\n\\(\\rightarrow\\) \\(2\\sigma\\) rule"
   },
   {
     "objectID": "slides/04-distributions.html#use-the-t-distribution-for-small-samples",
     "href": "slides/04-distributions.html#use-the-t-distribution-for-small-samples",
     "title": "04-Distributions",
     "section": "Use the t-distribution for small samples",
-    "text": "Use the t-distribution for small samples\n\\[\nCI_{95\\%} = \\bigg(\\bar{x} - t_{0.975, n-1} \\cdot \\frac{s}{\\sqrt{n}},\n                 \\bar{x} + t_{0.975, n-1} \\cdot \\frac{s}{\\sqrt{n}}\\bigg)\n\\]\n\nnecessary for small samples: \\(n\\lessapprox 30\\), \\(n-1\\) degrees of freedom\ncan also be used for \\(n>30\\)\n\\(t\\)-quantile can be found in tables or calculated with the qt()function in R.\n\nExample with \\(\\mu=50\\) and \\(\\sigma=10\\):\n\nset.seed(123)\nn <- 10\nx <- rnorm(n, 50, 10)\nm <- mean(x); s <- sd(x)\nse <- s/sqrt(n)\n# lower and upper confidence limits\nm + qt(c(0.025, 0.975), n-1) * se\n\n[1] 43.92330 57.56922\n\n\nThe true mean (\\(\\mu\\)=50) is in the interval CI = (43.9, 57.6)."
+    "text": "Use the t-distribution for small samples\n\\[\nCI_{95\\%} = \\bigg(\\bar{x} - t_{0.975, n-1} \\cdot \\frac{s}{\\sqrt{n}},\n                 \\bar{x} + t_{0.975, n-1} \\cdot \\frac{s}{\\sqrt{n}}\\bigg)\n\\]\n\nnecessary for small samples: \\(n\\lessapprox 30\\), \\(n-1\\) degrees of freedom\ncan also be used for \\(n>30\\)\n\\(t\\)-quantile can be found in tables or calculated with the qt()function in R.\n\nExample with \\(\\mu=50\\) and \\(\\sigma=10\\):\n\nset.seed(123)\nn <- 10\nx <- rnorm(n, 50, 10)\nm <- mean(x); s <- sd(x)\nse <- s/sqrt(n)\n# lower and upper confidence limits\nm + qt(c(0.025, 0.975), n-1) * se\n\n[1] 43.92330 57.56922\n\n\n\\(\\rightarrow\\) the true mean (\\(\\mu\\)=50) is in the interval CI = (43.9, 57.6)."
   },
   {
     "objectID": "slides/04-distributions.html#outliers",
@@ -606,7 +606,7 @@
     "href": "slides/05-classtests.html#null-hypothesis-and-alternative-hypothesis",
     "title": "05-Classical Tests",
     "section": "Null hypothesis and alternative hypothesis",
-    "text": "Null hypothesis and alternative hypothesis\n\n\\(H_0\\) null hypothesis: two populations are not different with respect to a certain property.\n\nAssumption: observed effect occured purely at random, true effect is zero.\n\n\\(H_a\\) alternative hypothesis (experimental hypothesis): existence of a certain effect.\n\nAn alternative hypothesis is never completely true or “proven”.\nAcceptance of \\(H_A\\) means only than \\(H_0\\) is unlikely.\n\n“Not significant” means either no effect or sample size too small!\n\nNote: Different meaning of significance (H0 unlikely) and relevance (effect large enough to play a role in practice)."
+    "text": "Null hypothesis and alternative hypothesis\n\n\\(H_0\\) null hypothesis: two populations are not different with respect to a certain property.\n\nAssumption: observed effect occured purely at random, true effect is zero.\n\n\\(H_a\\) alternative hypothesis (experimental hypothesis): existence of a certain effect.\n\nAn alternative hypothesis is never completely true or “proven”.\nAcceptance of \\(H_A\\) means only than \\(H_0\\) is unlikely.\n\n“Not significant” means either no effect or sample size too small!\n\nNote: Different meaning of significance (\\(H_0\\) unlikely) and relevance (effect large enough to play a role in practice)."
   },
   {
     "objectID": "slides/05-classtests.html#the-p-value",
@@ -620,7 +620,7 @@
     "href": "slides/05-classtests.html#alpha-and-beta-errors",
     "title": "05-Classical Tests",
     "section": "Alpha and beta errors",
-    "text": "Alpha and beta errors\n\n\n\n\n\n\n\n\n\nReality\nDecision of the test\ncorrect?\nprobability\n\n\n\n\n\\(H_0\\) = true\nnot significant\nyes\n\\(1-\\alpha\\)\n\n\n\\(H_0\\) = false\nsignificant\nyes\n\\(1-\\beta\\) (power)\n\n\n\\(H_0\\) = true\nsignificant\nno\n\\(\\alpha\\)-error\n\n\n\\(H_0\\) = false\nnot significant\nno\n\\(\\beta\\)-error\n\n\n\n\n\n\n\n\n\n1.\\(H_0\\) falsely rejected (error of the first kind or \\(\\alpha\\)-error)\n\nwe claim an effect, that does not exist, e.g. a drug with no effect\n\n2.\\(H_0\\) falsely retained (error of the second kind or \\(\\beta\\)-error)\n\ntypical case in small studies, where effert was not enough to detect existing effects\n\nUse in practice\n\ncommon convention in environmental sciences: \\(\\alpha=0.05\\), must be set beforehand\n\\(\\beta=f(\\alpha, \\text{effectsize}, \\text{sample size}, \\text{kind of test})\\) (should be \\(\\ge 0.2\\))"
+    "text": "Alpha and beta errors\n\n\n\n\n\n\n\n\n\nReality\nDecision of the test\ncorrect?\nprobability\n\n\n\n\n\\(H_0\\) = true\nnot significant\nyes\n\\(1-\\alpha\\)\n\n\n\\(H_0\\) = false\nsignificant\nyes\n\\(1-\\beta\\) (power)\n\n\n\\(H_0\\) = true\nsignificant\nno\n\\(\\alpha\\)-error\n\n\n\\(H_0\\) = false\nnot significant\nno\n\\(\\beta\\)-error\n\n\n\n\n\n\n\n\n\n1.\\(H_0\\) falsely rejected (error of the first kind or \\(\\alpha\\)-error)\n\nwe claim an effect, that does not exist, e.g. a drug with no effect\n\n2.\\(H_0\\) falsely retained (error of the second kind or \\(\\beta\\)-error)\n\ntypical case in small studies, where effect was not enough to detect existing effects\n\nUse in practice\n\ncommon convention in environmental sciences: \\(\\alpha=0.05\\), must be set beforehand\n\\(\\beta=f(\\alpha, \\text{effectsize}, \\text{sample size}, \\text{kind of test})\\), should be \\(\\le 0.2\\)"
   },
   {
     "objectID": "slides/05-classtests.html#significance-and-relevance",
@@ -641,21 +641,21 @@
     "href": "slides/05-classtests.html#one-sample-t-test",
     "title": "05-Classical Tests",
     "section": "One sample t-Test",
-    "text": "One sample t-Test\n\ntests if a sample is from a population with given mean value \\(\\mu\\)\nbased on checking if the population mean \\(\\mu\\) is in the confidence interval of \\(\\bar{x}\\)\n\n\nLet’s assume a sample of size with \\(n=10, \\bar{x}=5.5, s=1\\) and \\(\\mu=5\\).\nEstimate the 95% confidence interval of \\(\\bar{x}\\):\n\n\\[\nCI = \\bar{x} \\pm t_{1-\\alpha/2, n-1} \\cdot s_{\\bar{x}}\n\\] with \\[\ns_{\\bar{x}} = \\frac{s}{\\sqrt{n}} \\qquad \\text{(standard error)}\n\\]\nDifferent ways of calculation shown at the next slides"
+    "text": "One sample t-Test\n\n\ntests if a sample is from a population with given mean value \\(\\mu\\)\nbased on checking if the population mean \\(\\mu\\) is in the confidence interval of \\(\\bar{x}\\)\n\n\nLet’s assume a sample of size with \\(n=10, \\bar{x}=5.5, s=1\\) and \\(\\mu=5\\).\nEstimate the 95% confidence interval of \\(\\bar{x}\\):\n\n\\[\nCI = \\bar{x} \\pm t_{1-\\alpha/2, n-1} \\cdot s_{\\bar{x}}\n\\] with \\[\ns_{\\bar{x}} = \\frac{s}{\\sqrt{n}} \\qquad \\text{(standard error)}\n\\]\nDifferent ways of calculation shown at the next slides"
   },
   {
     "objectID": "slides/05-classtests.html#remember-standard-deviation-and-standard-error",
     "href": "slides/05-classtests.html#remember-standard-deviation-and-standard-error",
     "title": "05-Classical Tests",
     "section": "Remember: standard deviation and standard error",
-    "text": "Remember: standard deviation and standard error\n\nFigure 1: Visualization of a one-sample t-test. Left: original distribution of the data measured by standard deviation, right: distribution of mean values, measured by its standard error.\\[\ns_{\\bar{x}} = \\frac{s}{\\sqrt{n}} \\qquad \\text{(standard error)}\n\\]\n\nstandard error < standard deviation\nmeasures precision of the mean value\nCLT!\n\nThe test is based on the distribution of the means, not the original data."
+    "text": "Remember: standard deviation and standard error\n\n Visualization of a one-sample t-test. Left: original distribution of the data measured by standard deviation, right: distribution of mean values, measured by its standard error. \n\\[\ns_{\\bar{x}} = \\frac{s}{\\sqrt{n}} \\qquad \\text{(standard error)}\n\\]\n\nstandard error < standard deviation\nmeasures precision of the mean value\nCLT!\n\nThe test is based on the distribution of the means, not distribution of original data."
   },
   {
     "objectID": "slides/05-classtests.html#method-1-is-mu-in-the-confidence-interval",
     "href": "slides/05-classtests.html#method-1-is-mu-in-the-confidence-interval",
     "title": "05-Classical Tests",
     "section": "Method 1: Is \\(\\mu\\) in the confidence interval?",
-    "text": "Method 1: Is \\(\\mu\\) in the confidence interval?\n\n\nSample: \\(n=10, \\bar{x}=5.5, s=1\\) and \\(\\mu=5\\)\nLet \\(\\alpha = 0.05\\), we get a two-sided 95% confidence interval with:\n\n\\[\\bar{x} \\pm t_{0,975, n-1} \\cdot \\frac{s}{\\sqrt{n}}\\]\n\n\n5.5 + c(-1, 1) * qt(0.975, 10-1) * 1/sqrt(10)\n\n[1] 4.784643 6.215357\n\n\n\n\n\nCheck if \\(\\mu=5.0\\) is in this interval.\nYes, it is inside \\(\\Rightarrow\\) difference not significant."
+    "text": "Method 1: Is \\(\\mu\\) in the confidence interval?\n\n\nSample: \\(n=10, \\bar{x}=5.5, s=1\\) and \\(\\mu=5\\)\nLet \\(\\alpha = 0.05\\), we get a two-sided 95% confidence interval with:\n\n\\[\\bar{x} \\pm t_{0,975, n-1} \\cdot \\frac{s}{\\sqrt{n}}\\]\n\n\n5.5 + c(-1, 1) * qt(0.975, 10-1) * 1/sqrt(10)\n\n[1] 4.784643 6.215357\n\n\n\n\n\nCheck if \\(\\mu=5.0\\) is in this interval?\nYes, it is inside \\(\\Rightarrow\\) difference not significant."
   },
   {
     "objectID": "slides/05-classtests.html#method-2-comparison-with-a-tabulated-t-value",
@@ -669,42 +669,42 @@
     "href": "slides/05-classtests.html#method-3-calculation-of-the-p-value-from-t_obs",
     "title": "05-Classical Tests",
     "section": "Method 3: Calculation of the p-value from \\(t_{obs}\\)",
-    "text": "Method 3: Calculation of the p-value from \\(t_{obs}\\)\n\n\nuse computerized probability function (pt) instead of table lookup\n\\(t = t_{obs}\\) and the degrees of freedom (\\(n-1\\)):\n\n\n\n2 * (1 - pt(t, df = 10 - 1)) # 2 * (1 - p) is re-arranged from 1-alpha/2\n\n[1] 0.1483047\n\n\nThis p-value = 0.1483047 is greater than \\(0.05\\) so we consider the difference as not significant.\n\nFAQ: less than or greater than?\n\n\n\n\n\n\n\n\n\np-value\n\\(\\text{p-value} < \\alpha\\)\nnull hypothesis unlikely\nsignificant\n\n\ntest statistic\n\\(t_{obs} > t_{1-\\alpha/2, n-1}\\)\neffect exceeds Confint.\nsignificant"
+    "text": "Method 3: Calculation of the p-value from \\(t_{obs}\\)\n\n\nuse computerized probability function (pt) instead of table lookup\n\\(t = t_{obs}\\) and the degrees of freedom (\\(n-1\\)):\n\n\n\n2 * (1 - pt(t, df = 10 - 1)) # 2 * (1 - p) is re-arranged from 1-alpha/2\n\n[1] 0.1483047\n\n\nThis p-value = 0.1483047 is greater than \\(0.05\\) so we consider the difference as not significant.\n\nFAQ: less than or greater than?\n\n\n\n\n\n\n\n\n\n\np-value\n\\(\\text{p-value} < \\alpha\\)\nnull hypothesis unlikely\nsignificant\n\n\ntest statistic\n\\(t_{obs} > t_{1-\\alpha/2, n-1}\\)\neffect exceeds confint.\nsignificant"
   },
   {
     "objectID": "slides/05-classtests.html#method-4-built-in-t-test-function-in-r",
     "href": "slides/05-classtests.html#method-4-built-in-t-test-function-in-r",
     "title": "05-Classical Tests",
     "section": "Method 4: Built-in t-test function in R",
-    "text": "Method 4: Built-in t-test function in R\nThe same can be done much easier with the computer in R.\nLet’s assume we have a sample with \\(\\bar{x}=5, s=1\\):\n\n## define sample\nx <- c(5.5, 3.5, 5.4, 5.3, 6, 7.2, 5.4, 6.3, 4.5, 5.9)\n\n## perform one-sample t-test\nt.test(x, mu=5)\n\n\n    One Sample t-test\n\ndata:  x\nt = 1.5811, df = 9, p-value = 0.1483\nalternative hypothesis: true mean is not equal to 5\n95 percent confidence interval:\n 4.784643 6.215357\nsample estimates:\nmean of x \n      5.5 \n\n\nThe test returns the observed t-value, the 95% confidence interval and the p-value.\nAn important difference is, that this method needs the original data, while the other methods need only mean, standard deviation and sample size."
+    "text": "Method 4: Built-in t-test function in R\n\nThe same can be done much easier with the computer in R.\nLet’s assume we have a sample with \\(\\bar{x}=5, s=1\\):\n\n## define sample\nx <- c(5.5, 3.5, 5.4, 5.3, 6, 7.2, 5.4, 6.3, 4.5, 5.9)\n\n## perform one-sample t-test\nt.test(x, mu=5)\n\n\n    One Sample t-test\n\ndata:  x\nt = 1.5811, df = 9, p-value = 0.1483\nalternative hypothesis: true mean is not equal to 5\n95 percent confidence interval:\n 4.784643 6.215357\nsample estimates:\nmean of x \n      5.5 \n\n\nThe test returns the observed t-value, the 95% confidence interval and the p-value.\nAn important difference is, that this method needs the original data, while the other methods need only mean, standard deviation and sample size."
   },
   {
     "objectID": "slides/05-classtests.html#two-sample-t-test",
     "href": "slides/05-classtests.html#two-sample-t-test",
     "title": "05-Classical Tests",
     "section": "Two sample t-test",
-    "text": "Two sample t-test\nThe two-sample t-test compares two independent samples:\n\nx1 <- c(5.3, 6.0, 7.1, 6.4, 5.7, 4.9, 5.0, 4.6, 5.7, 4.0, 4.5, 6.5)\nx2 <- c(5.8, 7.1, 5.8, 7.0, 6.7, 7.7, 9.2, 6.0, 7.2, 7.8, 7.8, 5.7)\nt.test(x1, x2)\n\n\n    Welch Two Sample t-test\n\ndata:  x1 and x2\nt = -3.7185, df = 21.611, p-value = 0.001224\nalternative hypothesis: true difference in means is not equal to 0\n95 percent confidence interval:\n -2.3504462 -0.6662205\nsample estimates:\nmean of x mean of y \n 5.475000  6.983333 \n\n\nThat means that both samples differ significantly (\\(p < 0.05\\)). It has to be mentioned that R did not perform the “ordinary” t-test but the Welch test (also termed heteroscedastic t-test), for which the variances of both samples are not required to be identical."
+    "text": "Two sample t-test\n\nThe two-sample t-test compares two independent samples:\n\nx1 <- c(5.3, 6.0, 7.1, 6.4, 5.7, 4.9, 5.0, 4.6, 5.7, 4.0, 4.5, 6.5)\nx2 <- c(5.8, 7.1, 5.8, 7.0, 6.7, 7.7, 9.2, 6.0, 7.2, 7.8, 7.8, 5.7)\nt.test(x1, x2)\n\n\n    Welch Two Sample t-test\n\ndata:  x1 and x2\nt = -3.7185, df = 21.611, p-value = 0.001224\nalternative hypothesis: true difference in means is not equal to 0\n95 percent confidence interval:\n -2.3504462 -0.6662205\nsample estimates:\nmean of x mean of y \n 5.475000  6.983333 \n\n\n\n\n\\(\\rightarrow\\) both samples differ significantly (\\(p < 0.05\\))\nNote: R has not performed the “ordinary” t-test but the Welch test (= heteroscedastic t-test)\nwhere variances of both samples don’t need to be identical."
   },
   {
     "objectID": "slides/05-classtests.html#hypothesis-and-formula-of-the-two-sample-t-test",
     "href": "slides/05-classtests.html#hypothesis-and-formula-of-the-two-sample-t-test",
     "title": "05-Classical Tests",
     "section": "Hypothesis and formula of the two-sample t-test",
-    "text": "Hypothesis and formula of the two-sample t-test\n\n\n\\(H_0\\) \\(\\mu_1 = mu_2\\)\n\\(H_a\\) the two means are different\ntest criterion\n\\[\nt_{obs} =\\frac{|\\bar{x}_1-\\bar{x}_2|}{s_{tot}} \\cdot \\sqrt{\\frac{n_1 n_2}{n_1+n_2}}\n\\]\n\n\n\n\n\n\n\n\npooled standard deviation\n\\[\ns_{tot} = \\sqrt{{({n}_1 - 1)\\cdot s_1^2 + ({n}_2 - 1)\\cdot s_2^2\n\\over ({n}_1 + {n}_2 - 2)}}\n\\]\nassumptions: independence, equal variances, normal distribution"
+    "text": "Hypothesis and formula of the two-sample t-test\n\n\n\\(H_0\\) \\(\\mu_1 = \\mu_2\\)\n\\(H_a\\) the two means are different\ntest criterion\n\\[\nt_{obs} =\\frac{|\\bar{x}_1-\\bar{x}_2|}{s_{tot}} \\cdot \\sqrt{\\frac{n_1 n_2}{n_1+n_2}}\n\\]\n\n\n\n\n\n\n\n\npooled standard deviation\n\\[\ns_{tot} = \\sqrt{{({n}_1 - 1)\\cdot s_1^2 + ({n}_2 - 1)\\cdot s_2^2\n\\over ({n}_1 + {n}_2 - 2)}}\n\\]\nassumptions: independence, equal variances, approximate normal distribution"
   },
   {
     "objectID": "slides/05-classtests.html#the-welch-test",
     "href": "slides/05-classtests.html#the-welch-test",
     "title": "05-Classical Tests",
     "section": "The Welch test",
-    "text": "The Welch test\n\nKnown as t-test for samples with unequal variance, works also for equal variance!\nTest criterion:\n\\[\nt = \\frac{\\bar{x}_1 - \\bar{x}_2}{\\sqrt{s^2_{\\bar{x}_1} + s^2_{\\bar{x}_2}}}\n\\]\nStandard error of each sample:\n\\[\ns_{\\bar{x}_i} = \\frac{s_i}{\\sqrt{n_i}}\n\\] Corrected degrees of freedom:\n\\[\n\\text{df} = \\frac{\\frac{s^2_1}{n_1} + \\frac{s^2_2}{n_2}}{\\frac{s^4_1}{n^2_1(n_1-1)} + \\frac{s^4_2}{n^2_2(n_2-1)}}\n\\]"
+    "text": "The Welch test\n\nKnown as t-test for samples with unequal variance, works also for equal variance!\n\nTest criterion:\n\\[\nt = \\frac{\\bar{x}_1 - \\bar{x}_2}{\\sqrt{s^2_{\\bar{x}_1} + s^2_{\\bar{x}_2}}}\n\\]\nStandard error of each sample:\n\\[\ns_{\\bar{x}_i} = \\frac{s_i}{\\sqrt{n_i}}\n\\] Corrected degrees of freedom:\n\\[\n\\text{df} = \\frac{\\frac{s^2_1}{n_1} + \\frac{s^2_2}{n_2}}{\\frac{s^4_1}{n^2_1(n_1-1)} + \\frac{s^4_2}{n^2_2(n_2-1)}}\n\\]"
   },
   {
     "objectID": "slides/05-classtests.html#equality-of-variance-f-test",
     "href": "slides/05-classtests.html#equality-of-variance-f-test",
     "title": "05-Classical Tests",
     "section": "Equality of variance: F-test",
-    "text": "Equality of variance: F-test\n\n\\(H_0\\): \\(\\sigma_1^2 = \\sigma_2^2\\)\n\\(H_a\\): variances unequal\nTest criterion:\n\\[F = \\frac{s_1^2}{s_2^2} \\]\n\nlarger of the two variances in the enumerator \\((s^2_1 > s^2_2)\\)\nseparate degrees of freedom (\\(n-1\\))\n\n\n\n\n\n\n\n\n\nExample\n\n\\(s_1=1\\), \\(s_2 =2\\), \\(n_1=5, n_2=10, F=\\frac{2^2}{1^2}=4\\)\ndeg. of freedom: \\(9 \\atop 4\\)\n\n\\(\\Rightarrow\\) \\(F_{9, 4, \\alpha=0.975} = 8.9 > 4 \\quad\\rightarrow\\) not significant"
+    "text": "Equality of variance: F-test\n\n\\(H_0\\): \\(\\sigma_1^2 = \\sigma_2^2\\)\n\\(H_a\\): variances unequal\nTest criterion:\n\\[F = \\frac{s_1^2}{s_2^2} \\]\n\nlarger of the two variances in the enumerator \\((s^2_1 > s^2_2)\\)\nseparate degrees of freedom (\\(n-1\\))\n\n\n\n\n\n\n\n\n\nExample:\n\n\\(s_1=1\\), \\(s_2 =2\\), \\(n_1=5, n_2=10, F=\\frac{2^2}{1^2}=4\\)\ndeg. of freedom: \\(9 \\atop 4\\)\n\n\\(\\Rightarrow\\) \\(F_{9, 4, \\alpha=0.975} = 8.9 > 4 \\quad\\rightarrow\\) not significant"
   },
   {
     "objectID": "slides/05-classtests.html#homogeneity-of-variances-with-2-samples",
@@ -718,7 +718,7 @@
     "href": "slides/05-classtests.html#recommendation-for-two-sample-t-tests",
     "title": "05-Classical Tests",
     "section": "Recommendation for two sample t-tests",
-    "text": "Recommendation for two sample t-tests\n\nTraditional procedure:\n\nTest for equal variances using the F-test: var.test(x, y)\nIf variances are equal: t.test(x, y, var.equal=TRUE)\notherwise, use t.test(x, y) (= Welch test)\nCheck if both samples follow a normal distribution.\n\n\nMore modern recommendation:\n\nDon’t use pre-tests\nUse always the Welch test: t.test(x, y)\nCheck approximate normal distribution by using box-plots. Not necessary if \\(n\\) is large.\n\nsee also: Wikipedia"
+    "text": "Recommendation for two sample t-tests\n\nTraditional procedure:\n\nTest for equal variances using the F-test: var.test(x, y)\nIf variances are equal: t.test(x, y, var.equal=TRUE)\notherwise, use t.test(x, y) (= Welch test)\nCheck if both samples follow a normal distribution.\n\n\nMore modern recommendation:\n\nDon’t use pre-tests!\nUse always the Welch test: t.test(x, y)\nCheck approximate normal distribution by using box-plots. Not necessary if \\(n\\) is large.\n\nsee also: Wikipedia and the references cited there"
   },
   {
     "objectID": "slides/05-classtests.html#paired-t-test",
@@ -739,7 +739,7 @@
     "href": "slides/05-classtests.html#mann-whitney-test-procedure-in-practice",
     "title": "05-Classical Tests",
     "section": "Mann-Whitney test procedure in practice",
-    "text": "Mann-Whitney test procedure in practice\n\nAssign ranks \\(R_A\\) and \\(R_B\\) to both samples \\(A\\), and \\(B\\) with sample size \\(m\\) and \\(n\\).\nCalculate number of inversions \\(U\\):\n\n\\[\\begin{align*}\n     U_A &= m \\cdot n + \\frac{m (m + 1)}{2} - \\sum_{i=1}^m R_A \\\\\n     U_B &= m \\cdot n + \\frac{n (n + 1)}{2} - \\sum_{i=1}^n R_B \\\\\n     U   &= \\min(U_A, U_B)\n\\end{align*}\\]\n\nCritical values of \\(U\\) can be found in common statistics text books.\nNot necessary in R, p-value directly printed.\nNote: Use special version wilcox.exact with correction if sample has ties."
+    "text": "Mann-Whitney test procedure in practice\n\n\nAssign ranks \\(R_A\\) and \\(R_B\\) to both samples \\(A\\), and \\(B\\) with sample size \\(m\\) and \\(n\\).\nCalculate number of inversions \\(U\\):\n\n\\[\\begin{align*}\n     U_A &= m \\cdot n + \\frac{m (m + 1)}{2} - \\sum_{i=1}^m R_A \\\\\n     U_B &= m \\cdot n + \\frac{n (n + 1)}{2} - \\sum_{i=1}^n R_B \\\\\n     U   &= \\min(U_A, U_B)\n\\end{align*}\\]\n\nCritical values of \\(U\\) can be found in common statistics text books.\nNot necessary in R, p-value directly printed.\nNote: Use special version wilcox.exact with correction if sample has ties."
   },
   {
     "objectID": "slides/05-classtests.html#mann-whitney---wilcoxon-test-in-r",
@@ -753,21 +753,21 @@
     "href": "slides/05-classtests.html#permutation-methods",
     "title": "05-Classical Tests",
     "section": "Permutation methods",
-    "text": "Permutation methods\n\nBasic principle: Estimation of a test statistic \\(x_{obs}\\) from sample,\nResampling: Simulate many \\(x_{i, sim}\\) from randomly permuted data set (\\(n = 999\\) or more)\nWhere does \\(x_{est}\\) appear within the ordered series of simulated values \\(x_{i, sim}\\)?\n\n\nLet \\(x_{obs}\\) be \\(4.5\\) in our example, then \\(\\Rightarrow\\) \\(p= 0.97\\)."
+    "text": "Permutation methods\n\nBasic principle: Estimation of a test statistic \\(\\xi_{obs}\\) from sample,\nResampling: Simulate many \\(\\xi_{i, sim}\\) from randomly permuted data set (\\(n = 999\\) or more)\nWhere does \\(\\xi_{est}\\) appear within the ordered series of simulated values \\(\\xi_{i, sim}\\)?\n\n\nLet \\(\\xi_{obs}\\) be \\(4.5\\) in our example, then \\(\\Rightarrow\\) \\(p= 0.97\\)."
   },
   {
     "objectID": "slides/05-classtests.html#testing-for-distributions",
     "href": "slides/05-classtests.html#testing-for-distributions",
     "title": "05-Classical Tests",
     "section": "Testing for distributions",
-    "text": "Testing for distributions\nNominal variables\n\n\\(\\chi^2\\)-test\nFisher’s exact test\nsee test for dependency\n\nOrdinal variables\n\nCramér-von-Mises-Test\n[\\(\\Rightarrow\\)] more powerful than \\(\\chi^2\\) or KS-test\n\nMetric scales\n\nKolmogorov-Smirnov-Test (KS-test)\nShapiro-Wilks-Test (for normal distribution)"
+    "text": "Testing for distributions\nNominal variables\n\n\\(\\chi^2\\)-test\nFisher’s exact test\n\nOrdinal variables\n\nCramér-von-Mises-Test\n\\(\\rightarrow\\) more powerful than \\(\\chi^2\\) or KS-test\n\nMetric scales\n\nKolmogorov-Smirnov-Test (KS-test)\nShapiro-Wilks-Test (for normal distribution)"
   },
   {
     "objectID": "slides/05-classtests.html#contingency-tables-for-nominal-variables",
     "href": "slides/05-classtests.html#contingency-tables-for-nominal-variables",
     "title": "05-Classical Tests",
     "section": "Contingency tables for nominal variables",
-    "text": "Contingency tables for nominal variables\n\nContingency tables used for nominal (i.e. categorical or qualitative) data\nexamples: eye and hair color, the kind of medical treatment and the number of cured/not cured\nmportant: use absolute mesurements (true numbers!), not percentages or other calculated data (e.g. not something like biomass per area)\n\nData example\n\nDaphnia (water flee)-clones and their preferred depth in a lake\nfood algae in the deep water zone poor of oxygen\nonly adapted clones with high hemoglobin can dive to the deep water\n\n\n\n\nClone\nUpper layer\nDeep layer\n\n\n\n\nA\n50\n87\n\n\nB\n37\n78\n\n\nC\n72\n45"
+    "text": "Contingency tables for nominal variables\n\nused for nominal (i.e. categorical or qualitative) data\nexamples: eye and hair color, medical treatment and the number of cured/not cured\nimportant: use absolute mesurements (true numbers!), not percentages or other calculated data (e.g. not something like biomass per area)\n\nData example\n\nDaphnia (water flee)-clones and their preferred depth in a lake\nfood algae in the deep water zone, poor of oxygen\nonly adapted clones with high haemoglobin can dive into deep water\n\n\n\n\nClone\nUpper layer\nDeep layer\n\n\n\n\nA\n50\n87\n\n\nB\n37\n78\n\n\nC\n72\n45"
   },
   {
     "objectID": "slides/05-classtests.html#calculation-of-the-chi2-test",
@@ -781,7 +781,7 @@
     "href": "slides/05-classtests.html#the-chi2-test-in-r",
     "title": "05-Classical Tests",
     "section": "The \\(\\chi^2\\)-test in R",
-    "text": "The \\(\\chi^2\\)-test in R\n\nOrganize data in a matrix with 3 rows (for the clones) and 2 columns (for the depths):\n\n\n\n     [,1] [,2]\n[1,]   50   87\n[2,]   37   78\n[3,]   72   45\n\n\n\n\\(\\chi^2\\)-test\n\n\n\n\n    Pearson's Chi-squared test\n\ndata:  x\nX-squared = 24.255, df = 2, p-value = 5.408e-06\n\n\n\nor Fisher’s exact test:\n\n\n\n\n    Fisher's Exact Test for Count Data\n\ndata:  x\np-value = 5.807e-06\nalternative hypothesis: two.sided\n\n\n\n\\(\\rightarrow\\) significant correlation between the clones and their location."
+    "text": "The \\(\\chi^2\\)-test in R\n\nOrganize data in a matrix with 3 rows (for the clones) and 2 columns (for the depths):\n\n\nx <- matrix(c(50, 37, 72, 87, 78, 45), ncol=2)\nx\n\n     [,1] [,2]\n[1,]   50   87\n[2,]   37   78\n[3,]   72   45\n\n\n\n\n\nchisq.test(x)\n\n\n    Pearson's Chi-squared test\n\ndata:  x\nX-squared = 24.255, df = 2, p-value = 5.408e-06"
   },
   {
     "objectID": "slides/05-classtests.html#favorite-numbers-of-hse-students",
@@ -795,7 +795,7 @@
     "href": "slides/05-classtests.html#chisquare-test",
     "title": "05-Classical Tests",
     "section": "Chisquare test",
-    "text": "Chisquare test\n\n\n\n\n\n    Chi-squared test for given probabilities\n\ndata:  obsfreq\nX-squared = 13.647, df = 8, p-value = 0.09144\n\n\n\n    Chi-squared test for given probabilities with simulated p-value (based\n    on 1000 replicates)\n\ndata:  obsfreq\nX-squared = 13.647, df = NA, p-value = 0.0969\n\n\n\n\n\none-sample \\(\\chi^2\\)-test. It tests for equality of frequency in all classes.\nThe simulation-based version of the test (with 1000 replicates) is slightly more precise than the standard \\(\\chi^2\\)-test, but both ar not significant."
+    "text": "Chisquare test\n\n\n\nobsfreq <- c(1, 1, 6, 2, 2, 5, 8, 6, 3)\nchisq.test(obsfreq)\n\n\n    Chi-squared test for given probabilities\n\ndata:  obsfreq\nX-squared = 13.647, df = 8, p-value = 0.09144\n\nchisq.test(obsfreq, simulate.p.value=TRUE, B=1000)\n\n\n    Chi-squared test for given probabilities with simulated p-value (based\n    on 1000 replicates)\n\ndata:  obsfreq\nX-squared = 13.647, df = NA, p-value = 0.0969\n\n\n\n\n\none-sample \\(\\chi^2\\)-test. It tests for equality of frequency in all classes.\nThe simulation-based version of the test (with 1000 replicates) is slightly more precise than the standard \\(\\chi^2\\)-test, but both ar not significant."
   },
   {
     "objectID": "slides/05-classtests.html#cramér-von-mises-test",
@@ -823,7 +823,7 @@
     "href": "slides/05-classtests.html#correlation",
     "title": "05-Classical Tests",
     "section": "Correlation",
-    "text": "Correlation\n\nFrequencies of nominal variables\n\nχ2-test\nFisher’s exact test\n\n⇒ dependence between plant society and soil type\n(see before)\nOrdinal variables\n\nSpearman-Correlation\n\n⇒ rank numbers\nMetric scales\n\nPearson-correlation\nSpearman-correlation"
+    "text": "Correlation\n\nFrequencies of nominal variables\n\n\\(\\chi^2\\)-test\nFisher’s exact test\n\n⇒ dependence between plant society and soil type\n(see before)\nOrdinal variables\n\nSpearman-Correlation\n\n\\(\\rightarrow\\) rank numbers\nMetric scales\n\nPearson-correlation\nSpearman-correlation"
   },
   {
     "objectID": "slides/05-classtests.html#variance-and-covariance",
@@ -837,7 +837,7 @@
     "href": "slides/05-classtests.html#correlation-coefficient-after-pearson",
     "title": "05-Classical Tests",
     "section": "Correlation coefficient after Pearson",
-    "text": "Correlation coefficient after Pearson\n\n\n\nthe usual correlation coefficient that we all know\ntests for linear dependence\n\n\\[\nr_P=\\frac{\\sum{(x_i-\\bar{x})  (y_i-\\bar{y})}}\n       {\\sqrt{\\sum(x_i-\\bar{x})^2\\sum(y_i-\\bar{y})^2}}\n\\]\nOr:\n\\[\nr_P=\\frac {\\sum xy - \\sum y \\sum y / n}\n        {\\sqrt{(\\sum x^2-(\\sum x)^2/n)(\\sum y^2-(\\sum y)^2/n)}}\n\\] \nRange of values: \\(-1 \\le r_P \\le +1\\)\n\n\n\n\\(0\\)\nno interdependence\n\n\n\\(+1 \\text{resp.} -1\\)\nstrictly positive resp. negative dependence\n\n\n\\(0 < |r_P| < 1\\)\npositive resp. negative dependence"
+    "text": "Correlation coefficient after Pearson\n\n\n\nthe usual correlation coefficient that we all know\ntests for linear dependence\n\n\\[\nr_p=\\frac{\\sum{(x_i-\\bar{x})  (y_i-\\bar{y})}}\n       {\\sqrt{\\sum(x_i-\\bar{x})^2\\sum(y_i-\\bar{y})^2}}\n\\]\nOr:\n\\[\nr_p=\\frac {\\sum xy - \\sum y \\sum y / n}\n        {\\sqrt{(\\sum x^2-(\\sum x)^2/n)(\\sum y^2-(\\sum y)^2/n)}}\n\\] \nRange of values: \\(-1 \\le r_p \\le +1\\)\n\n\n\n\\(0\\)\nno interdependence\n\n\n\\(+1 \\,\\text{or}\\,-1\\)\nstrictly positive resp. negative dependence\n\n\n\\(0 < |r_p| < 1\\)\npositive resp. negative dependence"
   },
   {
     "objectID": "slides/05-classtests.html#which-size-of-correlation-indicates-dependency",
@@ -851,28 +851,28 @@
     "href": "slides/05-classtests.html#significant-correlation",
     "title": "05-Classical Tests",
     "section": "Significant correlation?",
-    "text": "Significant correlation?\n\\[\n\\hat{t}_{\\alpha/2;n-2} =\\frac{|r_P|\\sqrt{n-2}}{\\sqrt{1-r^2_P}}\n\\]\n\\(t=0.829 \\cdot \\sqrt{1000-2}/\\sqrt{1-0.829^2}=46.86, df=998\\)\n Quick test: critical values for \\(r_P\\)\n\n\n\n\\(n\\)\nd.f.\n\\(t\\)\n\n\n3\n1\n12.706\n\n\n5\n3\n3.182\n\n\n10\n8\n2.306\n\n\n20\n18\n2.101\n\n\n50\n48\n2.011\n\n\n100\n98\n1.984\n\n\n1000\n998\n1.962"
+    "text": "Significant correlation?\n\\[\n\\hat{t}_{\\alpha/2;n-2} =\\frac{|r_p|\\sqrt{n-2}}{\\sqrt{1-r^2_P}}\n\\]\n\\(t=0.829 \\cdot \\sqrt{1000-2}/\\sqrt{1-0.829^2}=46.86, df=998\\)\n Quick test: critical values for \\(r_p\\)\n\n\n\n\\(n\\)\nd.f.\n\\(t\\)\n\n\n3\n1\n12.706\n\n\n5\n3\n3.182\n\n\n10\n8\n2.306\n\n\n20\n18\n2.101\n\n\n50\n48\n2.011\n\n\n100\n98\n1.984\n\n\n1000\n998\n1.962"
   },
   {
     "objectID": "slides/05-classtests.html#rank-correlation-according-to-spearman",
     "href": "slides/05-classtests.html#rank-correlation-according-to-spearman",
     "title": "05-Classical Tests",
     "section": "Rank-correlation according to Spearman",
-    "text": "Rank-correlation according to Spearman\n\n\nmeasures monotonous (and not necessarily linear) dependence\nestimation from rank differences:\n\n\\[\nr_S=1-\\frac{6 \\sum d^2_i}{n(n^2-1)}\n\\]\n\nor, alternatively: Pearson-correlation of ranked data (necessary in case of ties).\nTest: for \\(n < 10\\) \\(\\rightarrow\\) table of critical values\n\nfor \\(10 \\leq n\\) \\(\\rightarrow\\) \\(t\\)-distribution\n\\[\n   \\hat{t}_{1-\\frac{\\alpha}{2};n-2}\n      =\\frac{|r_S|}{\\sqrt{1-r^2_S}} \\sqrt{n-2}\n\\]\n\n\nComputer statistics packages use a special algorithm (algorithm AS 89 according to Best and Roberts, 1975)."
+    "text": "Rank-correlation according to Spearman\n\n\nmeasures monotonous (and not necessarily linear) dependence\nestimation from rank differences:\n\n\\[\nr_s=1-\\frac{6 \\sum d^2_i}{n(n^2-1)}\n\\]\n\nor, alternatively: Pearson-correlation of ranked data (necessary in case of ties).\nTest: for \\(n < 10\\) \\(\\rightarrow\\) table of critical values\n\nfor \\(10 \\leq n\\) \\(\\rightarrow\\) \\(t\\)-distribution\n\\[\n   \\hat{t}_{1-\\frac{\\alpha}{2};n-2}\n      =\\frac{|r_s|}{\\sqrt{1-r^2_S}} \\sqrt{n-2}\n\\]\n\n\nComputer statistics packages use a special algorithm (algorithm AS 89 according to Best and Roberts, 1975)."
   },
   {
     "objectID": "slides/05-classtests.html#example",
     "href": "slides/05-classtests.html#example",
     "title": "05-Classical Tests",
     "section": "Example",
-    "text": "Example\n\n\n\n\\(x\\)\n\\(y\\)\n\\(R_x\\)\n\\(R_y\\)\n\\(d\\)\n\\(d^2\\)\n\n\n\n\n1\n2.7\n1\n1\n0\n0\n\n\n2\n7.4\n2\n2\n0\n0\n\n\n3\n20.1\n3\n3\n0\n0\n\n\n4\n500.0\n4\n5\n-1\n1\n\n\n5\n148.4\n5\n4\n+1\n1\n\n\n\n\n\n\n\n2\n\n\n\n\n\n\n\n\n\n\n\n\\[\nr_S=1-\\frac{6 \\cdot 2}{5\\cdot (25-1)}=1-\\frac{12}{120}=0.9\n\\]\nFor comparison: \\(r_P=0.58\\)"
+    "text": "Example\n\n\n\n\\(x\\)\n\\(y\\)\n\\(R_x\\)\n\\(R_y\\)\n\\(d\\)\n\\(d^2\\)\n\n\n\n\n1\n2.7\n1\n1\n0\n0\n\n\n2\n7.4\n2\n2\n0\n0\n\n\n3\n20.1\n3\n3\n0\n0\n\n\n4\n500.0\n4\n5\n-1\n1\n\n\n5\n148.4\n5\n4\n+1\n1\n\n\n\n\n\n\n\n2\n\n\n\n\n\n\n\n\n\n\n\n\\[\nr_s=1-\\frac{6 \\cdot 2}{5\\cdot (25-1)}=1-\\frac{12}{120}=0.9\n\\]\nFor comparison: \\(r_p=0.58\\)"
   },
   {
     "objectID": "slides/05-classtests.html#application-of-spearmans-r_s",
     "href": "slides/05-classtests.html#application-of-spearmans-r_s",
     "title": "05-Classical Tests",
-    "section": "Application of Spearman’s-\\(r_S\\)",
-    "text": "Application of Spearman’s-\\(r_S\\)\n\nAdvantages\n\ndistribution free (does not require normal distribution),\ndetects any dependence,\nnot much affected by outliers.\n\nDisadvantages:\n\ncertain information loss due to ranking,\nno information about type of dependency,\nno direct relationship to coefficient of determination.\n\nConclusion: \\(r_S\\) is nevertheless highly recommended!"
+    "section": "Application of Spearman’s-\\(r_s\\)",
+    "text": "Application of Spearman’s-\\(r_s\\)\n\nAdvantages\n\ndistribution free (does not require normal distribution),\ndetects any dependence,\nnot much affected by outliers.\n\nDisadvantages:\n\ncertain information loss due to ranking,\nno information about type of dependency,\nno direct relationship to coefficient of determination.\n\nConclusion: \\(r_s\\) is nevertheless highly recommended!"
   },
   {
     "objectID": "slides/05-classtests.html#correlation-coefficients-in-r",
@@ -893,14 +893,14 @@
     "href": "slides/05-classtests.html#outlook-more-than-two-independent-variables",
     "title": "05-Classical Tests",
     "section": "Outlook: More than two independent variables",
-    "text": "Outlook: More than two independent variables\n\nMultiple correlation\n\nExample: Chl-a=\\(f(X_1, X_2, X_3, X_4, \\dots)\\), where \\(X_i\\) is the biomass of the \\(i\\)th phytoplankton species.\nmultiple correlation coefficient\npartial correlation coefficient\nattractive method \\(\\leftrightarrow\\) but difficult in practice:\n\n“independent” variables may correlate with each other (multi-collinearity) \\(\\Rightarrow\\) bias of the multiple \\(r\\).\nnon-linearities are even more difficult to handle than in the two-sample case.\n\n\nRecommendation:\n\nUse multivariate Methods (NMDS, PCA, …) for a first overview,\napply multiple regression with care and use process knowledge."
+    "text": "Outlook: More than two independent variables\n\nMultiple correlation\n\nExample: Chl-a=\\(f(x_1, x_2, x_3, x_4, \\dots)\\), where \\(x_i\\) is the biomass of the \\(i\\)th phytoplankton species.\nmultiple correlation coefficient\npartial correlation coefficient\nattractive method \\(\\leftrightarrow\\) but difficult in practice:\n\n“independent” variables may correlate with each other (multi-collinearity) \\(\\Rightarrow\\) bias of the multiple \\(r\\).\nnon-linearities are even more difficult to handle than in the two-sample case.\n\n\nRecommendation:\n\nUse multivariate Methods (NMDS, PCA, …) for a first overview,\napply multiple regression with care and use process knowledge."
   },
   {
     "objectID": "slides/05-classtests.html#determining-the-power-of-statistical-tests",
     "href": "slides/05-classtests.html#determining-the-power-of-statistical-tests",
     "title": "05-Classical Tests",
     "section": "Determining the power of statistical tests",
-    "text": "Determining the power of statistical tests\n\nHow many replicates will I need?\n\nDepends on:\n\nthe relative effect size (effect/standard deviation, \\(\\delta=\\frac{(\\bar{x}_1-\\bar{x}_2)}{s}\\),\nthe sample size \\(n\\),\nand the pre-defined significance level \\(\\alpha\\).\nand the used method\n\nThe smaller \\(\\alpha\\), \\(n\\) and \\(\\Delta\\), the bigger the type II error (\\(\\beta\\) error).\nThis is the probability to overlook effects despite of their existence."
+    "text": "Determining the power of statistical tests\n\nHow many replicates will I need?\n\nDepends on:\n\nthe relative effect size: effect/standard deviation\n\n\\[\\delta=\\frac{(\\bar{x}_1-\\bar{x}_2)}{s}\\]\n\nthe sample size \\(n\\),\nand the pre-defined significance level \\(\\alpha\\).\nand the used method\n\nThe smaller \\(\\alpha\\), \\(n\\) and \\(\\Delta\\), the bigger the type II error (\\(\\beta\\) error).\nThis is the probability to overlook effects despite of their existence."
   },
   {
     "objectID": "slides/05-classtests.html#power-analysis-1",
@@ -914,7 +914,7 @@
     "href": "slides/05-classtests.html#power-of-the-t-test",
     "title": "05-Classical Tests",
     "section": "Power of the t-test",
-    "text": "Power of the t-test\nThe power of a t-test, or the minimum sample size, can be calculated with: power.t.test():\n\npower.t.test(n=5, delta=0.5, sig.level=0.05)\n\n\n     Two-sample t test power calculation \n\n              n = 5\n          delta = 0.5\n             sd = 1\n      sig.level = 0.05\n          power = 0.1038399\n    alternative = two.sided\n\nNOTE: n is number in *each* group\n\n\n\\(\\rightarrow\\) power = 0.10 * for \\(n=5\\) an existing effect of \\(0.5\\sigma\\) is only detected in 1 out of 10 cases.\nFor a power of 80% at \\(n=5\\) we need an effect size of at least \\(2\\sigma\\):\n\npower.t.test(n=5, power=0.8, sig.level=0.05)\n\nFor a weak effect of \\(0.5\\sigma\\) we need a sample size of \\(n\\ge64\\) in each group:\n\npower.t.test(delta=0.5,power=0.8,sig.level=0.05)\n\n\\(\\Rightarrow\\) either a large sample size or a large effect size."
+    "text": "Power of the t-test\nThe power of a t-test, or the minimum sample size, can be calculated with: power.t.test():\n\npower.t.test(n=5, delta=0.5, sig.level=0.05)\n\n\n     Two-sample t test power calculation \n\n              n = 5\n          delta = 0.5\n             sd = 1\n      sig.level = 0.05\n          power = 0.1038399\n    alternative = two.sided\n\nNOTE: n is number in *each* group\n\n\n\\(\\rightarrow\\) power = 0.10\n\nFor \\(n=5\\) an existing effect of \\(0.5\\sigma\\) is only detected in 1 out of 10 cases.\nFor a power of 80% at \\(n=5\\) we need an effect size of at least \\(2\\sigma\\):\n\n\npower.t.test(n=5, power=0.8, sig.level=0.05)\n\nFor a weak effect of \\(0.5\\sigma\\) we need a sample size of \\(n\\ge64\\) in each group:\n\npower.t.test(delta=0.5,power=0.8,sig.level=0.05)\n\n\\(\\Rightarrow\\) we ned either a large sample size or a strong effect."
   },
   {
     "objectID": "slides/06-linear.html#the-linear-model",
@@ -2772,6 +2772,7 @@
     "text": "Task\n\nTry to understand the analysis,\ndiscuss the results,\nask questions.\nThe idea is to work on this report together and to make it more complete."
   },
   {
+<<<<<<< HEAD
     "objectID": "slides/10-multivariate.html#data-set-and-terms-of-use",
     "href": "slides/10-multivariate.html#data-set-and-terms-of-use",
     "title": "Multivariate methods",
@@ -3050,5 +3051,26 @@
     "title": "Multivariate methods",
     "section": "Color NMDS according to clusters",
     "text": "Color NMDS according to clusters\n\nplot(md, type = \"n\")\ntext(md$points, row.names(dat2), col = grp)"
+=======
+    "objectID": "slides/05-classtests.html#fishers-exact-test",
+    "href": "slides/05-classtests.html#fishers-exact-test",
+    "title": "05-Classical Tests",
+    "section": "Fisher’s exact test",
+    "text": "Fisher’s exact test\n\n\n\nx <- matrix(c(50, 37, 72, 87, 78, 45), ncol=2)\nx\n\n     [,1] [,2]\n[1,]   50   87\n[2,]   37   78\n[3,]   72   45\n\n\n\nfisher.test(x)\n\n\n    Fisher's Exact Test for Count Data\n\ndata:  x\np-value = 5.807e-06\nalternative hypothesis: two.sided\n\n\n\n\n\\(\\rightarrow\\) significant correlation between the clones and their location.\n\ndependency between clones and vertical distribution in the lake"
+  },
+  {
+    "objectID": "slides/05-classtests.html#simulation-of-power",
+    "href": "slides/05-classtests.html#simulation-of-power",
+    "title": "05-Classical Tests",
+    "section": "Simulation of power",
+    "text": "Simulation of power\n\n### simulated power of a t-test \n\n# population parameters\nn <- 10\nxmean1 <- 50\nxmean2 <- 55\nxsd1   <- xsd2 <- 10\nalpha  <- 0.05\n\n# number of test runs in the simulation\nnn <- 1000\na <- b <- 0\nfor (i in 1:nn) {\n  # creating random numbers\n  x1 <- rnorm(n, xmean1, xsd1)\n  x2 <- rnorm(n, xmean2, xsd2)\n  # results of the t-test\n  p <- t.test(x1,x2,var.equal = TRUE)$p.value\n  if (p < alpha) {\n     a <- a+1\n   } else {\n     b <- b+1\n  }\n}\nprint(paste(\"a=\", a, \", b=\", b, \", a/n=\", a/nn, \", b/n=\", b/nn))"
+  },
+  {
+    "objectID": "slides/05-classtests.html#simulated-power-of-a-t-test",
+    "href": "slides/05-classtests.html#simulated-power-of-a-t-test",
+    "title": "05-Classical Tests",
+    "section": "Simulated power of a t-test",
+    "text": "Simulated power of a t-test\n\n# population parameters\nn      <- 10\nxmean1 <- 50\nxmean2 <- 55\nxsd1   <- xsd2 <- 10\nalpha  <- 0.05\n\n# number of test runs in the simulation\nnn <- 1000\na <- b <- 0\nfor (i in 1:nn) {\n  # creating random numbers\n  x1 <- rnorm(n, xmean1, xsd1)\n  x2 <- rnorm(n, xmean2, xsd2)\n  # results of the t-test\n  p <- t.test(x1,x2,var.equal = TRUE)$p.value \n  if (p < alpha) {\n     a <- a+1\n   } else {\n     b <- b+1\n  }\n}\nprint(paste(\"a=\", a, \", b=\", b, \", a/n=\", a/nn, \", b/n=\", b/nn))"
+>>>>>>> main
   }
 ]

@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2023-11-09">
+  <meta name="dcterms.date" content="2023-11-16">
   <title>Elements of Data Analysis and Statistics - 05-Classical Tests</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -408,7 +408,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2023-11-09</p>
+  <p class="date">2023-11-16</p>
 </section>
 <section>
 <section id="hypotheses-errors-and-the-p-value" class="title-slide slide level1 center">
@@ -459,7 +459,7 @@ ToDo: insert formulae and algorithms from the slides
 </ul>
 <p><strong>“Not significant” means either no effect or sample size too small!</strong></p>
 <p><br></p>
-<p><span class="blue">Note: Different meaning of <strong>significance</strong> (H0 unlikely) and <strong>relevance</strong> (effect large enough to play a role in practice).</span></p>
+<p><span class="blue">Note: Different meaning of <strong>significance</strong> (<span class="math inline">\(H_0\)</span> unlikely) and <strong>relevance</strong> (effect large enough to play a role in practice).</span></p>
 <!------------------------------------------------------------------------------
 ## Notes
 
@@ -553,12 +553,12 @@ under the assumption that the null hypothesis is to be true.
 </ul>
 <p>2.<span class="math inline">\(H_0\)</span> falsely retained (error of the second kind or <span class="math inline">\(\beta\)</span>-error)</p>
 <ul>
-<li>typical case in small studies, where effert was not enough to detect existing effects</li>
+<li>typical case in small studies, where effect was not enough to detect existing effects</li>
 </ul>
 <p><strong>Use in practice</strong></p>
 <ul>
 <li>common convention in environmental sciences: <span class="math inline">\(\alpha=0.05\)</span>, must be set beforehand</li>
-<li><span class="math inline">\(\beta=f(\alpha, \text{effectsize}, \text{sample size}, \text{kind of test})\)</span> (should be <span class="math inline">\(\ge 0.2\)</span>)</li>
+<li><span class="math inline">\(\beta=f(\alpha, \text{effectsize}, \text{sample size}, \text{kind of test})\)</span>, should be <span class="math inline">\(\le 0.2\)</span></li>
 </ul>
 </section>
 <section id="significance-and-relevance" class="slide level2">
@@ -584,10 +584,11 @@ under the assumption that the null hypothesis is to be true.
 <section>
 <section id="differences-between-mean-values" class="title-slide slide level1 center">
 <h1>Differences between mean values</h1>
-<p><br></p>
+
 </section>
 <section id="one-sample-t-test" class="slide level2">
 <h2>One sample t-Test</h2>
+<p><br></p>
 <ul>
 <li>tests if a sample is from a population with given mean value <span class="math inline">\(\mu\)</span></li>
 <li>based on checking if the population mean <span class="math inline">\(\mu\)</span> is in the confidence interval of <span class="math inline">\(\bar{x}\)</span></li>
@@ -606,7 +607,8 @@ s_{\bar{x}} = \frac{s}{\sqrt{n}} \qquad \text{(standard error)}
 <section id="remember-standard-deviation-and-standard-error" class="slide level2">
 <h2>Remember: standard deviation and standard error</h2>
 
-<img data-src="05-classtests_files/figure-revealjs/fig-one-sample-ttest-1.png" width="960" class="r-stretch quarto-figure-center"><p class="caption">Figure&nbsp;1: Visualization of a one-sample t-test. Left: original distribution of the data measured by standard deviation, right: distribution of mean values, measured by its standard error.</p><p><span class="math display">\[
+<img data-src="05-classtests_files/figure-revealjs/sd-and-se-1.png" width="960" class="r-stretch"><p><small> Visualization of a one-sample t-test. Left: original distribution of the data measured by standard deviation, right: distribution of mean values, measured by its standard error. </small></p>
+<p><span class="math display">\[
 s_{\bar{x}} = \frac{s}{\sqrt{n}} \qquad \text{(standard error)}
 \]</span></p>
 <ul>
@@ -614,7 +616,7 @@ s_{\bar{x}} = \frac{s}{\sqrt{n}} \qquad \text{(standard error)}
 <li>measures precision of the mean value</li>
 <li>CLT!</li>
 </ul>
-<p>The test is based on the distribution of the means, not the original data.</p>
+<p>The test is based on the distribution of the means, not distribution of original data.</p>
 </section>
 <section id="method-1-is-mu-in-the-confidence-interval" class="slide level2">
 <h2>Method 1: Is <span class="math inline">\(\mu\)</span> in the confidence interval?</h2>
@@ -634,7 +636,7 @@ s_{\bar{x}} = \frac{s}{\sqrt{n}} \qquad \text{(standard error)}
 </div>
 <p><br></p>
 <ol start="3" type="1">
-<li><p>Check if <span class="math inline">\(\mu=5.0\)</span> is in this interval.</p></li>
+<li><p>Check if <span class="math inline">\(\mu=5.0\)</span> is in this interval?</p></li>
 <li><p>Yes, it <strong>is</strong> inside <span class="math inline">\(\Rightarrow\)</span> <span class="blue">difference not significant</span>.</p></li>
 </ol>
 </section>
@@ -680,6 +682,7 @@ t_{obs} = |\bar{x}-\mu | \cdot \frac{1}{s_{\bar{x}}} = \frac{|\bar{x}-\mu |}{s} 
 <p>This p-value = 0.1483047 is greater than <span class="math inline">\(0.05\)</span> so we consider the difference as not significant.</p>
 <p><br></p>
 <p><strong>FAQ: less than or greater than?</strong></p>
+<p><br></p>
 <table>
 <colgroup>
 <col style="width: 18%">
@@ -697,7 +700,7 @@ t_{obs} = |\bar{x}-\mu | \cdot \frac{1}{s_{\bar{x}}} = \frac{|\bar{x}-\mu |}{s} 
 <tr class="even">
 <td>test statistic</td>
 <td><span class="math inline">\(t_{obs} &gt; t_{1-\alpha/2, n-1}\)</span></td>
-<td>effect exceeds Confint.</td>
+<td>effect exceeds confint.</td>
 <td>significant</td>
 </tr>
 <tr class="odd">
@@ -711,6 +714,7 @@ t_{obs} = |\bar{x}-\mu | \cdot \frac{1}{s_{\bar{x}}} = \frac{|\bar{x}-\mu |}{s} 
 </section>
 <section id="method-4-built-in-t-test-function-in-r" class="slide level2">
 <h2>Method 4: Built-in t-test function in R</h2>
+<p><br></p>
 <p>The same can be done much easier with the computer in <strong>R</strong>.</p>
 <p>Let’s assume we have a sample with <span class="math inline">\(\bar{x}=5, s=1\)</span>:</p>
 <div class="cell">
@@ -738,6 +742,7 @@ mean of x
 </section>
 <section id="two-sample-t-test" class="slide level2">
 <h2>Two sample t-test</h2>
+<p><br></p>
 <p>The two-sample t-test compares two independent samples:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">5.3</span>, <span class="fl">6.0</span>, <span class="fl">7.1</span>, <span class="fl">6.4</span>, <span class="fl">5.7</span>, <span class="fl">4.9</span>, <span class="fl">5.0</span>, <span class="fl">4.6</span>, <span class="fl">5.7</span>, <span class="fl">4.0</span>, <span class="fl">4.5</span>, <span class="fl">6.5</span>)</span>
@@ -757,13 +762,18 @@ mean of x mean of y
  5.475000  6.983333 </code></pre>
 </div>
 </div>
-<p>That means that both samples differ significantly (<span class="math inline">\(p &lt; 0.05\)</span>). It has to be mentioned that <strong>R</strong> did not perform the “ordinary” t-test but the Welch test (also termed heteroscedastic t-test), for which the variances of both samples are not required to be identical.</p>
+<p><br></p>
+<ul>
+<li><span class="math inline">\(\rightarrow\)</span> both samples differ significantly (<span class="math inline">\(p &lt; 0.05\)</span>)</li>
+<li>Note: <strong>R</strong> has not performed the “ordinary” t-test but the Welch test (= heteroscedastic t-test)</li>
+<li>where variances of both samples don’t need to be identical.</li>
+</ul>
 </section>
 <section id="hypothesis-and-formula-of-the-two-sample-t-test" class="slide level2">
 <h2>Hypothesis and formula of the two-sample t-test</h2>
 <p><br></p>
 <div class="column" style="width:49%;">
-<p><span class="math inline">\(H_0\)</span> <span class="math inline">\(\mu_1 = mu_2\)</span></p>
+<p><span class="math inline">\(H_0\)</span> <span class="math inline">\(\mu_1 = \mu_2\)</span></p>
 <p><span class="math inline">\(H_a\)</span> the two means are different</p>
 <p><strong>test criterion</strong></p>
 <p><span class="math display">\[
@@ -782,12 +792,13 @@ t_{obs} =\frac{|\bar{x}_1-\bar{x}_2|}{s_{tot}} \cdot \sqrt{\frac{n_1 n_2}{n_1+n_
 s_{tot} = \sqrt{{({n}_1 - 1)\cdot s_1^2 + ({n}_2 - 1)\cdot s_2^2
 \over ({n}_1 + {n}_2 - 2)}}
 \]</span></p>
-<p><strong>assumptions:</strong> independence, equal variances, normal distribution</p>
+<p><strong>assumptions:</strong> independence, equal variances, approximate normal distribution</p>
 </section>
 <section id="the-welch-test" class="slide level2">
 <h2>The Welch test</h2>
 <p><br></p>
 <p><strong>Known as t-test for samples with unequal variance, works also for equal variance!</strong></p>
+<p><br></p>
 <p>Test criterion:</p>
 <p><span class="math display">\[
 t = \frac{\bar{x}_1 - \bar{x}_2}{\sqrt{s^2_{\bar{x}_1} + s^2_{\bar{x}_2}}}
@@ -842,7 +853,7 @@ mean of x mean of y
 </div>
 </div>
 </div>
-<p><strong>Example</strong></p>
+<p><strong>Example:</strong></p>
 <ul>
 <li><span class="red"><span class="math inline">\(s_1=1\)</span></span>, <span class="blue"><span class="math inline">\(s_2 =2\)</span></span>, <span class="math inline">\(n_1=5, n_2=10, F=\frac{2^2}{1^2}=4\)</span></li>
 <li>deg. of freedom: <span class="math inline">\(9 \atop 4\)</span></li>
@@ -968,11 +979,11 @@ mean of x mean of y
 <p><br></p>
 <p><strong>More modern recommendation:</strong></p>
 <ol type="1">
-<li>Don’t use pre-tests</li>
+<li>Don’t use pre-tests!</li>
 <li>Use always the Welch test: <code>t.test(x, y)</code></li>
 <li>Check approximate normal distribution by using box-plots. Not necessary if <span class="math inline">\(n\)</span> is large.</li>
 </ol>
-<p>see also: <a href="https://en.wikipedia.org/wiki/Welch%27s_t-test">Wikipedia</a></p>
+<p>see also: <a href="https://en.wikipedia.org/wiki/Welch%27s_t-test">Wikipedia</a> and the references cited there</p>
 <!--
 Zimmerman, D. W. (2004). "A note on preliminary tests of equality of variances". British Journal of Mathematical and Statistical Psychology. 57 (Pt 1): 173–181. doi:10.1348/000711004849222
 -->
@@ -1056,6 +1067,7 @@ mean difference
 </section>
 <section id="mann-whitney-test-procedure-in-practice" class="slide level2">
 <h2>Mann-Whitney test procedure in practice</h2>
+<p><br></p>
 <ol type="1">
 <li>Assign ranks <span class="math inline">\(R_A\)</span> and <span class="math inline">\(R_B\)</span> to both samples <span class="math inline">\(A\)</span>, and <span class="math inline">\(B\)</span> with sample size <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span>.</li>
 <li>Calculate number of inversions <span class="math inline">\(U\)</span>:</li>
@@ -1113,12 +1125,12 @@ alternative hypothesis: true mu is not equal to 0</code></pre>
 <section id="permutation-methods" class="slide level2">
 <h2>Permutation methods</h2>
 <ul>
-<li>Basic principle: Estimation of a test statistic <span class="math inline">\(x_{obs}\)</span> from sample,</li>
-<li>Resampling: Simulate many <span class="math inline">\(x_{i, sim}\)</span> from randomly permuted data set (<span class="math inline">\(n = 999\)</span> or more)</li>
-<li>Where does <span class="math inline">\(x_{est}\)</span> appear within the ordered series of simulated values <span class="math inline">\(x_{i, sim}\)</span>?</li>
+<li>Basic principle: Estimation of a test statistic <span class="math inline">\(\xi_{obs}\)</span> from sample,</li>
+<li>Resampling: Simulate many <span class="math inline">\(\xi_{i, sim}\)</span> from randomly permuted data set (<span class="math inline">\(n = 999\)</span> or more)</li>
+<li>Where does <span class="math inline">\(\xi_{est}\)</span> appear within the ordered series of simulated values <span class="math inline">\(\xi_{i, sim}\)</span>?</li>
 </ul>
 
-<img data-src="05-classtests_files/figure-revealjs/permutation-test-1.png" width="960" class="r-stretch quarto-figure-center"><p>Let <span class="math inline">\(x_{obs}\)</span> be <span class="math inline">\(4.5\)</span> in our example, then <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(p= 0.97\)</span>.</p>
+<img data-src="05-classtests_files/figure-revealjs/permutation-test-1.png" width="960" class="r-stretch quarto-figure-center"><p>Let <span class="math inline">\(\xi_{obs}\)</span> be <span class="math inline">\(4.5\)</span> in our example, then <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(p= 0.97\)</span>.</p>
 </section></section>
 <section>
 <section id="test-for-distributions" class="title-slide slide level1 center">
@@ -1131,12 +1143,11 @@ alternative hypothesis: true mu is not equal to 0</code></pre>
 <ul>
 <li><span class="math inline">\(\chi^2\)</span>-test</li>
 <li>Fisher’s exact test</li>
-<li>see test for dependency</li>
 </ul>
 <p><strong>Ordinal variables</strong></p>
 <ul>
 <li>Cramér-von-Mises-Test</li>
-<li>[<span class="math inline">\(\Rightarrow\)</span>] more powerful than <span class="math inline">\(\chi^2\)</span> or KS-test</li>
+<li><span class="math inline">\(\rightarrow\)</span> more powerful than <span class="math inline">\(\chi^2\)</span> or KS-test</li>
 </ul>
 <p><strong>Metric scales</strong></p>
 <ul>
@@ -1147,15 +1158,15 @@ alternative hypothesis: true mu is not equal to 0</code></pre>
 <section id="contingency-tables-for-nominal-variables" class="slide level2">
 <h2>Contingency tables for nominal variables</h2>
 <ul>
-<li>Contingency tables used for nominal (i.e.&nbsp;categorical or qualitative) data</li>
-<li>examples: eye and hair color, the kind of medical treatment and the number of cured/not cured</li>
-<li>mportant: use <strong>absolute mesurements</strong> (true numbers!), not percentages or other calculated data (e.g.&nbsp;not something like biomass per area)</li>
+<li>used for nominal (i.e.&nbsp;categorical or qualitative) data</li>
+<li>examples: eye and hair color, medical treatment and the number of cured/not cured</li>
+<li>important: use <strong>absolute mesurements</strong> (true numbers!), not percentages or other calculated data (e.g.&nbsp;not something like biomass per area)</li>
 </ul>
 <p><strong>Data example</strong></p>
 <ul>
 <li><em>Daphnia</em> (water flee)-clones and their preferred depth in a lake</li>
-<li>food algae in the deep water zone poor of oxygen</li>
-<li>only adapted clones with high hemoglobin can dive to the deep water</li>
+<li>food algae in the deep water zone, poor of oxygen</li>
+<li>only adapted clones with high haemoglobin can dive into deep water</li>
 </ul>
 <table>
 <thead>
@@ -1278,6 +1289,8 @@ alternative hypothesis: true mu is not equal to 0</code></pre>
 <p>Organize data in a matrix with 3 rows (for the clones) and 2 columns (for the depths):</p>
 <div class="bigfont">
 <div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">37</span>, <span class="dv">72</span>, <span class="dv">87</span>, <span class="dv">78</span>, <span class="dv">45</span>), <span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     [,1] [,2]
 [1,]   50   87
@@ -1286,9 +1299,9 @@ alternative hypothesis: true mu is not equal to 0</code></pre>
 </div>
 </div>
 </div>
-<p><strong><span class="math inline">\(\chi^2\)</span>-test</strong></p>
 <div class="bigfont">
 <div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's Chi-squared test
@@ -1298,9 +1311,23 @@ X-squared = 24.255, df = 2, p-value = 5.408e-06</code></pre>
 </div>
 </div>
 </div>
-<p><strong>or Fisher’s exact test:</strong></p>
+</section>
+<section id="fishers-exact-test" class="slide level2">
+<h2>Fisher’s exact test</h2>
+<p><br></p>
 <div class="bigfont">
 <div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">50</span>, <span class="dv">37</span>, <span class="dv">72</span>, <span class="dv">87</span>, <span class="dv">78</span>, <span class="dv">45</span>), <span class="at">ncol=</span><span class="dv">2</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2]
+[1,]   50   87
+[2,]   37   78
+[3,]   72   45</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">fisher.test</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Fisher's Exact Test for Count Data
@@ -1311,7 +1338,11 @@ alternative hypothesis: two.sided</code></pre>
 </div>
 </div>
 </div>
+<p><br></p>
 <p><span class="math inline">\(\rightarrow\)</span> significant correlation between the clones and their location.</p>
+<ul>
+<li>dependency between clones and vertical distribution in the lake</li>
+</ul>
 </section>
 <section id="favorite-numbers-of-hse-students" class="slide level2">
 <h2>Favorite numbers of HSE students</h2>
@@ -1326,7 +1357,9 @@ alternative hypothesis: two.sided</code></pre>
 <h2>Chisquare test</h2>
 <p><br></p>
 <div class="bigfont">
-<div class="cell" data-ech0="true">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>obsfreq <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">3</span>)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(obsfreq)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Chi-squared test for given probabilities
@@ -1334,6 +1367,7 @@ alternative hypothesis: two.sided</code></pre>
 data:  obsfreq
 X-squared = 13.647, df = 8, p-value = 0.09144</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">chisq.test</span>(obsfreq, <span class="at">simulate.p.value=</span><span class="cn">TRUE</span>, <span class="at">B=</span><span class="dv">1000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Chi-squared test for given probabilities with simulated p-value (based
@@ -1360,24 +1394,24 @@ T = n \omega^2 = \frac{1}{12n} + \sum_{i=1}^n \left[ \frac{2i-1}{2n}-F(x_i) \rig
 <section id="cramér-von-mises-test-in-r" class="slide level2">
 <h2>Cramér-von-Mises-Test in <strong>R</strong></h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dgof)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>obsfreq <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">3</span>)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a><span class="do">## CvM-test needs individual values, not class frequencies</span></span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(obsfreq), obsfreq)</span>
-<span id="cb31-6"><a href="#cb31-6" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dgof)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>obsfreq <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">6</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">8</span>, <span class="dv">6</span>, <span class="dv">3</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="do">## CvM-test needs individual values, not class frequencies</span></span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(obsfreq), obsfreq)</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 1 2 3 3 3 3 3 3 4 4 5 5 6 6 6 6 6 7 7 7 7 7 7 7 7 8 8 8 8 8 8 9 9 9</code></pre>
 </div>
 </div>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create a cumulative function with equal probability of all cases</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>cdf <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="fu">cumsum</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span>, <span class="dv">9</span>))))</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>cdf <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="do">## perform the test</span></span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cvm.test</span>(x, cdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="do">## create a cumulative function with equal probability of all cases</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>cdf <span class="ot">&lt;-</span> <span class="fu">stepfun</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>, <span class="fu">cumsum</span>(<span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">rep</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">9</span>, <span class="dv">9</span>))))</span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>cdf <span class="ot">&lt;-</span> <span class="fu">ecdf</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">9</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="do">## perform the test</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a><span class="fu">cvm.test</span>(x, cdf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Cramer-von Mises - W2
@@ -1413,7 +1447,7 @@ alternative hypothesis: Two.sided</code></pre>
 <p><br></p>
 <p><strong>Frequencies of nominal variables</strong></p>
 <ul>
-<li>χ2-test</li>
+<li><span class="math inline">\(\chi^2\)</span>-test</li>
 <li>Fisher’s exact test</li>
 </ul>
 <p>⇒ dependence between plant society and soil type</p>
@@ -1422,7 +1456,7 @@ alternative hypothesis: Two.sided</code></pre>
 <ul>
 <li>Spearman-Correlation</li>
 </ul>
-<p>⇒ rank numbers</p>
+<p><span class="math inline">\(\rightarrow\)</span> rank numbers</p>
 <p><strong>Metric scales</strong></p>
 <ul>
 <li>Pearson-correlation</li>
@@ -1469,15 +1503,15 @@ alternative hypothesis: Two.sided</code></pre>
 <li>tests for <span class="blue">linear dependence</span></li>
 </ul>
 <p><span class="math display">\[
-r_P=\frac{\sum{(x_i-\bar{x})  (y_i-\bar{y})}}
+r_p=\frac{\sum{(x_i-\bar{x})  (y_i-\bar{y})}}
        {\sqrt{\sum(x_i-\bar{x})^2\sum(y_i-\bar{y})^2}}
 \]</span></p>
 <p><strong>Or:</strong></p>
 <p><span class="math display">\[
-r_P=\frac {\sum xy - \sum y \sum y / n}
+r_p=\frac {\sum xy - \sum y \sum y / n}
         {\sqrt{(\sum x^2-(\sum x)^2/n)(\sum y^2-(\sum y)^2/n)}}
 \]</span> <br></p>
-<p>Range of values: <span class="math inline">\(-1 \le r_P \le +1\)</span></p>
+<p>Range of values: <span class="math inline">\(-1 \le r_p \le +1\)</span></p>
 <table>
 <tbody>
 <tr class="odd">
@@ -1485,11 +1519,11 @@ r_P=\frac {\sum xy - \sum y \sum y / n}
 <td>no interdependence</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(+1 \text{resp.} -1\)</span></td>
+<td><span class="math inline">\(+1 \,\text{or}\,-1\)</span></td>
 <td>strictly positive resp. negative dependence</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(0 &lt; |r_P| &lt; 1\)</span></td>
+<td><span class="math inline">\(0 &lt; |r_p| &lt; 1\)</span></td>
 <td>positive resp. negative dependence</td>
 </tr>
 <tr class="even">
@@ -1529,10 +1563,10 @@ r_P=\frac {\sum xy - \sum y \sum y / n}
 <section id="significant-correlation" class="slide level2">
 <h2>Significant correlation?</h2>
 <p><span class="math display">\[
-\hat{t}_{\alpha/2;n-2} =\frac{|r_P|\sqrt{n-2}}{\sqrt{1-r^2_P}}
+\hat{t}_{\alpha/2;n-2} =\frac{|r_p|\sqrt{n-2}}{\sqrt{1-r^2_P}}
 \]</span></p>
 <p><span class="math inline">\(t=0.829 \cdot \sqrt{1000-2}/\sqrt{1-0.829^2}=46.86, df=998\)</span></p>
-<p><br> <strong>Quick test: critical values for <span class="math inline">\(r_P\)</span></strong></p>
+<p><br> <strong>Quick test: critical values for <span class="math inline">\(r_p\)</span></strong></p>
 <table>
 <tbody>
 <tr class="odd">
@@ -1591,7 +1625,7 @@ r_P=\frac {\sum xy - \sum y \sum y / n}
 <li>estimation from rank differences:</li>
 </ul>
 <p><span class="math display">\[
-r_S=1-\frac{6 \sum d^2_i}{n(n^2-1)}
+r_s=1-\frac{6 \sum d^2_i}{n(n^2-1)}
 \]</span></p>
 <ul>
 <li>or, alternatively: Pearson-correlation of ranked data (necessary in case of ties).</li>
@@ -1600,7 +1634,7 @@ r_S=1-\frac{6 \sum d^2_i}{n(n^2-1)}
 <p>for <span class="math inline">\(10 \leq n\)</span> <span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(t\)</span>-distribution</p>
 <p><span class="math display">\[
    \hat{t}_{1-\frac{\alpha}{2};n-2}
-      =\frac{|r_S|}{\sqrt{1-r^2_S}} \sqrt{n-2}
+      =\frac{|r_s|}{\sqrt{1-r^2_S}} \sqrt{n-2}
 \]</span></p>
 
 <aside><div>
@@ -1679,12 +1713,12 @@ r_S=1-\frac{6 \sum d^2_i}{n(n^2-1)}
 </tbody>
 </table>
 <p><span class="math display">\[
-r_S=1-\frac{6 \cdot 2}{5\cdot (25-1)}=1-\frac{12}{120}=0.9
+r_s=1-\frac{6 \cdot 2}{5\cdot (25-1)}=1-\frac{12}{120}=0.9
 \]</span></p>
-<p>For comparison: <span class="math inline">\(r_P=0.58\)</span></p>
+<p>For comparison: <span class="math inline">\(r_p=0.58\)</span></p>
 </section>
 <section id="application-of-spearmans-r_s" class="slide level2">
-<h2>Application of Spearman’s-<span class="math inline">\(r_S\)</span></h2>
+<h2>Application of Spearman’s-<span class="math inline">\(r_s\)</span></h2>
 <p><br></p>
 <p><strong>Advantages</strong></p>
 <ul>
@@ -1698,7 +1732,7 @@ r_S=1-\frac{6 \cdot 2}{5\cdot (25-1)}=1-\frac{12}{120}=0.9
 <li>no information about type of dependency,</li>
 <li>no direct relationship to coefficient of determination.</li>
 </ul>
-<p>Conclusion: <span class="math inline">\(r_S\)</span> is nevertheless highly recommended!</p>
+<p>Conclusion: <span class="math inline">\(r_s\)</span> is nevertheless highly recommended!</p>
 </section>
 <section id="correlation-coefficients-in-r" class="slide level2">
 <h2>Correlation coefficients in <strong>R</strong></h2>
@@ -1707,9 +1741,9 @@ r_S=1-\frac{6 \cdot 2}{5\cdot (25-1)}=1-\frac{12}{120}=0.9
 <li>Spearman’s rank correlation coefficient</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>,  <span class="dv">9</span>)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">11</span>)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(x, y, <span class="at">method=</span><span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">7</span>,  <span class="dv">9</span>)</span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">11</span>)</span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(x, y, <span class="at">method=</span><span class="st">"pearson"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Pearson's product-moment correlation
@@ -1726,7 +1760,7 @@ sample estimates:
 </div>
 <p>If linearity or normality of residuals is doubtful, use a rank correlation</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(x, y, <span class="at">method=</span><span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(x, y, <span class="at">method=</span><span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Spearman's rank correlation rho
@@ -1749,7 +1783,7 @@ sample estimates:
 <p><br></p>
 <p><strong>Multiple correlation</strong></p>
 <ul>
-<li><span class="blue">Example:</span> Chl-a=<span class="math inline">\(f(X_1, X_2, X_3, X_4, \dots)\)</span>, where <span class="math inline">\(X_i\)</span> is the biomass of the <span class="math inline">\(i\)</span>th phytoplankton species.</li>
+<li><span class="blue">Example:</span> Chl-a=<span class="math inline">\(f(x_1, x_2, x_3, x_4, \dots)\)</span>, where <span class="math inline">\(x_i\)</span> is the biomass of the <span class="math inline">\(i\)</span>th phytoplankton species.</li>
 <li>multiple correlation coefficient</li>
 <li>partial correlation coefficient</li>
 <li>attractive method <span class="math inline">\(\leftrightarrow\)</span> but difficult in practice:
@@ -1774,15 +1808,18 @@ sample estimates:
 <p><br></p>
 <p><strong>How many replicates will I need?</strong></p>
 <ul>
-<li>Depends on:
+<li><p>Depends on:</p>
 <ul>
-<li>the relative effect size (effect/standard deviation, <span class="math inline">\(\delta=\frac{(\bar{x}_1-\bar{x}_2)}{s}\)</span>,</li>
+<li>the relative effect size: effect/standard deviation</li>
+</ul>
+<p><span class="math display">\[\delta=\frac{(\bar{x}_1-\bar{x}_2)}{s}\]</span></p>
+<ul>
 <li>the sample size <span class="math inline">\(n\)</span>,</li>
 <li>and the pre-defined significance level <span class="math inline">\(\alpha\)</span>.</li>
 <li>and the used method</li>
 </ul></li>
-<li>The smaller <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(n\)</span> and <span class="math inline">\(\Delta\)</span>, the bigger the type II error (<span class="math inline">\(\beta\)</span> error).</li>
-<li>This is the probability to overlook effects despite of their existence.</li>
+<li><p>The smaller <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(n\)</span> and <span class="math inline">\(\Delta\)</span>, the bigger the type II error (<span class="math inline">\(\beta\)</span> error).</p></li>
+<li><p>This is the probability to overlook effects despite of their existence.</p></li>
 </ul>
 </section>
 <section id="power-analysis-1" class="slide level2">
@@ -1807,7 +1844,7 @@ n= (1.96 \pm 0.84)^2 \cdot 1/\delta^2 \approx 8 /\delta^2
 <h2>Power of the t-test</h2>
 <p>The power of a t-test, or the minimum sample size, can be calculated with: <code>power.t.test()</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="dv">5</span>, <span class="at">delta=</span><span class="fl">0.5</span>, <span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="dv">5</span>, <span class="at">delta=</span><span class="fl">0.5</span>, <span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Two-sample t test power calculation 
@@ -1822,16 +1859,47 @@ n= (1.96 \pm 0.84)^2 \cdot 1/\delta^2 \approx 8 /\delta^2
 NOTE: n is number in *each* group</code></pre>
 </div>
 </div>
-<p><span class="math inline">\(\rightarrow\)</span> power = 0.10 * for <span class="math inline">\(n=5\)</span> an existing effect of <span class="math inline">\(0.5\sigma\)</span> is only detected in 1 out of 10 cases.</p>
-<p>For a power of 80% at <span class="math inline">\(n=5\)</span> we need an effect size of at least <span class="math inline">\(2\sigma\)</span>:</p>
+<p><span class="math inline">\(\rightarrow\)</span> power = 0.10</p>
+<ul>
+<li>For <span class="math inline">\(n=5\)</span> an existing effect of <span class="math inline">\(0.5\sigma\)</span> is only detected in 1 out of 10 cases.</li>
+<li>For a power of 80% at <span class="math inline">\(n=5\)</span> we need an effect size of at least <span class="math inline">\(2\sigma\)</span>:</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="dv">5</span>, <span class="at">power=</span><span class="fl">0.8</span>, <span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">n=</span><span class="dv">5</span>, <span class="at">power=</span><span class="fl">0.8</span>, <span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For a weak effect of <span class="math inline">\(0.5\sigma\)</span> we need a sample size of <span class="math inline">\(n\ge64\)</span> in each group:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">delta=</span><span class="fl">0.5</span>,<span class="at">power=</span><span class="fl">0.8</span>,<span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">delta=</span><span class="fl">0.5</span>,<span class="at">power=</span><span class="fl">0.8</span>,<span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><span class="darkred"><span class="math inline">\(\Rightarrow\)</span> either a large sample size or a large effect size.</span></p>
+<p><span class="darkred"><span class="math inline">\(\Rightarrow\)</span> we ned either a large sample size or a strong effect.</span></p>
+</section>
+<section id="simulated-power-of-a-t-test" class="slide level2">
+<h2>Simulated power of a t-test</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># population parameters</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>n      <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>xmean1 <span class="ot">&lt;-</span> <span class="dv">50</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>xmean2 <span class="ot">&lt;-</span> <span class="dv">55</span></span>
+<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>xsd1   <span class="ot">&lt;-</span> xsd2 <span class="ot">&lt;-</span> <span class="dv">10</span></span>
+<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>alpha  <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a><span class="co"># number of test runs in the simulation</span></span>
+<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>nn <span class="ot">&lt;-</span> <span class="dv">1000</span></span>
+<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>a <span class="ot">&lt;-</span> b <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>nn) {</span>
+<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># creating random numbers</span></span>
+<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>  x1 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, xmean1, xsd1)</span>
+<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>  x2 <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(n, xmean2, xsd2)</span>
+<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># results of the t-test</span></span>
+<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>  p <span class="ot">&lt;-</span> <span class="fu">t.test</span>(x1,x2,<span class="at">var.equal =</span> <span class="cn">TRUE</span>)<span class="sc">$</span>p.value </span>
+<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (p <span class="sc">&lt;</span> alpha) {</span>
+<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>     a <span class="ot">&lt;-</span> a<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>   } <span class="cf">else</span> {</span>
+<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>     b <span class="ot">&lt;-</span> b<span class="sc">+</span><span class="dv">1</span></span>
+<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"a="</span>, a, <span class="st">", b="</span>, b, <span class="st">", a/n="</span>, a<span class="sc">/</span>nn, <span class="st">", b/n="</span>, b<span class="sc">/</span>nn))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 
 <div class="footer footer-default">
 
