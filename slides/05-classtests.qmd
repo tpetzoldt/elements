@@ -77,7 +77,7 @@ with respect to a certain property.
 
 <br>
 
-[Note: Different meaning of **significance** (H0 unlikely) and **relevance**
+[Note: Different meaning of **significance** ($H_0$ unlikely) and **relevance**
 (effect large enough to play a role in practice).]{.blue}
 
 <!------------------------------------------------------------------------------
@@ -142,12 +142,12 @@ Psychological Research, Theory Psychology June 2004 vol. 14 no. 3
   
 2.$H_0$ falsely retained (error of the second kind or $\beta$-error)
 
-* typical case in small studies, where effert was not enough to detect existing effects
+* typical case in small studies, where effect was not enough to detect existing effects
 
 **Use in practice**
 
 * common convention in environmental sciences: $\alpha=0.05$, must be set beforehand
-* $\beta=f(\alpha, \text{effectsize}, \text{sample size}, \text{kind of test})$ (should be $\ge 0.2$)
+* $\beta=f(\alpha, \text{effectsize}, \text{sample size}, \text{kind of test})$, should be $\le 0.2$
 
 ## Significance and relevance
 
@@ -190,9 +190,10 @@ study with a large number of people. But as it is highly relevant, it is worth t
 
 # Differences between mean values
 
-<br>
 
 ## One sample t-Test
+
+<br>
 
 * tests if a sample is from a population with given mean value $\mu$ 
 * based on checking if the population mean $\mu$ is in the confidence interval of $\bar{x}$
@@ -217,9 +218,6 @@ Different ways of calculation shown at the next slides
 ## Remember: standard deviation and standard error
 
 ```{r sd-and-se, echo=FALSE, fig.height=2.5}
-#| label: fig-one-sample-ttest
-#| fig-cap: "Visualization of a one-sample t-test. Left: original distribution of the data measured by standard deviation, right: distribution of mean values, measured by its standard error."
-
 par(mar=c(4.1, 5.1, 1.1, 1.1), mfrow=c(1,2))
 x<-seq(0,10, length=100)
 plot(x, dnorm(x, mean=5.5, sd=1), col="blue", type="l", lwd=2, ylab="Density", las=1)
@@ -228,8 +226,11 @@ abline(v=5, col="red", lwd=2)
 
 plot(x, dnorm(x, mean=5.5, sd=1/sqrt(5)), col="blue", type="l", lwd=2, ylab="Density", las=1)
 abline(v=5, col="red", lwd=2)
-
 ```
+
+<small>
+Visualization of a one-sample t-test. Left: original distribution of the data measured by standard deviation, right: distribution of mean values, measured by its standard error.
+</small>
 
 $$
 s_{\bar{x}} = \frac{s}{\sqrt{n}} \qquad \text{(standard error)}
@@ -239,7 +240,7 @@ $$
 * measures precision of the mean value
 * CLT!
 
-The test is based on the distribution of the means, not the original data.
+The test is based on the distribution of the means, not distribution of original data.
 
 
 ## Method 1: Is $\mu$ in the confidence interval?
@@ -260,7 +261,7 @@ $$\bar{x} \pm t_{0,975, n-1} \cdot \frac{s}{\sqrt{n}}$$
 
 <br>
 
-3. Check if  $\mu=5.0$ is in this interval. 
+3. Check if  $\mu=5.0$ is in this interval? 
 
 4. Yes, it **is** inside $\Rightarrow$ [difference not significant]{.blue}.
 
@@ -310,14 +311,18 @@ the difference as not significant.
 
 **FAQ: less than or greater than?**
 
+<br>
+
 |                |                                 |                          |             |
 |----------------|---------------------------------|--------------------------|-------------|
 | p-value        | $\text{p-value} < \alpha$       | null hypothesis unlikely | significant |
-| test statistic | $t_{obs} > t_{1-\alpha/2, n-1}$ | effect exceeds Confint.  | significant |
+| test statistic | $t_{obs} > t_{1-\alpha/2, n-1}$ | effect exceeds confint.  | significant |
 |                |                                 |                          |             |
 
 
 ## Method 4: Built-in t-test function in R
+
+<br>
 
 The same can be done much easier with the computer in **R**.
 
@@ -339,7 +344,9 @@ An important difference is, that this method needs the original data, while the 
 methods need only mean, standard deviation and sample size.
 
 
-## Two sample t-test 
+## Two sample t-test
+
+<br>
 
 The two-sample t-test compares two independent samples:
 
@@ -350,11 +357,12 @@ x2 <- c(5.8, 7.1, 5.8, 7.0, 6.7, 7.7, 9.2, 6.0, 7.2, 7.8, 7.8, 5.7)
 t.test(x1, x2)
 ```
 
+<br>
 
-That means that both samples differ significantly ($p < 0.05$). It has
-to be mentioned that **R** did not perform the "ordinary" t-test but the
-Welch test (also termed heteroscedastic t-test), for which the
-variances of both samples are not required to be identical.
+* $\rightarrow$ both samples differ significantly ($p < 0.05$)
+* Note: **R** has not performed the "ordinary" t-test but the
+Welch test (= heteroscedastic t-test)
+* where variances of both samples don't need to be identical.
 
 ## Hypothesis and formula of the two-sample t-test
 
@@ -362,7 +370,7 @@ variances of both samples are not required to be identical.
 
 ::: {.column width="49%"}
 
-$H_0$ $\mu_1 = mu_2$
+$H_0$ $\mu_1 = \mu_2$
 
 $H_a$ the two means are different
 
@@ -392,13 +400,15 @@ s_{tot} = \sqrt{{({n}_1 - 1)\cdot s_1^2 + ({n}_2 - 1)\cdot s_2^2
 \over ({n}_1 + {n}_2 - 2)}}
 $$
 
-**assumptions:** independence, equal variances, normal distribution
+**assumptions:** independence, equal variances, approximate normal distribution
 
 ## The Welch test
 
 <br>
 
 **Known as t-test for samples with unequal variance, works also for equal variance!**
+
+<br>
 
 Test criterion:
 
@@ -455,7 +465,7 @@ lines(x, dnorm(x, mean=5, sd=2), col="blue", lwd=2)
 ```
 :::
 
-**Example**
+**Example:**
 
 - [$s_1=1$]{.red}, [$s_2 =2$]{.blue}, $n_1=5, n_2=10, F=\frac{2^2}{1^2}=4$
 - deg. of freedom: $9 \atop 4$
@@ -541,11 +551,11 @@ t.test(x1, x2, var.equal = TRUE) # classical t-test
 
 **More modern recommendation:**
 
-1. Don't use pre-tests
+1. Don't use pre-tests!
 2. Use always the Welch test: `t.test(x, y)`
 3. Check approximate normal distribution by using box-plots. Not necessary if $n$ is large.
 
-see also: [Wikipedia](https://en.wikipedia.org/wiki/Welch%27s_t-test)
+see also: [Wikipedia](https://en.wikipedia.org/wiki/Welch%27s_t-test) and the references cited there
 
 <!--
 Zimmerman, D. W. (2004). "A note on preliminary tests of equality of variances". British Journal of Mathematical and Statistical Psychology. 57 (Pt 1): 173–181. doi:10.1348/000711004849222
@@ -606,6 +616,8 @@ power in this case.
 
 ## Mann-Whitney test procedure in practice
 
+<br>
+
 1. Assign ranks $R_A$ and $R_B$ to both samples $A$, and $B$ with sample size $m$ and $n$.
 2. Calculate number of inversions $U$:
   
@@ -653,15 +665,15 @@ wilcox.exact(A, B, paired=TRUE)
 
 ## Permutation methods
 
-* Basic principle: Estimation of a test statistic $x_{obs}$ from sample,
-* Resampling: Simulate many $x_{i, sim}$ from randomly permuted data set ($n = 999$ or more)
-* Where does $x_{est}$ appear within the ordered series of simulated values $x_{i, sim}$?
+* Basic principle: Estimation of a test statistic $\xi_{obs}$ from sample,
+* Resampling: Simulate many $\xi_{i, sim}$ from randomly permuted data set ($n = 999$ or more)
+* Where does $\xi_{est}$ appear within the ordered series of simulated values $\xi_{i, sim}$?
 
 ```{r permutation-test, fig.align='center'}
   par(mar=c(4.1, 5.1, 1.1, 1.1))
   set.seed(123)
-  x<-rgamma(100, 2, 1)
-  plot(seq(0,1, length=100), sort(x), xlab="p", ylab=expression(sort(x[i])),
+  x <- rgamma(100, 2, 1)
+  plot(seq(0,1, length=100), sort(x), xlab="p", ylab=expression(xi[i]),
   pch=16, cex=0.5, las=1, col="blue")
   xx <- 4.5
   qxx <- approx(sort(x), seq(0,1, length=100), xx)$y
@@ -670,7 +682,7 @@ wilcox.exact(A, B, paired=TRUE)
   points(qxx, xx, pch=16, col="red")
 ```
 
-Let $x_{obs}$ be $`r xx`$ in our example, then $\Rightarrow$ $p= `r round(qxx,2)`$.
+Let $\xi_{obs}$ be $`r xx`$ in our example, then $\Rightarrow$ $p= `r round(qxx,2)`$.
 
 # Test for distributions
 
@@ -681,12 +693,11 @@ Let $x_{obs}$ be $`r xx`$ in our example, then $\Rightarrow$ $p= `r round(qxx,2)
 
 *  $\chi^2$-test
 *  Fisher's exact test
-*  see test for dependency
 
 **Ordinal variables**
 
 *  Cramér-von-Mises-Test
-* [$\Rightarrow$] more powerful than $\chi^2$ or KS-test
+* $\rightarrow$ more powerful than $\chi^2$ or KS-test
 
 **Metric scales**
 
@@ -696,16 +707,16 @@ Let $x_{obs}$ be $`r xx`$ in our example, then $\Rightarrow$ $p= `r round(qxx,2)
 ## Contingency tables for nominal variables
 
 
-* Contingency tables used for nominal (i.e. categorical or qualitative) data
-* examples: eye and hair color, the kind of medical treatment and the number of cured/not cured
-* mportant: use **absolute mesurements** (true numbers!), not percentages
+* used for nominal (i.e. categorical or qualitative) data
+* examples: eye and hair color, medical treatment and the number of cured/not cured
+* important: use **absolute mesurements** (true numbers!), not percentages
     or other calculated data (e.g. not something like biomass per area)
 
 **Data example**
 
 * *Daphnia* (water flee)-clones and their preferred depth in a lake
-* food algae in the deep water zone poor of oxygen
-* only adapted clones with high hemoglobin can dive to the deep water
+* food algae in the deep water zone, poor of oxygen
+* only adapted clones with high haemoglobin can dive into deep water
 
 
 | Clone | Upper layer | Deep layer |
@@ -751,29 +762,39 @@ C      |          72  |          45|
 Organize data in a matrix with 3 rows (for the clones) and 2 columns (for the depths):
 
 :::{.bigfont}
-```{r}
+```{r, echo=TRUE}
 x <- matrix(c(50, 37, 72, 87, 78, 45), ncol=2)
 x
 ```
 :::
 
-**$\chi^2$-test**
 
 :::{.bigfont}
-```{r}
+```{r, echo=TRUE}
 chisq.test(x)
 ```
 :::
 
-**or Fisher's exact test:**
+## Fisher's exact test
+
+<br>
 
 :::{.bigfont}
-```{r}
+```{r, echo=TRUE}
+x <- matrix(c(50, 37, 72, 87, 78, 45), ncol=2)
+x
+```
+
+```{r, echo=TRUE}
 fisher.test(x)
 ```
 :::
 
+<br>
+
 $\rightarrow$ significant correlation between the clones and their location.
+
+* dependency between clones and vertical distribution in the lake
 
 
 ## Favorite numbers of HSE students
@@ -794,7 +815,7 @@ abline(h=mean(x), lty="dashed", lwd=2,col="red")
 <br>
 
 :::{.bigfont}
-```{r, ech0=TRUE}
+```{r, echo=TRUE}
 obsfreq <- c(1, 1, 6, 2, 2, 5, 8, 6, 3)
 chisq.test(obsfreq)
 chisq.test(obsfreq, simulate.p.value=TRUE, B=1000)
@@ -881,7 +902,7 @@ boxplot(x, col="wheat")
 
 **Frequencies of nominal variables**
 
-* χ2-test
+* $\chi^2$-test
 * Fisher’s exact test
 
 ⇒ dependence between plant society and soil type
@@ -892,7 +913,7 @@ boxplot(x, col="wheat")
 
 * Spearman-Correlation
 
-⇒ rank numbers
+$\rightarrow$ rank numbers
 
 **Metric scales**
 
@@ -953,25 +974,25 @@ plot(xy, pch=16, xlab="x", ylab="y")
 * tests for [linear dependence]{.blue}
 
 $$
-r_P=\frac{\sum{(x_i-\bar{x})  (y_i-\bar{y})}}
+r_p=\frac{\sum{(x_i-\bar{x})  (y_i-\bar{y})}}
        {\sqrt{\sum(x_i-\bar{x})^2\sum(y_i-\bar{y})^2}}
 $$
 
 **Or:**
   
 $$
-r_P=\frac {\sum xy - \sum y \sum y / n}
+r_p=\frac {\sum xy - \sum y \sum y / n}
         {\sqrt{(\sum x^2-(\sum x)^2/n)(\sum y^2-(\sum y)^2/n)}}
 $$
 <br>
 
-Range of values: $-1 \le r_P \le +1$
+Range of values: $-1 \le r_p \le +1$
 
 |                     |                                            |
 |---------------------|--------------------------------------------|  
 |$0$                  | no interdependence                         |
-|$+1 \text{resp.} -1$ | strictly positive resp. negative dependence|
-|$0 < |r_P| < 1$      | positive resp. negative dependence         |
+|$+1 \,\text{or}\,-1$ | strictly positive resp. negative dependence|
+|$0 < |r_p| < 1$      | positive resp. negative dependence         |
 |                     |                                            |
 :::
 
@@ -1015,14 +1036,14 @@ $r=`r round(cor(x2[,1], x2[,2]), 2)`, \quad p=`r round(cor.test(x2[,1], x2[,2])$
 ## Significant correlation?
 
 $$
-\hat{t}_{\alpha/2;n-2} =\frac{|r_P|\sqrt{n-2}}{\sqrt{1-r^2_P}}
+\hat{t}_{\alpha/2;n-2} =\frac{|r_p|\sqrt{n-2}}{\sqrt{1-r^2_P}}
 $$
 
 
 $t=0.829 \cdot \sqrt{1000-2}/\sqrt{1-0.829^2}=46.86, df=998$
 
 <br>
-**Quick test: critical values for $r_P$**
+**Quick test: critical values for $r_p$**
 
 |     |     |         |
 |----:|----:|--------:|
@@ -1044,7 +1065,7 @@ $t=0.829 \cdot \sqrt{1000-2}/\sqrt{1-0.829^2}=46.86, df=998$
 * estimation from rank differences:
 
 $$
-r_S=1-\frac{6 \sum d^2_i}{n(n^2-1)}
+r_s=1-\frac{6 \sum d^2_i}{n(n^2-1)}
 $$
 
 * or, alternatively: Pearson-correlation of ranked data (necessary in case of ties).
@@ -1054,7 +1075,7 @@ for $10 \leq n$  $\rightarrow$ $t$-distribution
 
 $$
    \hat{t}_{1-\frac{\alpha}{2};n-2}
-      =\frac{|r_S|}{\sqrt{1-r^2_S}} \sqrt{n-2}
+      =\frac{|r_s|}{\sqrt{1-r^2_S}} \sqrt{n-2}
 $$
 
 ::: aside
@@ -1075,12 +1096,12 @@ Computer statistics packages use a special algorithm (algorithm AS 89 according 
 
 
 $$
-r_S=1-\frac{6 \cdot 2}{5\cdot (25-1)}=1-\frac{12}{120}=0.9
+r_s=1-\frac{6 \cdot 2}{5\cdot (25-1)}=1-\frac{12}{120}=0.9
 $$
 
-For comparison: $r_P=0.58$
+For comparison: $r_p=0.58$
 
-## Application of Spearman's-$r_S$
+## Application of Spearman's-$r_s$
 
 <br>
 
@@ -1096,7 +1117,7 @@ For comparison: $r_P=0.58$
 * no information about type of dependency,
 * no direct relationship to coefficient of determination.
 
-Conclusion: $r_S$ is nevertheless highly recommended!
+Conclusion: $r_s$ is nevertheless highly recommended!
 
 
 ## Correlation coefficients in **R**
@@ -1146,7 +1167,7 @@ plot(x, xlab="x", ylab="y", las=1, pch=16, cex=0.5, xlim=c(0,10), ylim=c(0,10))
 
 **Multiple correlation**
   
-* [Example:]{.blue} Chl-a=$f(X_1, X_2, X_3, X_4, \dots)$, where $X_i$ is the
+* [Example:]{.blue} Chl-a=$f(x_1, x_2, x_3, x_4, \dots)$, where $x_i$ is the
       biomass of the $i$th phytoplankton species.
 * multiple correlation coefficient
 * partial correlation coefficient
@@ -1170,8 +1191,10 @@ plot(x, xlab="x", ylab="y", las=1, pch=16, cex=0.5, xlim=c(0,10), ylim=c(0,10))
 **How many replicates will I need?**
 
 * Depends on:
-    * the relative effect size (effect/standard deviation,
-      $\delta=\frac{(\bar{x}_1-\bar{x}_2)}{s}$,
+    * the relative effect size: effect/standard deviation
+    
+    $$\delta=\frac{(\bar{x}_1-\bar{x}_2)}{s}$$
+    
     * the sample size $n$,
     * and the pre-defined significance level $\alpha$.
     * and the used method
@@ -1219,9 +1242,9 @@ power.t.test(n=5, delta=0.5, sig.level=0.05)
 ```
 
 $\rightarrow$ power = 0.10
-* for $n=5$ an existing effect of $0.5\sigma$ is only detected in 1 out of 10 cases.
 
-For a power of 80% at $n=5$ we need an effect size of at least $2\sigma$:
+* For $n=5$ an existing effect of $0.5\sigma$ is only detected in 1 out of 10 cases.
+* For a power of 80% at $n=5$ we need an effect size of at least $2\sigma$:
 
 ```{r, echo=TRUE,eval=FALSE}
 power.t.test(n=5, power=0.8, sig.level=0.05)
@@ -1233,7 +1256,35 @@ For a weak effect of $0.5\sigma$ we need a sample size of $n\ge64$ in each group
 power.t.test(delta=0.5,power=0.8,sig.level=0.05)
 ```
 
-[$\Rightarrow$ either a large sample size or a large effect size.]{.darkred}
+[$\Rightarrow$ we ned either a large sample size or a strong effect.]{.darkred}
+
+## Simulated power of a t-test 
+
+```{r, echo=TRUE, eval=FALSE}
+# population parameters
+n      <- 10
+xmean1 <- 50
+xmean2 <- 55
+xsd1   <- xsd2 <- 10
+alpha  <- 0.05
+
+# number of test runs in the simulation
+nn <- 1000
+a <- b <- 0
+for (i in 1:nn) {
+  # creating random numbers
+  x1 <- rnorm(n, xmean1, xsd1)
+  x2 <- rnorm(n, xmean2, xsd2)
+  # results of the t-test
+  p <- t.test(x1,x2,var.equal = TRUE)$p.value 
+  if (p < alpha) {
+     a <- a+1
+   } else {
+     b <- b+1
+  }
+}
+print(paste("a=", a, ", b=", b, ", a/n=", a/nn, ", b/n=", b/nn))
+```
 
 
 
