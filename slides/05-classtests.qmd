@@ -119,8 +119,8 @@ even in statistics textbooks, so it is good to refer to a clear definition:
 
 * [https://en.wikipedia.org/wiki/P-value](https://en.wikipedia.org/wiki/P-value):
 
-* Hubbard, R. (2004). Blurring the Distinctions Between p’s and a’s in
-Psychological Research, Theory Psychology June 2004 vol. 14 no. 3
+* @hubbard_alphabet_2004 Alphabet Soup: Blurring the Distinctions Between p’s and a’s in
+Psychological Research, Theory Psychology 14(3),
 295-327. DOI: [10.1177/0959354304043638](https://doi.org/10.1177/0959354304043638)
 
 
@@ -749,7 +749,7 @@ C      |          72  |          45|
   with $(n_{row} - 1) \cdot (n_{col} - 1)$ degrees of freedom.
 
 * Compare with critical $\chi^2$ from table.
-* Note: The results are only reliable if all observed frequencies are$ \geq 5$.
+* Note: The results are only reliable if all observed frequencies are $\geq 5$.
 * For smaller samples, use Fisher's exact test
 
 
@@ -1043,17 +1043,17 @@ $t=0.829 \cdot \sqrt{1000-2}/\sqrt{1-0.829^2}=46.86, df=998$
 <br>
 **Quick test: critical values for $r_p$**
 
-|     |     |         |
-|----:|----:|--------:|
-|$n$  | d.f.|  $t$ |$r_{crit}$|
-|3    |1  |12.706|0.997|
-|5    |3  |3.182|0.878|
-|10   |8  |2.306|0.633|
-|20   |18 |2.101|0.445|
-|50   |48 |2.011|0.280|
-|100  |98 |1.984|0.197|
-|1000 |998|1.962|0.062|
-|     |   |     |     |
+|     |     |         |          |
+|----:|----:|--------:|---------:|
+|$n$  | d.f.|  $t$    |$r_{crit}$|
+|3    |1    |12.706   |0.997     |
+|5    |3    |3.182    |0.878     |
+|10   |8    |2.306    |0.633     |
+|20   |18   |2.101    |0.445     |
+|50   |48   |2.011    |0.280     |
+|100  |98   |1.984    |0.197     |
+|1000 |998  |1.962    |0.062     |
+|     |     |         |          |
 
 ## Rank-correlation according to Spearman
 
@@ -1081,6 +1081,8 @@ Computer statistics packages use a special algorithm (algorithm AS 89 according 
 :::
 
 ## Example
+
+<br>
 
 |$x$ | $y$   | $R_x$ | $R_y$ | $d$ | $d^2$|
 |----|------:|-------|-------|-----|------|
@@ -1165,18 +1167,18 @@ plot(x, xlab="x", ylab="y", las=1, pch=16, cex=0.5, xlim=c(0,10), ylim=c(0,10))
 
 **Multiple correlation**
   
-* [Example:]{.blue} Chl-a=$f(x_1, x_2, x_3, x_4, \dots)$, where $x_i$ is the
+* [Example:]{.blue} Chl-a=$f(x_1, x_2, x_3, \dots)$, where $x_i$ =
       biomass of the $i$th phytoplankton species.
 * multiple correlation coefficient
 * partial correlation coefficient
 * attractive method $\leftrightarrow$ but difficult in practice:
-    * "independent" variables may correlate with each other (multi-collinearity)
+    * "independent" variables may correlate with each other (multi-collinearity)<br>
         $\Rightarrow$ bias of the multiple $r$.
     * non-linearities are even more difficult to handle than in the two-sample case.
 
 **Recommendation:**
 
-* Use multivariate Methods (NMDS, PCA, ...) for a first overview,
+* Use multivariate methods (NMDS, PCA, ...) for a first overview,
 * apply multiple regression with care and use process knowledge.
 
 
@@ -1189,16 +1191,16 @@ plot(x, xlab="x", ylab="y", las=1, pch=16, cex=0.5, xlim=c(0,10), ylim=c(0,10))
 **How many replicates will I need?**
 
 * Depends on:
-    * the relative effect size: effect/standard deviation
+    * the relative effect size $\frac{\mathrm{effect}}{\mathrm{standard ~ deviation}}$
     
     $$\delta=\frac{(\bar{x}_1-\bar{x}_2)}{s}$$
     
-    * the sample size $n$,
-    * and the pre-defined significance level $\alpha$.
-    * and the used method
+    * the sample size $n$
+    * and the pre-defined significance level $\alpha$
+    * and the applied method
 
 
-* The smaller $\alpha$, $n$ and $\Delta$, the bigger the type II error ($\beta$ error).
+* The smaller $\alpha$, $n$ and $\delta$, the bigger the type II ($\beta$) error.
 * This is the probability to overlook effects despite of their existence.
 
 
@@ -1210,7 +1212,7 @@ Formula for minimum sample size in the one-sample case:
 
 
 $$
-n = \bigg(\frac{z_\alpha + z_{1-\beta}}{\Delta}\bigg)^2
+n = \bigg(\frac{z_\alpha + z_{1-\beta}}{\delta}\bigg)^2
 $$
 
 * $z$: the quantiles (`qnorm`) of the standard normal
@@ -1284,5 +1286,5 @@ for (i in 1:nn) {
 print(paste("a=", a, ", b=", b, ", a/n=", a/nn, ", b/n=", b/nn))
 ```
 
-
+## References
 

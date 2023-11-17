@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2023-11-16">
+  <meta name="dcterms.date" content="2023-11-17">
   <title>Elements of Data Analysis and Statistics - 05-Classical Tests</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -93,6 +93,25 @@
     code span.va { color: #111111; } /* Variable */
     code span.vs { color: #20794d; } /* VerbatimString */
     code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
   </style>
   <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css" id="theme">
   <link rel="stylesheet" href="../thpe.css">
@@ -408,7 +427,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2023-11-16</p>
+  <p class="date">2023-11-17</p>
 </section>
 <section>
 <section id="hypotheses-errors-and-the-p-value" class="title-slide slide level1 center">
@@ -494,7 +513,7 @@ under the assumption that the null hypothesis is to be true.
 <p><br></p>
 <ul>
 <li><p><a href="https://en.wikipedia.org/wiki/P-value">https://en.wikipedia.org/wiki/P-value</a>:</p></li>
-<li><p>Hubbard, R. (2004). Blurring the Distinctions Between p’s and a’s in Psychological Research, Theory Psychology June 2004 vol.&nbsp;14 no. 3 295-327. DOI: <a href="https://doi.org/10.1177/0959354304043638">10.1177/0959354304043638</a></p></li>
+<li><p><span class="citation" data-cites="hubbard_alphabet_2004">Hubbard (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span> Alphabet Soup: Blurring the Distinctions Between p’s and a’s in Psychological Research, Theory Psychology 14(3), 295-327. DOI: <a href="https://doi.org/10.1177/0959354304043638">10.1177/0959354304043638</a></p></li>
 </ul>
 </section>
 <section id="alpha-and-beta-errors" class="slide level2">
@@ -517,18 +536,6 @@ under the assumption that the null hypothesis is to be true.
 <tbody>
 <tr class="odd">
 <td style="text-align: center;"><span class="math inline">\(H_0\)</span> = true</td>
-<td style="text-align: center;">not significant</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;"><span class="math inline">\(1-\alpha\)</span></td>
-</tr>
-<tr class="even">
-<td style="text-align: center;"><span class="math inline">\(H_0\)</span> = false</td>
-<td style="text-align: center;">significant</td>
-<td style="text-align: center;">yes</td>
-<td style="text-align: center;"><span class="math inline">\(1-\beta\)</span> (power)</td>
-</tr>
-<tr class="odd">
-<td style="text-align: center;"><span class="math inline">\(H_0\)</span> = true</td>
 <td style="text-align: center;">significant</td>
 <td style="text-align: center;">no</td>
 <td style="text-align: center;"><span class="math inline">\(\alpha\)</span>-error</td>
@@ -538,6 +545,18 @@ under the assumption that the null hypothesis is to be true.
 <td style="text-align: center;">not significant</td>
 <td style="text-align: center;">no</td>
 <td style="text-align: center;"><span class="math inline">\(\beta\)</span>-error</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;"><span class="math inline">\(H_0\)</span> = true</td>
+<td style="text-align: center;">not significant</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;"><span class="math inline">\(1-\alpha\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: center;"><span class="math inline">\(H_0\)</span> = false</td>
+<td style="text-align: center;">significant</td>
+<td style="text-align: center;">yes</td>
+<td style="text-align: center;"><span class="math inline">\(1-\beta\)</span> (power)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;"></td>
@@ -983,10 +1002,7 @@ mean of x mean of y
 <li>Use always the Welch test: <code>t.test(x, y)</code></li>
 <li>Check approximate normal distribution by using box-plots. Not necessary if <span class="math inline">\(n\)</span> is large.</li>
 </ol>
-<p>see also: <a href="https://en.wikipedia.org/wiki/Welch%27s_t-test">Wikipedia</a> and the references cited there</p>
-<!--
-Zimmerman, D. W. (2004). "A note on preliminary tests of equality of variances". British Journal of Mathematical and Statistical Psychology. 57 (Pt 1): 173–181. doi:10.1348/000711004849222
--->
+<p>see <span class="citation" data-cites="zimmerman_note_2004">Zimmerman (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span> or <a href="https://en.wikipedia.org/wiki/Welch%27s_t-test">Wikipedia</a>.</p>
 </section>
 <section id="paired-t-test" class="slide level2">
 <h2>Paired t-Test</h2>
@@ -1279,7 +1295,7 @@ alternative hypothesis: true mu is not equal to 0</code></pre>
 </ol>
 <ul>
 <li>Compare with critical <span class="math inline">\(\chi^2\)</span> from table.</li>
-<li>Note: The results are only reliable if all observed frequencies are$ $.</li>
+<li>Note: The results are only reliable if all observed frequencies are <span class="math inline">\(\geq 5\)</span>.</li>
 <li>For smaller samples, use Fisher’s exact test</li>
 </ul>
 </section>
@@ -1563,7 +1579,7 @@ r_p=\frac {\sum xy - \sum y \sum y / n}
 <section id="significant-correlation" class="slide level2">
 <h2>Significant correlation?</h2>
 <p><span class="math display">\[
-\hat{t}_{\alpha/2;n-2} =\frac{|r_p|\sqrt{n-2}}{\sqrt{1-r^2_P}}
+\hat{t}_{\alpha/2;n-2} =\frac{|r_p|\sqrt{n-2}}{\sqrt{1-r^2_p}}
 \]</span></p>
 <p><span class="math inline">\(t=0.829 \cdot \sqrt{1000-2}/\sqrt{1-0.829^2}=46.86, df=998\)</span></p>
 <p><br> <strong>Quick test: critical values for <span class="math inline">\(r_p\)</span></strong></p>
@@ -1573,43 +1589,52 @@ r_p=\frac {\sum xy - \sum y \sum y / n}
 <td style="text-align: right;"><span class="math inline">\(n\)</span></td>
 <td style="text-align: right;">d.f.</td>
 <td style="text-align: right;"><span class="math inline">\(t\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(r_{crit}\)</span></td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">12.706</td>
+<td style="text-align: right;">0.997</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">3.182</td>
+<td style="text-align: right;">0.878</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">2.306</td>
+<td style="text-align: right;">0.633</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">20</td>
 <td style="text-align: right;">18</td>
 <td style="text-align: right;">2.101</td>
+<td style="text-align: right;">0.445</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">50</td>
 <td style="text-align: right;">48</td>
 <td style="text-align: right;">2.011</td>
+<td style="text-align: right;">0.280</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">100</td>
 <td style="text-align: right;">98</td>
 <td style="text-align: right;">1.984</td>
+<td style="text-align: right;">0.197</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">1000</td>
 <td style="text-align: right;">998</td>
 <td style="text-align: right;">1.962</td>
+<td style="text-align: right;">0.062</td>
 </tr>
 <tr class="odd">
+<td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
 <td style="text-align: right;"></td>
@@ -1642,6 +1667,7 @@ r_s=1-\frac{6 \sum d^2_i}{n(n^2-1)}
 </div></aside></section>
 <section id="example" class="slide level2">
 <h2>Example</h2>
+<p><br></p>
 <table>
 <thead>
 <tr class="header">
@@ -1783,18 +1809,18 @@ sample estimates:
 <p><br></p>
 <p><strong>Multiple correlation</strong></p>
 <ul>
-<li><span class="blue">Example:</span> Chl-a=<span class="math inline">\(f(x_1, x_2, x_3, x_4, \dots)\)</span>, where <span class="math inline">\(x_i\)</span> is the biomass of the <span class="math inline">\(i\)</span>th phytoplankton species.</li>
+<li><span class="blue">Example:</span> Chl-a=<span class="math inline">\(f(x_1, x_2, x_3, \dots)\)</span>, where <span class="math inline">\(x_i\)</span> = biomass of the <span class="math inline">\(i\)</span>th phytoplankton species.</li>
 <li>multiple correlation coefficient</li>
 <li>partial correlation coefficient</li>
 <li>attractive method <span class="math inline">\(\leftrightarrow\)</span> but difficult in practice:
 <ul>
-<li>“independent” variables may correlate with each other (multi-collinearity) <span class="math inline">\(\Rightarrow\)</span> bias of the multiple <span class="math inline">\(r\)</span>.</li>
+<li>“independent” variables may correlate with each other (multi-collinearity)<br> <span class="math inline">\(\Rightarrow\)</span> bias of the multiple <span class="math inline">\(r\)</span>.</li>
 <li>non-linearities are even more difficult to handle than in the two-sample case.</li>
 </ul></li>
 </ul>
 <p><strong>Recommendation:</strong></p>
 <ul>
-<li>Use multivariate Methods (NMDS, PCA, …) for a first overview,</li>
+<li>Use multivariate methods (NMDS, PCA, …) for a first overview,</li>
 <li>apply multiple regression with care and use process knowledge.</li>
 </ul>
 </section></section>
@@ -1810,15 +1836,15 @@ sample estimates:
 <ul>
 <li><p>Depends on:</p>
 <ul>
-<li>the relative effect size: effect/standard deviation</li>
+<li>the relative effect size <span class="math inline">\(\frac{\mathrm{effect}}{\mathrm{standard ~ deviation}}\)</span></li>
 </ul>
 <p><span class="math display">\[\delta=\frac{(\bar{x}_1-\bar{x}_2)}{s}\]</span></p>
 <ul>
-<li>the sample size <span class="math inline">\(n\)</span>,</li>
-<li>and the pre-defined significance level <span class="math inline">\(\alpha\)</span>.</li>
-<li>and the used method</li>
+<li>the sample size <span class="math inline">\(n\)</span></li>
+<li>and the pre-defined significance level <span class="math inline">\(\alpha\)</span></li>
+<li>and the applied method</li>
 </ul></li>
-<li><p>The smaller <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(n\)</span> and <span class="math inline">\(\Delta\)</span>, the bigger the type II error (<span class="math inline">\(\beta\)</span> error).</p></li>
+<li><p>The smaller <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(n\)</span> and <span class="math inline">\(\delta\)</span>, the bigger the type II (<span class="math inline">\(\beta\)</span>) error.</p></li>
 <li><p>This is the probability to overlook effects despite of their existence.</p></li>
 </ul>
 </section>
@@ -1827,7 +1853,7 @@ sample estimates:
 <p><br></p>
 <p>Formula for minimum sample size in the one-sample case:</p>
 <p><span class="math display">\[
-n = \bigg(\frac{z_\alpha + z_{1-\beta}}{\Delta}\bigg)^2
+n = \bigg(\frac{z_\alpha + z_{1-\beta}}{\delta}\bigg)^2
 \]</span></p>
 <ul>
 <li><span class="math inline">\(z\)</span>: the quantiles (<code>qnorm</code>) of the standard normal distribution for <span class="math inline">\(\alpha\)</span> and for <span class="math inline">\(1-\beta\)</span></li>
@@ -1900,9 +1926,20 @@ NOTE: n is number in *each* group</code></pre>
 <span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>}</span>
 <span id="cb50-23"><a href="#cb50-23" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">paste</span>(<span class="st">"a="</span>, a, <span class="st">", b="</span>, b, <span class="st">", a/n="</span>, a<span class="sc">/</span>nn, <span class="st">", b/n="</span>, b<span class="sc">/</span>nn))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</section>
+<section id="references" class="slide level2 smaller scrollable">
+<h2>References</h2>
 
 <div class="footer footer-default">
 
+</div>
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-hubbard_alphabet_2004" class="csl-entry" role="doc-biblioentry">
+Hubbard, R. (2004). Alphabet soup: Blurring the distinctions betweenp’s anda’s in psychological research. <em>Theory &amp; Psychology</em>, <em>14</em>(3), 295–327. <a href="https://doi.org/10.1177/0959354304043638">https://doi.org/10.1177/0959354304043638</a>
+</div>
+<div id="ref-zimmerman_note_2004" class="csl-entry" role="doc-biblioentry">
+Zimmerman, D. W. (2004). A note on preliminary tests of equality of variances. <em>British Journal of Mathematical and Statistical Psychology</em>, <em>57</em>(1), 173–181. <a href="https://doi.org/10.1348/000711004849222">https://doi.org/10.1348/000711004849222</a>
+</div>
 </div>
 </section></section>
     </div>
