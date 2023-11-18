@@ -10,6 +10,7 @@ library("readxl")
 library("vegan")
 library("knitr")
 library("kableExtra")
+library("leaflet")
 #knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 knitr::opts_chunk$set(echo = TRUE, eval=TRUE)
 #setupKnitr(autoprint = TRUE)
@@ -19,7 +20,7 @@ knitr::opts_chunk$set(echo = TRUE, eval=TRUE)
 
 <br>
 
-1. The "uba-lakes" data set originates from the public data repository of the German 
+1. The "UBA-lakes" data set originates from the public data repository of the German 
 Umweltbundesamt [@UBA2020]. The data set provided can be used freely according
 to the [terms and conditions](https://www.umweltbundesamt.de/datenschutz-haftung#c-urheber-und-kennzeichenrecht) 
 published at the [UBA web site](https://www.umweltbundesamt.de/), that refer to
@@ -43,7 +44,7 @@ of lakes in Brandenburg and Mecklenburg. The data werde taken from the literatur
 ```{r}
 library("readxl") # read Excel files directly
 lakes <- as.data.frame(
-  read_excel("../data/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx", sheet="Tabelle1", skip=3)
+  read_excel("../data/uba/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx", sheet="Tabelle1", skip=3)
 )
 names(lakes) <- c("name", "state", "drainage", "population", "altitude", 
                   "z_mean", "z_max", "t_ret", "volume", "area", "shore_length", 
@@ -69,97 +70,14 @@ plot(lakes)
 
 * we need methods to extract the main information with a small number of plots
 
-## Another example
-
-<small>
-```{r echo=FALSE}
-benthos <- read.csv("../data/gauernitz.csv") 
-kable(benthos[-(2:4)])
-```
-</small>
-
-* Aggregated part of taxa list from two small streams.
-
-## How to aggregate the data?
-
-<hr></hr>
-
-:::{.column width="44%" .add-space}
-**Simpson index**
-
-$$
-D = \sum_{i=1}^S p_i^2
-$$
-
-* $p_i$: relative abundance of species
-* in most cases, Simpson index is given as $\tilde{D} = 1 - D$<br>
-  [(large values -- high diversity)]{.gray}
-* also possible: inverse Simpson index: $D' = 1 / D$<br> 
-
-:::
-
-:::{.column width="48%"}
-
-**Shannon index**
-
-$$
-H = -\sum_{i=1}^S p_i \log_b p_i
-$$
-  
-  * in most cases log base $b=e$ (natural log), some prefer $b=2$ (information theory)
-  
-  
-  **Eveness **
-  
-  $$
-  E = \frac{H}{\log(S)}
-  $$
-  
-* $S$: number of species
-
-:::
-
-<hr></hr>
-
-* more indices: species richness, species deficit, Fisher's $\alpha$ ...
-
-## Diversity indices
-
-:::{.column width="20%"}
-:::
-
-:::{.column width="60%"}
-<small>
-```{r echo=FALSE}
-library("vegan")
-species <- benthos[c("Mollusca", "Diptera", "Baetis", "Plecoptera", 
-                     "Coleoptera", "Turbellaria", "Heptageniidae",
-                     "Ephemeroptera", "Gammarus", "Trichoptera", 
-                     "Acari", "Nematoda", "Oligochaeta")]
-div <- data.frame(
-  shannon = diversity(species, index="shannon"),
-  simpson = diversity(species, index="simpson"),
-  invsimpson = diversity(species, index="invsimpson"),
-  eveness = diversity(species, index="shannon") / log(ncol(species)),
-  fisher_alpha = fisher.alpha(species)
-)
-div <- lapply(div, round, 2)
-kable(cbind(benthos[c("Site", "Habitat", "Stream", "Flood")], div))
-```
-</small>
-:::
-
-* aggregated data but which of the indices tells what?
-* $\rightarrow$ information loss compared to the original list
 
 
-
-## Alternative approach
+## The multivariate approach
 
 <br>
 
 
-[Work with the compleze original variables directly]{.bigfont}
+[Work with the complete original variables directly]{.bigfont}
 
 <br>
 
@@ -180,32 +98,42 @@ For comparison
 
 ## Two approches of multivariate statistics
 
-:::{.column width="44%" .add-space}
+```{r echo=FALSE}
+benthos <- read.csv("../data/gauernitz.csv") 
+species <- benthos[c("Mollusca", "Diptera", "Baetis", "Plecoptera", 
+                     "Coleoptera", "Turbellaria", "Heptageniidae",
+                     "Ephemeroptera", "Gammarus", "Trichoptera", 
+                     "Acari", "Nematoda", "Oligochaeta")]
+```
+
+
+:::{.column width="46%" .add-space}
+
+**Ordination**
+
+```{r approach-pca, echo=FALSE, fig.width=5, fig.height=5}
+par(mar=c(4,4,1,1))
+biplot(prcomp(scale(species)))
+```
+
+* dimension reduction
+* relate observations and variables
+:::
+
+
+::: {.column width="46%"}
 
 **Cluster analysis**
 
-```{r approach-cluster, echo=FALSE, fig.width=4, fig.height=4}
+```{r approach-cluster, echo=FALSE, fig.width=5, fig.height=5}
 par(mar=c(1,4,1,1))
 rownames(species) <- benthos$Site
 plot(hclust(dist(scale(species))), hang=-1, main="")
 ```
 
 * distance and similarity
+* identification of groups
 
-:::
-
-
-::: {.column width="44%"}
-
-**Ordination**
-
-```{r approach-pca, echo=FALSE, fig.width=4, fig.height=4}
-par(mar=c(4,4,1,1))
-biplot(prcomp(scale(species)))
-```
-
-* dimension reduction
-* relationship between observations and variables
 :::
 
 
@@ -225,6 +153,212 @@ biplot(prcomp(scale(species)))
   $\rightarrow$  Show which observations are closely together.
 * ordination:<br>
   $\rightarrow$  Plot data at lower dimensions, similar observations closely together.
+
+
+
+# The UBA-lakes example
+
+## A data set from German lakes
+
+```{r lakes-leaflet, echo=FALSE, fig.height=7, fig.width=10, fig.align='center'}
+library("leaflet")
+
+lakepos <- read.csv("../data/uba/kenndaten-seen-gps.csv")
+
+leaflet(options = leafletOptions(zoomControl = TRUE)) |>
+  addTiles() |>
+  setView(lng = 10.447, lat = 51.16, zoom = 5) |>
+  addMarkers(lng = lakepos$lon, lat = lakepos$lat,
+             popup = lakepos$name,
+             options = markerOptions(title=lakepos$name, closeButton = FALSE))
+```
+
+
+## Example: A simplified subset from the UBA lake data
+
+<small>
+```{r, echo=FALSE}
+lakes <- read.csv(file="../data/uba/lakes-combined-data.csv")
+valid_columns <- c(
+  "name", "shortname",
+  #"drainage", 
+  #"population", 
+  #"altitude", 
+  "z_mean",
+  "z_max", 
+  "t_ret", 
+  "volume", 
+  "area", 
+  #"shore_length", 
+  #"shore_devel", 
+  #"drain_ratio", 
+  "p_tot", 
+  "n_no3", 
+  "chl",
+  "wfd_type"
+)
+
+## less columns, so that we get a simplified subset and more complete cases
+lakes <- lakes[valid_columns] |> na.omit()
+
+## print table
+kable(lakes)
+
+row.names(lakes) <- lakes$shortname
+lake_ids <- lakes[c("name", "shortname")]
+lakedata <- lakes[, -c(1, 2)]
+lakedata$wfd_type <- NULL
+```
+
+mean and maximum depth (m): z_mean, z_max; retention time (years): t_ret;
+volume (10^9 m^3); area (km^2), total phosphorus P (µg/L): p_tot; nitrogen-N (mg/L):
+n_no3, chlorophyll (µg/L): chl, water framework directive lake type: wfd_type
+</small>
+
+::: aside
+Data set from UBA = Umweltbundesamt = German Federal Environmental Agency
+:::
+
+## Code to read the data
+
+```{r, eval=FALSE}
+lakes <- read.csv(file="lakes-combined-data.csv")
+valid_columns <- c("name", "shortname", "z_mean", "z_max",  "t_ret", "volume", 
+  "area", "p_tot", "n_no3", "chl", "wfd_type")
+lakes <- lakes[valid_columns] |> na.omit()
+row.names(lakes) <- lakes$shortname
+
+lake_ids <- lakes[c("name", "shortname")]
+lakedata <- lakes[, -c(1, 2)]
+
+## remove wfd_type for now
+lakedata$wfd_type <- NULL
+```
+
+* data available from ......................
+
+
+## Data transformation and normalization
+
+```{r uba-lakes-boxplot, fig.align='center', fig.width=8, fig.height=3}
+par(mfrow = c(1, 4), mar = c(6, 4, 3, 1), las = 2)
+boxplot(lakedata, main = "raw data")
+boxplot(scale(lakedata), main = "normalized")
+boxplot(scale(sqrt(lakedata)), main = "sqrt + normalized")
+boxplot(scale(log(lakedata)), main = "log + normalized")
+```
+
+
+* `scale()` performs normalisation (z-transformation)
+* aim: make different scales better comparable
+
+
+# Ordination methods
+
+## Principal Component Analysis: PCA
+
+```{r, echo=FALSE}
+options(width=120)
+```
+
+
+```{r}
+pc <- prcomp(scale(lakedata))
+```
+
+Eigenvalues (proportion of variance) indicate importance of components.
+
+```{r}
+summary(pc)
+```
+
+
+```{r uba-pca-variance, echo=FALSE, fig.align='center', fig.width=10, fig.height=3.5}
+par(mar=c(4,4,2,1), las=1)
+plot(pc)
+n_pc <- length(pc$sdev)
+mtext(side=1, at=1.2*(1:n_pc) - 0.6, text=paste("PC", 1:n_pc))
+```
+
+## PCA Biplot
+
+```{r pca-biplot1, fig.align='center', fig.width=6, fig.height=6}
+biplot(pc)
+```
+
+## PCA with sqrt transformed data
+
+<br>
+
+```{r}
+lakedata2 <- sqrt(lakedata)
+pc2 <- prcomp(scale(lakedata2))
+summary(pc2)
+```
+
+<br>
+
+* The PCA with the untransformed data looked very asymmetric, we repeat it with
+square root transformed data.
+* helps to get a better "resolution"
+* must be taken into account when interpreting the results
+* log transformation is also possible
+
+
+## Biplot of sqrt transformed data  (here also 3rd PC)
+
+```{r uba-pca-biplot, fig.align='center', fig.width=12, fig.height=6}
+par(mfrow=c(1, 2), mar=c(5, 4, 4, 2.4), las=1)
+biplot(pc)
+biplot(pc2, choices=c(3, 2))
+```
+
+
+## PCA with the vegan package
+
+```{r}
+pc3 <- rda(lakedata2, scale = TRUE)
+summary(pc3)
+```
+
+<!---
+summary(pc3)$cont$importance # trick to suppress long output
+--->
+
+## Biplot
+
+```{r uba-rda-biplot, fig.width=5, fig.height=5, fig.align='center'}
+biplot(pc3)
+```
+
+# Distance and similarity
+
+## Euclidean distance
+
+<br>
+
+```{r, echo=FALSE, fig.align='center'}
+plot(NULL, xlim=c(0,10), ylim=c(0,10), las=1, type="n", xlab="x", ylab="y")
+
+x <- c(2, 8)
+y <- c(1, 7)
+points(x, y, pch=16, cex=2, type="b", lwd=2)
+text(x, y + 0.2, c("A", "B"), cex=2, pos=3)
+lines(c(x, x[2]), c(y[1], y[1], y[2]))
+text(mean(x), y[1], "a", pos=1, cex=2)
+text(x[2], mean(y), "b", pos=4, cex=2)
+text(mean(x), mean(y), "c", pos=3, cex=2)
+```
+
+
+* PCA works with Euclidean distance
+* rule of Pythagoras
+
+$$
+a^2 + b^2 = c^2 \quad \Rightarrow\quad c = \sqrt{a^2 + b^2} = \sqrt{\Delta x^2 + \Delta y^2}
+$$
+
+* but: Euclidean distance is not always the best option.
 
 ## Distance and dissimilarity
 
@@ -356,111 +490,131 @@ the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/to
 
 
 
-## The UBA-lakes example
-
-Load the data set and add English column names and abbreviated lake identifiers as row names to the table.
-These are useful for the multivariate plotting functions.
-
-```{r}
-library("readxl") # read Excel files directly
-library("vegan")  # multivariate statistics in ecology
-lakes <- as.data.frame(
-  read_excel("../data/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx", sheet="Tabelle1", skip=3)
-)
-names(lakes) <- c("name", "state", "drainage", "population", "altitude", 
-                  "z_mean", "z_max", "t_ret", "volume", "area", "shore_length", 
-                  "shore_devel", "drain_ratio", "wfd_type")
-rownames(lakes) <- paste0(1:nrow(lakes), substr(lakes$name, 1, 4))
-```
-
-<br>
-
-Remove text columns, e.g Federal State names, lake type and rows with missing data:
-
-```{r}
-valid_columns <- c("drainage", "population", "altitude", "z_mean",
-                   "z_max", "t_ret", "volume", "area", "shore_length", 
-                   "shore_devel", "drain_ratio")
-
-dat <- lakes[valid_columns]
-dat <- na.omit(dat)
-```
-
-::: aside
-UBA = Umweltbundesamt = German Federal Environmental Agency
-:::
-
-## Data inspection
-
-```{r uba-lakes-boxplot, fig.align='center'}
-par(mfrow = c(1, 1))
-par(mar = c(7, 4, 2, 1) + .1)
-boxplot(scale(dat), las = 2)
-```
-
-* Note: `scale()` that does normalisation (z-transformation)
-
-# Multivariate Analysis
-
-## Principal Components Analysis: PCA
-
-```{r uba-pca-variance}
-pc <- prcomp(scale(dat))
-summary(pc)
-plot(pc)
-biplot(pc)
-```
-
-As the PCA with the untransformed data looks somewhat asymmetric, we repeat it with
-square transformed data. In addition, also the 3rd PC is plotted.
-
-```{r}
-dat2 <- sqrt(dat)
-pc2 <- prcomp(scale(dat2))
-summary(pc2)
-```
-
-## Biplot
-
-```{r uba-pca-biplot}
-par(mfrow=c(1,2))
-par(mar=c(5, 4, 4, 2) + 0.1)
-biplot(pc2, cex=0.6)
-biplot(pc2, cex=0.6, choices=c(3, 2))
-```
-
-## PCA with the vegan package
-
-```{r}
-pc3 <- rda(dat2, scale = TRUE)
-summary(pc3)
-```
-
-## Biplot
-
-```{r uba-rda-biplot, fig.width=5, fig.height=5, fig.align='center'}
-plot(pc3)
-
-```
-
 
 ## Nonmetric Multidimensional Scaling: NMDS
 
 ```{r uba-nmds, fig.align='center', fig.width=5, fig.height=5}
-md <- metaMDS(dat2, scale = TRUE, distance = "euclid", trace=FALSE)
+md <- metaMDS(lakedata2, scale = TRUE, distance = "euclid", trace=FALSE)
 plot(md, type="text")
 abline(h=0, col="grey", lty="dotted")
 abline(v=0, col="grey", lty="dotted")
 ```
 
-## Cluster analysis
+## A Taxonomic Table
+
+<small>
+```{r echo=FALSE}
+benthos <- read.csv("../data/gauernitz.csv") 
+kable(benthos[-(2:4)])
+```
+</small>
+
+* Aggregated part of taxa list from two small streams.
+
+## How to aggregate the data?
+
+<hr></hr>
+
+:::{.column width="44%" .add-space}
+**Simpson index**
+
+$$
+D = \sum_{i=1}^S p_i^2
+$$
+
+* $p_i$: relative abundance of species
+* in most cases, Simpson index is given as $\tilde{D} = 1 - D$<br>
+  [(large values -- high diversity)]{.gray}
+* also possible: inverse Simpson index: $D' = 1 / D$<br> 
+
+:::
+
+:::{.column width="48%"}
+
+**Shannon index**
+
+$$
+H = -\sum_{i=1}^S p_i \log_b p_i
+$$
+  
+  * in most cases log base $b=e$ (natural log), some prefer $b=2$ (information theory)
+  
+  
+  **Eveness **
+  
+  $$
+  E = \frac{H}{\log(S)}
+  $$
+  
+* $S$: number of species
+
+:::
+
+<hr></hr>
+
+* more indices: species richness, species deficit, Fisher's $\alpha$ ...
+
+## Diversity indices
+
+:::{.column width="20%"}
+:::
+
+:::{.column width="60%"}
+<small>
+```{r echo=FALSE}
+library("vegan")
+species <- benthos[c("Mollusca", "Diptera", "Baetis", "Plecoptera", 
+                     "Coleoptera", "Turbellaria", "Heptageniidae",
+                     "Ephemeroptera", "Gammarus", "Trichoptera", 
+                     "Acari", "Nematoda", "Oligochaeta")]
+div <- data.frame(
+  shannon = diversity(species, index="shannon"),
+  simpson = diversity(species, index="simpson"),
+  invsimpson = diversity(species, index="invsimpson"),
+  eveness = diversity(species, index="shannon") / log(ncol(species)),
+  fisher_alpha = fisher.alpha(species)
+)
+div <- lapply(div, round, 2)
+kable(cbind(benthos[c("Site", "Habitat", "Stream", "Flood")], div))
+```
+</small>
+:::
+
+* aggregated data but which of the indices tells what?
+* $\rightarrow$ information loss compared to the original list
+
+
+
+# Cluster Analysis
+
+
+## Overview
+
+* Cluster analysis aims to group data sets in clusters
+
+* Hierarchical clustering
+  - build a dendrogram (a tree of grouping)
+  - agglomerative methods
+  - divisive methods
+
+* Different agglomeration methods
+  - define how distance is measured between clusters
+
+* Nonhierarchical clustering
+   - subdivide in a given number of groups
+   - usually no dendrogram
+   - iterative methods
+   - e.g. k-means, k-centroids
+   
+   
+
 
 ```{r  fig.height=6, wig.width=12, fig.align='center'}
 par(mfrow=c(1,2))
-hc <- hclust(dist(scale(dat2)), method="complete") # the default
+hc <- hclust(dist(scale(lakedata2)), method="complete") # the default
 plot(hc)
 
-hc2 <- hclust(dist(scale(dat2)), method="ward.D2")
+hc2 <- hclust(dist(scale(lakedata2)), method="ward.D2")
 plot(hc2)
 ```
 
@@ -477,7 +631,7 @@ grp <- cutree(hc, 5)
 
 ```{r}
 plot(md, type = "n")
-text(md$points, row.names(dat2), col = grp)
+text(md$points, row.names(lakedata2), col = grp)
 ```
 
 

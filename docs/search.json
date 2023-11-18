@@ -467,5 +467,313 @@
     "title": "05-Classical Tests",
     "section": "References",
     "text": "References\n\n\n\n\n\n\nHubbard, R. (2004). Alphabet soup: Blurring the distinctions betweenp’s anda’s in psychological research. Theory & Psychology, 14(3), 295–327. https://doi.org/10.1177/0959354304043638\n\n\nZimmerman, D. W. (2004). A note on preliminary tests of equality of variances. British Journal of Mathematical and Statistical Psychology, 57(1), 173–181. https://doi.org/10.1348/000711004849222"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#data-sets-and-terms-of-use",
+    "href": "slides/10-multivariate.html#data-sets-and-terms-of-use",
+    "title": "Multivariate methods",
+    "section": "Data sets and terms of use",
+    "text": "Data sets and terms of use\n\n\nThe “UBA-lakes” data set originates from the public data repository of the German Umweltbundesamt (Umweltbundesamt, 2021). The data set provided can be used freely according to the terms and conditions published at the UBA web site, that refer to § 12a EGovG with respect of the data, and to the Creative Commons CC-BY ND International License 4.0 with respect to other objects directly created by UBA.\nThe “bm-lakes” data set is a teaching data set, derived from historical measurements of lakes in Brandenburg and Mecklenburg. The data werde taken from the literature Koschel & Scheffler (1985) and adapted to teaching purposes.\nThe “gauernitz” data set contains simplified teaching versions from research data, of the study from Winkelmann et al. (2011)\nThe document itself, the codes and the ebedded images are own work and can be shared according to CC BY 4.0."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#an-introductory-example",
+    "href": "slides/10-multivariate.html#an-introductory-example",
+    "title": "Multivariate methods",
+    "section": "An introductory example",
+    "text": "An introductory example"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#correlation-between-all-variables",
+    "href": "slides/10-multivariate.html#correlation-between-all-variables",
+    "title": "Multivariate methods",
+    "section": "Correlation between all variables?",
+    "text": "Correlation between all variables?\n\nlibrary(\"readxl\") # read Excel files directly\nlakes <- as.data.frame(\n  read_excel(\"../data/uba/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx\", sheet=\"Tabelle1\", skip=3)\n)\nnames(lakes) <- c(\"name\", \"state\", \"drainage\", \"population\", \"altitude\", \n                  \"z_mean\", \"z_max\", \"t_ret\", \"volume\", \"area\", \"shore_length\", \n                  \"shore_devel\", \"drain_ratio\", \"wfd_type\")\nstr(lakes)\n\n'data.frame':   56 obs. of  14 variables:\n $ name        : chr  \"Ammersee\" \"Arendsee\" \"Bleilochtalsperre\" \"Bodensee\" ...\n $ state       : chr  \"BY\" \"ST\" \"TH\" \"BW\" ...\n $ drainage    : num  993 29.8 1239.9 11477 28.2 ...\n $ population  : num  114900 3200 180000 1400000 28 ...\n $ altitude    : num  532.9 22.8 404 395.4 13.1 ...\n $ z_mean      : num  37.6 28.6 23.3 85 2.4 ...\n $ z_max       : num  81.1 48.7 55 254 4.8 58.3 32.5 73.4 1.7 18.8 ...\n $ t_ret       : num  2.7 50 0.526 4.2 1.9 16.3 NA 1.26 0.1 2.3 ...\n $ volume      : num  1.75 0.147 0.215 48.522 0.009 ...\n $ area        : num  46.6 5.14 9.2 571.5 3.9 ...\n $ shore_length: num  43 9 NA 273 10.4 13.7 17.5 64 7.5 10.1 ...\n $ shore_devel : num  1.78 1.12 NA 2.26 1.48 2.09 1.64 2.02 2.22 1.6 ...\n $ drain_ratio : num  20.3 5.8 NA 21.9 7.2 ...\n $ wfd_type    : chr  \"Typ 4\" \"Typ 13\" \"Typ 5\" \"Typ 4\" ...\n\n\n\nnames(lakes) replaces the original German column names by abbreviated English abbreviations"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#create-pairwise-scatter-plots-for-all-variables",
+    "href": "slides/10-multivariate.html#create-pairwise-scatter-plots-for-all-variables",
+    "title": "Multivariate methods",
+    "section": "Create pairwise scatter plots for all variables?",
+    "text": "Create pairwise scatter plots for all variables?\n\nplot(lakes)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#create-pairwise-scatter-plots-for-all-variables-1",
+    "href": "slides/10-multivariate.html#create-pairwise-scatter-plots-for-all-variables-1",
+    "title": "Multivariate methods",
+    "section": "Create pairwise scatter plots for all variables?",
+    "text": "Create pairwise scatter plots for all variables?\n\n\nnot a good idea, 14 variables would produce 182 (or 91) plots\ncan lead to “statistical fishing”\nwe need methods to extract the main information with a small number of plots"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#another-example",
+    "href": "slides/10-multivariate.html#another-example",
+    "title": "Multivariate methods",
+    "section": "Another example",
+    "text": "Another example\n\n\n\n\n\n \n  \n    Site \n    Mollusca \n    Diptera \n    Baetis \n    Plecoptera \n    Coleoptera \n    Turbellaria \n    Heptageniidae \n    Ephemeroptera \n    Gammarus \n    Trichoptera \n    Acari \n    Nematoda \n    Oligochaeta \n  \n \n\n  \n    GP9 \n    3 \n    165 \n    91 \n    14 \n    6 \n    3 \n    9 \n    136 \n    256 \n    45 \n    6 \n    0 \n    11 \n  \n  \n    GR9 \n    31 \n    438 \n    728 \n    31 \n    728 \n    11 \n    31 \n    0 \n    65 \n    367 \n    3 \n    0 \n    503 \n  \n  \n    TP9 \n    0 \n    26 \n    3 \n    20 \n    9 \n    0 \n    3 \n    20 \n    119 \n    40 \n    0 \n    0 \n    23 \n  \n  \n    TR9 \n    0 \n    11 \n    6 \n    37 \n    11 \n    0 \n    0 \n    3 \n    68 \n    26 \n    0 \n    0 \n    23 \n  \n  \n    GP8 \n    23 \n    913 \n    31 \n    14 \n    3 \n    9 \n    6 \n    26 \n    901 \n    37 \n    3 \n    20 \n    0 \n  \n  \n    GR8 \n    225 \n    1066 \n    310 \n    199 \n    461 \n    48 \n    91 \n    23 \n    688 \n    600 \n    26 \n    0 \n    284 \n  \n  \n    TP8 \n    17 \n    2204 \n    54 \n    117 \n    11 \n    0 \n    11 \n    20 \n    2525 \n    77 \n    3 \n    3 \n    68 \n  \n  \n    TR8 \n    3 \n    520 \n    74 \n    762 \n    125 \n    20 \n    65 \n    0 \n    668 \n    173 \n    3 \n    0 \n    267 \n  \n  \n    GP7 \n    26 \n    247 \n    68 \n    6 \n    3 \n    3 \n    3 \n    20 \n    813 \n    9 \n    6 \n    0 \n    0 \n  \n  \n    GR7 \n    117 \n    509 \n    290 \n    63 \n    191 \n    6 \n    26 \n    11 \n    682 \n    117 \n    60 \n    9 \n    131 \n  \n  \n    TP7 \n    26 \n    3477 \n    17 \n    28 \n    0 \n    0 \n    3 \n    37 \n    2693 \n    17 \n    0 \n    0 \n    0 \n  \n  \n    TR7 \n    48 \n    429 \n    57 \n    412 \n    97 \n    9 \n    63 \n    9 \n    808 \n    102 \n    26 \n    6 \n    57 \n  \n  \n    GP10 \n    3 \n    159 \n    14 \n    31 \n    3 \n    0 \n    48 \n    91 \n    100 \n    23 \n    0 \n    0 \n    17 \n  \n  \n    GR10 \n    0 \n    68 \n    191 \n    26 \n    51 \n    3 \n    253 \n    0 \n    80 \n    233 \n    3 \n    0 \n    11 \n  \n  \n    TP10 \n    0 \n    51 \n    0 \n    6 \n    9 \n    0 \n    0 \n    6 \n    71 \n    0 \n    0 \n    0 \n    31 \n  \n  \n    TR10 \n    0 \n    28 \n    6 \n    40 \n    14 \n    0 \n    0 \n    0 \n    40 \n    54 \n    0 \n    0 \n    0 \n  \n\n\n\n\n\n\n\nAggregated part of taxa list from two small streams."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#how-to-aggregate-the-data",
+    "href": "slides/10-multivariate.html#how-to-aggregate-the-data",
+    "title": "Multivariate methods",
+    "section": "How to aggregate the data?",
+    "text": "How to aggregate the data?\n\n\n\nSimpson index\n\\[\nD = \\sum_{i=1}^S p_i^2\n\\]\n\n\\(p_i\\): relative abundance of species\nin most cases, Simpson index is given as \\(\\tilde{D} = 1 - D\\) (large values – high diversity)\nalso possible: inverse Simpson index: \\(D' = 1 / D\\)\n\n\n\nShannon index\n\\[\nH = -\\sum_{i=1}^S p_i \\log_b p_i\n\\]\n\nin most cases log base \\(b=e\\) (natural log), some prefer \\(b=2\\) (information theory)\n\nEveness \n\\[\n  E = \\frac{H}{\\log(S)}\n  \\]\n\n\\(S\\): number of species\n\n\n\n\n\nmore indices: species richness, species deficit, Fisher’s \\(\\alpha\\) …"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#diversity-indices",
+    "href": "slides/10-multivariate.html#diversity-indices",
+    "title": "Multivariate methods",
+    "section": "Diversity indices",
+    "text": "Diversity indices\n\n\n\n\n\n\n\n\n\n \n  \n    Site \n    Habitat \n    Stream \n    Flood \n    shannon \n    simpson \n    invsimpson \n    eveness \n    fisher_alpha \n  \n \n\n  \n    GP9 \n    p \n    g \n    n \n    1.75 \n    0.78 \n    4.55 \n    0.68 \n    2.03 \n  \n  \n    GR9 \n    r \n    g \n    n \n    1.79 \n    0.81 \n    5.23 \n    0.70 \n    1.44 \n  \n  \n    TP9 \n    p \n    t \n    n \n    1.70 \n    0.74 \n    3.87 \n    0.66 \n    1.80 \n  \n  \n    TR9 \n    r \n    t \n    n \n    1.74 \n    0.78 \n    4.57 \n    0.68 \n    1.70 \n  \n  \n    GP8 \n    p \n    g \n    v \n    1.11 \n    0.58 \n    2.39 \n    0.43 \n    1.70 \n  \n  \n    GR8 \n    r \n    g \n    v \n    2.08 \n    0.85 \n    6.57 \n    0.81 \n    1.52 \n  \n  \n    TP8 \n    p \n    t \n    v \n    1.04 \n    0.57 \n    2.32 \n    0.41 \n    1.47 \n  \n  \n    TR8 \n    r \n    t \n    v \n    1.81 \n    0.80 \n    5.04 \n    0.71 \n    1.46 \n  \n  \n    GP7 \n    p \n    g \n    v \n    1.04 \n    0.50 \n    1.99 \n    0.40 \n    1.67 \n  \n  \n    GR7 \n    r \n    g \n    v \n    1.97 \n    0.82 \n    5.45 \n    0.77 \n    1.83 \n  \n  \n    TP7 \n    p \n    t \n    v \n    0.80 \n    0.51 \n    2.05 \n    0.31 \n    0.90 \n  \n  \n    TR7 \n    r \n    t \n    v \n    1.80 \n    0.77 \n    4.33 \n    0.70 \n    1.84 \n  \n  \n    GP10 \n    p \n    g \n    n \n    1.83 \n    0.80 \n    5.00 \n    0.71 \n    1.78 \n  \n  \n    GR10 \n    r \n    g \n    n \n    1.79 \n    0.80 \n    4.99 \n    0.70 \n    1.57 \n  \n  \n    TP10 \n    p \n    t \n    n \n    1.42 \n    0.71 \n    3.46 \n    0.55 \n    1.20 \n  \n  \n    TR10 \n    r \n    t \n    n \n    1.62 \n    0.78 \n    4.64 \n    0.63 \n    1.19 \n  \n\n\n\n\n\n\n\n\naggregated data but which of the indices tells what?\n\\(\\rightarrow\\) information loss compared to the original list"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#the-multivariate-approach",
+    "href": "slides/10-multivariate.html#the-multivariate-approach",
+    "title": "Multivariate methods",
+    "section": "The multivariate approach",
+    "text": "The multivariate approach\n\nWork with the complete original variables directly\n\n\\(\\rightarrow\\) Multivariate statistics\n\ndependent variables + explanation variables optional\nanalyze distance and location in multidimensional space\nfind way to vizualize relationship in lower dimensions\n\n\nFor comparison\n\nunivariate: 1 variable\nbivariate: 1 dependent, 1 independent variable\nmultiple: 1 dependent, >1 independent variables"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#two-approches-of-multivariate-statistics",
+    "href": "slides/10-multivariate.html#two-approches-of-multivariate-statistics",
+    "title": "Multivariate methods",
+    "section": "Two approches of multivariate statistics",
+    "text": "Two approches of multivariate statistics\n\n\n\n\nOrdination\n\n\n\n\n\n\ndimension reduction\nrelate observations and variables\n\n\n\nCluster analysis\n\n\n\n\n\n\ndistance and similarity\nidentification of groups"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#basic-concepts",
+    "href": "slides/10-multivariate.html#basic-concepts",
+    "title": "Multivariate methods",
+    "section": "Basic concepts",
+    "text": "Basic concepts\n\nSimilarity and correlation\n\ndistance and similarity: \\(\\rightarrow\\) How different or similar are the observations?\ncorrelation and covariance: \\(\\rightarrow\\) Are variables interdependent?\ndimension reduction: \\(\\rightarrow\\) Try to show essential parts of information on a lower number of dimensions.\ncluster analysis: \\(\\rightarrow\\) Show which observations are closely together.\nordination: \\(\\rightarrow\\) Plot data at lower dimensions, similar observations closely together."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#distance-and-dissimilarity",
+    "href": "slides/10-multivariate.html#distance-and-dissimilarity",
+    "title": "Multivariate methods",
+    "section": "Distance and dissimilarity",
+    "text": "Distance and dissimilarity\n\nAxiomatic definition\nMeasure of distance \\(d\\) between multidimensional points \\(x_i\\) and \\(x_j\\):\n\n\\(d(x_i, x_j) \\ge 0\\), distances are similar or equal to zero\n\\(d(x_i, x_j)=d(x_j,x_i)\\), the distance from A to B is the same as from B to A,\n\\(d(x_i, x_i)=0\\), the distance from a given point to itself is zero\n\nA distance measure is termed metric, if:\n\n\\(d=0\\) applies in the case of equality only, and\nthe triangle inequality aapplies. The indirect route is longer than the direct route\n\nIf one or both of the additional conditions are violated, we speak about nonmetric measures and use the term dissimilarity instead of distance."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#similarity",
+    "href": "slides/10-multivariate.html#similarity",
+    "title": "Multivariate methods",
+    "section": "Similarity",
+    "text": "Similarity\n\nA measure of similarity \\(s\\) can be defined in a similar way:\n\n\\(s(x_i,x_j) \\le s_{max}\\)\n\\(s(x_i,x_j)=s(x_j,x_i)\\)\n\\(s(x_i,x_i)=s_{max}\\)\n\nit is metric, if:\n\n\\(s_{max}\\) applies only in the case of equality and\nthe triangle inequality applies"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#conversion-between-dissimilarity-and-similarity",
+    "href": "slides/10-multivariate.html#conversion-between-dissimilarity-and-similarity",
+    "title": "Multivariate methods",
+    "section": "Conversion between dissimilarity and similarity",
+    "text": "Conversion between dissimilarity and similarity\n\n\n\n\n\n\nsimilarity\ndissimilarity\n\n\n\n\n\\(s=1-d/d_{max}\\)\n\\(d=1-s/s_{max}\\)\n\n\n\\(s=\\exp(-d)\\)\n\\(d= - \\ln(s-s_{min})\\)\n\n\n\n\n\n\ndistance goes from \\(0\\) to \\(\\infty\\)\ndifferent transformations, as long as the \\(\\Rightarrow\\) transformation is monotonic\nin most cases similarity \\(s\\) is limited between \\((0, 1)\\) or between 0 and 100%."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#common-distance-and-dissimilarity-measures",
+    "href": "slides/10-multivariate.html#common-distance-and-dissimilarity-measures",
+    "title": "Multivariate methods",
+    "section": "Common distance and dissimilarity measures",
+    "text": "Common distance and dissimilarity measures\n\n\nEuclidean distance: shortest connection between 2 points in space\nManhattan distance: around the corner, as in Manhattans grid-like streets\nChi-square distance: for comparison of frequencies,\nMahalanobis distance: takes covariance into account\nBray-Curtis dissimilarity: comparison of species lists in ecology\nJaccard index: for binary (presence-absence) data\nGower dissimilarity: used for mixed-type variables"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#distance-and-dissimilarity-of-metric-variables",
+    "href": "slides/10-multivariate.html#distance-and-dissimilarity-of-metric-variables",
+    "title": "Multivariate methods",
+    "section": "Distance and dissimilarity of metric variables",
+    "text": "Distance and dissimilarity of metric variables\nwith \\(x_{ij}, x_{ik}\\) abundance of species \\(i\\) at sites (\\(j, k\\)).\nEuclidean distance:\n\\[\nd_{jk} = \\sqrt{\\sum (x_{ij}-x_{ik})^2}\n\\]\nManhattan distance: \\[\nd_{jk} = \\sum |x_{ij}-x_{ik}|\n\\]\nGower distance: \\[\nd_{jk} = \\frac{1}{M} \\sum\\frac{|x_{ij}-x_{ik}|}{\\max(x_i)-\\min(x_i)}\n\\]\nBray-Curtis dissimilarity: \\[\nd_{jk} = \\frac{\\sum{|x_{ij}-x_{ik}|}}{\\sum{(x_{ij}+x_{ik})}}\n\\]"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#distance-and-dissimilarity-of-binary-variables",
+    "href": "slides/10-multivariate.html#distance-and-dissimilarity-of-binary-variables",
+    "title": "Multivariate methods",
+    "section": "Distance and dissimilarity of binary variables",
+    "text": "Distance and dissimilarity of binary variables\n\n\nEuclidean: \\(\\sqrt{A+B-2J}\\)\nManhattan: \\(A+B-2J\\)\nGower: \\(\\frac{A+B-2J}{M}\\)\nBray-Curtis: \\(\\frac{A+B-2J}{A+B}\\)\nJaccard: \\(\\frac{2b}{1+b}\\) with \\(b\\) = Bray-Curtis dissimilarity\n\nwhere:\n\n\\(A, B\\) = numbers of species on compared sites\n\\(J\\) = (joint) is the number of species that occur on both compared sites\n\\(M\\) = number of columns (excluding missing values)\n\n Applications\nAdditional distance measures and application suggestions in the vegdist help page."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#map-of-the-lakes",
+    "href": "slides/10-multivariate.html#map-of-the-lakes",
+    "title": "Multivariate methods",
+    "section": "Map of the lakes",
+    "text": "Map of the lakes"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#the-data-set",
+    "href": "slides/10-multivariate.html#the-data-set",
+    "title": "Multivariate methods",
+    "section": "The data set",
+    "text": "The data set\nExample: A simplified subset from the UBA lake data.\n\n\n\n\n\n \n  \n      \n    name \n    shortname \n    z_mean \n    z_max \n    t_ret \n    volume \n    area \n    p_tot \n    n_no3 \n    chl \n  \n \n\n  \n    Ammer \n    Ammersee \n    Ammer \n    37.60 \n    81.1 \n    2.70 \n    1.75000 \n    46.600 \n    7.3 \n    1.09 \n    2.80 \n  \n  \n    Arend \n    Arendsee \n    Arend \n    28.60 \n    48.7 \n    50.00 \n    0.14700 \n    5.140 \n    375.0 \n    0.05 \n    22.30 \n  \n  \n    Boden \n    Bodensee \n    Boden \n    85.00 \n    254.0 \n    4.20 \n    48.52150 \n    571.500 \n    6.9 \n    0.84 \n    2.10 \n  \n  \n    Chiem \n    Chiemsee \n    Chiem \n    25.60 \n    73.4 \n    1.26 \n    2.04800 \n    79.900 \n    9.2 \n    0.55 \n    3.80 \n  \n  \n    Dober \n    Dobersdorfer See \n    Dober \n    5.40 \n    18.8 \n    2.30 \n    0.01690 \n    3.120 \n    63.9 \n    0.64 \n    27.30 \n  \n  \n    Mügg \n    Großer Müggelsee \n    Mügg \n    4.85 \n    7.5 \n    0.20 \n    0.03500 \n    7.200 \n    189.9 \n    0.17 \n    32.90 \n  \n  \n    Plön \n    Großer Plöner See \n    Plön \n    12.40 \n    58.0 \n    3.10 \n    0.37200 \n    29.970 \n    62.3 \n    0.22 \n    8.80 \n  \n  \n    Kumme \n    Kummerower See \n    Kumme \n    8.10 \n    23.3 \n    1.50 \n    0.26300 \n    32.500 \n    65.3 \n    0.78 \n    16.60 \n  \n  \n    MürA \n    Müritz (Außenmüritz) \n    MürA \n    6.50 \n    28.1 \n    6.00 \n    0.68000 \n    105.300 \n    19.7 \n    0.11 \n    6.30 \n  \n  \n    MürB \n    Müritz (Binnenmüritz) \n    MürB \n    9.80 \n    30.3 \n    6.00 \n    0.03800 \n    3.910 \n    34.2 \n    0.11 \n    6.70 \n  \n  \n    Plaue \n    Plauer See \n    Plaue \n    6.80 \n    25.5 \n    3.00 \n    0.30000 \n    38.400 \n    26.0 \n    0.09 \n    6.80 \n  \n  \n    Sacro \n    Sacrower See \n    Sacro \n    18.01 \n    36.0 \n    15.00 \n    0.01930 \n    1.072 \n    79.8 \n    0.04 \n    8.60 \n  \n  \n    Schar \n    Scharmützelsee \n    Schar \n    9.00 \n    29.5 \n    16.00 \n    0.10823 \n    12.090 \n    35.3 \n    0.12 \n    10.40 \n  \n  \n    SchwA \n    Schweriner See (Außensee) \n    SchwA \n    9.40 \n    52.4 \n    10.00 \n    0.33100 \n    35.200 \n    100.0 \n    0.23 \n    11.70 \n  \n  \n    SchwI \n    Schweriner See (Innensee) \n    SchwI \n    13.50 \n    44.6 \n    5.30 \n    0.35600 \n    26.400 \n    246.5 \n    0.19 \n    5.86 \n  \n  \n    Starn \n    Starnberger See \n    Starn \n    53.20 \n    127.8 \n    21.00 \n    2.99900 \n    56.400 \n    5.9 \n    0.32 \n    1.84 \n  \n  \n    Stech \n    Stechlinsee \n    Stech \n    22.80 \n    68.0 \n    32.00 \n    0.09700 \n    4.250 \n    15.8 \n    0.04 \n    2.60 \n  \n  \n    Stein \n    Steinhuder Meer \n    Stein \n    1.35 \n    2.9 \n    2.30 \n    0.04200 \n    29.100 \n    53.3 \n    0.12 \n    29.00 \n  \n\n\n\n\n\n\n\n\nData set from UBA = Umweltbundesamt = German Federal Environmental Agency"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#data-inspection",
+    "href": "slides/10-multivariate.html#data-inspection",
+    "title": "Multivariate methods",
+    "section": "Data inspection",
+    "text": "Data inspection\n\npar(mfrow = c(1, 4), mar = c(6, 4, 3, 1), las = 2)\nboxplot(lakedata, main=\"raw data\")\nboxplot(scale(lakedata), main=\"normalized\")\nboxplot(scale(sqrt(lakedata)), main=\"sqrt + normalized\")\nboxplot(scale(log(lakedata)), main=\"log + normalized\")\n\n\n\nNote: scale() that does normalisation (z-transformation)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#principal-components-analysis-pca",
+    "href": "slides/10-multivariate.html#principal-components-analysis-pca",
+    "title": "Multivariate methods",
+    "section": "Principal Components Analysis: PCA",
+    "text": "Principal Components Analysis: PCA\n\n\n\n\npc <- prcomp(scale(lakedata))\nsummary(pc)\n\nImportance of components:\n                          PC1    PC2   PC3     PC4    PC5     PC6     PC7     PC8\nStandard deviation     2.0692 1.2735 1.047 0.76067 0.5499 0.30497 0.12230 0.10618\nProportion of Variance 0.5352 0.2027 0.137 0.07233 0.0378 0.01163 0.00187 0.00141\nCumulative Proportion  0.5352 0.7379 0.875 0.94729 0.9851 0.99672 0.99859 1.00000\n\nplot(pc)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#biplot",
+    "href": "slides/10-multivariate.html#biplot",
+    "title": "Multivariate methods",
+    "section": "Biplot",
+    "text": "Biplot\n\nbiplot(pc3)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#pca-with-the-vegan-package",
+    "href": "slides/10-multivariate.html#pca-with-the-vegan-package",
+    "title": "Multivariate methods",
+    "section": "PCA with the vegan package",
+    "text": "PCA with the vegan package\n\npc3 <- rda(lakedata2, scale = TRUE)\nsummary(pc3)\n\n\nCall:\nrda(X = lakedata2, scale = TRUE) \n\nPartitioning of correlations:\n              Inertia Proportion\nTotal               8          1\nUnconstrained       8          1\n\nEigenvalues, and their contribution to the correlations \n\nImportance of components:\n                        PC1    PC2    PC3     PC4     PC5     PC6      PC7      PC8\nEigenvalue            4.456 1.7053 0.9503 0.50170 0.25322 0.08846 0.029105 0.016020\nProportion Explained  0.557 0.2132 0.1188 0.06271 0.03165 0.01106 0.003638 0.002003\nCumulative Proportion 0.557 0.7702 0.8889 0.95165 0.98330 0.99436 0.997997 1.000000\n\nScaling 2 for species and site scores\n* Species are scaled proportional to eigenvalues\n* Sites are unscaled: weighted dispersion equal on all dimensions\n* General scaling constant of scores:  3.414953 \n\n\nSpecies scores\n\n           PC1     PC2      PC3      PC4       PC5      PC6\nz_mean -1.0598  0.4289 -0.21113  0.23873 -0.008753  0.18441\nz_max  -1.1318  0.3420 -0.12121  0.10258  0.072128  0.04149\nt_ret   0.0321  1.1531 -0.07499  0.10386 -0.291203 -0.15956\nvolume -1.0984 -0.1075 -0.36435 -0.28489 -0.088096  0.07254\narea   -1.0368 -0.2858 -0.25303 -0.44554 -0.025908 -0.17654\np_tot   0.7169  0.2934 -0.85503  0.06207  0.345841 -0.05495\nn_no3  -0.7044 -0.7316 -0.18149  0.60719 -0.072833 -0.13748\nchl     0.8938 -0.3753 -0.59964 -0.02895 -0.381711  0.09702\n\n\nSite scores (weighted sums of species scores)\n\n           PC1     PC2      PC3      PC4      PC5      PC6\nAmmer -0.83902 -0.6075  0.51716  1.81616  0.22343 -0.15112\nArend  0.61718  1.8219 -1.92971  0.44353 -0.51334 -0.46420\nBoden -2.56671 -0.3066 -1.32007 -1.14721 -0.41861  0.35821\nChiem -0.64712 -0.5918  0.55561  0.35138  0.48915  0.23752\nDober  0.57998 -1.0029 -0.35592  1.09957 -1.11137  0.09904\nMügg   0.98336 -0.8687 -1.03143 -0.33065  0.31544  1.71907\nPlön   0.05148 -0.1788  0.12415 -0.07719  0.74087  0.42564\nKumme  0.20231 -1.0792 -0.29790  0.92094 -0.25802 -1.13785\nMürA   0.01805 -0.1716  0.69453 -1.37602 -0.04136 -1.55657\nMürB   0.32308  0.1145  0.83401 -0.12085  0.39231  0.75409\nPlaue  0.21775 -0.2308  0.80820 -0.98103  0.44885  0.06816\nSacro  0.40494  0.8219  0.29088 -0.04609  0.23456  1.24642\nSchar  0.34038  0.3961  0.50515 -0.19722 -0.82282 -0.52792\nSchwA  0.19197  0.1243 -0.30591 -0.03972  0.15528 -1.05932\nSchwI  0.24471  0.2379 -0.69605  0.04506  2.41490 -0.72493\nStarn -0.95511  0.9136  0.55372  0.66291 -0.52409  0.55554\nStech -0.05030  1.4337  1.12433  0.06976 -0.49103  0.09703\nStein  0.88307 -0.8259 -0.07074 -1.09331 -1.23415  0.06121"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#biplot-1",
+    "href": "slides/10-multivariate.html#biplot-1",
+    "title": "Multivariate methods",
+    "section": "Biplot",
+    "text": "Biplot\n\nplot(pc3)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#nonmetric-multidimensional-scaling-nmds",
+    "href": "slides/10-multivariate.html#nonmetric-multidimensional-scaling-nmds",
+    "title": "Multivariate methods",
+    "section": "Nonmetric Multidimensional Scaling: NMDS",
+    "text": "Nonmetric Multidimensional Scaling: NMDS\n\nmd <- metaMDS(lakedata2, scale = TRUE, distance = \"euclid\", trace=FALSE)\nplot(md, type=\"text\")\nabline(h=0, col=\"grey\", lty=\"dotted\")\nabline(v=0, col=\"grey\", lty=\"dotted\")"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#overview",
+    "href": "slides/10-multivariate.html#overview",
+    "title": "Multivariate methods",
+    "section": "Overview",
+    "text": "Overview\n\nCluster analysis aims to group data sets in clusters\nHierarchical clustering\n\nbuild a dendrogram (a tree of grouping)\nagglomerative methods\ndivisive methods\n\nDifferent agglomeration methods\n\ndefine how distance is measured between clusters\n\nNonhierarchical clustering\n\nsubdivide in a given number of groups\nusually no dendrogram\niterative methods\ne.g. k-means, k-centroids\n\n\n\npar(mfrow=c(1,2))\nhc <- hclust(dist(scale(lakedata2)), method=\"complete\") # the default\nplot(hc)\n\nhc2 <- hclust(dist(scale(lakedata2)), method=\"ward.D2\")\nplot(hc2)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#identification-of-clusters-in-the-tree",
+    "href": "slides/10-multivariate.html#identification-of-clusters-in-the-tree",
+    "title": "Multivariate methods",
+    "section": "Identification of clusters in the tree",
+    "text": "Identification of clusters in the tree\n\nplot(hc, hang = -1)    # -1: extend vertical lines to the bottom\nrect.hclust(hc, 5)\n\ngrp <- cutree(hc, 5)\n# grp                  # can be used to show the groups"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#color-nmds-according-to-clusters",
+    "href": "slides/10-multivariate.html#color-nmds-according-to-clusters",
+    "title": "Multivariate methods",
+    "section": "Color NMDS according to clusters",
+    "text": "Color NMDS according to clusters\n\nplot(md, type = \"n\")\ntext(md$points, row.names(lakedata2), col = grp)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#non-hierarchical-clustering",
+    "href": "slides/10-multivariate.html#non-hierarchical-clustering",
+    "title": "Multivariate methods",
+    "section": "Non-hierarchical clustering",
+    "text": "Non-hierarchical clustering\nInstead of hierarchical clustering, we can also use a non-hierarchical method, e.g. k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.\nDepending on the question, it may be a disadvantage, that the number of clusters needs to be specified beforehand (e.g. from hierarchical clustering) and that we do not get a tree diagramm."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#references",
+    "href": "slides/10-multivariate.html#references",
+    "title": "Multivariate methods",
+    "section": "References",
+    "text": "References\n\n\n\n\n\n\nCasper, S. J. (1985). Lake stechlin: A temperate oligotrophic lake. Dr. W. Junk Publishers.\n\n\nKoschel, R., & Scheffler, W. (1985). The primary production. In S. J. Casper (Ed.), Lake stechlin. A temperate oligotrophic lake (pp. 287–345). Dr. W. Junk Publishers.\n\n\nUmweltbundesamt. (2021). Kenndaten ausgewählter Seen Deutschlands. https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen\n\n\nWinkelmann, C., Hellmann, C., Worischka, S., Petzoldt, T., & Benndorf, J. (2011). Fish predation affects the structure of a benthic community. Freshwater Biology, 56(6), 1030–1046. https://doi.org/10.1111/j.1365-2427.2010.02543.x"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#some-lakes-in-germany",
+    "href": "slides/10-multivariate.html#some-lakes-in-germany",
+    "title": "Multivariate methods",
+    "section": "Some lakes in Germany",
+    "text": "Some lakes in Germany"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#a-data-set-from-german-lakes",
+    "href": "slides/10-multivariate.html#a-data-set-from-german-lakes",
+    "title": "Multivariate methods",
+    "section": "A data set from German lakes",
+    "text": "A data set from German lakes"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#example-a-simplified-subset-from-the-uba-lake-data.",
+    "href": "slides/10-multivariate.html#example-a-simplified-subset-from-the-uba-lake-data.",
+    "title": "Multivariate methods",
+    "section": "Example: A simplified subset from the UBA lake data.",
+    "text": "Example: A simplified subset from the UBA lake data.\n\n\n\n\n\n \n  \n      \n    name \n    shortname \n    z_mean \n    z_max \n    t_ret \n    volume \n    area \n    p_tot \n    n_no3 \n    chl \n    wfd_type \n  \n \n\n  \n    1 \n    Ammersee \n    Ammer \n    37.60 \n    81.1 \n    2.70 \n    1.75000 \n    46.600 \n    7.3 \n    1.09 \n    2.80 \n    Typ 4 \n  \n  \n    2 \n    Arendsee \n    Arend \n    28.60 \n    48.7 \n    50.00 \n    0.14700 \n    5.140 \n    375.0 \n    0.05 \n    22.30 \n    Typ 13 \n  \n  \n    4 \n    Bodensee \n    Boden \n    85.00 \n    254.0 \n    4.20 \n    48.52150 \n    571.500 \n    6.9 \n    0.84 \n    2.10 \n    Typ 4 \n  \n  \n    8 \n    Chiemsee \n    Chiem \n    25.60 \n    73.4 \n    1.26 \n    2.04800 \n    79.900 \n    9.2 \n    0.55 \n    3.80 \n    Typ 4 \n  \n  \n    10 \n    Dobersdorfer See \n    Dober \n    5.40 \n    18.8 \n    2.30 \n    0.01690 \n    3.120 \n    63.9 \n    0.64 \n    27.30 \n    Typ 14 \n  \n  \n    14 \n    Großer Müggelsee \n    Mügg \n    4.85 \n    7.5 \n    0.20 \n    0.03500 \n    7.200 \n    189.9 \n    0.17 \n    32.90 \n    Typ 11 \n  \n  \n    15 \n    Großer Plöner See \n    Plön \n    12.40 \n    58.0 \n    3.10 \n    0.37200 \n    29.970 \n    62.3 \n    0.22 \n    8.80 \n    Typ 13 \n  \n  \n    21 \n    Kummerower See \n    Kumme \n    8.10 \n    23.3 \n    1.50 \n    0.26300 \n    32.500 \n    65.3 \n    0.78 \n    16.60 \n    Typ 11 \n  \n  \n    25 \n    Müritz (Außenmüritz) \n    MürA \n    6.50 \n    28.1 \n    6.00 \n    0.68000 \n    105.300 \n    19.7 \n    0.11 \n    6.30 \n    Typ 14 \n  \n  \n    26 \n    Müritz (Binnenmüritz) \n    MürB \n    9.80 \n    30.3 \n    6.00 \n    0.03800 \n    3.910 \n    34.2 \n    0.11 \n    6.70 \n    Typ 10 \n  \n  \n    30 \n    Plauer See \n    Plaue \n    6.80 \n    25.5 \n    3.00 \n    0.30000 \n    38.400 \n    26.0 \n    0.09 \n    6.80 \n    Typ 10 \n  \n  \n    34 \n    Sacrower See \n    Sacro \n    18.01 \n    36.0 \n    15.00 \n    0.01930 \n    1.072 \n    79.8 \n    0.04 \n    8.60 \n    Typ 10 \n  \n  \n    36 \n    Scharmützelsee \n    Schar \n    9.00 \n    29.5 \n    16.00 \n    0.10823 \n    12.090 \n    35.3 \n    0.12 \n    10.40 \n    Typ 13 \n  \n  \n    39 \n    Schweriner See (Außensee) \n    SchwA \n    9.40 \n    52.4 \n    10.00 \n    0.33100 \n    35.200 \n    100.0 \n    0.23 \n    11.70 \n    Typ 13 \n  \n  \n    40 \n    Schweriner See (Innensee) \n    SchwI \n    13.50 \n    44.6 \n    5.30 \n    0.35600 \n    26.400 \n    246.5 \n    0.19 \n    5.86 \n    Typ 13 \n  \n  \n    44 \n    Starnberger See \n    Starn \n    53.20 \n    127.8 \n    21.00 \n    2.99900 \n    56.400 \n    5.9 \n    0.32 \n    1.84 \n    Typ 3 \n  \n  \n    45 \n    Stechlinsee \n    Stech \n    22.80 \n    68.0 \n    32.00 \n    0.09700 \n    4.250 \n    15.8 \n    0.04 \n    2.60 \n    Typ 13 \n  \n  \n    46 \n    Steinhuder Meer \n    Stein \n    1.35 \n    2.9 \n    2.30 \n    0.04200 \n    29.100 \n    53.3 \n    0.12 \n    29.00 \n    Typ 11 \n  \n\n\n\n\n\n\n\n\nData set from UBA = Umweltbundesamt = German Federal Environmental Agency"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#example-a-simplified-subset-from-the-uba-lake-data",
+    "href": "slides/10-multivariate.html#example-a-simplified-subset-from-the-uba-lake-data",
+    "title": "Multivariate methods",
+    "section": "Example: A simplified subset from the UBA lake data",
+    "text": "Example: A simplified subset from the UBA lake data\n\n\n\n\n\n \n  \n      \n    name \n    shortname \n    z_mean \n    z_max \n    t_ret \n    volume \n    area \n    p_tot \n    n_no3 \n    chl \n    wfd_type \n  \n \n\n  \n    1 \n    Ammersee \n    Ammer \n    37.60 \n    81.1 \n    2.70 \n    1.75000 \n    46.600 \n    7.3 \n    1.09 \n    2.80 \n    Typ 4 \n  \n  \n    2 \n    Arendsee \n    Arend \n    28.60 \n    48.7 \n    50.00 \n    0.14700 \n    5.140 \n    375.0 \n    0.05 \n    22.30 \n    Typ 13 \n  \n  \n    4 \n    Bodensee \n    Boden \n    85.00 \n    254.0 \n    4.20 \n    48.52150 \n    571.500 \n    6.9 \n    0.84 \n    2.10 \n    Typ 4 \n  \n  \n    8 \n    Chiemsee \n    Chiem \n    25.60 \n    73.4 \n    1.26 \n    2.04800 \n    79.900 \n    9.2 \n    0.55 \n    3.80 \n    Typ 4 \n  \n  \n    10 \n    Dobersdorfer See \n    Dober \n    5.40 \n    18.8 \n    2.30 \n    0.01690 \n    3.120 \n    63.9 \n    0.64 \n    27.30 \n    Typ 14 \n  \n  \n    14 \n    Großer Müggelsee \n    Mügg \n    4.85 \n    7.5 \n    0.20 \n    0.03500 \n    7.200 \n    189.9 \n    0.17 \n    32.90 \n    Typ 11 \n  \n  \n    15 \n    Großer Plöner See \n    Plön \n    12.40 \n    58.0 \n    3.10 \n    0.37200 \n    29.970 \n    62.3 \n    0.22 \n    8.80 \n    Typ 13 \n  \n  \n    21 \n    Kummerower See \n    Kumme \n    8.10 \n    23.3 \n    1.50 \n    0.26300 \n    32.500 \n    65.3 \n    0.78 \n    16.60 \n    Typ 11 \n  \n  \n    25 \n    Müritz (Außenmüritz) \n    MürA \n    6.50 \n    28.1 \n    6.00 \n    0.68000 \n    105.300 \n    19.7 \n    0.11 \n    6.30 \n    Typ 14 \n  \n  \n    26 \n    Müritz (Binnenmüritz) \n    MürB \n    9.80 \n    30.3 \n    6.00 \n    0.03800 \n    3.910 \n    34.2 \n    0.11 \n    6.70 \n    Typ 10 \n  \n  \n    30 \n    Plauer See \n    Plaue \n    6.80 \n    25.5 \n    3.00 \n    0.30000 \n    38.400 \n    26.0 \n    0.09 \n    6.80 \n    Typ 10 \n  \n  \n    34 \n    Sacrower See \n    Sacro \n    18.01 \n    36.0 \n    15.00 \n    0.01930 \n    1.072 \n    79.8 \n    0.04 \n    8.60 \n    Typ 10 \n  \n  \n    36 \n    Scharmützelsee \n    Schar \n    9.00 \n    29.5 \n    16.00 \n    0.10823 \n    12.090 \n    35.3 \n    0.12 \n    10.40 \n    Typ 13 \n  \n  \n    39 \n    Schweriner See (Außensee) \n    SchwA \n    9.40 \n    52.4 \n    10.00 \n    0.33100 \n    35.200 \n    100.0 \n    0.23 \n    11.70 \n    Typ 13 \n  \n  \n    40 \n    Schweriner See (Innensee) \n    SchwI \n    13.50 \n    44.6 \n    5.30 \n    0.35600 \n    26.400 \n    246.5 \n    0.19 \n    5.86 \n    Typ 13 \n  \n  \n    44 \n    Starnberger See \n    Starn \n    53.20 \n    127.8 \n    21.00 \n    2.99900 \n    56.400 \n    5.9 \n    0.32 \n    1.84 \n    Typ 3 \n  \n  \n    45 \n    Stechlinsee \n    Stech \n    22.80 \n    68.0 \n    32.00 \n    0.09700 \n    4.250 \n    15.8 \n    0.04 \n    2.60 \n    Typ 13 \n  \n  \n    46 \n    Steinhuder Meer \n    Stein \n    1.35 \n    2.9 \n    2.30 \n    0.04200 \n    29.100 \n    53.3 \n    0.12 \n    29.00 \n    Typ 11 \n  \n\n\n\n\n\nmean and maximum depth (m): z_mean, z_max; retention time (years): t_ret; volume (10^9 m^3); area (km^2), total phosphorus P (µg/L): p_tot; nitrogen-N (mg/L): n_no3, chlorophyll (µg/L): chl, water framework directive lake type: wfd_type \n\n\nData set from UBA = Umweltbundesamt = German Federal Environmental Agency"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#code-to-read-the-data",
+    "href": "slides/10-multivariate.html#code-to-read-the-data",
+    "title": "Multivariate methods",
+    "section": "Code to read the data",
+    "text": "Code to read the data\n\nlakes <- read.csv(file=\"lakes-combined-data.csv\")\nvalid_columns <- c(\"name\", \"shortname\", \"z_mean\", \"z_max\",  \"t_ret\", \"volume\", \n  \"area\", \"p_tot\", \"n_no3\", \"chl\", \"wfd_type\")\nlakes <- lakes[valid_columns] |> na.omit()\nrow.names(lakes) <- lakes$shortname\n\nlake_ids <- lakes[c(\"name\", \"shortname\")]\nlakedata <- lakes[, -c(1, 2)]\n\n## remove wfd_type for now\nlakedata$wfd_type <- NULL\n\n\ndata available from …………………."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#data-transformation-and-normalization",
+    "href": "slides/10-multivariate.html#data-transformation-and-normalization",
+    "title": "Multivariate methods",
+    "section": "Data transformation and normalization",
+    "text": "Data transformation and normalization\n\npar(mfrow = c(1, 4), mar = c(6, 4, 3, 1), las = 2)\nboxplot(lakedata, main = \"raw data\")\nboxplot(scale(lakedata), main = \"normalized\")\nboxplot(scale(sqrt(lakedata)), main = \"sqrt + normalized\")\nboxplot(scale(log(lakedata)), main = \"log + normalized\")\n\n\n\nscale() performs normalisation (z-transformation)\naim: make different scales better comparable"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#pca-biplot",
+    "href": "slides/10-multivariate.html#pca-biplot",
+    "title": "Multivariate methods",
+    "section": "PCA Biplot",
+    "text": "PCA Biplot\n\nbiplot(pc)"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#pca-with-sqrt-transformed-data",
+    "href": "slides/10-multivariate.html#pca-with-sqrt-transformed-data",
+    "title": "Multivariate methods",
+    "section": "PCA with sqrt transformed data",
+    "text": "PCA with sqrt transformed data\n\n\nlakedata2 <- sqrt(lakedata)\npc2 <- prcomp(scale(lakedata2))\nsummary(pc2)\n\nImportance of components:\n                         PC1    PC2    PC3     PC4     PC5     PC6     PC7    PC8\nStandard deviation     2.111 1.3059 0.9748 0.70830 0.50321 0.29742 0.17060 0.1266\nProportion of Variance 0.557 0.2132 0.1188 0.06271 0.03165 0.01106 0.00364 0.0020\nCumulative Proportion  0.557 0.7702 0.8889 0.95165 0.98330 0.99436 0.99800 1.0000\n\n\n * The PCA with the untransformed data looked very asymmetric, we repeat it with square root transformed data. * helps to get a better “resolution” * must be taken into account when interpreting the results * log transformation is also possible"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#biplot-of-sqrt-transformed-data",
+    "href": "slides/10-multivariate.html#biplot-of-sqrt-transformed-data",
+    "title": "Multivariate methods",
+    "section": "Biplot of sqrt transformed data",
+    "text": "Biplot of sqrt transformed data\n\npar(mfrow=c(1,2))\npar(mar=c(5, 4, 4, 2) + 0.1)\nbiplot(pc2, cex=0.6)\nbiplot(pc2, cex=0.6, choices=c(3, 2))\n\n\n\nIn addition, also the 3rd PC is plotted."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#principal-component-analysis-pca",
+    "href": "slides/10-multivariate.html#principal-component-analysis-pca",
+    "title": "Multivariate methods",
+    "section": "Principal Component Analysis: PCA",
+    "text": "Principal Component Analysis: PCA\n\n\n\n\npc <- prcomp(scale(lakedata))\n\nEigenvalues (proportion of variance) indicate importance of components.\n\nsummary(pc)\n\nImportance of components:\n                          PC1    PC2   PC3     PC4    PC5     PC6     PC7     PC8\nStandard deviation     2.0692 1.2735 1.047 0.76067 0.5499 0.30497 0.12230 0.10618\nProportion of Variance 0.5352 0.2027 0.137 0.07233 0.0378 0.01163 0.00187 0.00141\nCumulative Proportion  0.5352 0.7379 0.875 0.94729 0.9851 0.99672 0.99859 1.00000"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#biplot-of-sqrt-transformed-data-here-also-3rd-pc",
+    "href": "slides/10-multivariate.html#biplot-of-sqrt-transformed-data-here-also-3rd-pc",
+    "title": "Multivariate methods",
+    "section": "Biplot of sqrt transformed data (here also 3rd PC)",
+    "text": "Biplot of sqrt transformed data (here also 3rd PC)\n\npar(mfrow=c(1, 2), mar=c(5, 4, 4, 2.4), las=1)\nbiplot(pc)\nbiplot(pc2, choices=c(3, 2))"
+  },
+  {
+    "objectID": "slides/10-multivariate.html#a-taxonomic-table",
+    "href": "slides/10-multivariate.html#a-taxonomic-table",
+    "title": "Multivariate methods",
+    "section": "A Taxonomic Table",
+    "text": "A Taxonomic Table\n\n\n\n\n\n \n  \n    Site \n    Mollusca \n    Diptera \n    Baetis \n    Plecoptera \n    Coleoptera \n    Turbellaria \n    Heptageniidae \n    Ephemeroptera \n    Gammarus \n    Trichoptera \n    Acari \n    Nematoda \n    Oligochaeta \n  \n \n\n  \n    GP9 \n    3 \n    165 \n    91 \n    14 \n    6 \n    3 \n    9 \n    136 \n    256 \n    45 \n    6 \n    0 \n    11 \n  \n  \n    GR9 \n    31 \n    438 \n    728 \n    31 \n    728 \n    11 \n    31 \n    0 \n    65 \n    367 \n    3 \n    0 \n    503 \n  \n  \n    TP9 \n    0 \n    26 \n    3 \n    20 \n    9 \n    0 \n    3 \n    20 \n    119 \n    40 \n    0 \n    0 \n    23 \n  \n  \n    TR9 \n    0 \n    11 \n    6 \n    37 \n    11 \n    0 \n    0 \n    3 \n    68 \n    26 \n    0 \n    0 \n    23 \n  \n  \n    GP8 \n    23 \n    913 \n    31 \n    14 \n    3 \n    9 \n    6 \n    26 \n    901 \n    37 \n    3 \n    20 \n    0 \n  \n  \n    GR8 \n    225 \n    1066 \n    310 \n    199 \n    461 \n    48 \n    91 \n    23 \n    688 \n    600 \n    26 \n    0 \n    284 \n  \n  \n    TP8 \n    17 \n    2204 \n    54 \n    117 \n    11 \n    0 \n    11 \n    20 \n    2525 \n    77 \n    3 \n    3 \n    68 \n  \n  \n    TR8 \n    3 \n    520 \n    74 \n    762 \n    125 \n    20 \n    65 \n    0 \n    668 \n    173 \n    3 \n    0 \n    267 \n  \n  \n    GP7 \n    26 \n    247 \n    68 \n    6 \n    3 \n    3 \n    3 \n    20 \n    813 \n    9 \n    6 \n    0 \n    0 \n  \n  \n    GR7 \n    117 \n    509 \n    290 \n    63 \n    191 \n    6 \n    26 \n    11 \n    682 \n    117 \n    60 \n    9 \n    131 \n  \n  \n    TP7 \n    26 \n    3477 \n    17 \n    28 \n    0 \n    0 \n    3 \n    37 \n    2693 \n    17 \n    0 \n    0 \n    0 \n  \n  \n    TR7 \n    48 \n    429 \n    57 \n    412 \n    97 \n    9 \n    63 \n    9 \n    808 \n    102 \n    26 \n    6 \n    57 \n  \n  \n    GP10 \n    3 \n    159 \n    14 \n    31 \n    3 \n    0 \n    48 \n    91 \n    100 \n    23 \n    0 \n    0 \n    17 \n  \n  \n    GR10 \n    0 \n    68 \n    191 \n    26 \n    51 \n    3 \n    253 \n    0 \n    80 \n    233 \n    3 \n    0 \n    11 \n  \n  \n    TP10 \n    0 \n    51 \n    0 \n    6 \n    9 \n    0 \n    0 \n    6 \n    71 \n    0 \n    0 \n    0 \n    31 \n  \n  \n    TR10 \n    0 \n    28 \n    6 \n    40 \n    14 \n    0 \n    0 \n    0 \n    40 \n    54 \n    0 \n    0 \n    0 \n  \n\n\n\n\n\n\n\nAggregated part of taxa list from two small streams."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#distance-and-similarity-measures",
+    "href": "slides/10-multivariate.html#distance-and-similarity-measures",
+    "title": "Multivariate methods",
+    "section": "Distance and similarity measures",
+    "text": "Distance and similarity measures\n\n\n\nPCA works with Euclidean distance\nrule of Pythagoras\n\n\\[\na^2 + b^2 = c^2 \\quad \\Rightarrow\\quad c = \\sqrt{a^2 + b^2}\n\\]\n\nbut: Euclidean distance is not always the best option."
+  },
+  {
+    "objectID": "slides/10-multivariate.html#euclidean-distance",
+    "href": "slides/10-multivariate.html#euclidean-distance",
+    "title": "Multivariate methods",
+    "section": "Euclidean distance",
+    "text": "Euclidean distance\n\n\n\nPCA works with Euclidean distance\nrule of Pythagoras\n\n\\[\na^2 + b^2 = c^2 \\quad \\Rightarrow\\quad c = \\sqrt{a^2 + b^2} = \\sqrt{\\Delta x^2 + \\Delta y^2}\n\\]\n\nbut: Euclidean distance is not always the best option."
   }
 ]
