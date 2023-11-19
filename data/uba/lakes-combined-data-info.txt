@@ -1,0 +1,15 @@
+File: lakes-combined.csv
+
+Data derived from:
+
+kenndaten-seen-npchl.csv
+3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx
+
+Source: Umweltbundesamt
+
+lakename-abbreviations.csv
+Source: 
+- names from 3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx
+- abbreviations: own work
+
+

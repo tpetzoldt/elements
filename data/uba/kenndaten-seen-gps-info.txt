@@ -1,0 +1,9 @@
+GPS coordinates of selected lakes
+
+lake names from kenndaten-seen-npchl.csv
+
+Source: UBA
+
+Coordinates (lat lon) WGS 84
+
+Wikipedia, except lakes with two basins (Müritz and Schweriner See) where coordinates were taken from Google Maps
