@@ -29,13 +29,9 @@ to the [terms and conditions](https://www.umweltbundesamt.de/datenschutz-haftung
 published at the [UBA web site](https://www.umweltbundesamt.de/), that refer to
 § 12a EGovG with respect of the data, and to the [Creative Commons CC-BY ND International License 4.0 ](https://creativecommons.org/licenses/by-nd/4.0/deed.de) with respect to other objects directly created by UBA.
 
-2. The "bm-lakes" data set is a teaching data set, derived from historical measurements 
-of lakes in Brandenburg and Mecklenburg. The data werde taken from the literature 
-[@casper_lake_1985, @koschel_primary_1985] and adapted to teaching purposes.
+2. The "gauernitz" data set contains simplified teaching versions from research data, of the study from @winkelmann_fish_2011
 
-3. The "gauernitz" data set contains simplified teaching versions from research data, of the study from @winkelmann_fish_2011
-
-4. The document itself, the codes and the ebedded images are own work and can be shared according to [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en).
+3. The document itself, the codes and the ebedded images are own work and can be shared according to [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en).
 
 
 ## An introductory example
@@ -313,7 +309,7 @@ lakedata <- lakes[, -c(1, 2)]
 ```
 
 
-```{r, echo= FALSE, fig.align='center'}
+```{r scatterplot-3-variables, echo= FALSE, fig.align='center'}
 par(mfrow=c(2,2), mar=c(4,4,1,1)+.1)
 plot(log(z_max) ~ log(z_mean), data=lakedata, pch=16)
 plot(log(z_max) ~ log(volume), data=lakedata, pch=16)
@@ -378,6 +374,8 @@ Note: log-transformed variables were used in this example.
 
 :::{.column width="32%"}
 
+<br>
+
 * PC1, PC2, PC3 are the principal components
 * OLS is ordinary least squares regression (linear model lm)
 
@@ -385,7 +383,7 @@ Note: log-transformed variables were used in this example.
 
 :::{.column width="66%"}
 
-```{r, echo=FALSE, fig.height=6, fig.width=6, fig.align='center'}
+```{r orthogonal-regression, echo=FALSE, fig.height=6, fig.width=6, fig.align='center'}
 
 col <- c("red", "cyan", "violet")
 
@@ -427,21 +425,23 @@ abline(v=0, col=col[2], lwd=2)
 
 ## Now analyse all numeric variables
 
-<br>
-
 <small>
 ```{r, echo=FALSE}
 lakes <- lakes_saved
+lakes$wfd_type <- NULL
 
 lake_ids <- lakes[c("name", "shortname")]
 lakedata <- lakes[, -c(1, 2)]
-lakedata$wfd_type <- NULL
+
 
 lakedata2 <- sqrt(lakedata)
 
 kable(lakes)
 ```
 </small>
+
+* columns: called **variables** or **species**
+* rows: **observations** or **objects**
 
 ## PCA with the UBA lake data
 
@@ -503,6 +503,7 @@ biplot(pc, choices=c(3, 2))
 ```
 
 
+
 ## PCA with the vegan package
 
 ```{r}
@@ -514,338 +515,148 @@ summary(pc)
 summary(pc3)$cont$importance # trick to suppress long output
 --->
 
-## Biplot
+The two first PCs explain PC 1 = `r round(summary(pc)$cont$importance[3,2],2) * 100`% of variance of the square root transformed observations.
+
+## Variance importance and biplot
+
+
+:::{.column width="49%"}
+
+**Importance of components**
+
+* PC 1 = `r round(summary(pc)$cont$importance[2,1], 2)*100`%
+* PC 2 = `r round(summary(pc)$cont$importance[2,2], 2)*100`%
+* PC 3 = `r round(summary(pc)$cont$importance[2,3], 2)*100`%
+
+$\Rightarrow$ The two first PCs explain PC 1 = `r round(summary(pc)$cont$importance[3,2],2) * 100`% of variance of the square root transformed observations.
+
+:::
+
+
+:::{.column width="49%"}
 
 ```{r uba-rda-biplot, fig.width=5, fig.height=5, fig.align='center'}
 biplot(pc)
 ```
+:::
+
+## Interpretation
+
+
+:::{.column width=69%}
+**Variables**
+
+* only long arrows can be interpreted
+* same direction: positive correlation
+* opposite direction: negative correlation
+* rectangular: no correlation
+
+**Observations**
+
+* identification of groups and extreme cases
+
+**Combined View**
+
+* relative size of variable for observations
+* arrow direction: high values
+* opposite direction: low values
+* around middle: average
+
+$\Rightarrow$ [Important: always read perpendicular to PCs and arrows!]{.red}
+:::
+
+:::{.column width=29%}
+
+```{r pca-interpretation, fig.width=2.5, echo=FALSE, fig.height=6}
+par(mfrow=c(3, 1), mar=c(4, 4.5, 0.5, 1), las=1)
+biplot(pc, display="species")
+biplot(pc, display="sites")
+biplot(pc)
+```
+:::
 
 
 ## Biplot in 3D
 
-```{r ordirgl3, echo=FALSE, eval=TRUE, fig.height=6, fig.width=6, fig.align='center'}
+:::{.column width="29%"}
+
+<br>
+
+**Variance**
+
+* PC 1 = `r round(summary(pc)$cont$importance[2,1], 2)*100`%
+* PC 2 = `r round(summary(pc)$cont$importance[2,2], 2)*100`%
+* PC 3 = `r round(summary(pc)$cont$importance[2,3], 2)*100`%
+* sum of PC 4 ... 8 = `r 100 - round(summary(pc)$cont$importance[3,3], 2)*100`%
+
+<br>
+
+$\rightarrow$ Use the mouse to rotate and zoom.
+:::
+
+
+:::{.column width="69%"}
+```{r ordirgl3, echo=FALSE, eval=TRUE, fig.height=5, fig.width=5, fig.align='center'}
+ordirgl(pc, col = "yellow")
+orgltext(pc, display = "species", col="red")
+orgltext(pc, display = "sites", col="blue", pos=4)
+view3d(theta = 5, phi = 15, fov=30, zoom=1)
+```
+:::
+
+
+## The code
+
+```{r, eval=FALSE}
+lakes <- read.csv("lakes-combined-data.csv")
+valid_columns <- c("name", "shortname", "z_mean", "z_max",  "t_ret", "volume", 
+  "area", "p_tot", "n_no3", "chl", "wfd_type")
+
+row.names(lakes) <- lakes$shortname
+lakes <- na.omit(lakes[valid_columns])
+
+# only the numerical variables
+lakedata <- lakes[c("z_mean", "z_max",  "t_ret", "volume", 
+                     "area", "p_tot", "n_no3", "chl")] 
+
+
+library("vegan")
+library("vegan3d")
+lakedata2 <- sqrt(lakedata)
+pc <- rda(lakedata2, scale = TRUE)
+summary(pc)
+biplot(pc)
+biplot(pc, choices=c(3, 2))
+
 ordirgl(pc, col = "yellow")
 orgltext(pc, display = "species", col="red")
 orgltext(pc, display = "sites", col="blue", pos=4)
 view3d(theta = 5, phi = 15, fov=30, zoom=1)
 ```
 
+* Data can be downloaded from .....
+* Full source code is available from [https://github.com/tpetzoldt/elements/](https://github.com/tpetzoldt/elements/)
 
-# Distance and similarity
-
-## Euclidean distance
-
-<br>
-
-```{r, echo=FALSE, fig.align='center'}
-plot(NULL, xlim=c(0,10), ylim=c(0,10), las=1, type="n", xlab="x", ylab="y")
-
-x <- c(2, 8)
-y <- c(1, 7)
-points(x, y, pch=16, cex=2, type="b", lwd=2)
-text(x, y + 0.2, c("A", "B"), cex=2, pos=3)
-lines(c(x, x[2]), c(y[1], y[1], y[2]))
-text(mean(x), y[1], "a", pos=1, cex=2)
-text(x[2], mean(y), "b", pos=4, cex=2)
-text(mean(x), mean(y), "c", pos=3, cex=2)
-```
-
-
-* PCA works with Euclidean distance
-* rule of Pythagoras
-
-$$
-a^2 + b^2 = c^2 \quad \Rightarrow\quad c = \sqrt{a^2 + b^2} = \sqrt{\Delta x^2 + \Delta y^2}
-$$
-
-* but: Euclidean distance is not always the best option.
-
-## Distance and dissimilarity
+## Summary
 
 <br>
 
-**Axiomatic definition**
-
-Measure of distance $d$ between multidimensional points $x_i$ and $x_j$:
-
-
-1. $d(x_i, x_j) \ge 0$, distances are similar or equal to zero
-2. $d(x_i, x_j)=d(x_j,x_i)$, the distance  from A to B is the
-    same as from B to A,
-3. $d(x_i, x_i)=0$, the distance from a given point to itself is zero
-
-A distance measure is termed metric, if:
-
-1. $d=0$ applies in the case of equality  only, and
-2. the triangle inequality aapplies.<br>
-  [The indirect route is longer than the direct route]{.gray}
-
-If one or both of the additional conditions are violated, we speak about **nonmetric**
-measures and use the term **dissimilarity** instead of distance.
-
-## Similarity
+* Multivariate methods can be used to analyze data sets, where multiple variables depend on each other.
+* PCA is a dimension reduction technique that tries to map high-dimensional data to a lower number of dimensions.
+* It can be used as an **explorative** technique to find relationships between data.
+* Compared to creating multiple plots between all variables, it helps to see the overall picture, saves time and avoids statistical fishing.
+* The next chapter will introduce more methods.
 
 <br>
 
-A measure of similarity $s$ can be defined in a similar way:
+**Further reading**
 
+* @oksanen_multivariate_2010
+* @borcard_numerical_2018
 
-1. $s(x_i,x_j) \le s_{max}$
-2. $s(x_i,x_j)=s(x_j,x_i)$
-3. $s(x_i,x_i)=s_{max}$
 
-it is metric, if:
 
-* $s_{max}$ applies only in the case of equality and
-* the triangle inequality applies
-
-
-## Conversion between dissimilarity and similarity
-
-
-<br>
-
-
-<br>
-
-:::{.bigfont}
-
-| similarity     |  dissimilarity        |
-|----------------|-----------------------|
-| $s=1-d/d_{max}$| $d=1-s/s_{max}$       |
-| $s=\exp(-d)$   | $d= - \ln(s-s_{min})$ |
-
-:::
-
-<br>
-
-* distance goes from $0$ to $\infty$
-* different transformations, as long as the $\Rightarrow$ transformation is monotonic
-* in most cases similarity $s$ is limited between $(0, 1)$ or between 0 and 100%.
-
-
-
-## Common distance and dissimilarity measures
-
-<br>
-
-* **Euclidean** distance: shortest connection between 2 points in space
-* **Manhattan** distance: around the corner, as in Manhattans grid-like streets
-* **Chi-square** distance: for comparison of frequencies,
-* **Mahalanobis** distance: takes covariance into account
-* **Bray-Curtis** dissimilarity: comparison of species lists in ecology
-* **Jaccard** index: for binary (presence-absence) data
-* **Gower** dissimilarity:  used for mixed-type variables
-
-
-## Distance and dissimilarity of **metric** variables
-
-with $x_{ij}, x_{ik}$ abundance of species  $i$ at sites ($j, k$).
-
-Euclidean distance:
-
-$$
-d_{jk} = \sqrt{\sum (x_{ij}-x_{ik})^2}
-$$
-
-Manhattan distance:
-$$
-d_{jk} = \sum |x_{ij}-x_{ik}|
-$$
-
-
-Gower distance:
-$$
-d_{jk} = \frac{1}{M} \sum\frac{|x_{ij}-x_{ik}|}{\max(x_i)-\min(x_i)}
-$$
-
-
-Bray-Curtis dissimilarity:
-$$
-d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
-$$
-
-## Distance and dissimilarity of binary variables
-
-<br>
-
-* Euclidean: $\sqrt{A+B-2J}$
-* Manhattan: $A+B-2J$
-* Gower: $\frac{A+B-2J}{M}$
-* Bray-Curtis: $\frac{A+B-2J}{A+B}$
-* Jaccard: $\frac{2b}{1+b}$ with $b$ = Bray-Curtis dissimilarity
-
-
-where:
-
-* $A, B$ = numbers of species on compared sites
-* $J$ =  (joint) is the number of species that occur on both compared sites
-* $M$ =  number of columns (excluding missing values)
-
-<br>
-**Applications**
-
-Additional distance measures and application suggestions in
-the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/vegdist) help page.
-
-
-
-
-## Nonmetric Multidimensional Scaling: NMDS
-
-```{r uba-nmds, fig.align='center', fig.width=5, fig.height=5}
-md <- metaMDS(lakedata2, scale = TRUE, distance = "euclid", trace=FALSE)
-plot(md, type="text")
-abline(h=0, col="grey", lty="dotted")
-abline(v=0, col="grey", lty="dotted")
-```
-
-## A Taxonomic Table
-
-<small>
-```{r echo=FALSE}
-benthos <- read.csv("../data/gauernitz.csv") 
-kable(benthos[-(2:4)])
-```
-</small>
-
-* Aggregated part of taxa list from two small streams.
-
-## How to aggregate the data?
-
-<hr></hr>
-
-:::{.column width="44%" .add-space}
-**Simpson index**
-
-$$
-D = \sum_{i=1}^S p_i^2
-$$
-
-* $p_i$: relative abundance of species
-* in most cases, Simpson index is given as $\tilde{D} = 1 - D$<br>
-  [(large values -- high diversity)]{.gray}
-* also possible: inverse Simpson index: $D' = 1 / D$<br> 
-
-:::
-
-:::{.column width="48%"}
-
-**Shannon index**
-
-$$
-H = -\sum_{i=1}^S p_i \log_b p_i
-$$
-  
-  * in most cases log base $b=e$ (natural log), some prefer $b=2$ (information theory)
-  
-  
-  **Eveness **
-  
-  $$
-  E = \frac{H}{\log(S)}
-  $$
-  
-* $S$: number of species
-
-:::
-
-<hr></hr>
-
-* more indices: species richness, species deficit, Fisher's $\alpha$ ...
-
-## Diversity indices
-
-:::{.column width="20%"}
-:::
-
-:::{.column width="60%"}
-<small>
-```{r echo=FALSE}
-library("vegan")
-species <- benthos[c("Mollusca", "Diptera", "Baetis", "Plecoptera", 
-                     "Coleoptera", "Turbellaria", "Heptageniidae",
-                     "Ephemeroptera", "Gammarus", "Trichoptera", 
-                     "Acari", "Nematoda", "Oligochaeta")]
-div <- data.frame(
-  shannon = diversity(species, index="shannon"),
-  simpson = diversity(species, index="simpson"),
-  invsimpson = diversity(species, index="invsimpson"),
-  eveness = diversity(species, index="shannon") / log(ncol(species)),
-  fisher_alpha = fisher.alpha(species)
-)
-div <- lapply(div, round, 2)
-kable(cbind(benthos[c("Site", "Habitat", "Stream", "Flood")], div))
-```
-</small>
-:::
-
-* aggregated data but which of the indices tells what?
-* $\rightarrow$ information loss compared to the original list
-
-
-
-# Cluster Analysis
-
-
-## Overview
-
-* Cluster analysis aims to group data sets in clusters
-
-* Hierarchical clustering
-  - build a dendrogram (a tree of grouping)
-  - agglomerative methods
-  - divisive methods
-
-* Different agglomeration methods
-  - define how distance is measured between clusters
-
-* Nonhierarchical clustering
-   - subdivide in a given number of groups
-   - usually no dendrogram
-   - iterative methods
-   - e.g. k-means, k-centroids
-   
-   
-
-
-```{r  fig.height=6, wig.width=12, fig.align='center'}
-par(mfrow=c(1,2))
-hc <- hclust(dist(scale(lakedata2)), method="complete") # the default
-plot(hc)
-
-hc2 <- hclust(dist(scale(lakedata2)), method="ward.D2")
-plot(hc2)
-```
-
-## Identification of clusters in the tree
-
-```{r}
-plot(hc, hang = -1)    # -1: extend vertical lines to the bottom
-rect.hclust(hc, 5)
-grp <- cutree(hc, 5)
-# grp                  # can be used to show the groups
-```
-
-## Color NMDS according to clusters
-
-```{r}
-plot(md, type = "n")
-text(md$points, row.names(lakedata2), col = grp)
-```
-
-
-## Non-hierarchical clustering
-
-Instead of hierarchical clustering, we can also use a non-hierarchical method,
-e.g. k-means clustering. This is an iterative method, and avoids the problem that 
-cluster assignment depends on the order of clustering and the agglomeration method.
-
-Depending on the question, it may be a disadvantage, that the number of clusters 
-needs to be specified beforehand (e.g. from hierarchical clustering) and that we
-do not get a tree diagramm.
-
-
- 
 ## References
+
+<br>
 
