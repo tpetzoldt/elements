@@ -7,6 +7,10 @@ format:
     css: ../thpe.css
     toc: true
     number-sections: true
+  pdf:
+    toc: false
+    number-sections: true
+    colorlinks: true
 bibliography: ../bib.bib
 csl: ../apa.csl
 
