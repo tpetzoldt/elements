@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2023-11-19">
+  <meta name="dcterms.date" content="2023-11-20">
   <title>Elements of Data Analysis and Statistics - 07-One and two-way ANOVA</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -430,7 +430,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2023-11-19</p>
+  <p class="date">2023-11-20</p>
 </section>
 <section id="anova-analysis-of-variances" class="slide level2">
 <h2>ANOVA – Analysis of Variances</h2>
@@ -895,6 +895,79 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>In the table above, we have only one single factor.</li>
 </ul>
 <p><span class="math inline">\(\Rightarrow\)</span> We see that the treatment had a significant effect.</p>
+</section>
+<section id="model-formula-examples" class="slide level2">
+<h2>Model formula examples</h2>
+<table>
+<colgroup>
+<col style="width: 43%">
+<col style="width: 56%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Model Type</th>
+<th>Formula</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Null model</td>
+<td><code>y ~ 1</code></td>
+</tr>
+<tr class="even">
+<td>Simple linear regression</td>
+<td><code>y ~ x</code></td>
+</tr>
+<tr class="odd">
+<td>Linear model without intercept</td>
+<td><code>y ~ x - 1</code></td>
+</tr>
+<tr class="even">
+<td>Multiple regression, no interaction</td>
+<td><code>y ~ x1 + x2 + x3</code></td>
+</tr>
+<tr class="odd">
+<td>Multiple regression with interaction</td>
+<td><code>y ~ x1 * x2 * x3</code></td>
+</tr>
+<tr class="even">
+<td>Multiple regression no 3x interaction</td>
+<td><code>y ~ x1 * x2 * x3 - x1 : x2 : x3</code></td>
+</tr>
+<tr class="odd">
+<td>Transformed with ‘as is’ function</td>
+<td><code>y ~ x + I(x^2)</code>, <code>y ~ x + sin(x^2)</code></td>
+</tr>
+<tr class="even">
+<td>Orthogonal polynomial of order 3</td>
+<td><code>y ~ poly(x, 3)</code></td>
+</tr>
+<tr class="odd">
+<td>ANOVA with interaction</td>
+<td><code>y ~ f1 * f2</code></td>
+</tr>
+<tr class="even">
+<td>ANCOVA with Interaction</td>
+<td><code>y ~ x * f</code></td>
+</tr>
+<tr class="odd">
+<td>Conditional or nested ANOVA</td>
+<td><code>y ~ x + (x | b)</code>, <code>y ~ x + (1 | a / b)</code></td>
+</tr>
+<tr class="even">
+<td>GAM with smoother <code>s</code></td>
+<td><code>y ~ s(x) + f</code></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><code>y</code> = response variable (dependent, target)</li>
+<li><code>x</code> = metric explanation variable (predictor, independent); <code>f</code> = factor variable (nominal)</li>
+</ul>
 </section>
 <section id="posthoc-tests" class="slide level2">
 <h2>Posthoc tests</h2>
