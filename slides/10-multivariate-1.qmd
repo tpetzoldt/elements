@@ -226,7 +226,7 @@ Data set from UBA = Umweltbundesamt = German Federal Environmental Agency
 ## Code to read the data
 
 ```{r, eval=FALSE}
-lakes <- read.csv(file="lakes-combined-data.csv")
+lakes <- read.csv("https://raw.githubusercontent.com/tpetzoldt/elements/main/data/uba/lakes-combined-data.csv")
 valid_columns <- c("name", "shortname", "z_mean", "z_max",  "t_ret", "volume", 
   "area", "p_tot", "n_no3", "chl", "wfd_type")
 lakes <- lakes[valid_columns] |> na.omit()
@@ -241,7 +241,10 @@ lakedata$wfd_type <- NULL
 
 
 
-* data available from ......................
+* Data files downloadable from [https://github.com/tpetzoldt/elements/tree/main/data/uba](https://github.com/tpetzoldt/elements/tree/main/data/uba)
+* Source of original data: Uwweltbundesamt [https://www.uba.de](https://www.uba.de)
+* Terms of use, see: [Copyright](https://github.com/tpetzoldt/elements/blob/main/data/uba/3_tab_kenndaten-ausgew-seen-d_2021-04-08-copyright.txt) and [description of derived data](https://github.com/tpetzoldt/elements/blob/main/data/uba/lakes-combined-data-info.txt)
+
 
 
 ## Data transformation and normalization
@@ -622,7 +625,7 @@ More about this in the next chapter.
 ## The code
 
 ```{r, eval=FALSE}
-lakes <- read.csv("lakes-combined-data.csv")
+lakes <- read.csv("https://raw.githubusercontent.com/tpetzoldt/elements/main/data/uba/lakes-combined-data.csv")
 valid_columns <- c("name", "shortname", "z_mean", "z_max",  "t_ret", "volume", 
   "area", "p_tot", "n_no3", "chl", "wfd_type")
 
@@ -656,8 +659,7 @@ abline(h=0, col="grey", lty="dotted")
 abline(v=0, col="grey", lty="dotted")
 ```
 
-* Data can be downloaded from .....
-* Full source code is available from [https://github.com/tpetzoldt/elements/](https://github.com/tpetzoldt/elements/)
+* Data and full source code is available from [https://github.com/tpetzoldt/elements/](https://github.com/tpetzoldt/elements/)
 
 ## Summary
 

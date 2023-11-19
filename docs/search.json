@@ -222,5 +222,215 @@
     "title": "An Introductory R Session",
     "section": "7.4 Exercises",
     "text": "7.4 Exercises\nR contains lots of data sets for exploring its graphical and statistical functions and that can be activated by using the data function, e.g. data(iris) or data(cars). A description of the data set can be found as usual in the help files, e.g. ?iris, ?cars.\nUse one of these data sets and try\n\nways to access columns, to select rows and to create subsets\nways for summary statistics and visualization with R’s base plot functions and optionally with ggplot."
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#data-sets-and-terms-of-use",
+    "href": "slides/10-multivariate-1.html#data-sets-and-terms-of-use",
+    "title": "10-Multivariate methods I",
+    "section": "Data sets and terms of use",
+    "text": "Data sets and terms of use\n\n\nThe “UBA-lakes” data set originates from the public data repository of the German Umweltbundesamt (Umweltbundesamt, 2021). The data set provided can be used freely according to the terms and conditions published at the UBA web site, that refer to § 12a EGovG with respect of the data, and to the Creative Commons CC-BY ND International License 4.0 with respect to other objects directly created by UBA.\nThe “gauernitz” data set contains simplified teaching versions from research data, of the study from Winkelmann et al. (2011)\nThe document itself, the codes and the ebedded images are own work and can be shared according to CC BY 4.0."
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#an-introductory-example",
+    "href": "slides/10-multivariate-1.html#an-introductory-example",
+    "title": "10-Multivariate methods I",
+    "section": "An introductory example",
+    "text": "An introductory example"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#correlation-between-all-variables",
+    "href": "slides/10-multivariate-1.html#correlation-between-all-variables",
+    "title": "10-Multivariate methods I",
+    "section": "Correlation between all variables?",
+    "text": "Correlation between all variables?\n\nlibrary(\"readxl\") # read Excel files directly\nlakes <- as.data.frame(\n  read_excel(\"../data/uba/3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx\", sheet=\"Tabelle1\", skip=3)\n)\nnames(lakes) <- c(\"name\", \"state\", \"drainage\", \"population\", \"altitude\", \n                  \"z_mean\", \"z_max\", \"t_ret\", \"volume\", \"area\", \"shore_length\", \n                  \"shore_devel\", \"drain_ratio\", \"wfd_type\")\nstr(lakes)\n\n'data.frame':   56 obs. of  14 variables:\n $ name        : chr  \"Ammersee\" \"Arendsee\" \"Bleilochtalsperre\" \"Bodensee\" ...\n $ state       : chr  \"BY\" \"ST\" \"TH\" \"BW\" ...\n $ drainage    : num  993 29.8 1239.9 11477 28.2 ...\n $ population  : num  114900 3200 180000 1400000 28 ...\n $ altitude    : num  532.9 22.8 404 395.4 13.1 ...\n $ z_mean      : num  37.6 28.6 23.3 85 2.4 ...\n $ z_max       : num  81.1 48.7 55 254 4.8 58.3 32.5 73.4 1.7 18.8 ...\n $ t_ret       : num  2.7 50 0.526 4.2 1.9 16.3 NA 1.26 0.1 2.3 ...\n $ volume      : num  1.75 0.147 0.215 48.522 0.009 ...\n $ area        : num  46.6 5.14 9.2 571.5 3.9 ...\n $ shore_length: num  43 9 NA 273 10.4 13.7 17.5 64 7.5 10.1 ...\n $ shore_devel : num  1.78 1.12 NA 2.26 1.48 2.09 1.64 2.02 2.22 1.6 ...\n $ drain_ratio : num  20.3 5.8 NA 21.9 7.2 ...\n $ wfd_type    : chr  \"Typ 4\" \"Typ 13\" \"Typ 5\" \"Typ 4\" ...\n\n\n\nnames(lakes) replaces the original German column names by abbreviated English abbreviations"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#create-pairwise-scatter-plots-for-all-variables",
+    "href": "slides/10-multivariate-1.html#create-pairwise-scatter-plots-for-all-variables",
+    "title": "10-Multivariate methods I",
+    "section": "Create pairwise scatter plots for all variables?",
+    "text": "Create pairwise scatter plots for all variables?\n\nplot(lakes)"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#create-pairwise-scatter-plots-for-all-variables-1",
+    "href": "slides/10-multivariate-1.html#create-pairwise-scatter-plots-for-all-variables-1",
+    "title": "10-Multivariate methods I",
+    "section": "Create pairwise scatter plots for all variables?",
+    "text": "Create pairwise scatter plots for all variables?\n\n\nnot a good idea, 14 variables would produce 182 (or 91) plots\ncan lead to “statistical fishing”\nwe need methods to extract the main information with a small number of plots"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#the-multivariate-approach",
+    "href": "slides/10-multivariate-1.html#the-multivariate-approach",
+    "title": "10-Multivariate methods I",
+    "section": "The multivariate approach",
+    "text": "The multivariate approach\n\nWork with the complete original variables directly\n\n\\(\\rightarrow\\) Multivariate statistics\n\ndependent variables + explanation variables optional\nanalyze distance and location in multidimensional space\nfind way to vizualize relationship in lower dimensions\n\n\nFor comparison\n\nunivariate: 1 variable\nbivariate: 1 dependent, 1 independent variable\nmultiple: 1 dependent, >1 independent variables"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#two-approches-of-multivariate-statistics",
+    "href": "slides/10-multivariate-1.html#two-approches-of-multivariate-statistics",
+    "title": "10-Multivariate methods I",
+    "section": "Two approches of multivariate statistics",
+    "text": "Two approches of multivariate statistics\n\n\n\n\nOrdination\n\n\n\n\n\n\ndimension reduction\nrelate observations and variables\n\n\n\nCluster analysis\n\n\n\n\n\n\ndistance and similarity\nidentification of groups"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#basic-concepts",
+    "href": "slides/10-multivariate-1.html#basic-concepts",
+    "title": "10-Multivariate methods I",
+    "section": "Basic concepts",
+    "text": "Basic concepts\n\nSimilarity and correlation\n\ndistance and similarity: \\(\\rightarrow\\) How different or similar are the observations?\ncorrelation and covariance: \\(\\rightarrow\\) Are variables interdependent?\ndimension reduction: \\(\\rightarrow\\) Try to show essential parts of information on a lower number of dimensions.\ncluster analysis: \\(\\rightarrow\\) Show which observations are closely together.\nordination: \\(\\rightarrow\\) Plot data at lower dimensions, similar observations closely together."
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#a-data-set-from-german-lakes",
+    "href": "slides/10-multivariate-1.html#a-data-set-from-german-lakes",
+    "title": "10-Multivariate methods I",
+    "section": "A data set from German lakes",
+    "text": "A data set from German lakes"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#example-a-simplified-subset-from-the-uba-lake-data",
+    "href": "slides/10-multivariate-1.html#example-a-simplified-subset-from-the-uba-lake-data",
+    "title": "10-Multivariate methods I",
+    "section": "Example: A simplified subset from the UBA lake data",
+    "text": "Example: A simplified subset from the UBA lake data\n\n\n\n\n\n\n\n\n \n  \n      \n    name \n    shortname \n    z_mean \n    z_max \n    t_ret \n    volume \n    area \n    p_tot \n    n_no3 \n    chl \n    wfd_type \n  \n \n\n  \n    Ammer \n    Ammersee \n    Ammer \n    37.60 \n    81.1 \n    2.70 \n    1.75000 \n    46.600 \n    7.3 \n    1.09 \n    2.80 \n    Typ 4 \n  \n  \n    Arend \n    Arendsee \n    Arend \n    28.60 \n    48.7 \n    50.00 \n    0.14700 \n    5.140 \n    375.0 \n    0.05 \n    22.30 \n    Typ 13 \n  \n  \n    Boden \n    Bodensee \n    Boden \n    85.00 \n    254.0 \n    4.20 \n    48.52150 \n    571.500 \n    6.9 \n    0.84 \n    2.10 \n    Typ 4 \n  \n  \n    Chiem \n    Chiemsee \n    Chiem \n    25.60 \n    73.4 \n    1.26 \n    2.04800 \n    79.900 \n    9.2 \n    0.55 \n    3.80 \n    Typ 4 \n  \n  \n    Dober \n    Dobersdorfer See \n    Dober \n    5.40 \n    18.8 \n    2.30 \n    0.01690 \n    3.120 \n    63.9 \n    0.64 \n    27.30 \n    Typ 14 \n  \n  \n    Muegg \n    Großer Müggelsee \n    Muegg \n    4.85 \n    7.5 \n    0.20 \n    0.03500 \n    7.200 \n    189.9 \n    0.17 \n    32.90 \n    Typ 11 \n  \n  \n    Ploen \n    Großer Plöner See \n    Ploen \n    12.40 \n    58.0 \n    3.10 \n    0.37200 \n    29.970 \n    62.3 \n    0.22 \n    8.80 \n    Typ 13 \n  \n  \n    Kumme \n    Kummerower See \n    Kumme \n    8.10 \n    23.3 \n    1.50 \n    0.26300 \n    32.500 \n    65.3 \n    0.78 \n    16.60 \n    Typ 11 \n  \n  \n    Mueritz \n    Müritz (Außenmüritz) \n    Mueritz \n    6.50 \n    28.1 \n    6.00 \n    0.68000 \n    105.300 \n    19.7 \n    0.11 \n    6.30 \n    Typ 14 \n  \n  \n    MuerB \n    Müritz (Binnenmüritz) \n    MuerB \n    9.80 \n    30.3 \n    6.00 \n    0.03800 \n    3.910 \n    34.2 \n    0.11 \n    6.70 \n    Typ 10 \n  \n  \n    Plaue \n    Plauer See \n    Plaue \n    6.80 \n    25.5 \n    3.00 \n    0.30000 \n    38.400 \n    26.0 \n    0.09 \n    6.80 \n    Typ 10 \n  \n  \n    Sacro \n    Sacrower See \n    Sacro \n    18.01 \n    36.0 \n    15.00 \n    0.01930 \n    1.072 \n    79.8 \n    0.04 \n    8.60 \n    Typ 10 \n  \n  \n    Schar \n    Scharmützelsee \n    Schar \n    9.00 \n    29.5 \n    16.00 \n    0.10823 \n    12.090 \n    35.3 \n    0.12 \n    10.40 \n    Typ 13 \n  \n  \n    SchwA \n    Schweriner See (Außensee) \n    SchwA \n    9.40 \n    52.4 \n    10.00 \n    0.33100 \n    35.200 \n    100.0 \n    0.23 \n    11.70 \n    Typ 13 \n  \n  \n    SchwI \n    Schweriner See (Innensee) \n    SchwI \n    13.50 \n    44.6 \n    5.30 \n    0.35600 \n    26.400 \n    246.5 \n    0.19 \n    5.86 \n    Typ 13 \n  \n  \n    Starn \n    Starnberger See \n    Starn \n    53.20 \n    127.8 \n    21.00 \n    2.99900 \n    56.400 \n    5.9 \n    0.32 \n    1.84 \n    Typ 3 \n  \n  \n    Stech \n    Stechlinsee \n    Stech \n    22.80 \n    68.0 \n    32.00 \n    0.09700 \n    4.250 \n    15.8 \n    0.04 \n    2.60 \n    Typ 13 \n  \n  \n    Stein \n    Steinhuder Meer \n    Stein \n    1.35 \n    2.9 \n    2.30 \n    0.04200 \n    29.100 \n    53.3 \n    0.12 \n    29.00 \n    Typ 11 \n  \n\n\n\n\n\nmean and maximum depth (m): z_mean, z_max; retention time (years): t_ret; volume (10^9 m^3); area (km^2), total phosphorus P (µg/L): p_tot; nitrogen-N (mg/L): n_no3, chlorophyll (µg/L): chl, water framework directive lake type: wfd_type \n\n\nData set from UBA = Umweltbundesamt = German Federal Environmental Agency"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#code-to-read-the-data",
+    "href": "slides/10-multivariate-1.html#code-to-read-the-data",
+    "title": "10-Multivariate methods I",
+    "section": "Code to read the data",
+    "text": "Code to read the data\n\nlakes <- read.csv(\"https://raw.githubusercontent.com/tpetzoldt/elements/main/data/uba/lakes-combined-data.csv\")\nvalid_columns <- c(\"name\", \"shortname\", \"z_mean\", \"z_max\",  \"t_ret\", \"volume\", \n  \"area\", \"p_tot\", \"n_no3\", \"chl\", \"wfd_type\")\nlakes <- lakes[valid_columns] |> na.omit()\nrow.names(lakes) <- lakes$shortname\n\nlake_ids <- lakes[c(\"name\", \"shortname\")]\nlakedata <- lakes[, -c(1, 2)]\n\n## remove wfd_type for now\nlakedata$wfd_type <- NULL\n\n\nData files downloadable from https://github.com/tpetzoldt/elements/tree/main/data/uba\nSource of original data: Uwweltbundesamt https://www.uba.de\nTerms of use, see: Copyright and description of derived data"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#data-transformation-and-normalization",
+    "href": "slides/10-multivariate-1.html#data-transformation-and-normalization",
+    "title": "10-Multivariate methods I",
+    "section": "Data transformation and normalization",
+    "text": "Data transformation and normalization\n\npar(mfrow = c(1, 4), mar = c(6, 4, 3, 1), las = 2)\nboxplot(lakedata, main = \"raw data\")\nboxplot(scale(lakedata), main = \"normalized\")\nboxplot(scale(sqrt(lakedata)), main = \"sqrt + normalized\")\nboxplot(scale(log(lakedata)), main = \"log + normalized\")\n\n\n\nscale() performs normalisation (z-transformation)\naim: make different scales better comparable"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#principal-component-analysis-pca",
+    "href": "slides/10-multivariate-1.html#principal-component-analysis-pca",
+    "title": "10-Multivariate methods I",
+    "section": "Principal Component Analysis: PCA",
+    "text": "Principal Component Analysis: PCA\n\n\nidentify cvovariance or correlation structure\nrotate coordinate system, so that it points in the diretions of maximum variance\n\\(k\\) dimensions in original space are transformed into \\(k\\) orthogonal (rectangular) coordinates in principal components space.\nworks with any number of dimensions\nvisualisation by a 3D example"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#correlation-structure-of-the-lakes-data-set",
+    "href": "slides/10-multivariate-1.html#correlation-structure-of-the-lakes-data-set",
+    "title": "10-Multivariate methods I",
+    "section": "Correlation structure of the lakes data set",
+    "text": "Correlation structure of the lakes data set\n\n\n\nround(cor(lakedata), 2)\n\n       z_mean z_max t_ret volume  area p_tot n_no3   chl\nz_mean   1.00  0.97  0.20   0.81  0.78 -0.17  0.48 -0.49\nz_max    0.97  1.00  0.07   0.88  0.87 -0.26  0.47 -0.54\nt_ret    0.20  0.07  1.00  -0.12 -0.18  0.48 -0.41 -0.04\nvolume   0.81  0.88 -0.12   1.00  0.98 -0.20  0.44 -0.27\narea     0.78  0.87 -0.18   0.98  1.00 -0.26  0.45 -0.32\np_tot   -0.17 -0.26  0.48  -0.20 -0.26  1.00 -0.32  0.47\nn_no3    0.48  0.47 -0.41   0.44  0.45 -0.32  1.00 -0.15\nchl     -0.49 -0.54 -0.04  -0.27 -0.32  0.47 -0.15  1.00\n\n\n\n\n\nLet’s pick 3 variables for a 3D visualization: z_mix, z_max and volume.\nUse log-transformation to make them symetrically distributed."
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#z_mix-z_max-and-volume-are-highly-corelated",
+    "href": "slides/10-multivariate-1.html#z_mix-z_max-and-volume-are-highly-corelated",
+    "title": "10-Multivariate methods I",
+    "section": "z_mix, z_max and volume are highly corelated",
+    "text": "z_mix, z_max and volume are highly corelated\n\n\n\n\n\\(\\rightarrow\\) We see that the three variables carry redundant information."
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#how-rotation-of-axes-works",
+    "href": "slides/10-multivariate-1.html#how-rotation-of-axes-works",
+    "title": "10-Multivariate methods I",
+    "section": "How rotation of axes works",
+    "text": "How rotation of axes works\n\nOriginal coordinates\n\n\n\n\n\n\n\n\n\nPCA rotated coordinates\n\n\n\n\n\n\n\n\n\n\nThis slide contains interactive 3D graphics, that can be rotated with the mouse.\nRotate the left image, so that the points on both size show similar patterns.\nRotate the right image to show PC 3\n\n\\(\\rightarrow\\) Most of the 3D information of the data can be vizualized in 2D.\nNote: log-transformed variables were used in this example."
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#pca-is-an-orthogonal-model-ii-regression",
+    "href": "slides/10-multivariate-1.html#pca-is-an-orthogonal-model-ii-regression",
+    "title": "10-Multivariate methods I",
+    "section": "PCA is an orthogonal (model II) regression",
+    "text": "PCA is an orthogonal (model II) regression\n\n\n\nPC1, PC2, PC3 are the principal components\nOLS is ordinary least squares regression (linear model lm)"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#now-analyse-all-numeric-variables",
+    "href": "slides/10-multivariate-1.html#now-analyse-all-numeric-variables",
+    "title": "10-Multivariate methods I",
+    "section": "Now analyse all numeric variables",
+    "text": "Now analyse all numeric variables\n\n\n\n\n\n \n  \n      \n    name \n    shortname \n    z_mean \n    z_max \n    t_ret \n    volume \n    area \n    p_tot \n    n_no3 \n    chl \n  \n \n\n  \n    Ammer \n    Ammersee \n    Ammer \n    37.60 \n    81.1 \n    2.70 \n    1.75000 \n    46.600 \n    7.3 \n    1.09 \n    2.80 \n  \n  \n    Arend \n    Arendsee \n    Arend \n    28.60 \n    48.7 \n    50.00 \n    0.14700 \n    5.140 \n    375.0 \n    0.05 \n    22.30 \n  \n  \n    Boden \n    Bodensee \n    Boden \n    85.00 \n    254.0 \n    4.20 \n    48.52150 \n    571.500 \n    6.9 \n    0.84 \n    2.10 \n  \n  \n    Chiem \n    Chiemsee \n    Chiem \n    25.60 \n    73.4 \n    1.26 \n    2.04800 \n    79.900 \n    9.2 \n    0.55 \n    3.80 \n  \n  \n    Dober \n    Dobersdorfer See \n    Dober \n    5.40 \n    18.8 \n    2.30 \n    0.01690 \n    3.120 \n    63.9 \n    0.64 \n    27.30 \n  \n  \n    Muegg \n    Großer Müggelsee \n    Muegg \n    4.85 \n    7.5 \n    0.20 \n    0.03500 \n    7.200 \n    189.9 \n    0.17 \n    32.90 \n  \n  \n    Ploen \n    Großer Plöner See \n    Ploen \n    12.40 \n    58.0 \n    3.10 \n    0.37200 \n    29.970 \n    62.3 \n    0.22 \n    8.80 \n  \n  \n    Kumme \n    Kummerower See \n    Kumme \n    8.10 \n    23.3 \n    1.50 \n    0.26300 \n    32.500 \n    65.3 \n    0.78 \n    16.60 \n  \n  \n    Mueritz \n    Müritz (Außenmüritz) \n    Mueritz \n    6.50 \n    28.1 \n    6.00 \n    0.68000 \n    105.300 \n    19.7 \n    0.11 \n    6.30 \n  \n  \n    MuerB \n    Müritz (Binnenmüritz) \n    MuerB \n    9.80 \n    30.3 \n    6.00 \n    0.03800 \n    3.910 \n    34.2 \n    0.11 \n    6.70 \n  \n  \n    Plaue \n    Plauer See \n    Plaue \n    6.80 \n    25.5 \n    3.00 \n    0.30000 \n    38.400 \n    26.0 \n    0.09 \n    6.80 \n  \n  \n    Sacro \n    Sacrower See \n    Sacro \n    18.01 \n    36.0 \n    15.00 \n    0.01930 \n    1.072 \n    79.8 \n    0.04 \n    8.60 \n  \n  \n    Schar \n    Scharmützelsee \n    Schar \n    9.00 \n    29.5 \n    16.00 \n    0.10823 \n    12.090 \n    35.3 \n    0.12 \n    10.40 \n  \n  \n    SchwA \n    Schweriner See (Außensee) \n    SchwA \n    9.40 \n    52.4 \n    10.00 \n    0.33100 \n    35.200 \n    100.0 \n    0.23 \n    11.70 \n  \n  \n    SchwI \n    Schweriner See (Innensee) \n    SchwI \n    13.50 \n    44.6 \n    5.30 \n    0.35600 \n    26.400 \n    246.5 \n    0.19 \n    5.86 \n  \n  \n    Starn \n    Starnberger See \n    Starn \n    53.20 \n    127.8 \n    21.00 \n    2.99900 \n    56.400 \n    5.9 \n    0.32 \n    1.84 \n  \n  \n    Stech \n    Stechlinsee \n    Stech \n    22.80 \n    68.0 \n    32.00 \n    0.09700 \n    4.250 \n    15.8 \n    0.04 \n    2.60 \n  \n  \n    Stein \n    Steinhuder Meer \n    Stein \n    1.35 \n    2.9 \n    2.30 \n    0.04200 \n    29.100 \n    53.3 \n    0.12 \n    29.00 \n  \n\n\n\n\n\n\n\ncolumns: called variables or species\nrows: observations or objects"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#pca-with-the-uba-lake-data",
+    "href": "slides/10-multivariate-1.html#pca-with-the-uba-lake-data",
+    "title": "10-Multivariate methods I",
+    "section": "PCA with the UBA lake data",
+    "text": "PCA with the UBA lake data\n\n\n\n\npc <- prcomp(scale(lakedata))\n\nEigenvalues (proportion of variance) indicate importance of components.\n\nsummary(pc)\n\nImportance of components:\n                          PC1    PC2   PC3     PC4    PC5     PC6     PC7     PC8\nStandard deviation     2.0692 1.2735 1.047 0.76067 0.5499 0.30497 0.12230 0.10618\nProportion of Variance 0.5352 0.2027 0.137 0.07233 0.0378 0.01163 0.00187 0.00141\nCumulative Proportion  0.5352 0.7379 0.875 0.94729 0.9851 0.99672 0.99859 1.00000"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#pca-biplot",
+    "href": "slides/10-multivariate-1.html#pca-biplot",
+    "title": "10-Multivariate methods I",
+    "section": "PCA Biplot",
+    "text": "PCA Biplot\n\nbiplot(pc)"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#pca-with-sqrt-transformed-data",
+    "href": "slides/10-multivariate-1.html#pca-with-sqrt-transformed-data",
+    "title": "10-Multivariate methods I",
+    "section": "PCA with sqrt transformed data",
+    "text": "PCA with sqrt transformed data\n\n\nlakedata2 <- sqrt(lakedata)\npc <- prcomp(scale(lakedata2))\nsummary(pc)\n\nImportance of components:\n                         PC1    PC2    PC3     PC4     PC5     PC6     PC7    PC8\nStandard deviation     2.111 1.3059 0.9748 0.70830 0.50321 0.29742 0.17060 0.1266\nProportion of Variance 0.557 0.2132 0.1188 0.06271 0.03165 0.01106 0.00364 0.0020\nCumulative Proportion  0.557 0.7702 0.8889 0.95165 0.98330 0.99436 0.99800 1.0000\n\n\n\n\nThe PCA with the untransformed data looked very asymmetric, we repeat it with square root transformed data.\nhelps to get a better “resolution”\nmust be taken into account when interpreting the results\nlog transformation is also possible"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#biplot-of-sqrt-transformed-data-1.-3.-pc",
+    "href": "slides/10-multivariate-1.html#biplot-of-sqrt-transformed-data-1.-3.-pc",
+    "title": "10-Multivariate methods I",
+    "section": "Biplot of sqrt transformed data (1.-3. PC)",
+    "text": "Biplot of sqrt transformed data (1.-3. PC)\n\npar(mfrow=c(1, 2), mar=c(5, 4, 4, 2.4), las=1)\nbiplot(pc)\nbiplot(pc, choices=c(3, 2))"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#pca-with-the-vegan-package",
+    "href": "slides/10-multivariate-1.html#pca-with-the-vegan-package",
+    "title": "10-Multivariate methods I",
+    "section": "PCA with the vegan package",
+    "text": "PCA with the vegan package\n\npc <- rda(lakedata2, scale = TRUE)\nsummary(pc)\n\n\nCall:\nrda(X = lakedata2, scale = TRUE) \n\nPartitioning of correlations:\n              Inertia Proportion\nTotal               8          1\nUnconstrained       8          1\n\nEigenvalues, and their contribution to the correlations \n\nImportance of components:\n                        PC1    PC2    PC3     PC4     PC5     PC6      PC7      PC8\nEigenvalue            4.456 1.7053 0.9503 0.50170 0.25322 0.08846 0.029105 0.016020\nProportion Explained  0.557 0.2132 0.1188 0.06271 0.03165 0.01106 0.003638 0.002003\nCumulative Proportion 0.557 0.7702 0.8889 0.95165 0.98330 0.99436 0.997997 1.000000\n\nScaling 2 for species and site scores\n* Species are scaled proportional to eigenvalues\n* Sites are unscaled: weighted dispersion equal on all dimensions\n* General scaling constant of scores:  3.414953 \n\n\nSpecies scores\n\n           PC1     PC2      PC3      PC4       PC5      PC6\nz_mean -1.0598  0.4289 -0.21113  0.23873 -0.008753  0.18441\nz_max  -1.1318  0.3420 -0.12121  0.10258  0.072128  0.04149\nt_ret   0.0321  1.1531 -0.07499  0.10386 -0.291203 -0.15956\nvolume -1.0984 -0.1075 -0.36435 -0.28489 -0.088096  0.07254\narea   -1.0368 -0.2858 -0.25303 -0.44554 -0.025908 -0.17654\np_tot   0.7169  0.2934 -0.85503  0.06207  0.345841 -0.05495\nn_no3  -0.7044 -0.7316 -0.18149  0.60719 -0.072833 -0.13748\nchl     0.8938 -0.3753 -0.59964 -0.02895 -0.381711  0.09702\n\n\nSite scores (weighted sums of species scores)\n\n             PC1     PC2      PC3      PC4      PC5      PC6\nAmmer   -0.83902 -0.6075  0.51716  1.81616  0.22343 -0.15112\nArend    0.61718  1.8219 -1.92971  0.44353 -0.51334 -0.46420\nBoden   -2.56671 -0.3066 -1.32007 -1.14721 -0.41861  0.35821\nChiem   -0.64712 -0.5918  0.55561  0.35138  0.48915  0.23752\nDober    0.57998 -1.0029 -0.35592  1.09957 -1.11137  0.09904\nMuegg    0.98336 -0.8687 -1.03143 -0.33065  0.31544  1.71907\nPloen    0.05148 -0.1788  0.12415 -0.07719  0.74087  0.42564\nKumme    0.20231 -1.0792 -0.29790  0.92094 -0.25802 -1.13785\nMueritz  0.01805 -0.1716  0.69453 -1.37602 -0.04136 -1.55657\nMuerB    0.32308  0.1145  0.83401 -0.12085  0.39231  0.75409\nPlaue    0.21775 -0.2308  0.80820 -0.98103  0.44885  0.06816\nSacro    0.40494  0.8219  0.29088 -0.04609  0.23456  1.24642\nSchar    0.34038  0.3961  0.50515 -0.19722 -0.82282 -0.52792\nSchwA    0.19197  0.1243 -0.30591 -0.03972  0.15528 -1.05932\nSchwI    0.24471  0.2379 -0.69605  0.04506  2.41490 -0.72493\nStarn   -0.95511  0.9136  0.55372  0.66291 -0.52409  0.55554\nStech   -0.05030  1.4337  1.12433  0.06976 -0.49103  0.09703\nStein    0.88307 -0.8259 -0.07074 -1.09331 -1.23415  0.06121\n\n\n\nThe two first PCs explain PC 1 = 77% of variance of the square root transformed observations."
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#variance-importance-and-biplot",
+    "href": "slides/10-multivariate-1.html#variance-importance-and-biplot",
+    "title": "10-Multivariate methods I",
+    "section": "Variance importance and biplot",
+    "text": "Variance importance and biplot\n\nImportance of components\n\nPC 1 = 56%\nPC 2 = 21%\nPC 3 = 12%\n\n\\(\\Rightarrow\\) The two first PCs explain PC 1 = 77% of variance of the square root transformed observations.\n\n\n\nbiplot(pc)"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#interpretation",
+    "href": "slides/10-multivariate-1.html#interpretation",
+    "title": "10-Multivariate methods I",
+    "section": "Interpretation",
+    "text": "Interpretation\n\nVariables\n\nonly long arrows can be interpreted\nsame direction: positive correlation\nopposite direction: negative correlation\nrectangular: no correlation\n\nObservations\n\nidentification of groups and extreme cases\n\nCombined View\n\nrelative size of variable for observations\narrow direction: high values\nopposite direction: low values\naround middle: average\n\n\\(\\Rightarrow\\) Important: always read perpendicular to PCs and arrows!"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#biplot-in-3d",
+    "href": "slides/10-multivariate-1.html#biplot-in-3d",
+    "title": "10-Multivariate methods I",
+    "section": "Biplot in 3D",
+    "text": "Biplot in 3D\n\n\nVariance\n\nPC 1 = 56%\nPC 2 = 21%\nPC 3 = 12%\nsum of PC 4 … 8 = 11%\n\n\n\\(\\rightarrow\\) Use the mouse to rotate and zoom."
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#nonmetric-multidimensional-scaling-nmds",
+    "href": "slides/10-multivariate-1.html#nonmetric-multidimensional-scaling-nmds",
+    "title": "10-Multivariate methods I",
+    "section": "Nonmetric Multidimensional Scaling: NMDS",
+    "text": "Nonmetric Multidimensional Scaling: NMDS\n\nmd <- metaMDS(lakedata2, scale = TRUE, distance = \"euclid\", trace=FALSE)\nplot(md, type=\"text\")\nabline(h=0, col=\"grey\", lty=\"dotted\")\nabline(v=0, col=\"grey\", lty=\"dotted\")\n\n\nThe NMDS tries to map the higher dimensions even better to 2D or 3D. However, it accepts some distortion. More about this in the next chapter."
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#the-code",
+    "href": "slides/10-multivariate-1.html#the-code",
+    "title": "10-Multivariate methods I",
+    "section": "The code",
+    "text": "The code\n\nlakes <- read.csv(\"https://raw.githubusercontent.com/tpetzoldt/elements/main/data/uba/lakes-combined-data.csv\")\nvalid_columns <- c(\"name\", \"shortname\", \"z_mean\", \"z_max\",  \"t_ret\", \"volume\", \n  \"area\", \"p_tot\", \"n_no3\", \"chl\", \"wfd_type\")\n\n# set row names and limit data set to complete records without missing data\nrow.names(lakes) <- lakes$shortname\nlakes <- na.omit(lakes[valid_columns])\n\n# only the numerical variables\nlakedata <- lakes[c(\"z_mean\", \"z_max\",  \"t_ret\", \"volume\", \n                     \"area\", \"p_tot\", \"n_no3\", \"chl\")] \n\n## PCA with the vegan package\nlibrary(\"vegan\")\nlakedata2 <- sqrt(lakedata)\npc <- rda(lakedata2, scale = TRUE)\nsummary(pc)\nbiplot(pc)\nbiplot(pc, choices=c(3, 2))\n\n## 3D Plot\nlibrary(\"vegan3d\")\nordirgl(pc, col = \"yellow\")\norgltext(pc, display = \"species\", col=\"red\")\norgltext(pc, display = \"sites\", col=\"blue\", pos=4)\nview3d(theta = 5, phi = 15, fov=30, zoom=1)\n\n## NMDS\nmd <- metaMDS(lakedata2, scale = TRUE, distance = \"euclid\", trace=FALSE)\nplot(md, type=\"text\")\nabline(h=0, col=\"grey\", lty=\"dotted\")\nabline(v=0, col=\"grey\", lty=\"dotted\")\n\n\nData and full source code is available from https://github.com/tpetzoldt/elements/"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#summary",
+    "href": "slides/10-multivariate-1.html#summary",
+    "title": "10-Multivariate methods I",
+    "section": "Summary",
+    "text": "Summary\n\n\nMultivariate methods can be used to analyze data sets, where multiple variables depend on each other.\nPCA is a dimension reduction technique that tries to map high-dimensional data to a lower number of dimensions.\nIt can be used as an explorative technique to find relationships between data.\nCompared to creating multiple plots between all variables, it helps to see the overall picture, saves time and avoids statistical fishing.\nThe next chapter will introduce more methods.\n\n\nFurther reading\n\nOksanen (2010)\nBorcard et al. (2018)"
+  },
+  {
+    "objectID": "slides/10-multivariate-1.html#references",
+    "href": "slides/10-multivariate-1.html#references",
+    "title": "10-Multivariate methods I",
+    "section": "References",
+    "text": "References\n\n\n\n\n\n\n\nBorcard, D., Gillet, F., & Legendre, P. (2018). Numerical ecology with R. Springer International Publishing. https://doi.org/10.1007/978-3-319-71404-2\n\n\nOksanen, J. (2010). Multivariate analysis of ecological communities in R: Vegan tutorial.\n\n\nUmweltbundesamt. (2021). Kenndaten ausgewählter Seen Deutschlands. https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen\n\n\nWinkelmann, C., Hellmann, C., Worischka, S., Petzoldt, T., & Benndorf, J. (2011). Fish predation affects the structure of a benthic community. Freshwater Biology, 56(6), 1030–1046. https://doi.org/10.1111/j.1365-2427.2010.02543.x"
   }
 ]
