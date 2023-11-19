@@ -1,5 +1,5 @@
 ---
-title: "Multivariate methods"
+title: "10-Multivariate methods I"
 author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
 ---
@@ -605,6 +605,20 @@ view3d(theta = 5, phi = 15, fov=30, zoom=1)
 :::
 
 
+
+## Nonmetric Multidimensional Scaling: NMDS
+
+```{r uba-nmds, fig.align='center', fig.width=5, fig.height=5}
+md <- metaMDS(lakedata2, scale = TRUE, distance = "euclid", trace=FALSE)
+plot(md, type="text")
+abline(h=0, col="grey", lty="dotted")
+abline(v=0, col="grey", lty="dotted")
+```
+
+The NMDS tries to map the higher dimensions even better to 2D or 3D. However, it accepts some distortion.
+More about this in the next chapter.
+
+
 ## The code
 
 ```{r, eval=FALSE}
@@ -612,6 +626,7 @@ lakes <- read.csv("lakes-combined-data.csv")
 valid_columns <- c("name", "shortname", "z_mean", "z_max",  "t_ret", "volume", 
   "area", "p_tot", "n_no3", "chl", "wfd_type")
 
+# set row names and limit data set to complete records without missing data
 row.names(lakes) <- lakes$shortname
 lakes <- na.omit(lakes[valid_columns])
 
@@ -619,19 +634,26 @@ lakes <- na.omit(lakes[valid_columns])
 lakedata <- lakes[c("z_mean", "z_max",  "t_ret", "volume", 
                      "area", "p_tot", "n_no3", "chl")] 
 
-
+## PCA with the vegan package
 library("vegan")
-library("vegan3d")
 lakedata2 <- sqrt(lakedata)
 pc <- rda(lakedata2, scale = TRUE)
 summary(pc)
 biplot(pc)
 biplot(pc, choices=c(3, 2))
 
+## 3D Plot
+library("vegan3d")
 ordirgl(pc, col = "yellow")
 orgltext(pc, display = "species", col="red")
 orgltext(pc, display = "sites", col="blue", pos=4)
 view3d(theta = 5, phi = 15, fov=30, zoom=1)
+
+## NMDS
+md <- metaMDS(lakedata2, scale = TRUE, distance = "euclid", trace=FALSE)
+plot(md, type="text")
+abline(h=0, col="grey", lty="dotted")
+abline(v=0, col="grey", lty="dotted")
 ```
 
 * Data can be downloaded from .....

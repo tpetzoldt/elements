@@ -1,5 +1,5 @@
 ---
-title: "Multivariate methods II"
+title: "11-Multivariate methods II"
 author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
 ---
@@ -12,11 +12,10 @@ library("knitr")
 library("kableExtra")
 library("leaflet")
 library("rgl")
-library("vegan3d")
 library("scatterplot3d")
 #knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
 knitr::opts_chunk$set(echo = TRUE, eval=TRUE)
-setupKnitr(autoprint = TRUE) # for embedded RGL graphics
+setupKnitr(autoprint = FALSE) # for embedded RGL graphics
 ```
 
 ## Data sets and terms of use
@@ -41,7 +40,7 @@ published at the [UBA web site](https://www.umweltbundesamt.de/), that refer to
 
 <br>
 
-```{r, echo=FALSE, fig.align='center'}
+```{r triangle-euclidean, echo=FALSE, fig.align='center'}
 plot(NULL, xlim=c(0,10), ylim=c(0,10), las=1, type="n", xlab="x", ylab="y")
 
 x <- c(2, 8)
@@ -193,17 +192,6 @@ Additional distance measures and application suggestions in
 the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/vegdist) help page.
 
 
-
-
-## Nonmetric Multidimensional Scaling: NMDS
-
-```{r uba-nmds, fig.align='center', fig.width=5, fig.height=5}
-md <- metaMDS(lakedata2, scale = TRUE, distance = "euclid", trace=FALSE)
-plot(md, type="text")
-abline(h=0, col="grey", lty="dotted")
-abline(v=0, col="grey", lty="dotted")
-```
-
 ## A Taxonomic Table
 
 <small>
@@ -311,9 +299,51 @@ kable(cbind(benthos[c("Site", "Habitat", "Stream", "Flood")], div))
    - e.g. k-means, k-centroids
    
    
+## The UBA lake data set again
 
+```{r echo = FALSE}
+lakes <- read.csv(file="../data/uba/lakes-combined-data.csv")
+valid_columns <- c(
+  "name", "shortname",
+  #"drainage", 
+  #"population", 
+  #"altitude", 
+  "z_mean",
+  "z_max", 
+  "t_ret", 
+  "volume", 
+  "area", 
+  #"shore_length", 
+  #"shore_devel", 
+  #"drain_ratio", 
+  "p_tot", 
+  "n_no3", 
+  "chl",
+  "wfd_type"
+)
 
-```{r  fig.height=6, wig.width=12, fig.align='center'}
+## less columns, so that we get a simplified subset and more complete cases
+lakes <- lakes[valid_columns] |> na.omit()
+row.names(lakes) <- lakes$shortname
+
+lakes_saved <- lakes # backup copy of the data set for later use
+
+lake_ids <- lakes[c("name", "shortname")]
+lakedata <- lakes[, -c(1, 2)]
+lakedata$wfd_type <- NULL
+lakedata2 <- sqrt(lakedata)
+```
+
+<small>
+```{r echo=FALSE}
+kable(lakedata)
+```
+
+</small>
+
+## Cluster analysis
+
+```{r lakes-cluster2 , fig.height=6, wig.width=12, fig.align='center'}
 par(mfrow=c(1,2))
 hc <- hclust(dist(scale(lakedata2)), method="complete") # the default
 plot(hc)
@@ -324,7 +354,7 @@ plot(hc2)
 
 ## Identification of clusters in the tree
 
-```{r}
+```{r lake-clusters2}
 plot(hc, hang = -1)    # -1: extend vertical lines to the bottom
 rect.hclust(hc, 5)
 grp <- cutree(hc, 5)
@@ -333,7 +363,11 @@ grp <- cutree(hc, 5)
 
 ## Color NMDS according to clusters
 
-```{r}
+```{r uba-nmds, fig.align='center', fig.width=5, fig.height=5}
+md <- metaMDS(lakedata2, scale = TRUE, distance = "euclid", trace=FALSE)
+```
+
+```{r lake-nmds-colored}
 plot(md, type = "n")
 text(md$points, row.names(lakedata2), col = grp)
 ```
