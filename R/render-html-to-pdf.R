@@ -13,6 +13,7 @@ to_pdf("https://tpetzoldt.github.io/elements/slides/06-linear.html", delay=5)
 to_pdf("https://tpetzoldt.github.io/elements/slides/07-anova.html", delay=5)
 to_pdf("https://tpetzoldt.github.io/elements/slides/08-nonlinear-regression.html", delay=5)
 to_pdf("https://tpetzoldt.github.io/elements/slides/09-timeseries-basics.html", delay=5)
+to_pdf("https://tpetzoldt.github.io/elements/slides/10-multivariate-1.html", delay=5)
 
 to_pdf("https://tpetzoldt.github.io/elements/slides/x1-r-basics.html", delay=5)
 to_pdf("https://tpetzoldt.github.io/elements/slides/x2-r-graphics.html", delay=5)
