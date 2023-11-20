@@ -82,7 +82,7 @@ text(8,4, substitute(s[epsilon]^2 == xxx, list(xxx=round(var(yres),1))), cex=2)
 
 \begin{align}
      r^2 & = \frac{\text{explained variance}}{\text{total variance}}\\
-         & = \frac{s^2_{\varepsilon}}{s^2_{y|x}}\\
+         & = \frac{s^2_{y|x}}{s^2_y}\\
 \end{align}
 
 It can also be expressed as ratio of residual (RSS) and total (TSS) sum of squares:
@@ -92,7 +92,7 @@ $$
 $$
 
 * derived from "sum of squares", scaled as relative variance
-* identical to the squared Pearon correlation $r^2$ (in the linear case)
+* identical to the squared Pearson correlation $r^2$ (in the linear case)
 * very useful interpretation: percentage of variance of the raw data explained by the model
 
 
@@ -362,8 +362,8 @@ legend("topleft", c("OLS", "IWLS-M", "IWLS-MM"),
  * @venables_modern_2013 Modern applied statistics with S-PLUS (3rd ed.). 
    Springer Science & Business Media. 
  * @fox_r_2018 An R companion to applied regression. Sage publications. 
- * @gelman_data_2007 Data analysis using regression and multilevelhierarchical models (Vol. 1).
-   Cambridge University Press New York
+ * @gelman_data_2007 Data analysis using regression and multilevel hierarchical models (Vol. 1).
+   Cambridge University Press, New York.
 
 ## References
 
