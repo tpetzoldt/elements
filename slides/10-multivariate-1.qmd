@@ -159,7 +159,7 @@ plot(hclust(dist(scale(species))), hang=-1, main="")
 
 ## A data set from German lakes
 
-```{r lakes-leaflet, echo=FALSE, fig.height=7, fig.width=10, fig.align='center'}
+```{r lakes-leaflet, echo=FALSE, fig.height=6, fig.width=10, fig.align='center'}
 library("leaflet")
 
 lakepos <- read.csv("../data/uba/kenndaten-seen-gps.csv")
@@ -172,6 +172,9 @@ leaflet(options = leafletOptions(zoomControl = TRUE)) |>
              options = markerOptions(title=lakepos$name, closeButton = FALSE))
 ```
 
+<small>
+GPS data from [Wikipedia](https://de.wikipedia.org) and [Google Maps](https://maps.google.de), map from [https://www.openstreetmap.org/](https://www.openstreetmap.org/copyright/)
+</small>
 
 ## Example: A simplified subset from the UBA lake data
 
@@ -213,15 +216,18 @@ lakedata$wfd_type <- NULL
 ## print table
 kable(lakes_saved)
 ```
-mean and maximum depth (m): z_mean, z_max; retention time (years): t_ret;
-volume (10^9 m^3); area (km^2), total phosphorus P (µg/L): p_tot; nitrogen-N (mg/L):
-n_no3, chlorophyll (µg/L): chl, water framework directive lake type: wfd_type
+mean and maximum depth ($\mathrm{m}$): z_mean, z_max; retention time (years): t_ret;
+volume ($\mathrm{10^9 m^3}$); area ($\mathrm{km^2}$), total phosphorus P ($\mathrm{\mu g/L}$): 
+p_tot; nitrogen-N ($\mathrm{mg/L}$):
+n_no3, chlorophyll ($\mathrm{\mu g/L}$): chl, water framework directive lake type: wfd_type
+
+<br>
+
+Data set from UBA (Umweltbundesamt = German Federal Environmental Agency), data modified<br>
+Original data source: [https://www.umweltbundesamt.de/themen/wasser/seen](https://www.umweltbundesamt.de/themen/wasser/seen)<br>
+Terms of use: [https://www.umweltbundesamt.de/datenschutz-haftung-urheberrecht](https://www.umweltbundesamt.de/datenschutz-haftung-urheberrecht)
+
 </small>
-
-
-::: aside
-Data set from UBA = Umweltbundesamt = German Federal Environmental Agency
-:::
 
 ## Code to read the data
 
@@ -239,10 +245,10 @@ lakedata <- lakes[, -c(1, 2)]
 lakedata$wfd_type <- NULL
 ```
 
+<br>
 
-
-* Data files downloadable from [https://github.com/tpetzoldt/elements/tree/main/data/uba](https://github.com/tpetzoldt/elements/tree/main/data/uba)
 * Source of original data: Uwweltbundesamt [https://www.uba.de](https://www.uba.de)
+* Data files downloadable from [https://github.com/tpetzoldt/elements/tree/main/data/uba](https://github.com/tpetzoldt/elements/tree/main/data/uba)
 * Terms of use, see: [Copyright](https://github.com/tpetzoldt/elements/blob/main/data/uba/3_tab_kenndaten-ausgew-seen-d_2021-04-08-copyright.txt) and [description of derived data](https://github.com/tpetzoldt/elements/blob/main/data/uba/lakes-combined-data-info.txt)
 
 
