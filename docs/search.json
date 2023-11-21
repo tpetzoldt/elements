@@ -445,7 +445,7 @@
     "href": "slides/07-anova.html#a-practical-example",
     "title": "07-One and two-way ANOVA",
     "section": "A practical example",
-    "text": "A practical example\n\nFind a suitable medium for growth experiments with green algae\n\ncheap, easy to handle\nsuitable for students courses and classroom experiments\n\n\n\n\n\nIdea\n\nuse a commercial fertilizer with the main nutrients N and P\nmineral water with trace elements\ndoes non-sparkling mineral water contain enough \\(\\mathrm{CO_2}\\)?\ntest how to improve (\\(\\mathrm{CO_2}\\)) availability for photosynthesis"
+    "text": "A practical example\n\nFind a suitable medium for growth experiments with green algae\n\ncheap, easy to handle\nsuitable for students courses and classroom experiments\n\n\n\n\n\nIdea\n\nuse a commercial fertilizer with the main nutrients N and P\nmineral water with trace elements\ndoes non-sparkling mineral water contain enough \\(\\mathrm{CO_2}\\)?\ntest how to improve \\(\\mathrm{CO_2}\\) availability for photosynthesis"
   },
   {
     "objectID": "slides/07-anova.html#application",
@@ -473,21 +473,21 @@
     "href": "slides/07-anova.html#the-data-set",
     "title": "07-One and two-way ANOVA",
     "section": "The data set",
-    "text": "The data set\n\n\n\n\n\n\n\n\nTable 1:  Growth from day 2 to day 6 (relative units) \n \n  \n    treat \n    replicate 1 \n    replicate 2 \n    replicate 3 \n  \n \n\n  \n    Fertilizer \n    0.020 \n    -0.217 \n    -0.273 \n  \n  \n    F. open \n    0.940 \n    0.780 \n    0.555 \n  \n  \n    F.+sugar \n    0.188 \n    -0.100 \n    0.020 \n  \n  \n    F.+CaCO3 \n    0.245 \n    0.236 \n    0.456 \n  \n  \n    Bas.med. \n    0.699 \n    0.727 \n    0.656 \n  \n  \n    A.dest \n    -0.010 \n    0.000 \n    -0.010 \n  \n  \n    Tap water \n    0.030 \n    -0.070 \n    NA \n  \n\n\n\n\n\n\n\nNA means “not available”, i.e. a missing value\nthe crosstable structure is compact and esy to read, but not suitable for data analysis\n\\(\\Rightarrow\\) convert it to long format"
+    "text": "The data set\n\n\n\n\n\nTable 1: Growth from day 2 to day 6 (relative units)\n\n\ntreat\nreplicate 1\nreplicate 2\nreplicate 3\n\n\n\n\nFertilizer\n0.020\n-0.217\n-0.273\n\n\nF. open\n0.940\n0.780\n0.555\n\n\nF.+sugar\n0.188\n-0.100\n0.020\n\n\nF.+CaCO3\n0.245\n0.236\n0.456\n\n\nBas.med.\n0.699\n0.727\n0.656\n\n\nA.dest\n-0.010\n0.000\n-0.010\n\n\nTap water\n0.030\n-0.070\nNA\n\n\n\n\n\n\n\n\n\nNA means “not available”, i.e. a missing value\nthe crosstable structure is compact and esy to read, but not suitable for data analysis\n\\(\\Rightarrow\\) convert it to long format"
   },
   {
     "objectID": "slides/07-anova.html#data-in-long-format",
     "href": "slides/07-anova.html#data-in-long-format",
     "title": "07-One and two-way ANOVA",
     "section": "Data in long format",
-    "text": "Data in long format\n\n\nAdvantages\n\nlooks “stupid” but is better for data analysis\ndependent variable growth and explanation variable treat clearly visible\nmodel formula: growth ~ treat\neasily extensible to \\(>1\\) explanation variable\n\n\n\n\n\n\n\n \n  \n    treat \n    rep \n    growth \n  \n \n\n  \n    Fertilizer \n    1 \n    0.020 \n  \n  \n    Fertilizer \n    2 \n    -0.217 \n  \n  \n    Fertilizer \n    3 \n    -0.273 \n  \n  \n    F. open \n    1 \n    0.940 \n  \n  \n    F. open \n    2 \n    0.780 \n  \n  \n    F. open \n    3 \n    0.555 \n  \n  \n    F.+sugar \n    1 \n    0.188 \n  \n  \n    F.+sugar \n    2 \n    -0.100 \n  \n  \n    F.+sugar \n    3 \n    0.020 \n  \n  \n    F.+CaCO3 \n    1 \n    0.245 \n  \n  \n    F.+CaCO3 \n    2 \n    0.236 \n  \n  \n    F.+CaCO3 \n    3 \n    0.456"
+    "text": "Data in long format\n\n\nAdvantages\n\nlooks “stupid” but is better for data analysis\ndependent variable growth and explanation variable treat clearly visible\nmodel formula: growth ~ treat\neasily extensible to \\(&gt;1\\) explanation variable\n\n\n\n\n\n\n\n\ntreat\nrep\ngrowth\n\n\n\n\nFertilizer\n1\n0.020\n\n\nFertilizer\n2\n-0.217\n\n\nFertilizer\n3\n-0.273\n\n\nF. open\n1\n0.940\n\n\nF. open\n2\n0.780\n\n\nF. open\n3\n0.555\n\n\nF.+sugar\n1\n0.188\n\n\nF.+sugar\n2\n-0.100\n\n\nF.+sugar\n3\n0.020\n\n\nF.+CaCO3\n1\n0.245\n\n\nF.+CaCO3\n2\n0.236\n\n\nF.+CaCO3\n3\n0.456"
   },
   {
     "objectID": "slides/07-anova.html#the-data-in-r",
     "href": "slides/07-anova.html#the-data-in-r",
     "title": "07-One and two-way ANOVA",
     "section": "The data in R",
-    "text": "The data in R\n\n\nalgae <- data.frame(\n  treat  = factor(c(\"Fertilizer\", \"Fertilizer\", \"Fertilizer\", \n             \"F. open\", \"F. open\", \"F. open\", \n             \"F.+sugar\", \"F.+sugar\", \"F.+sugar\", \n             \"F.+CaCO3\", \"F.+CaCO3\", \"F.+CaCO3\", \n             \"Bas.med.\", \"Bas.med.\", \"Bas.med.\", \n             \"A.dest\", \"A.dest\", \"A.dest\", \n             \"Tap water\", \"Tap water\"),\n             levels=c(\"Fertilizer\", \"F. open\", \"F.+sugar\", \n                    \"F.+CaCO3\", \"Bas.med.\", \"A.dest\", \"Tap water\")),\n  rep   = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2), \n  growth = c(0.02, -0.217, -0.273, 0.94, 0.78, 0.555, 0.188, -0.1, 0.02, \n             0.245, 0.236, 0.456, 0.699, 0.727, 0.656, -0.01, 0, -0.01, 0.03, -0.07)\n)\n\n… can be entered directly in the code. A csv-file in long format is also possible."
+    "text": "The data in R\n\n\nalgae &lt;- data.frame(\n  treat  = factor(c(\"Fertilizer\", \"Fertilizer\", \"Fertilizer\", \n             \"F. open\", \"F. open\", \"F. open\", \n             \"F.+sugar\", \"F.+sugar\", \"F.+sugar\", \n             \"F.+CaCO3\", \"F.+CaCO3\", \"F.+CaCO3\", \n             \"Bas.med.\", \"Bas.med.\", \"Bas.med.\", \n             \"A.dest\", \"A.dest\", \"A.dest\", \n             \"Tap water\", \"Tap water\"),\n             levels=c(\"Fertilizer\", \"F. open\", \"F.+sugar\", \n                    \"F.+CaCO3\", \"Bas.med.\", \"A.dest\", \"Tap water\")),\n  rep   = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2), \n  growth = c(0.02, -0.217, -0.273, 0.94, 0.78, 0.555, 0.188, -0.1, 0.02, \n             0.245, 0.236, 0.456, 0.699, 0.727, 0.656, -0.01, 0, -0.01, 0.03, -0.07)\n)\n\n… can be entered directly in the code. A csv-file in long format is also possible."
   },
   {
     "objectID": "slides/07-anova.html#boxplot",
@@ -515,7 +515,7 @@
     "href": "slides/07-anova.html#why-cant-we-apply-just-several-t-tests",
     "title": "07-One and two-way ANOVA",
     "section": "Why can’t we apply just several t-tests?",
-    "text": "Why can’t we apply just several t-tests?\n\n\nIf we have 7 treatments and want to test all against each other, we would need:\n\n\\[7 \\cdot (7 - 1) / 2 = 21 \\qquad\\text{tests.}\\]\n\nIf we set \\(\\alpha = 0.05\\) we get 5% false positives. \\(\\Rightarrow\\) One of 20 tests is on average a false positive\nIf we do \\(N\\) tests, we increase the overall \\(\\alpha\\) error to \\(N\\cdot\\alpha\\) in the worst case.\nThis is called alpha-error-inflation or the Bonferroni law:\n\n\\[\n\\alpha_{total} \\le \\sum_{i=1}^{N} \\alpha_i = N \\cdot \\alpha\n\\]\nIf we ignore the Bonferroni law, we end in statistical fishing and get spurious results just by chance. See https://xkcd.com/882/."
+    "text": "Why can’t we apply just several t-tests?\n\n\nIf we have 7 treatments and want to test all against each other, we would need:\n\n\\[7 \\cdot (7 - 1) / 2 = 21 \\qquad\\text{tests.}\\]\n\nIf we set \\(\\alpha = 0.05\\) we get 5% false positives. \\(\\Rightarrow\\) One of 20 tests is on average a false positive\nIf we do \\(N\\) tests, we increase the overall \\(\\alpha\\) error to \\(N\\cdot\\alpha\\) in the worst case.\nThis is called alpha-error-inflation or the Bonferroni law:\n\n\\[\n\\alpha_{total} \\le \\sum_{i=1}^{N} \\alpha_i = N \\cdot \\alpha\n\\]\nIf we ignore the Bonferroni law, we end in statistical fishing and get spurious results just by chance."
   },
   {
     "objectID": "slides/07-anova.html#anova-analysis-of-variances-1",
@@ -529,35 +529,35 @@
     "href": "slides/07-anova.html#example",
     "title": "07-One and two-way ANOVA",
     "section": "Example",
-    "text": "Example\n\nTwo brands of Clementine fruits from a shop “E”, that we encode as “EB” and “EP”. We want to know whether the premium brand (“P”) and the basic brand (“B”) have a different weight.\n\nclem <- data.frame(\n  brand = c(\"EP\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \n            \"EB\", \"EB\", \"EB\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EB\", \"EP\"),\n  weight = c(88, 96, 100, 96, 90, 100, 92, 92, 102, 99, 86, 89, 99, 89, 75, 80, \n             81, 96, 82, 98, 80, 107, 88))\n\n We encode one sample (“EB”) with 1 and the other sample (“EP”) with 2:\n\nclem$code <- as.numeric(factor(clem$brand))\nclem$code\n\n [1] 2 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 1 2"
+    "text": "Example\n\nTwo brands of Clementine fruits from a shop “E”, that we encode as “EB” and “EP”. We want to know whether the premium brand (“P”) and the basic brand (“B”) have a different weight.\n\nclem &lt;- data.frame(\n  brand = c(\"EP\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \"EB\", \n            \"EB\", \"EB\", \"EB\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EP\", \"EB\", \"EP\"),\n  weight = c(88, 96, 100, 96, 90, 100, 92, 92, 102, 99, 86, 89, 99, 89, 75, 80, \n             81, 96, 82, 98, 80, 107, 88))\n\n We encode one sample (“EB”) with 1 and the other sample (“EP”) with 2:\n\nclem$code &lt;- as.numeric(factor(clem$brand))\nclem$code\n\n [1] 2 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 1 2"
   },
   {
     "objectID": "slides/07-anova.html#then-we-fit-a-linear-regression",
     "href": "slides/07-anova.html#then-we-fit-a-linear-regression",
     "title": "07-One and two-way ANOVA",
     "section": "Then we fit a linear regression:",
-    "text": "Then we fit a linear regression:\n\nplot(weight ~ code, data = clem, axes = FALSE)\nm <- lm(weight ~ code, data = clem)\naxis(1, at = c(1,2), labels = c(\"EB\", \"EP\")); axis(2); box()\nabline(m, col = \"blue\")"
+    "text": "Then we fit a linear regression:\n\nplot(weight ~ code, data = clem, axes = FALSE)\nm &lt;- lm(weight ~ code, data = clem)\naxis(1, at = c(1,2), labels = c(\"EB\", \"EP\")); axis(2); box()\nabline(m, col = \"blue\")"
   },
   {
     "objectID": "slides/07-anova.html#variance-components",
     "href": "slides/07-anova.html#variance-components",
     "title": "07-One and two-way ANOVA",
     "section": "Variance components",
-    "text": "Variance components\n\nWe fit a linear model and compare the variances:\n\nm <- lm(weight ~ code, data = clem)\n\ntotal variance\n\n(var_tot <- var(clem$weight))\n\n[1] 68.98814\n\n\nresidual variance (= within variance)\n\n(var_res <- var(residuals(m)))\n\n[1] 43.25\n\n\nexplained variance (= between variance)\n\nvar_tot - var_res\n\n[1] 25.73814\n\n\nNow we can analyse whether the between variance is big enough to justify a significant effect.\nThis is called an ANOVA."
+    "text": "Variance components\n\nWe fit a linear model and compare the variances:\n\nm &lt;- lm(weight ~ code, data = clem)\n\ntotal variance\n\n(var_tot &lt;- var(clem$weight))\n\n[1] 68.98814\n\n\nresidual variance (= within variance)\n\n(var_res &lt;- var(residuals(m)))\n\n[1] 43.25\n\n\nexplained variance (= between variance)\n\nvar_tot - var_res\n\n[1] 25.73814\n\n\nNow we can analyse whether the between variance is big enough to justify a significant effect.\nThis is called an ANOVA."
   },
   {
     "objectID": "slides/07-anova.html#anova",
     "href": "slides/07-anova.html#anova",
     "title": "07-One and two-way ANOVA",
     "section": "ANOVA",
-    "text": "ANOVA\n\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: weight\n          Df Sum Sq Mean Sq F value   Pr(>F)   \ncode       1 566.24  566.24  12.497 0.001963 **\nResiduals 21 951.50   45.31                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\nA t-test for comparison\n\nt.test(weight ~ code, data = clem, var.equal=TRUE)\n\n\n    Two Sample t-test\n\ndata:  weight by code\nt = 3.5351, df = 21, p-value = 0.001963\nalternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0\n95 percent confidence interval:\n  4.185911 16.147423\nsample estimates:\nmean in group 1 mean in group 2 \n       95.50000        85.33333 \n\n\n\\(\\Rightarrow\\) the p-values are exactly the same."
+    "text": "ANOVA\n\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: weight\n          Df Sum Sq Mean Sq F value   Pr(&gt;F)   \ncode       1 566.24  566.24  12.497 0.001963 **\nResiduals 21 951.50   45.31                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\nA t-test for comparison\n\nt.test(weight ~ code, data = clem, var.equal=TRUE)\n\n\n    Two Sample t-test\n\ndata:  weight by code\nt = 3.5351, df = 21, p-value = 0.001963\nalternative hypothesis: true difference in means between group 1 and group 2 is not equal to 0\n95 percent confidence interval:\n  4.185911 16.147423\nsample estimates:\nmean in group 1 mean in group 2 \n       95.50000        85.33333 \n\n\n\\(\\Rightarrow\\) the p-values are exactly the same."
   },
   {
     "objectID": "slides/07-anova.html#anova-with-more-than-2-samples",
     "href": "slides/07-anova.html#anova-with-more-than-2-samples",
     "title": "07-One and two-way ANOVA",
     "section": "ANOVA with more than 2 samples",
-    "text": "ANOVA with more than 2 samples\nBack to the algae growth data. Let’s call the linear model m:\n\nm <- lm(growth ~ treat, data = algae)\n\n\n\nWe can print the coefficients of the linear model with summary(m)\nBut we are interested in the overall effect and use anova\n\n\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: growth\n          Df  Sum Sq Mean Sq F value    Pr(>F)    \ntreat      6 2.35441 0.39240  25.045 1.987e-06 ***\nResiduals 13 0.20368 0.01567                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\nThe ANOVA table shows F-tests testing for significance of all factors.\nIn the table above, we have only one single factor.\n\n\\(\\Rightarrow\\) We see that the treatment had a significant effect."
+    "text": "ANOVA with more than 2 samples\nBack to the algae growth data. Let’s call the linear model m:\n\nm &lt;- lm(growth ~ treat, data = algae)\n\n\n\nWe can print the coefficients of the linear model with summary(m)\nBut we are interested in the overall effect and use anova\n\n\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: growth\n          Df  Sum Sq Mean Sq F value    Pr(&gt;F)    \ntreat      6 2.35441 0.39240  25.045 1.987e-06 ***\nResiduals 13 0.20368 0.01567                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\n\nThe ANOVA table shows F-tests testing for significance of all factors.\nIn the table above, we have only one single factor.\n\n\\(\\Rightarrow\\) We see that the treatment had a significant effect."
   },
   {
     "objectID": "slides/07-anova.html#model-formulae",
@@ -571,7 +571,7 @@
     "href": "slides/07-anova.html#posthoc-tests",
     "title": "07-One and two-way ANOVA",
     "section": "Posthoc tests",
-    "text": "Posthoc tests\n\nThe test showed, that the factor “treatment” had a significant effect.\nWe don’t know yet, which factor levels were different.\n\nTukey HSD test is the most common.\n\ntk <- TukeyHSD(aov(m))\ntk\n\n  Tukey multiple comparisons of means\n    95% family-wise confidence level\n\nFit: aov(formula = m)\n\n$treat\n                            diff         lwr         upr     p adj\nF. open-Fertilizer    0.91500000  0.56202797  1.26797203 0.0000103\nF.+sugar-Fertilizer   0.19266667 -0.16030537  0.54563870 0.5211198\nF.+CaCO3-Fertilizer   0.46900000  0.11602797  0.82197203 0.0069447\nBas.med.-Fertilizer   0.85066667  0.49769463  1.20363870 0.0000231\nA.dest-Fertilizer     0.15000000 -0.20297203  0.50297203 0.7579063\nTap water-Fertilizer  0.13666667 -0.25796806  0.53130140 0.8837597\nF.+sugar-F. open     -0.72233333 -1.07530537 -0.36936130 0.0001312\nF.+CaCO3-F. open     -0.44600000 -0.79897203 -0.09302797 0.0102557\nBas.med.-F. open     -0.06433333 -0.41730537  0.28863870 0.9943994\nA.dest-F. open       -0.76500000 -1.11797203 -0.41202797 0.0000721\nTap water-F. open    -0.77833333 -1.17296806 -0.38369860 0.0001913\nF.+CaCO3-F.+sugar     0.27633333 -0.07663870  0.62930537 0.1727182\nBas.med.-F.+sugar     0.65800000  0.30502797  1.01097203 0.0003363\nA.dest-F.+sugar      -0.04266667 -0.39563870  0.31030537 0.9994197\nTap water-F.+sugar   -0.05600000 -0.45063473  0.33863473 0.9985686\nBas.med.-F.+CaCO3     0.38166667  0.02869463  0.73463870 0.0307459\nA.dest-F.+CaCO3      -0.31900000 -0.67197203  0.03397203 0.0879106\nTap water-F.+CaCO3   -0.33233333 -0.72696806  0.06230140 0.1247914\nA.dest-Bas.med.      -0.70066667 -1.05363870 -0.34769463 0.0001792\nTap water-Bas.med.   -0.71400000 -1.10863473 -0.31936527 0.0004507\nTap water-A.dest     -0.01333333 -0.40796806  0.38130140 0.9999997"
+    "text": "Posthoc tests\n\nThe test showed, that the factor “treatment” had a significant effect.\nWe don’t know yet, which factor levels were different.\n\nTukey HSD test is the most common.\n\ntk &lt;- TukeyHSD(aov(m))\ntk\n\n  Tukey multiple comparisons of means\n    95% family-wise confidence level\n\nFit: aov(formula = m)\n\n$treat\n                            diff         lwr         upr     p adj\nF. open-Fertilizer    0.91500000  0.56202797  1.26797203 0.0000103\nF.+sugar-Fertilizer   0.19266667 -0.16030537  0.54563870 0.5211198\nF.+CaCO3-Fertilizer   0.46900000  0.11602797  0.82197203 0.0069447\nBas.med.-Fertilizer   0.85066667  0.49769463  1.20363870 0.0000231\nA.dest-Fertilizer     0.15000000 -0.20297203  0.50297203 0.7579063\nTap water-Fertilizer  0.13666667 -0.25796806  0.53130140 0.8837597\nF.+sugar-F. open     -0.72233333 -1.07530537 -0.36936130 0.0001312\nF.+CaCO3-F. open     -0.44600000 -0.79897203 -0.09302797 0.0102557\nBas.med.-F. open     -0.06433333 -0.41730537  0.28863870 0.9943994\nA.dest-F. open       -0.76500000 -1.11797203 -0.41202797 0.0000721\nTap water-F. open    -0.77833333 -1.17296806 -0.38369860 0.0001913\nF.+CaCO3-F.+sugar     0.27633333 -0.07663870  0.62930537 0.1727182\nBas.med.-F.+sugar     0.65800000  0.30502797  1.01097203 0.0003363\nA.dest-F.+sugar      -0.04266667 -0.39563870  0.31030537 0.9994197\nTap water-F.+sugar   -0.05600000 -0.45063473  0.33863473 0.9985686\nBas.med.-F.+CaCO3     0.38166667  0.02869463  0.73463870 0.0307459\nA.dest-F.+CaCO3      -0.31900000 -0.67197203  0.03397203 0.0879106\nTap water-F.+CaCO3   -0.33233333 -0.72696806  0.06230140 0.1247914\nA.dest-Bas.med.      -0.70066667 -1.05363870 -0.34769463 0.0001792\nTap water-Bas.med.   -0.71400000 -1.10863473 -0.31936527 0.0004507\nTap water-A.dest     -0.01333333 -0.40796806  0.38130140 0.9999997"
   },
   {
     "objectID": "slides/07-anova.html#graphical-output",
@@ -592,7 +592,7 @@
     "href": "slides/07-anova.html#numerical-tests",
     "title": "07-One and two-way ANOVA",
     "section": "Numerical tests",
-    "text": "Numerical tests\n\n\nTest variance homogeneity\n\nF-test compares only two variances.\nSeveral tests for multiple variances available, e.g. Bartlett, Levene, Fligner-Killeen\nRecommended: Fligner-Killeen-test\n\n\nfligner.test(growth ~ treat, \n             data = algae)\n\n\n    Fligner-Killeen test of homogeneity of variances\n\ndata:  growth by treat\nFligner-Killeen:med chi-squared = 4.2095, df = 6, p-value = 0.6483\n\n\n\n\nTest of normal distribution\n\nThe Shapiro-Wilks test can be misleading.\nUse a graphical method!\n\n\nqqnorm(residuals(m))\nqqline(residuals(m))"
+    "text": "Numerical tests\n\n\nTest variance homogeneity\n\nF-test compares only two variances.\nSeveral tests for multiple variances, e.g. Bartlett, Levene, Fligner-Killeen\nRecommended: Fligner-Killeen-test\n\n\nfligner.test(growth ~ treat, \n             data = algae)\n\n\n    Fligner-Killeen test of homogeneity of variances\n\ndata:  growth by treat\nFligner-Killeen:med chi-squared = 4.2095, df = 6, p-value = 0.6483\n\n\n\n\nTest of normal distribution\n\nThe Shapiro-Wilks test can be misleading.\nUse a graphical method!\n\n\nqqnorm(residuals(m))\nqqline(residuals(m))"
   },
   {
     "objectID": "slides/07-anova.html#one-way-anova-with-heterogeneous-variances",
@@ -606,21 +606,21 @@
     "href": "slides/07-anova.html#two-way-anova",
     "title": "07-One and two-way ANOVA",
     "section": "Two-way ANOVA",
-    "text": "Two-way ANOVA\n\n\n\n\nExample from a statistics text book (Crawley, 2002)\nEffects of diet and coat color on growth of Hamsters in gramm per time\n\n\n\n\ndiet\nlight coat\ndark coat\n\n\n\n\nA\n8.3\n6.6\n\n\nA\n8.7\n7.2\n\n\nB\n8.1\n6.9\n\n\nB\n8.5\n8.3\n\n\nC\n9.1\n7.9\n\n\nC\n9.0\n9.2\n\n\n\n\n\n\n\n\n\nfactorial experiment (with replicates): each factor combination has more than one observation.\nwithout replication:\n\nno replicates per factor combination\nthis is possible, but does not allow identification of interactions"
+    "text": "Two-way ANOVA\n\nExample from a statistics text book (Crawley, 2002)\nEffects of diet and coat color on growth of Hamsters in gramm per time\n\n\n\n\ndiet\ndark coat\nlight coat\n\n\n\n\nA\n8.3\n6.6\n\n\nA\n8.7\n7.2\n\n\nB\n8.1\n6.9\n\n\nB\n8.5\n8.3\n\n\nC\n9.1\n7.9\n\n\nC\n9.0\n9.2\n\n\n\n\n\n\n\n\n\nfactorial experiment (with replicates): each factor combination has more than one observation.\nwithout replication:\n\nno replicates per factor combination\nthis is possible, but does not allow identification of interactions"
   },
   {
     "objectID": "slides/07-anova.html#enter-data-in-long-format",
     "href": "slides/07-anova.html#enter-data-in-long-format",
     "title": "07-One and two-way ANOVA",
     "section": "Enter data in long format",
-    "text": "Enter data in long format\n\n\n\nhams <- data.frame(No = 1:12,\n                   growth = c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,\n                            8.3, 8.7, 8.1, 8.5, 9.1, 9.0),\n                   diet = rep(c(\"A\", \"B\", \"C\"), each=2),\n                   coat = rep(c(\"light\", \"dark\"), each=6)\n                   )\n\n\n\n\n\n\n\n \n  \n    No \n    growth \n    diet \n    coat \n  \n \n\n  \n    1 \n    6.6 \n    A \n    light \n  \n  \n    2 \n    7.2 \n    A \n    light \n  \n  \n    3 \n    6.9 \n    B \n    light \n  \n  \n    4 \n    8.3 \n    B \n    light \n  \n  \n    5 \n    7.9 \n    C \n    light \n  \n  \n    6 \n    9.2 \n    C \n    light \n  \n  \n    7 \n    8.3 \n    A \n    dark \n  \n  \n    8 \n    8.7 \n    A \n    dark \n  \n  \n    9 \n    8.1 \n    B \n    dark \n  \n  \n    10 \n    8.5 \n    B \n    dark \n  \n  \n    11 \n    9.1 \n    C \n    dark \n  \n  \n    12 \n    9.0 \n    C \n    dark"
+    "text": "Enter data in long format\n\n\n\nhams &lt;- data.frame(No = 1:12,\n                   growth = c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,\n                            8.3, 8.7, 8.1, 8.5, 9.1, 9.0),\n                   diet = rep(c(\"A\", \"B\", \"C\"), each=2),\n                   coat = rep(c(\"light\", \"dark\"), each=6)\n                   )\n\n\n\n\n\n\n\n\nNo\ngrowth\ndiet\ncoat\n\n\n\n\n1\n6.6\nA\nlight\n\n\n2\n7.2\nA\nlight\n\n\n3\n6.9\nB\nlight\n\n\n4\n8.3\nB\nlight\n\n\n5\n7.9\nC\nlight\n\n\n6\n9.2\nC\nlight\n\n\n7\n8.3\nA\ndark\n\n\n8\n8.7\nA\ndark\n\n\n9\n8.1\nB\ndark\n\n\n10\n8.5\nB\ndark\n\n\n11\n9.1\nC\ndark\n\n\n12\n9.0\nC\ndark"
   },
   {
     "objectID": "slides/07-anova.html#linear-model-and-anova",
     "href": "slides/07-anova.html#linear-model-and-anova",
     "title": "07-One and two-way ANOVA",
     "section": "Linear model and ANOVA",
-    "text": "Linear model and ANOVA\n\nANOVA\n\nm <- lm(growth ~ coat * diet, data = hams)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: growth\n          Df  Sum Sq Mean Sq F value  Pr(>F)  \ncoat       1 2.61333 2.61333  7.2258 0.03614 *\ndiet       2 2.66000 1.33000  3.6774 0.09069 .\ncoat:diet  2 0.68667 0.34333  0.9493 0.43833  \nResiduals  6 2.17000 0.36167                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+    "text": "Linear model and ANOVA\n\nANOVA\n\nm &lt;- lm(growth ~ coat * diet, data = hams)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: growth\n          Df  Sum Sq Mean Sq F value  Pr(&gt;F)  \ncoat       1 2.61333 2.61333  7.2258 0.03614 *\ndiet       2 2.66000 1.33000  3.6774 0.09069 .\ncoat:diet  2 0.68667 0.34333  0.9493 0.43833  \nResiduals  6 2.17000 0.36167                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
     "objectID": "slides/07-anova.html#interaction-plot",
@@ -641,7 +641,7 @@
     "href": "slides/07-anova.html#diagnostics-ii",
     "title": "07-One and two-way ANOVA",
     "section": "Diagnostics II",
-    "text": "Diagnostics II\n\npar(mfrow=c(1, 2))\npar(cex=1.2, las=1)\nqqnorm(residuals(m))\nqqline(residuals(m))\n\nplot(residuals(m)~fitted(m))\nabline(h=0)\n\n\n\nfligner.test(growth ~ interaction(coat, diet), data=hams)\n\n\n    Fligner-Killeen test of homogeneity of variances\n\ndata:  growth by interaction(coat, diet)\nFligner-Killeen:med chi-squared = 10.788, df = 5, p-value = 0.05575\n\n\nResiduals: look ok and p-value of the Fligner test \\(< 0.05\\), \\(\\rightarrow\\) looks fine."
+    "text": "Diagnostics II\n\npar(mfrow=c(1, 2))\npar(cex=1.2, las=1)\nqqnorm(residuals(m))\nqqline(residuals(m))\n\nplot(residuals(m)~fitted(m))\nabline(h=0)\n\n\n\nfligner.test(growth ~ interaction(coat, diet), data=hams)\n\n\n    Fligner-Killeen test of homogeneity of variances\n\ndata:  growth by interaction(coat, diet)\nFligner-Killeen:med chi-squared = 10.788, df = 5, p-value = 0.05575\n\n\nResiduals: look ok and p-value of the Fligner test \\(&gt; 0.05\\), \\(\\rightarrow\\) looks fine."
   },
   {
     "objectID": "slides/07-anova.html#notes",
@@ -655,28 +655,28 @@
     "href": "slides/07-anova.html#sequential-holm-bonferroni-method",
     "title": "07-One and two-way ANOVA",
     "section": "Sequential Holm-Bonferroni method",
-    "text": "Sequential Holm-Bonferroni method\n\nAlso called Holm procedure (Holm, 1979)\nEasy to use\nCan be applied to any multiple test problem\nLess conservative that ordinary Bonferroni correction, but …\n… still a very conservative approach\nsee also Wikipedia\n\nAlgorithm\n\nSelect smallest \\(p\\) out of all \\(n\\) \\(p\\)-values\nIf \\(p \\cdot n < \\alpha\\) \\(\\Rightarrow\\) significant, else STOP\nSet \\(n − 1 \\rightarrow n\\), remove smallest \\(p\\) from the list and go to step 1."
+    "text": "Sequential Holm-Bonferroni method\n\nAlso called Holm procedure (Holm, 1979)\nEasy to use\nCan be applied to any multiple test problem\nLess conservative that ordinary Bonferroni correction, but …\n… still a very conservative approach\nsee also Wikipedia\n\nAlgorithm\n\nSelect smallest \\(p\\) out of all \\(n\\) \\(p\\)-values\nIf \\(p \\cdot n &lt; \\alpha\\) \\(\\Rightarrow\\) significant, else STOP\nSet \\(n − 1 \\rightarrow n\\), remove smallest \\(p\\) from the list and go to step 1."
   },
   {
     "objectID": "slides/07-anova.html#example-1",
     "href": "slides/07-anova.html#example-1",
     "title": "07-One and two-way ANOVA",
     "section": "Example",
-    "text": "Example\nGrowth rate per day (\\(d^{-1}\\)) of blue-green algae cultures (Pseudanabaena) after adding toxic peptides from another blue-green algae (Microcystis).\nThe original hypothesis was that Microcystin LR (MCYST) or a derivative of it (Substance A) inhibits growth.\n\nmcyst <-  data.frame(treat = factor(c(rep(\"Control\", 5),\n                                       rep(\"MCYST\", 5),\n                                       rep(\"Subst A\", 5)),\n                                levels=c(\"Control\", \"MCYST\", \"Subst A\")),\n                      mu   = c(0.086, 0.101, 0.086, 0.086, 0.099,\n                               0.092, 0.088, 0.093, 0.088, 0.086,\n                               0.095, 0.102, 0.106, 0.106, 0.106)\n                     )"
+    "text": "Example\nGrowth rate per day (\\(d^{-1}\\)) of blue-green algae cultures (Pseudanabaena) after adding toxic peptides from another blue-green algae (Microcystis).\nThe original hypothesis was that Microcystin LR (MCYST) or a derivative of it (Substance A) inhibits growth.\n\nmcyst &lt;-  data.frame(treat = factor(c(rep(\"Control\", 5),\n                                       rep(\"MCYST\", 5),\n                                       rep(\"Subst A\", 5)),\n                                levels=c(\"Control\", \"MCYST\", \"Subst A\")),\n                      mu   = c(0.086, 0.101, 0.086, 0.086, 0.099,\n                               0.092, 0.088, 0.093, 0.088, 0.086,\n                               0.095, 0.102, 0.106, 0.106, 0.106)\n                     )"
   },
   {
     "objectID": "slides/07-anova.html#approach-1-one-way-anova",
     "href": "slides/07-anova.html#approach-1-one-way-anova",
     "title": "07-One and two-way ANOVA",
     "section": "Approach 1: one-way ANOVA",
-    "text": "Approach 1: one-way ANOVA\n\npar(mar=c(4, 8, 2, 1), las=1)\nm <- lm(mu ~ treat, data=mcyst)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: mu\n          Df     Sum Sq    Mean Sq F value   Pr(>F)   \ntreat      2 0.00053293 2.6647e-04   8.775 0.004485 **\nResiduals 12 0.00036440 3.0367e-05                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nplot(TukeyHSD(aov(m)))"
+    "text": "Approach 1: one-way ANOVA\n\npar(mar=c(4, 8, 2, 1), las=1)\nm &lt;- lm(mu ~ treat, data=mcyst)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: mu\n          Df     Sum Sq    Mean Sq F value   Pr(&gt;F)   \ntreat      2 0.00053293 2.6647e-04   8.775 0.004485 **\nResiduals 12 0.00036440 3.0367e-05                    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nplot(TukeyHSD(aov(m)))"
   },
   {
     "objectID": "slides/07-anova.html#approach-2-multiple-t-tests-with-sequential-bonferroni-correction",
     "href": "slides/07-anova.html#approach-2-multiple-t-tests-with-sequential-bonferroni-correction",
     "title": "07-One and two-way ANOVA",
     "section": "Approach 2: multiple t-Tests with sequential Bonferroni correction",
-    "text": "Approach 2: multiple t-Tests with sequential Bonferroni correction\nWe separate the data set in single subsets:\n\nControl <- mcyst$mu[mcyst$treat == \"Control\"]\nMCYST   <- mcyst$mu[mcyst$treat == \"MCYST\"]\nSubstA  <- mcyst$mu[mcyst$treat == \"Subst A\"]\n\nand perform 3 t-Tests:\n\np1 <- t.test(Control, MCYST)$p.value\np2 <- t.test(Control, SubstA)$p.value\np3 <- t.test(MCYST, SubstA)$p.value\n\nThe following shows the raw p-values without correction:\n\nc(p1, p2, p3)\n\n[1] 0.576275261 0.027378832 0.001190592\n\n\nand with Holm correction:\n\np.adjust(c(p1, p2, p3))\n\n[1] 0.576275261 0.054757664 0.003571775"
+    "text": "Approach 2: multiple t-Tests with sequential Bonferroni correction\nWe separate the data set in single subsets:\n\nControl &lt;- mcyst$mu[mcyst$treat == \"Control\"]\nMCYST   &lt;- mcyst$mu[mcyst$treat == \"MCYST\"]\nSubstA  &lt;- mcyst$mu[mcyst$treat == \"Subst A\"]\n\nand perform 3 t-Tests:\n\np1 &lt;- t.test(Control, MCYST)$p.value\np2 &lt;- t.test(Control, SubstA)$p.value\np3 &lt;- t.test(MCYST, SubstA)$p.value\n\nThe following shows the raw p-values without correction:\n\nc(p1, p2, p3)\n\n[1] 0.576275261 0.027378832 0.001190592\n\n\nand with Holm correction:\n\np.adjust(c(p1, p2, p3))\n\n[1] 0.576275261 0.054757664 0.003571775"
   },
   {
     "objectID": "slides/07-anova.html#conclusions",
@@ -697,7 +697,7 @@
     "href": "slides/07-anova.html#the-birthweight-data-set",
     "title": "07-One and two-way ANOVA",
     "section": "The birthweight data set",
-    "text": "The birthweight data set\nThe data set is found at different places on the internet and in different versions.\nHere the version that is found in an R demo: demo(lm.glm)\n\n## Birth Weight Data see stats/demo/lm.glm.R\ndobson <- data.frame(\n  week = c(40, 38, 40, 35, 36, 37, 41, 40, 37, 38, 40, 38,\n     40, 36, 40, 38, 42, 39, 40, 37, 36, 38, 39, 40),\n  weight = c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,\n        3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,\n        2412, 2991, 2875, 3231),\n  sex = gl(2, 12, labels=c(\"M\", \"F\"))\n)"
+    "text": "The birthweight data set\nThe data set is found at different places on the internet and in different versions.\nHere the version that is found in an R demo: demo(lm.glm)\n\n## Birth Weight Data see stats/demo/lm.glm.R\ndobson &lt;- data.frame(\n  week = c(40, 38, 40, 35, 36, 37, 41, 40, 37, 38, 40, 38,\n     40, 36, 40, 38, 42, 39, 40, 37, 36, 38, 39, 40),\n  weight = c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,\n        3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,\n        2412, 2991, 2875, 3231),\n  sex = gl(2, 12, labels=c(\"M\", \"F\"))\n)"
   },
   {
     "objectID": "slides/07-anova.html#anette-dobsons-birthweight-data",
@@ -711,7 +711,7 @@
     "href": "slides/07-anova.html#ancova-makes-use-of-covariates",
     "title": "07-One and two-way ANOVA",
     "section": "ANCOVA makes use of covariates",
-    "text": "ANCOVA makes use of covariates\n\nm <- lm(weight ~ week * sex, data = dobson)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: weight\n          Df  Sum Sq Mean Sq F value    Pr(>F)    \nweek       1 1013799 1013799 31.0779 1.862e-05 ***\nsex        1  157304  157304  4.8221   0.04006 *  \nweek:sex   1    6346    6346  0.1945   0.66389    \nResiduals 20  652425   32621                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+    "text": "ANCOVA makes use of covariates\n\nm &lt;- lm(weight ~ week * sex, data = dobson)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: weight\n          Df  Sum Sq Mean Sq F value    Pr(&gt;F)    \nweek       1 1013799 1013799 31.0779 1.862e-05 ***\nsex        1  157304  157304  4.8221   0.04006 *  \nweek:sex   1    6346    6346  0.1945   0.66389    \nResiduals 20  652425   32621                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
     "objectID": "slides/07-anova.html#pitfalls-of-anova-and-ancova-described-so-far",
@@ -732,7 +732,7 @@
     "href": "slides/07-anova.html#type-ii-anova-example",
     "title": "07-One and two-way ANOVA",
     "section": "Type II ANOVA: Example",
-    "text": "Type II ANOVA: Example\n\n\nlibrary(\"car\")\nm <- lm(growth ~ coat * diet, data = hams)\nAnova(m, type=\"II\")\n\nAnova Table (Type II tests)\n\nResponse: growth\n           Sum Sq Df F value  Pr(>F)  \ncoat      2.61333  1  7.2258 0.03614 *\ndiet      2.66000  2  3.6774 0.09069 .\ncoat:diet 0.68667  2  0.9493 0.43833  \nResiduals 2.17000  6                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+    "text": "Type II ANOVA: Example\n\n\nlibrary(\"car\")\nm &lt;- lm(growth ~ coat * diet, data = hams)\nAnova(m, type=\"II\")\n\nAnova Table (Type II tests)\n\nResponse: growth\n           Sum Sq Df F value  Pr(&gt;F)  \ncoat      2.61333  1  7.2258 0.03614 *\ndiet      2.66000  2  3.6774 0.09069 .\ncoat:diet 0.68667  2  0.9493 0.43833  \nResiduals 2.17000  6                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   },
   {
     "objectID": "slides/07-anova.html#model-selection-a-paradigm-change",
@@ -753,7 +753,7 @@
     "href": "slides/07-anova.html#model-selection-and-likelihood-ratio-tests",
     "title": "07-One and two-way ANOVA",
     "section": "Model Selection and Likelihood Ratio Tests",
-    "text": "Model Selection and Likelihood Ratio Tests\nApproach\n\nFit several models individually\nCompare the models pairwise with ANOVA (likelihood ratio test)\n\nData and example\n\nhams <- data.frame(No=1:12,\n                   growth=c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,\n                            8.3, 8.7, 8.1, 8.5, 9.1, 9.0),\n                   diet= rep(c(\"A\", \"B\", \"C\"), each=2),\n                   coat= rep(c(\"light\", \"dark\"), each=6)\n                   )\n\n\nm1 <- lm(growth ~ diet * coat, data=hams)\nm2 <- lm(growth ~ diet + coat, data=hams)\nanova(m1, m2)\n\nAnalysis of Variance Table\n\nModel 1: growth ~ diet * coat\nModel 2: growth ~ diet + coat\n  Res.Df    RSS Df Sum of Sq      F Pr(>F)\n1      6 2.1700                           \n2      8 2.8567 -2  -0.68667 0.9493 0.4383\n\n\n\nLikelihood ratio test compares two models (anova with > 1 model)\nModel with interaction (m1) not significantly better than model without interaction (m2)."
+    "text": "Model Selection and Likelihood Ratio Tests\nApproach\n\nFit several models individually\nCompare the models pairwise with ANOVA (likelihood ratio test)\n\nData and example\n\nhams &lt;- data.frame(No=1:12,\n                   growth=c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,\n                            8.3, 8.7, 8.1, 8.5, 9.1, 9.0),\n                   diet= rep(c(\"A\", \"B\", \"C\"), each=2),\n                   coat= rep(c(\"light\", \"dark\"), each=6)\n                   )\n\n\nm1 &lt;- lm(growth ~ diet * coat, data=hams)\nm2 &lt;- lm(growth ~ diet + coat, data=hams)\nanova(m1, m2)\n\nAnalysis of Variance Table\n\nModel 1: growth ~ diet * coat\nModel 2: growth ~ diet + coat\n  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)\n1      6 2.1700                           \n2      8 2.8567 -2  -0.68667 0.9493 0.4383\n\n\n\nLikelihood ratio test compares two models (anova with &gt; 1 model)\nModel with interaction (m1) not significantly better than model without interaction (m2)."
   },
   {
     "objectID": "slides/07-anova.html#aic-based-model-selection",
@@ -767,7 +767,7 @@
     "href": "slides/07-anova.html#automatic-model-selection",
     "title": "07-One and two-way ANOVA",
     "section": "Automatic Model Selection",
-    "text": "Automatic Model Selection\n\nThe full model is supplied to the step function.\nThe model with the smallest AIC ist the optimal model:\n\n\n\nm1 <- lm(growth ~ diet * coat, data=hams)\nopt <- step(m1)\n\nStart:  AIC=-8.52\ngrowth ~ diet * coat\n\n            Df Sum of Sq    RSS     AIC\n- diet:coat  2   0.68667 2.8567 -9.2230\n<none>                   2.1700 -8.5222\n\nStep:  AIC=-9.22\ngrowth ~ diet + coat\n\n       Df Sum of Sq    RSS     AIC\n<none>              2.8567 -9.2230\n- diet  2    2.6600 5.5167 -5.3256\n- coat  1    2.6133 5.4700 -3.4275\n\n\n\n\n\nsummary(opt)\n\n\nCall:\nlm(formula = growth ~ diet + coat, data = hams)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-0.6333 -0.3458 -0.1000  0.2333  0.8667 \n\nCoefficients:\n            Estimate Std. Error t value Pr(>|t|)    \n(Intercept)   8.1667     0.3450  23.671 1.08e-08 ***\ndietB         0.2500     0.4225   0.592   0.5704    \ndietC         1.1000     0.4225   2.603   0.0315 *  \ncoatlight    -0.9333     0.3450  -2.705   0.0269 *  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.5976 on 8 degrees of freedom\nMultiple R-squared:  0.6486,    Adjusted R-squared:  0.5169 \nF-statistic: 4.923 on 3 and 8 DF,  p-value: 0.03178"
+    "text": "Automatic Model Selection\n\nThe full model is supplied to the step function.\nThe model with the smallest AIC ist the optimal model:\n\n\n\nm1 &lt;- lm(growth ~ diet * coat, data=hams)\nopt &lt;- step(m1)\n\nStart:  AIC=-8.52\ngrowth ~ diet * coat\n\n            Df Sum of Sq    RSS     AIC\n- diet:coat  2   0.68667 2.8567 -9.2230\n&lt;none&gt;                   2.1700 -8.5222\n\nStep:  AIC=-9.22\ngrowth ~ diet + coat\n\n       Df Sum of Sq    RSS     AIC\n&lt;none&gt;              2.8567 -9.2230\n- diet  2    2.6600 5.5167 -5.3256\n- coat  1    2.6133 5.4700 -3.4275\n\n\n\n\n\nsummary(opt)\n\n\nCall:\nlm(formula = growth ~ diet + coat, data = hams)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-0.6333 -0.3458 -0.1000  0.2333  0.8667 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   8.1667     0.3450  23.671 1.08e-08 ***\ndietB         0.2500     0.4225   0.592   0.5704    \ndietC         1.1000     0.4225   2.603   0.0315 *  \ncoatlight    -0.9333     0.3450  -2.705   0.0269 *  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.5976 on 8 degrees of freedom\nMultiple R-squared:  0.6486,    Adjusted R-squared:  0.5169 \nF-statistic: 4.923 on 3 and 8 DF,  p-value: 0.03178"
   },
   {
     "objectID": "slides/07-anova.html#summary",
@@ -795,6 +795,6 @@
     "href": "slides/07-anova.html#model-formula-examples",
     "title": "07-One and two-way ANOVA",
     "section": "Model formula examples",
-    "text": "Model formula examples\n\n\n\n\n\n\n\nModel Type\nFormula\n\n\n\n\nNull model\ny ~ 1\n\n\nSimple linear regression\ny ~ x\n\n\nLinear model without intercept\ny ~ x - 1\n\n\nMultiple regression, no interaction\ny ~ x1 + x2 + x3\n\n\nMultiple regression with interaction\ny ~ x1 * x2 * x3\n\n\nMultiple regression no 3x interaction\ny ~ x1 * x2 * x3 - x1 : x2 : x3\n\n\nTransformed with ‘as is’ function\ny ~ x + I(x^2), y ~ x + sin(x^2)\n\n\nOrthogonal polynomial of order 3\ny ~ poly(x, 3)\n\n\nANOVA with interaction\ny ~ f1 * f2\n\n\nANCOVA with Interaction\ny ~ x * f\n\n\nConditional or nested ANOVA\ny ~ x + (x | b), y ~ x + (1 | a / b)\n\n\nGAM with smoother s\ny ~ s(x) + f\n\n\n\n\n\n\n\n\ny = response variable (dependent, target)\nx = metric explanation variable (predictor, independent); f = factor variable (nominal)"
+    "text": "Model formula examples\n\n\n\n\n\n\n\nModel Type\nFormula\n\n\n\n\nNull model\ny ~ 1\n\n\nSimple linear regression\ny ~ x\n\n\nLinear model without intercept\ny ~ x - 1\n\n\nMultiple regression, no interaction\ny ~ x1 + x2 + x3\n\n\nMultiple regression with interaction\ny ~ x1 * x2 * x3\n\n\nMultiple regression, no 3x interaction\ny ~ x1 * x2 * x3 - x1 : x2 : x3\n\n\nTransformed with ‘as is’ function\ny ~ x + I(x^2)\n\n\nOne way ANOVA\ny ~ f\n\n\nANOVA with interaction\ny ~ f1 * f2\n\n\nANCOVA with Interaction\ny ~ x * f\n\n\nNested ANOVA\ny ~ x + (1 | a / b)\n\n\nGAM with smoother s\ny ~ s(x) + f\n\n\n\n\n\n\n\n\ny = response variable (dependent, target)\nx = metric explanation variable (predictor, independent); f = factor variable (nominal)"
   }
 ]

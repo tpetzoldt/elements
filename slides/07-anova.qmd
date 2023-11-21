@@ -57,7 +57,7 @@ mypar <- list(las=1, cex.lab=1.4, cex.axis=1.4, lwd=2)
 * use a commercial fertilizer with the main nutrients N and P
 * mineral water with trace elements
 * does non-sparkling mineral water contain enough $\mathrm{CO_2}$?
-* test how to improve ($\mathrm{CO_2}$) availability for photosynthesis
+* test how to improve $\mathrm{CO_2}$ availability for photosynthesis
 
 
 ## Application
@@ -236,7 +236,7 @@ $$
 
 
 If we ignore the Bonferroni law, we end in **statistical fishing** and
-get spurious results just by chance. See [https://xkcd.com/882/](https://xkcd.com/882/).
+get spurious results just by chance.
 
 # Solutions
 
@@ -379,29 +379,6 @@ anova(m)
 
 $\Rightarrow$ We see that the treatment had a significant effect.
 
-## Model formula examples
-
-| Model Type                              | Formula                                             |
-|-----------------------------------------|-----------------------------------------------------|
-| Null model                              | `y ~ 1`                                             |
-| Simple linear regression                | `y ~ x`                                             |
-| Linear model without intercept          | `y ~ x - 1`                                         |
-| Multiple regression, no interaction     | `y ~ x1 + x2 + x3`                                  |
-| Multiple regression with interaction    | `y ~ x1 * x2 * x3`                                  |
-| Multiple regression no 3x interaction   | `y ~ x1 * x2 * x3 - x1 : x2 : x3`                   |
-| Transformed with 'as is' function       | `y ~ x + I(x^2)`, `y ~ x + sin(x^2)`                |
-| Orthogonal polynomial of order 3        | `y ~ poly(x, 3)`                                    |
-| ANOVA with interaction                  | `y ~ f1 * f2`                                       |
-| ANCOVA with Interaction                 | `y ~ x * f`                                         |
-| Conditional or nested ANOVA             | `y ~ x + (x | b)`, `y ~ x + (1 | a / b)`            |
-| GAM with smoother `s`                   | `y ~ s(x) + f`                                      |
-|                                         |                                                     |
-
-* `y` = response variable (dependent, target)
-* `x` = metric explanation variable (predictor, independent); `f` = factor variable (nominal)
-
-
-
 
 ## Posthoc tests
 
@@ -460,7 +437,7 @@ plot(m)
 **Test variance homogeneity**
 
 * F-test compares only two variances.
-* Several tests for multiple variances available, e.g. Bartlett, Levene, Fligner-Killeen
+* Several tests for multiple variances, e.g. Bartlett, Levene, Fligner-Killeen
 * Recommended: Fligner-Killeen-test
 
 ```{r, echo=TRUE}
@@ -512,7 +489,7 @@ hams <- data.frame(No=1:12,
 * Example from a statistics text book [@Crawley2002]
 * Effects of diet and coat color on growth of Hamsters in gramm per time
 
-| diet | light coat  | dark coat   |
+| diet | dark coat   | light coat   |
 |------|-------------|-------------|
 | A    | 8.3         | 6.6         |
 | A    | 8.7         | 7.2         |
@@ -553,6 +530,28 @@ hams %>%
 ```
 
 :::
+
+## Model formula examples
+
+| Model Type                              | Formula                                             |
+|-----------------------------------------|-----------------------------------------------------|
+| Null model                              | `y ~ 1`                                             |
+| Simple linear regression                | `y ~ x`                                             |
+| Linear model without intercept          | `y ~ x - 1`                                         |
+| Multiple regression, no interaction     | `y ~ x1 + x2 + x3`                                  |
+| Multiple regression with interaction    | `y ~ x1 * x2 * x3`                                  |
+| Multiple regression, no 3x interaction  | `y ~ x1 * x2 * x3 - x1 : x2 : x3`                   |
+| Transformed with 'as is' function       | `y ~ x + I(x^2)`                                    |
+| One way ANOVA                           | `y ~ f`                                             |
+| ANOVA with interaction                  | `y ~ f1 * f2`                                       |
+| ANCOVA with Interaction                 | `y ~ x * f`                                         |
+| Nested ANOVA                            | `y ~ x + (1 | a / b)`            |
+| GAM with smoother `s`                   | `y ~ s(x) + f`                                      |
+|                                         |                                                     |
+
+* `y` = response variable (dependent, target)
+* `x` = metric explanation variable (predictor, independent); `f` = factor variable (nominal)
+
 
 
 ## Linear model and ANOVA
@@ -615,7 +614,7 @@ abline(h=0)
 fligner.test(growth ~ interaction(coat, diet), data=hams)
 ```
 
-Residuals: look ok and p-value of the Fligner test $< 0.05$, $\rightarrow$ looks fine. 
+Residuals: look ok and p-value of the Fligner test $> 0.05$, $\rightarrow$ looks fine. 
 
 ## Notes
 
