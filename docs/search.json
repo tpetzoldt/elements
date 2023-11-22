@@ -935,7 +935,7 @@
     "href": "slides/11-multivariate-2.html#how-to-analyse-this-kind-of-data",
     "title": "11-Multivariate methods II",
     "section": "How to analyse this kind of data?",
-    "text": "How to analyse this kind of data?\n\nTwo general approaches\n\nCalculation of biodiversity indices\n\ngeneral-purpose indices (Richness, Simpson, Shannon, Eveness)\ndomain-specific indices (e.g. Perlodes, EPT in stream ecology)\n\nMultivariate statistics\n\nordination methods (CCA, NMDS, dbRDA)\ncluster analysis"
+    "text": "How to analyse this kind of data?\n\nDifferent approaches\n\nDirect interpretation\n\nraw data, mean values, …\ntables and plots\n\nCalculation of biodiversity indices\n\ngeneral-purpose indices (Richness, Simpson, Shannon, Eveness)\ndomain-specific indices (in stream ecology: sapropbic index, Perlodes, EPT)\n\nMultivariate statistics\n\nordination methods (CCA, NMDS, dbRDA)\ncluster analysis"
   },
   {
     "objectID": "slides/11-multivariate-2.html#diversity-indices-1",
@@ -950,5 +950,187 @@
     "title": "11-Multivariate methods II",
     "section": "Bar chart",
     "text": "Bar chart\n\n\n\nlibrary(\"ggplot2\")\nlibrary(\"tidyr\")\n\nbenthos <- read.csv(\"https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/gauernitz.csv\")\n\nbenthos_long <-\n  benthos |>\n  pivot_longer(cols=5:17, names_to=\"Taxon\", values_to = \"Abundance\")\n\nggplot(benthos_long, aes(x=Site, y=Abundance, fill=Taxon)) + geom_col()"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#which-distances-are-supported-by-different-methods",
+    "href": "slides/11-multivariate-2.html#which-distances-are-supported-by-different-methods",
+    "title": "11-Multivariate methods II",
+    "section": "Which distances are supported by different methods?",
+    "text": "Which distances are supported by different methods?\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nMatrices\nDistance\nR function\n\n\n\n\nPCA\nPrincipal Components Analysis\none matrix\neuclidean\nprcomp, rda\n\n\nRDA\nRedundancy Analysis\ntwo matices\neuclidean\nrda\n\n\nCA\nCorrespondence Analysis\none matrix\nchi square\ncca\n\n\nCCA\nCanonical Correspondence Analysis\ntwo matrices\nchi square\ncca\n\n\nPCO/MDS\nPrincipal Correspondence Analysis\none matrix\nany\ncmdscale\n\n\ndbRDA\ndistance-based Redundancy Analysis\ntwo matrices\nany\ndbrda, capscale\n\n\nPCoA\nPrincipal Coordinate Analysis\ntwo matrices\nany\nwcmdscale\n\n\nNMDS\nNon-metric Multidimensional Scaling\none matrix\nany\nmetaMDS\n\n\n…\n…\n…\n…\n…\n\n\n\nCluster analysis\none matrix\nany\nseveral packages\n\n\n\n\n\n\n\n\n\n\n\n\nmany different methods, not all are shown\none matrix methods: all variables depend on each other; optional matrix of explanation variables can be projected afterwards\ntwo matrix methods (= constrained methods): additional matrix of explanation variables, both matrices handled simultanaeously\nan additional third matrix is supported by so-called partial methods, e.g. pRDA, pCCA, pdbRDA"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#from-pca-to-nmds",
+    "href": "slides/11-multivariate-2.html#from-pca-to-nmds",
+    "title": "11-Multivariate methods II",
+    "section": "From PCA to NMDS",
+    "text": "From PCA to NMDS\nPCA: Principal Components analysis\n▶ Starting point: raw data, covariance or correlation matrix\n(+) Basic method, very easy to understand\n(+) Biplot: common representation of objects and variables\n(–) Only metric distance can be used, not suitable for taxa lists\nPCO: Principal Coordinates Analysis\nalso referred to as (metric) MDS\n▶ Starting point: distance matrix\n(+) any distance measure can be used\nNMDS: non-metric multidimensional scaling\n\nstarts with results from PCO or random configuration\nattempts to bring similarity structure better into 2 (or 3) dimensions"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#nmds",
+    "href": "slides/11-multivariate-2.html#nmds",
+    "title": "11-Multivariate methods II",
+    "section": "NMDS",
+    "text": "NMDS\n\n\nis an extension of the PCO\niterative procedure, minimize goodness of fit (called “stress”)\nseveral variants, mostly algorithm according to Kruskal\nstart: random configuration or PCO\n\n(+/-) geometric distortion\n(–) results not always identical\n(–) computer intensive method, for large dada sets\n\nNote: stress is sometimes given as ratio 0…1, sometimes in 0…100%, different values in other statistics programs, e.g. SPSS"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#which-ordination-method-to-start-with",
+    "href": "slides/11-multivariate-2.html#which-ordination-method-to-start-with",
+    "title": "11-Multivariate methods II",
+    "section": "Which ordination method to start with?",
+    "text": "Which ordination method to start with?\n\nMultivariate statistics is a very broad field. Experience shows that it can become quite complex and challenging, but also that it is relatively easy to start with it.\n\nMy personal recommendation\n\nStart with PCA if working with physical, chemical and hydromorphological data. It often also works well with aggregated biomass data.\nUse RDA if you have additional explanation variables (two-matrix method)\nStart with NMDS if working with abundance data of species (taxa lists)\nUse NMDS with envfit to explore influence of explanation variables on the ordination.\nuse CCA, dbRDA or PCoA to get more quantitative results, compared to NMDS."
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#nonmetric-multidimensional-scaling",
+    "href": "slides/11-multivariate-2.html#nonmetric-multidimensional-scaling",
+    "title": "11-Multivariate methods II",
+    "section": "Nonmetric Multidimensional Scaling",
+    "text": "Nonmetric Multidimensional Scaling"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#example",
+    "href": "slides/11-multivariate-2.html#example",
+    "title": "11-Multivariate methods II",
+    "section": "Example",
+    "text": "Example\n\nbenthos <- read.csv(\"../data/gauernitz.csv\")\nrow.names(benthos) <- benthos$Site\n\nenv <- benthos[c(\"Habitat\", \"Stream\", \"Flood\")]\n\nbio <- benthos[c(\"Mollusca\", \"Diptera\", \"Baetis\", \"Plecoptera\", \"Coleoptera\", \n         \"Turbellaria\", \"Heptageniidae\", \"Ephemeroptera\", \"Gammarus\", \n         \"Trichoptera\", \"Acari\", \"Nematoda\", \"Oligochaeta\")]\n\nord <- metaMDS(bio)\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1102424 \nRun 1 stress 0.2560219 \nRun 2 stress 0.1105543 \n... Procrustes: rmse 0.02428942  max resid 0.07216245 \nRun 3 stress 0.1858757 \nRun 4 stress 0.1102424 \n... Procrustes: rmse 1.84355e-05  max resid 5.265787e-05 \n... Similar to previous best\nRun 5 stress 0.1105543 \n... Procrustes: rmse 0.02424258  max resid 0.07200373 \nRun 6 stress 0.1736877 \nRun 7 stress 0.1105543 \n... Procrustes: rmse 0.02421709  max resid 0.07191801 \nRun 8 stress 0.1105543 \n... Procrustes: rmse 0.02425645  max resid 0.07205195 \nRun 9 stress 0.1105543 \n... Procrustes: rmse 0.02426838  max resid 0.07208859 \nRun 10 stress 0.1102424 \n... Procrustes: rmse 2.875104e-06  max resid 6.718182e-06 \n... Similar to previous best\nRun 11 stress 0.1102424 \n... Procrustes: rmse 3.269254e-06  max resid 7.323184e-06 \n... Similar to previous best\nRun 12 stress 0.1105543 \n... Procrustes: rmse 0.02430161  max resid 0.07220224 \nRun 13 stress 0.1105544 \n... Procrustes: rmse 0.02432126  max resid 0.07227036 \nRun 14 stress 0.2053265 \nRun 15 stress 0.1102424 \n... Procrustes: rmse 4.984308e-06  max resid 1.407559e-05 \n... Similar to previous best\nRun 16 stress 0.1105543 \n... Procrustes: rmse 0.02420566  max resid 0.07188046 \nRun 17 stress 0.1855539 \nRun 18 stress 0.1102424 \n... Procrustes: rmse 1.126518e-05  max resid 3.061245e-05 \n... Similar to previous best\nRun 19 stress 0.1105543 \n... Procrustes: rmse 0.02421721  max resid 0.07191877 \nRun 20 stress 0.1727865 \n*** Best solution repeated 5 times"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#stress",
+    "href": "slides/11-multivariate-2.html#stress",
+    "title": "11-Multivariate methods II",
+    "section": "Stress",
+    "text": "Stress\n\nCompares similarity of the ordination with original dissimilarity in all dimensions.\n\n\n\n\\(\\theta(d_{ij})\\): observed dissimilaritiy\n\\(\\tilde{d}|{ij}\\): ordination dissimilarity\n\n\\[\nS = \\sqrt{\\frac{\\sum_{i \\ne j} (\\theta(d_{ij}) - \\tilde{d}|{ij})^2}{\\sum_{i \\ne j}  \\tilde{d}_{ij}^2}}\n\\]\n\n\n\n\n\nQuality of ordination\nStress\n\n\n\n\npoor\n> 0.2\n\n\nsufficient\n< 0.1\n\n\ngood\n<0.05\n\n\nexcellent\n<0.025\n\n\nperfect\n0.0"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#results-of-the-nmds",
+    "href": "slides/11-multivariate-2.html#results-of-the-nmds",
+    "title": "11-Multivariate methods II",
+    "section": "Results of the NMDS",
+    "text": "Results of the NMDS\n\nord\n\n\nCall:\nmetaMDS(comm = bio) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     wisconsin(sqrt(bio)) \nDistance: bray \n\nDimensions: 2 \nStress:     0.1102424 \nStress type 1, weak ties\nBest solution was repeated 5 times in 20 tries\nThe best solution was from try 0 (metric scaling or null solution)\nScaling: centring, PC rotation, halfchange scaling \nSpecies: expanded scores based on 'wisconsin(sqrt(bio))' \n\n\n\nmetaMDS made automatic decisions about transformation, distance and scaling\nit ran a series of NMDS trials and outputs the best\n\nRecommendation\n\nspecify transformation, scaling and distance explicitly\nconsider to increase tryand trymax for big and/or difficult data sets\n\n\nord <- metaMDS(bio, distance=\"bray\", autotransform=FALSE, try=40)"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#nmds-plot",
+    "href": "slides/11-multivariate-2.html#nmds-plot",
+    "title": "11-Multivariate methods II",
+    "section": "NMDS Plot",
+    "text": "NMDS Plot\n\nplot(ord, type=\"text\")\nabline(h=0, lty=\"dashed\", col=\"gray\")\nabline(v=0, lty=\"dashed\", col=\"gray\")\nmtext(paste(\"Stress=\", round(ord$stress,2)), side=3)"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#stressplot-shepherd-plot",
+    "href": "slides/11-multivariate-2.html#stressplot-shepherd-plot",
+    "title": "11-Multivariate methods II",
+    "section": "Stressplot (Shepherd plot)",
+    "text": "Stressplot (Shepherd plot)\n\nstressplot(ord)"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#stressplot-a-good-and-a-bad-example",
+    "href": "slides/11-multivariate-2.html#stressplot-a-good-and-a-bad-example",
+    "title": "11-Multivariate methods II",
+    "section": "Stressplot: a good and a bad example",
+    "text": "Stressplot: a good and a bad example\n\n\nGood\n\n\n\n\n\n\n\nBad\n\n\n\n\n\n\n\nThe \\(R^2\\) values are always very big, omit or at least don’t overinterpret \\(R^2\\).\nPattern of stairs not important (at least not now)\nImportant: points should be close to the red line"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#environmental-fitting",
+    "href": "slides/11-multivariate-2.html#environmental-fitting",
+    "title": "11-Multivariate methods II",
+    "section": "Environmental fitting",
+    "text": "Environmental fitting\n\nord <- metaMDS(bio, trace=FALSE)\nef <- envfit(ord, env, permu=1000)\nplot(ord, type=\"t\")\nplot(ef, p.max =0.1)\n\n\n\nPlots arrows if explanation variables are metric.\nShows only centroids for ordinal explanation variables."
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#numerical-results-and-p-values",
+    "href": "slides/11-multivariate-2.html#numerical-results-and-p-values",
+    "title": "11-Multivariate methods II",
+    "section": "Numerical results and p-values",
+    "text": "Numerical results and p-values\n\nef\n\n\n***FACTORS:\n\nCentroids:\n           NMDS1   NMDS2\nHabitatp -0.2714  0.0874\nHabitatr  0.2714 -0.0874\nStreamg  -0.0062 -0.1955\nStreamt   0.0062  0.1955\nFloodn    0.1665  0.1540\nFloodv   -0.1665 -0.1540\n\nGoodness of fit:\n            r2   Pr(>r)    \nHabitat 0.3837 0.000999 ***\nStream  0.1807 0.062937 .  \nFlood   0.2428 0.018981 *  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\nPermutation: free\nNumber of permutations: 1000\n\n\n\n\np-values are based on a permutation test\nuseful, but the ADONIS test is better"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#another-example-data-set-from-the-package",
+    "href": "slides/11-multivariate-2.html#another-example-data-set-from-the-package",
+    "title": "11-Multivariate methods II",
+    "section": "Another example data set from the package",
+    "text": "Another example data set from the package\n\ndata(varechem); data(varespec)\nmds <- metaMDS(varespec, trace=FALSE)\nef <- envfit(mds, varechem, permu=1000)\nplot(mds, type=\"t\")\nplot(ef, p.max =0.1)"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#surface-fitting",
+    "href": "slides/11-multivariate-2.html#surface-fitting",
+    "title": "11-Multivariate methods II",
+    "section": "Surface fitting",
+    "text": "Surface fitting\n\n\nef <- envfit(mds ~ Al + Ca, varechem, permu = 1000)\nplot(mds, display = \"sites\", type = \"text\")\nplot(ef)\nwith(varechem, ordisurf(mds, Al, add = TRUE))\nwith(varechem, ordisurf(mds, Ca, add = TRUE, col = \"green4\"))"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#stressplot-a-good-and-a-poor-example",
+    "href": "slides/11-multivariate-2.html#stressplot-a-good-and-a-poor-example",
+    "title": "11-Multivariate methods II",
+    "section": "Stressplot: a good and a poor example",
+    "text": "Stressplot: a good and a poor example\n\n\nGood\n\n\n\n\n\n\n\nPoor\n\n\n\n\n\n\n\nImportant: points should be close to the red line\nPattern of stairs not important (at least not for now)\nThe \\(R^2\\) values are always big, ignore or at least don’t overinterpret it."
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#advantages-and-disadvantages-of-the-methods-discussed-so-far",
+    "href": "slides/11-multivariate-2.html#advantages-and-disadvantages-of-the-methods-discussed-so-far",
+    "title": "11-Multivariate methods II",
+    "section": "Advantages and disadvantages of the methods discussed so far",
+    "text": "Advantages and disadvantages of the methods discussed so far\nPCA\n(+) easy to understand, quick and reproducible\n(+) no non-linear distortion\n(–) but: horseshoe effect possible\n(–) information is often still in a “higher dimension”\n(–) Euclidean distance poorly suited for species lists\n(–) one-matrix method (no separate matrices for species and environmental factors)\nNMDS\n(+) any distance measure can be used\n(+) better mapping on low dimensions\n(–) bias\n(–) numerical effort, iterative method, local minima\n(–) one-matrix method (no separate matrices for species and environmental factors)"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#alternative-and-generalized-methods-i",
+    "href": "slides/11-multivariate-2.html#alternative-and-generalized-methods-i",
+    "title": "11-Multivariate methods II",
+    "section": "Alternative and generalized methods I",
+    "text": "Alternative and generalized methods I\nCA\n\nsimilar to PCS, but uses \\(\\chi^2\\) distance\nbetter for taxa lists\none-matrix method\n\nCCA\n\nextension of the CA (\\(\\chi^2\\) distance)\ntwo-matrix method: species list and environmental factors\n\nRDA\n\nextension of the PCA (Euclidean distance)\ntwo-matrix method: species list and environmental factors"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#alternative-and-generalized-methods-i-1",
+    "href": "slides/11-multivariate-2.html#alternative-and-generalized-methods-i-1",
+    "title": "11-Multivariate methods II",
+    "section": "Alternative and generalized methods I",
+    "text": "Alternative and generalized methods I\ndbRDA / capscale\n\nExtension of the RDA for arbitrary distance measures\nTwo-matrix method: species list and environmental factors\n\nFor comparison: environmental fitting\n\nsubsequent overlay of the ordination with environmental factors\napplicable for most ordination methods (CA, PCA, NMDS) ▶ similar to two-matrix method, but both steps independent"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#interpretation-of-ca",
+    "href": "slides/11-multivariate-2.html#interpretation-of-ca",
+    "title": "11-Multivariate methods II",
+    "section": "Interpretation of CA",
+    "text": "Interpretation of CA\n\nbiplot with species and environmental factors, note scaling (α)!\n\ndistance from the origin: \\(\\chi^2\\)\nspecies in the middle: either “average species” or poorly explained species.\nspecies at the very edge: Attention, often rare species\n\northogonal angle of species on connecting line origin - centroid of environmental factor"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#problems-of-ca-and-pca",
+    "href": "slides/11-multivariate-2.html#problems-of-ca-and-pca",
+    "title": "11-Multivariate methods II",
+    "section": "Problems of CA (and PCA)",
+    "text": "Problems of CA (and PCA)\n\n\narc (CA) or horseshoe effect (PCA)\n\n\n\n\n\n\n  \n    1 \n    1 \n    1 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n  \n  \n    0 \n    1 \n    1 \n    1 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n  \n  \n    0 \n    0 \n    1 \n    1 \n    1 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n  \n  \n    0 \n    0 \n    0 \n    1 \n    1 \n    1 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n  \n  \n    0 \n    0 \n    0 \n    0 \n    1 \n    1 \n    1 \n    0 \n    0 \n    0 \n    0 \n    0 \n  \n  \n    0 \n    0 \n    0 \n    0 \n    0 \n    1 \n    1 \n    1 \n    0 \n    0 \n    0 \n    0 \n  \n  \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    1 \n    1 \n    1 \n    0 \n    0 \n    0 \n  \n  \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    1 \n    1 \n    1 \n    0 \n    0 \n  \n  \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    1 \n    1 \n    1 \n    0 \n  \n  \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    0 \n    1 \n    1 \n    1 \n  \n\n\n\n\n\n\n\n\n\n\n\n\n\nWorkaround\n\ndetrended correspondence analysis (DCA) used in the past, not anymore recommended\nbetter: NMDS or a “constrained” (2-matrix) method, e.g. CCA, RDA, dbRDA)"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#cca-canonical-correspondence-analysis",
+    "href": "slides/11-multivariate-2.html#cca-canonical-correspondence-analysis",
+    "title": "11-Multivariate methods II",
+    "section": "CCA: Canonical Correspondence Analysis",
+    "text": "CCA: Canonical Correspondence Analysis\n……….. draw a sketch here\n\ntwo-matrix method:\n\ntaxa matrix (bio)\nenvironmental matrix (env)\n\ncorrelation many - many \\(\\mathbf{Y} =f(\\mathbf{X})\\)\nresponse variable is not only a diversity index, but the complete species community\nallows numerical assessment of “information partition” (inertia)"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#example-gauernitzbach-data",
+    "href": "slides/11-multivariate-2.html#example-gauernitzbach-data",
+    "title": "11-Multivariate methods II",
+    "section": "Example Gauernitzbach-data",
+    "text": "Example Gauernitzbach-data\n\nord <- cca(bio ~ ., data=env)\nord\n\nCall: cca(formula = bio ~ Habitat + Stream + Flood, data = env)\n\n              Inertia Proportion Rank\nTotal          0.8599     1.0000     \nConstrained    0.5210     0.6059    3\nUnconstrained  0.3389     0.3941   12\nInertia is scaled Chi-square \n\nEigenvalues for constrained axes:\n  CCA1   CCA2   CCA3 \n0.3821 0.1090 0.0299 \n\nEigenvalues for unconstrained axes:\n    CA1     CA2     CA3     CA4     CA5     CA6     CA7     CA8     CA9    CA10 \n0.13511 0.09923 0.03695 0.02930 0.01771 0.01124 0.00504 0.00213 0.00157 0.00050 \n   CA11    CA12 \n0.00011 0.00000 \n\n\n\n“inertia” measures error and information (similar to variance)\nin case of CCA it is \\(\\chi^2\\) distance, in case of RDA it is variance\nin the example\n\n61% is explained by the constrained axes Habitat, Stream and Flood\n39% is not explained by the provided environmental variables"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#triplot",
+    "href": "slides/11-multivariate-2.html#triplot",
+    "title": "11-Multivariate methods II",
+    "section": "Triplot",
+    "text": "Triplot\n\n\nplot(ord)"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#statistical-significance-tests",
+    "href": "slides/11-multivariate-2.html#statistical-significance-tests",
+    "title": "11-Multivariate methods II",
+    "section": "Statistical significance tests",
+    "text": "Statistical significance tests\n\nanova(ord, by=\"terms\")\n\nPermutation test for cca under reduced model\nTerms added sequentially (first to last)\nPermutation: free\nNumber of permutations: 999\n\nModel: cca(formula = bio ~ Habitat + Stream + Flood, data = env)\n         Df ChiSquare       F Pr(>F)    \nHabitat   1   0.31255 11.0671  0.001 ***\nStream    1   0.10766  3.8123  0.006 ** \nFlood     1   0.10081  3.5696  0.011 *  \nResidual 12   0.33889                   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
+  },
+  {
+    "objectID": "slides/11-multivariate-2.html#adonis-test",
+    "href": "slides/11-multivariate-2.html#adonis-test",
+    "title": "11-Multivariate methods II",
+    "section": "ADONIS test",
+    "text": "ADONIS test\n\nadonis2(bio ~Habitat*Stream*Flood, data=env)\n\nPermutation test for adonis under reduced model\nTerms added sequentially (first to last)\nPermutation: free\nNumber of permutations: 999\n\nadonis2(formula = bio ~ Habitat * Stream * Flood, data = env)\n                     Df SumOfSqs      R2       F Pr(>F)    \nHabitat               1   0.4465 0.12068  7.4916  0.003 ** \nStream                1   0.4388 0.11863  7.3637  0.002 ** \nFlood                 1   1.4603 0.39474 24.5039  0.001 ***\nHabitat:Stream        1   0.2827 0.07642  4.7439  0.015 *  \nHabitat:Flood         1   0.1549 0.04187  2.5989  0.064 .  \nStream:Flood          1   0.3001 0.08113  5.0363  0.004 ** \nHabitat:Stream:Flood  1   0.1393 0.03765  2.3371  0.078 .  \nResidual              8   0.4768 0.12888                   \nTotal                15   3.6994 1.00000                   \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1"
   }
 ]

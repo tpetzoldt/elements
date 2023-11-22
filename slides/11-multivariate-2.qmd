@@ -352,6 +352,427 @@ where:
 Additional distance measures and application suggestions in
 the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/vegdist) help page.
 
+## Which distances are supported by different methods?
+
+<br>
+
+:::{.smallfont}
+
+|         |                                    |  Matrices     |  Distance |  R function         |
+|---------|------------------------------------|---------------|-----------|---------------------|
+| PCA     | Principal Components Analysis      | one matrix    | euclidean | `prcomp`, `rda`     |
+| RDA     | Redundancy Analysis                | two matices   | euclidean | `rda`               |
+| CA      | Correspondence Analysis            | one matrix    | chi square| `cca`               |
+| CCA     | Canonical Correspondence Analysis  | two matrices  | chi square| `cca`               |
+| PCO/MDS | Principal Correspondence Analysis  | one matrix    | any       | `cmdscale`          |
+| dbRDA   | distance-based Redundancy Analysis | two matrices  | any       | `dbrda`, `capscale` |
+| PCoA    | Principal Coordinate Analysis      | two matrices  | any       | `wcmdscale`         |
+| NMDS    | Non-metric Multidimensional Scaling| one matrix    | any       | `metaMDS`           |
+|...      | ...                                |...            |...        | ...                 |
+|         |  Cluster analysis                  | one matrix    | any       | several packages    |
+|         |                                    |               |           |                     |
+
+<small><br></small>
+
+* many different methods, not all are shown
+* one matrix methods: all variables depend on each other; optional matrix of explanation variables can be projected afterwards
+* two matrix methods (= constrained methods): additional matrix of explanation variables, both matrices handled simultanaeously
+* an additional third matrix is supported by so-called partial methods, e.g. pRDA, pCCA, pdbRDA
+
+:::
+
+## From PCA to NMDS
+
+**PCA: Principal Components analysis**
+
+▶ Starting point: raw data, covariance or correlation matrix
+
+(+) Basic method, very easy to understand
+
+(+) Biplot: common representation of objects and variables
+
+(--) Only metric distance can be used, not suitable for taxa lists
+
+**PCO: Principal Coordinates Analysis**
+
+[also referred to as (metric) MDS]{.gray}
+
+▶ Starting point: distance matrix
+
+
+(+) any distance measure can be used
+
+
+**NMDS: non-metric multidimensional scaling**
+
+
+* starts with results from PCO or random configuration
+* attempts to bring similarity structure better into 2 (or 3) dimensions
+
+
+## NMDS
+<br>
+
+* is an extension of the PCO
+* iterative procedure, minimize goodness of fit (called "stress")
+* several variants, mostly algorithm according to Kruskal
+* start: random configuration or PCO
+
+(+/-) geometric distortion
+
+(--) results not always identical
+
+(--) computer intensive method, for large dada sets
+
+<br>
+
+**Note:** stress is sometimes given as ratio 0...1, sometimes in 0...100%, different values in other statistics programs, e.g. SPSS
+
+
+## Example
+
+```{r}
+benthos <- read.csv("../data/gauernitz.csv")
+row.names(benthos) <- benthos$Site
+
+env <- benthos[c("Habitat", "Stream", "Flood")]
+
+bio <- benthos[c("Mollusca", "Diptera", "Baetis", "Plecoptera", "Coleoptera", 
+         "Turbellaria", "Heptageniidae", "Ephemeroptera", "Gammarus", 
+         "Trichoptera", "Acari", "Nematoda", "Oligochaeta")]
+
+ord <- metaMDS(bio)
+```
+## Results of the NMDS
+
+```{r}
+ord
+```
+
+* `metaMDS` made automatic decisions about transformation, distance and scaling
+* it ran a series of NMDS trials and outputs the best
+
+**Recommendation**
+
+* specify transformation, scaling and distance explicitly 
+* consider to increase `try`and `trymax` for big and/or difficult data sets
+
+```{r, eval=FALSE}
+ord <- metaMDS(bio, distance="bray", autotransform=FALSE, try=40)
+```
+
+```{r, echo=FALSE}
+ord <- metaMDS(bio, distance="bray", autotransform=FALSE, try=40, trace = FALSE)
+```
+
+## NMDS Plot
+
+```{r gau-nmds, fig.width=5, fig.height=5, fig.algn='center'}
+plot(ord, type="text")
+abline(h=0, lty="dashed", col="gray")
+abline(v=0, lty="dashed", col="gray")
+mtext(paste("Stress=", round(ord$stress,2)), side=3)
+```
+
+
+## Stress
+
+<br>
+
+Compares similarity of the ordination with original dissimilarity in all dimensions.
+
+<br>
+
+::: {.column width="39%"}
+
+* $\theta(d_{ij})$: observed dissimilaritiy
+* $\tilde{d}|{ij}$: ordination dissimilarity
+
+$$
+S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}|{ij})^2}{\sum_{i \ne j}  \tilde{d}_{ij}^2}}
+$$
+
+:::
+
+::: {.column width="39%"}
+
+| Quality of ordination | Stress |
+|-----------------------|--------|
+| poor                  | > 0.2  |
+| sufficient            | < 0.1  |
+| good                  | <0.05  |
+| excellent             | <0.025 |
+| perfect               | 0.0    |
+|                       |        |
+
+:::
+
+
+## Stressplot (Shepherd plot)
+
+
+```{r stressplot1, fig.align='center'}
+stressplot(ord)
+```
+
+## Stressplot: a good and a poor example
+
+<br>
+
+:::{.column width="47%" .add-space}
+
+**Good**
+
+```{r stressplot2, echo=FALSE, fig.width=4, fig.height=4}
+stressplot(ord, pch=16)
+mtext(paste("Stress=", round(ord$stress,2)), side=3)
+```
+
+:::
+
+:::{.column width="47%"}
+
+**Poor**
+
+```{r stressplot3, echo=FALSE, fig.width=4, fig.height=4}
+set.seed(123)
+rdat <- matrix(runif(100), nrow=20)
+ord2  <- metaMDS(rdat, distance = "euclid", autotransform=FALSE, trace=FALSE)
+stressplot(ord2, pch=16)
+mtext(paste("Stress=", round(ord2$stress,2)), side=3)
+```
+
+:::
+
+
+* Important: points should be close to the red line
+* Pattern of stairs not important (at least not for now)
+* The $R^2$ values are always big, ignore or at least don't overinterpret it.
+
+
+
+## Environmental fitting
+
+```{r envfit, fig.align='center'}
+ord <- metaMDS(bio, trace=FALSE)
+ef <- envfit(ord, env, permu=1000)
+plot(ord, type="t")
+plot(ef, p.max =0.1)
+```
+
+* Plots arrows if explanation variables are metric.
+* Shows only centroids for ordinal explanation variables.
+
+## Numerical results and p-values
+
+```{r}
+ef
+```
+<br>
+
+* p-values are based on a permutation test
+* useful, but the ADONIS test is better
+
+## Another example data set from the package
+
+```{r vare-envfit, fig.align='center'}
+data(varechem); data(varespec)
+mds <- metaMDS(varespec, trace=FALSE)
+ef <- envfit(mds, varechem, permu=1000)
+plot(mds, type="t")
+plot(ef, p.max =0.1)
+```
+
+## Surface fitting
+
+```{r vare-surf, fig.align='center', echo=FALSE}
+ef <- envfit(mds ~ Al + Ca, varechem, permu=1000)
+plot(mds, display="sites", type="text")
+plot(ef)
+invisible(with(varechem, ordisurf(mds, Al, add=TRUE)))
+invisible(with(varechem, ordisurf(mds, Ca, add=TRUE, col="green4")))
+```
+
+```{r vare-surf2, fig.align='center', eval=FALSE}
+ef <- envfit(mds ~ Al + Ca, varechem, permu = 1000)
+plot(mds, display = "sites", type = "text")
+plot(ef)
+with(varechem, ordisurf(mds, Al, add = TRUE))
+with(varechem, ordisurf(mds, Ca, add = TRUE, col = "green4"))
+```
+
+## Advantages and disadvantages of the methods discussed so far
+
+**PCA**
+
+(+) easy to understand, quick and reproducible
+
+(+) no non-linear distortion
+
+(--) but: horseshoe effect possible
+
+(--) information is often still in a "higher dimension"
+
+(--) Euclidean distance poorly suited for species lists
+
+(--) one-matrix method (no separate matrices for species and environmental factors)
+
+**NMDS**
+
+(+) any distance measure can be used
+
+(+) better mapping on low dimensions
+
+(--) bias
+
+(--) numerical effort, iterative method, local minima
+
+(--) one-matrix method (no separate matrices for species and environmental factors)
+
+
+## Alternative and generalized methods I
+
+**CA**
+
+* similar to PCS, but uses $\chi^2$ distance
+* better for taxa lists
+* one-matrix method
+
+**CCA**
+
+* extension of the CA ($\chi^2$ distance)
+* two-matrix method: species list and environmental factors
+
+**RDA**
+
+* extension of the PCA (Euclidean distance)
+* two-matrix method: species list and environmental factors
+
+## Alternative and generalized methods I
+
+**dbRDA** / **capscale**
+
+* Extension of the RDA for arbitrary distance measures
+* Two-matrix method: species list and environmental factors
+
+**For comparison: environmental fitting**
+
+* subsequent overlay of the ordination with environmental factors
+* applicable for most ordination methods (CA, PCA, NMDS)
+▶ similar to two-matrix method, but both steps independent
+
+## Interpretation of CA
+
+* biplot with species and environmental factors, note scaling (α)!
+    - distance from the origin: $\chi^2$
+    - species in the middle: either "average species" or poorly explained species.
+    - species at the very edge: Attention, often rare species
+- orthogonal angle of species on connecting line origin - centroid of environmental factor
+
+## Problems of CA (and  PCA)
+
+:::{.column width="44%" .add-space}
+* arc (CA) or horseshoe effect (PCA)
+
+```{r, echo=FALSE}
+tridi <- function(k) {
+  x <- matrix(0, nrow=k+2, ncol=k)
+  diag(x) <- 1
+  x2 <- x
+  x2[2:(k+1), ] <- x2[2:(k+1), ] + x[1:k, ]
+  x2[3:(k+2), ] <- x2[3:(k+2), ] + x[1:k, ]
+  t(x2)
+}
+x <- tridi(10)
+kable(x)
+```
+
+
+:::
+
+:::{.column width=44%}
+
+```{r horseshoe, fig.width=4, fig.height=4, echo=FALSE}
+par(mar=c(4,4,1,1))
+cc <- cca(x)
+plot(cc)
+```
+
+:::
+
+**Workaround**
+
+- detrended correspondence analysis (DCA) used in the past, not anymore recommended
+- better: NMDS or a "constrained" (2-matrix) method, e.g. CCA, RDA, dbRDA)
+
+
+## CCA: Canonical Correspondence Analysis
+
+........... draw a sketch here
+
+* two-matrix method:
+    - taxa matrix (bio)
+    - environmental matrix (env)
+* correlation many - many $\mathbf{Y} =f(\mathbf{X})$
+* response variable is not only a diversity index, but the complete species community
+* allows numerical assessment of "information partition" (inertia)
+
+## Example Gauernitzbach-data
+
+```{r}
+ord <- cca(bio ~ ., data=env)
+ord
+```
+
+
+* "inertia" measures error and information (similar to variance)
+* in case of CCA it is $\chi^2$ distance, in case of RDA it is variance
+* in the example
+    - 61% is explained by the constrained axes Habitat, Stream and Flood
+    - 39% is not explained by the provided environmental variables
+
+## Triplot
+
+<br>
+
+```{r gau-cca, fig.width=6, fig.height=6, fig.align='center'}
+plot(ord)
+```
+
+
+## Statistical significance tests
+
+```{r}
+anova(ord, by="terms")
+```
+
+
+## ADONIS test
+
+```{r}
+adonis2(bio ~Habitat*Stream*Flood, data=env)
+```
+
+
+
+## Which ordination method to start with?
+
+<br>
+
+Multivariate statistics is a very broad field. 
+Experience shows that it can become quite complex and challenging, but also that it is relatively easy to start with it.
+
+<br>
+
+**My personal recommendation**
+
+1. Start with **PCA** if working with physical, chemical and hydromorphological data. It often also works well with aggregated biomass data.
+2. Use RDA if you have additional explanation variables (two-matrix method)
+3. Start with NMDS if working with abundance data of species (taxa lists)
+4. Use NMDS with `envfit` to explore influence of explanation variables on the ordination.
+5. use CCA, dbRDA or PCoA to get more quantitative results, compared to NMDS.
+
+
 
 
 
