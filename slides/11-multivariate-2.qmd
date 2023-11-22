@@ -13,7 +13,8 @@ library("kableExtra")
 library("leaflet")
 library("rgl")
 library("scatterplot3d")
-#knitr::opts_chunk$set(echo = TRUE, eval=FALSE)
+library("ggplot2")
+library("tidyr")
 knitr::opts_chunk$set(echo = TRUE, eval=TRUE)
 setupKnitr(autoprint = FALSE) # for embedded RGL graphics
 ```
@@ -32,6 +33,166 @@ published at the [UBA web site](https://www.umweltbundesamt.de/), that refer to
 2. The "gauernitz" data set contains simplified teaching versions from research data, of the study from @winkelmann_fish_2011
 
 3. The document itself, the codes and the ebedded images are own work and can be shared according to [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/deed.en).
+
+
+
+## A Taxonomic Table
+
+<small>
+```{r echo=FALSE}
+benthos <- read.csv("../data/gauernitz.csv") 
+kable(benthos[-(2:4)])
+```
+</small>
+
+* Aggregated part of taxa list from two small streams.
+* Mayfly splitted in most dominant taxa (*Baetis* and *Heptageniidae*) and the 
+remaining *Ephemeroptera* for simplicity of the teaching example.
+
+## Bar chart
+
+
+<!-- use local data -->
+```{r gau-barchart, echo=FALSE, fig.height=4, fig.width=12}
+benthos <- read.csv("../data/gauernitz.csv")
+
+benthos_long <-
+  benthos |>
+  pivot_longer(cols=5:17, names_to="Taxon", values_to = "Abundance")
+
+ggplot(benthos_long, aes(x=Site, y=Abundance, fill=Taxon)) + geom_col()
+```
+
+
+```{r, echo=TRUE, eval=FALSE}
+library("ggplot2")
+library("tidyr")
+
+benthos <- read.csv("https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/gauernitz.csv")
+
+benthos_long <-
+  benthos |>
+  pivot_longer(cols=5:17, names_to="Taxon", values_to = "Abundance")
+
+ggplot(benthos_long, aes(x=Site, y=Abundance, fill=Taxon)) + geom_col()
+```
+
+
+## How to analyse this kind of data?
+
+<br>
+
+Different approaches
+
+1. Direct interpretation
+    - raw data, mean values, ...
+    - tables and plots
+
+2. Calculation of biodiversity indices
+    - general-purpose indices (Richness, Simpson, Shannon, Eveness)
+    - domain-specific indices (in stream ecology: sapropbic index, Perlodes, EPT)
+
+
+3. Multivariate statistics
+    - ordination methods (CCA, NMDS, dbRDA)
+    - cluster analysis
+
+
+## Diversity indices
+
+<hr></hr>
+
+:::{.column width="44%" .add-space}
+**Simpson index**
+
+$$
+D = \sum_{i=1}^S p_i^2
+$$
+
+* $p_i$: relative abundance of species
+* in most cases, Simpson index is given as $\tilde{D} = 1 - D$<br>
+  [(large values -- high diversity)]{.gray}
+* also possible: inverse Simpson index: $D' = 1 / D$<br> 
+
+:::
+
+:::{.column width="48%"}
+
+**Shannon index**
+
+$$
+H = -\sum_{i=1}^S p_i \log_b p_i
+$$
+  
+  * in most cases log base $b=e$ (natural log), some prefer $b=2$ (information theory)
+  
+  
+  **Eveness **
+  
+  $$
+  E = \frac{H}{\log(S)}
+  $$
+  
+* $S$: number of species
+
+:::
+
+<hr></hr>
+
+* more indices: species richness, species deficit, Fisher's $\alpha$ ...
+
+## Diversity indices
+
+:::{.column width="20%"}
+:::
+
+:::{.column width="60%"}
+<small>
+```{r echo=FALSE}
+library("vegan")
+species <- benthos[c("Mollusca", "Diptera", "Baetis", "Plecoptera", 
+                     "Coleoptera", "Turbellaria", "Heptageniidae",
+                     "Ephemeroptera", "Gammarus", "Trichoptera", 
+                     "Acari", "Nematoda", "Oligochaeta")]
+div <- data.frame(
+  shannon = diversity(species, index="shannon"),
+  simpson = diversity(species, index="simpson"),
+  invsimpson = diversity(species, index="invsimpson"),
+  eveness = diversity(species, index="shannon") / log(ncol(species)),
+  fisher_alpha = fisher.alpha(species)
+)
+div <- lapply(div, round, 2)
+kable(cbind(benthos[c("Site", "Habitat", "Stream", "Flood")], div))
+```
+</small>
+:::
+
+* aggregated data but which of the indices tells what?
+* $\rightarrow$ information loss compared to the original list
+
+
+
+## Problem
+
+<br>
+
+**The PCA does not work well for this kind of data**
+
+* Without standardization: most frequent taxa dominate the analysis, rare species under-represented
+
+* With standardization: rare species will given too much influence, result dominates much on sampling error
+
+* square root transformation does not help, log-transformation is not possible because of zeros
+
+
+**Why?**
+
+* the distance measure, used in PCA is the so-called Euclidean distance
+* it works not well for species lists
+
+**Approach**
+
+* use other distance and dissimilarity measures
 
 
 # Distance and similarity
@@ -191,89 +352,6 @@ where:
 Additional distance measures and application suggestions in
 the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/vegdist) help page.
 
-
-## A Taxonomic Table
-
-<small>
-```{r echo=FALSE}
-benthos <- read.csv("../data/gauernitz.csv") 
-kable(benthos[-(2:4)])
-```
-</small>
-
-* Aggregated part of taxa list from two small streams.
-
-## How to aggregate the data?
-
-<hr></hr>
-
-:::{.column width="44%" .add-space}
-**Simpson index**
-
-$$
-D = \sum_{i=1}^S p_i^2
-$$
-
-* $p_i$: relative abundance of species
-* in most cases, Simpson index is given as $\tilde{D} = 1 - D$<br>
-  [(large values -- high diversity)]{.gray}
-* also possible: inverse Simpson index: $D' = 1 / D$<br> 
-
-:::
-
-:::{.column width="48%"}
-
-**Shannon index**
-
-$$
-H = -\sum_{i=1}^S p_i \log_b p_i
-$$
-  
-  * in most cases log base $b=e$ (natural log), some prefer $b=2$ (information theory)
-  
-  
-  **Eveness **
-  
-  $$
-  E = \frac{H}{\log(S)}
-  $$
-  
-* $S$: number of species
-
-:::
-
-<hr></hr>
-
-* more indices: species richness, species deficit, Fisher's $\alpha$ ...
-
-## Diversity indices
-
-:::{.column width="20%"}
-:::
-
-:::{.column width="60%"}
-<small>
-```{r echo=FALSE}
-library("vegan")
-species <- benthos[c("Mollusca", "Diptera", "Baetis", "Plecoptera", 
-                     "Coleoptera", "Turbellaria", "Heptageniidae",
-                     "Ephemeroptera", "Gammarus", "Trichoptera", 
-                     "Acari", "Nematoda", "Oligochaeta")]
-div <- data.frame(
-  shannon = diversity(species, index="shannon"),
-  simpson = diversity(species, index="simpson"),
-  invsimpson = diversity(species, index="invsimpson"),
-  eveness = diversity(species, index="shannon") / log(ncol(species)),
-  fisher_alpha = fisher.alpha(species)
-)
-div <- lapply(div, round, 2)
-kable(cbind(benthos[c("Site", "Habitat", "Stream", "Flood")], div))
-```
-</small>
-:::
-
-* aggregated data but which of the indices tells what?
-* $\rightarrow$ information loss compared to the original list
 
 
 
