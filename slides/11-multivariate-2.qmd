@@ -347,6 +347,7 @@ where:
 * $M$ =  number of columns (excluding missing values)
 
 <br>
+
 **Applications**
 
 Additional distance measures and application suggestions in
@@ -364,7 +365,7 @@ the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/to
 | RDA     | Redundancy Analysis                | two matices   | euclidean | `rda`               |
 | CA      | Correspondence Analysis            | one matrix    | chi square| `cca`               |
 | CCA     | Canonical Correspondence Analysis  | two matrices  | chi square| `cca`               |
-| PCO/MDS | Principal Correspondence Analysis  | one matrix    | any       | `cmdscale`          |
+| PCO/MDS | Principal Correspondence Analysis  | one matrix    | any       | `cmdscale`, ...     |
 | dbRDA   | distance-based Redundancy Analysis | two matrices  | any       | `dbrda`, `capscale` |
 | PCoA    | Principal Coordinate Analysis      | two matrices  | any       | `wcmdscale`         |
 | NMDS    | Non-metric Multidimensional Scaling| one matrix    | any       | `metaMDS`           |
@@ -380,6 +381,41 @@ the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/to
 * an additional third matrix is supported by so-called partial methods, e.g. pRDA, pCCA, pdbRDA
 
 :::
+
+## Principal coordinate analysis (PCO)
+
+:::{.column width="49%"}
+
+<br>
+
+```{r}
+library("vegan")
+benthos <- read.csv("../data/gauernitz.csv")
+row.names(benthos) <- benthos$Site
+species <- benthos[-c(1:4)]
+
+d   <- vegdist(species, method="bray")
+ord <- cmdscale(d)
+```
+```{r gauernitz-mds, eval=FALSE}
+plot(ord, type="n", xlab="PCO 1", ylab="PCO 2")
+text(ord, row.names(species))
+```
+
+$\rigtarrow$ input is distance matrix (`d`) instead of data matrix (`species`)
+:::
+
+:::{.column width="49%"}
+```{r gauernitz-mds, echo=FALSE, fig.width=4, fig.height=4}
+```
+:::
+
+
+* works with arbitrary distance measures, e.g. Bray-Curtis dissimilarity
+* supported by different packages, e.g. **stats**, **vegan**, **labdsv**, **ecodist**, **ade4** and **ape**
+* basic version in package **stats** (base R), other ith packages more specialized versions
+* basic version has no biplot, can be added done separately
+
 
 ## From PCA to NMDS
 
