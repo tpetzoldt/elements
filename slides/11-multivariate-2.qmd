@@ -991,6 +991,18 @@ Depending on the question, it may be a disadvantage, that the number of clusters
 needs to be specified beforehand (e.g. from hierarchical clustering) and that we
 do not get a tree diagramm.
 
+```{r}
+cl <- kmeans(scale(log(lakedata)), centers = 4)
+cl$cluster
+```
+
+## Scatterplot of data and clusters
+
+```{r}
+plot(log(lakedata), col = cl$cluster, pch=16)
+```
+
+
 ## Further reading
 
 <br>

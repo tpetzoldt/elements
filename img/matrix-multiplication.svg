@@ -12,7 +12,12 @@
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:svg="http://www.w3.org/2000/svg">
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <title
+     id="title1">Matrix Multiplication</title>
   <sodipodi:namedview
      id="namedview7"
      pagecolor="#ffffff"
@@ -28,8 +33,8 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      inkscape:zoom="3.6329743"
-     inkscape:cx="26.975142"
-     inkscape:cy="157.30912"
+     inkscape:cx="27.112771"
+     inkscape:cy="179.19202"
      inkscape:window-width="3840"
      inkscape:window-height="2050"
      inkscape:window-x="2676"
@@ -40,117 +45,12 @@
      inkscape:deskcolor="#d1d1d1" />
   <defs
      id="defs2">
-    <inkscape:path-effect
-       effect="skeletal"
-       id="path-effect36"
-       is_visible="true"
-       lpeversion="1"
-       pattern="M 0,4.9921383 C 0,2.2364779 2.2364779,0 4.9921383,0 c 2.7556603,0 4.9921382,2.2364779 4.9921382,4.9921383 0,2.7556603 -2.2364779,4.9921382 -4.9921382,4.9921382 C 2.2364779,9.9842765 0,7.7477986 0,4.9921383 Z"
-       copytype="single_stretched"
-       prop_scale="1"
-       scale_y_rel="false"
-       spacing="0"
-       normal_offset="0"
-       tang_offset="0"
-       prop_units="false"
-       vertical_pattern="false"
-       hide_knot="false"
-       fuse_tolerance="0" />
-    <inkscape:path-effect
-       effect="bspline"
-       id="path-effect35"
-       is_visible="true"
-       lpeversion="1.3"
-       weight="33.333333"
-       steps="2"
-       helper_size="0"
-       apply_no_weight="true"
-       apply_with_weight="true"
-       only_selected="false"
-       uniform="false" />
-    <inkscape:path-effect
-       effect="powerstroke"
-       id="path-effect34"
-       is_visible="true"
-       lpeversion="1.3"
-       scale_width="1"
-       interpolator_type="CubicBezierJohan"
-       interpolator_beta="0.2"
-       start_linecap_type="zerowidth"
-       end_linecap_type="zerowidth"
-       offset_points="0,4.9921383"
-       linejoin_type="extrp_arc"
-       miter_limit="4"
-       not_jump="false"
-       sort_points="true"
-       message="&lt;b&gt;Strg + Klick&lt;/b&gt; und Verschieben eines Anfassers" />
-    <inkscape:path-effect
-       effect="bspline"
-       id="path-effect33"
-       is_visible="true"
-       lpeversion="1.3"
-       weight="33.333333"
-       steps="2"
-       helper_size="0"
-       apply_no_weight="true"
-       apply_with_weight="true"
-       only_selected="false"
-       uniform="false" />
-    <inkscape:path-effect
-       effect="powerstroke"
-       id="path-effect32"
-       is_visible="true"
-       lpeversion="1.3"
-       scale_width="1"
-       interpolator_type="CubicBezierJohan"
-       interpolator_beta="0.2"
-       start_linecap_type="zerowidth"
-       end_linecap_type="zerowidth"
-       offset_points="0,4.9921383"
-       linejoin_type="extrp_arc"
-       miter_limit="4"
-       not_jump="false"
-       sort_points="true"
-       message="&lt;b&gt;Strg + Klick&lt;/b&gt; und Verschieben eines Anfassers" />
-    <inkscape:path-effect
-       effect="bspline"
-       id="path-effect31"
-       is_visible="true"
-       lpeversion="1.3"
-       weight="33.333333"
-       steps="2"
-       helper_size="0"
-       apply_no_weight="true"
-       apply_with_weight="true"
-       only_selected="false"
-       uniform="false" />
     <rect
        x="-43.984371"
        y="95.053474"
        width="113.94609"
        height="59.039425"
        id="rect14891" />
-    <pattern
-       id="EMFhbasepattern"
-       patternUnits="userSpaceOnUse"
-       width="6"
-       height="6"
-       x="0"
-       y="0" />
-    <pattern
-       id="EMFhbasepattern-6"
-       patternUnits="userSpaceOnUse"
-       width="6"
-       height="6"
-       x="0"
-       y="0" />
-    <pattern
-       id="EMFhbasepattern-2"
-       patternUnits="userSpaceOnUse"
-       width="6"
-       height="6"
-       x="0"
-       y="0" />
   </defs>
   <g
      inkscape:label="Ebene 1"
@@ -833,4 +733,30 @@
        d="m 77.646953,175.81961 1.495322,-4.48596 h -2.990644 z"
        id="path99" />
   </g>
+  <metadata
+     id="metadata1">
+    <rdf:RDF>
+      <cc:License
+         rdf:about="http://creativecommons.org/publicdomain/zero/1.0/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+      <cc:Work
+         rdf:about="">
+        <cc:license
+           rdf:resource="http://creativecommons.org/publicdomain/zero/1.0/" />
+        <dc:title>Matrix Multiplication</dc:title>
+        <dc:date>2023-11-26</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>tpetzoldt</dc:title>
+          </cc:Agent>
+        </dc:creator>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
 </svg>
