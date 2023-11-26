@@ -5,9 +5,6 @@ date:   "`r Sys.Date()`"
 --- 
 
 
-# Some Basics of Nonlinear Regression
-
-
 ## Nonlinear regression
 
 Many phenomena in nature are non-linear!
@@ -130,10 +127,10 @@ The minimum of the squared residuals (SQ) is searched by [iteration]{.blue}:
 :::{.column width="34%"}
 
 ![](../img/newton_optimization_vs_grad_descent.svg)
-
+<small>
 Newton method ([red]{.red}) uses curvature information to converge faster than gradient descent ([green]{.neongreen}).<br> 
 Source: [Wikipedia](https://en.wikipedia.org/wiki/Newton's_method_in_optimization).
-
+</small>
 :::
 
 
@@ -237,45 +234,51 @@ text(15, 0.04, "V = S * vmax / (km + S)")
 
 ## Nonlinear regression in R: simple exponential
 
-:::{.column width="46%"}
+:::{.column width="49%" .add-space}
 
-**Code and Plot**
+**Fit model**
 
-```{r nlregexp, echo = TRUE, eval = TRUE, fig.width=6, fig.height=4}
+```{r nlregexp1, echo=TRUE}
 # example data
 x <- 1:10
-y <- c(1.6, 1.8, 2.1, 2.8, 3.5, 4.1, 5.1, 5.8, 7.1, 9.0)
+y <- c(1.6, 1.8, 2.1, 2.8, 3.5, 
+       4.1, 5.1, 5.8, 7.1, 9.0)
 
 # initial parameters for the optimizer
 pstart <- c(a = 1, b = 1)
 
 # nonlinear least squares
 fit <- nls(y ~ a * exp(b * x), start = pstart)
+summary(fit)
+```
+:::
+
+:::{.column width="44%"}
+
+**Plot result**
+
+```{r nlregexp, echo = TRUE, eval = TRUE, fig.width=6, fig.height=6}
 
 # additional x-values to get a smooth curve
 x1 <- seq(1, 10, 0.1)
 y1 <- predict(fit, data.frame(x = x1))
-
 plot(x, y)
 lines(x1, y1, col = "red")
 ```
 :::
 
-:::{.column width="3%"}
-:::
+## Fitted parameters
 
-:::{.column width="49%"}
-
-**Fitted parameters**
+<br>
 
 ```{r nlregexp2}
 summary(fit)
 ```
 
-* "Estimate": the fitted parameters
-* Str. error: $s_{\bar{x}}$, indicates reliability of the estimate
-* t- and p-values: can be misleading in the nonlinear case<br>
-  because "non-significant" parameters can be structurally necessary
+* **Estimate":** the fitted parameters
+* **Std. error:** $s_{\bar{x}}$: indicates reliability of the estimate
+* t- and p-values: no over-interpretation! 
+* in the non-linear world, "non-significant" parameters can be structurally necessary.
 
 
 **Coefficient of determination $r^2 = 1-\frac{s_\varepsilon}{s_y}$**
@@ -283,17 +286,17 @@ summary(fit)
 ```{r echo=TRUE}
 (Rsquared <- 1 - var(residuals(fit))/var(y))
 ```
-:::
+
 
 ## Michaelis-Menten-Kinetics
 
 <br>
 
-:::{.column width="49%"}
+:::{.column width="46%" .add-space}
 
 **Code**
 
-
+:::{.smallfont}
 ```{r mmenten, echo=TRUE, eval = FALSE}
 S <-c(25, 25, 10, 10, 5, 5, 2.5, 2.5, 1.25, 1.25)
 V <-c(0.0998, 0.0948, 0.076, 0.0724, 0.0557,
@@ -310,19 +313,18 @@ plot(S, V, xlim = c(0, max(S)), ylim = c(0, max(V)))
 x1 <-seq(0, 25, length = 100)
 lines(x1, predict(model_fit, data.frame(S = x1)), col = "red")
 ```
+:::
 
 <br>
-Coefficient of determination
+**Coefficient of determination**
 
 ```{r echo=TRUE}
-(1 - var(residuals(model_fit))/var(V)) # nonlinear r2
+(1 - var(residuals(model_fit))/var(V))
 ```
 
 
 :::
 
-:::{.column width="3%"}
-:::
 
 :::{.column width="46%"}
 **Results**
@@ -412,12 +414,17 @@ may be necessary for the structure of the model, removal of it will invalidate t
 
 <br>
 
-**Code for the comparison slide**
+**Code of the method comparison slide**
 
+:::{.smallfont}
 ```{r enzymekinetics, eval=FALSE, echo=TRUE}
 ```
+:::
 
 See: [https://en.wikipedia.org/wiki/Lineweaver-Burk_plot](https://en.wikipedia.org/wiki/Lineweaver-Burk_plot)
 
 
 ## References
+
+<br>
+

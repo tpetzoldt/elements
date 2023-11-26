@@ -429,11 +429,6 @@ Thomas Petzoldt
 
   <p class="date">2023-11-26</p>
 </section>
-<section>
-<section id="some-basics-of-nonlinear-regression" class="title-slide slide level1 center">
-<h1>Some Basics of Nonlinear Regression</h1>
-
-</section>
 <section id="nonlinear-regression" class="slide level2">
 <h2>Nonlinear regression</h2>
 <p>Many phenomena in nature are non-linear!</p>
@@ -543,8 +538,7 @@ R^2 = 1 - \frac{\text{variance of the residuals}}{\text{variance of the y-data}}
 </ul>
 </div>
 <div class="column" style="width:34%;">
-<p><img data-src="../img/newton_optimization_vs_grad_descent.svg"></p>
-<p>Newton method (<span class="red">red</span>) uses curvature information to converge faster than gradient descent (<span class="neongreen">green</span>).<br> Source: <a href="https://en.wikipedia.org/wiki/Newton's_method_in_optimization">Wikipedia</a>.</p>
+<p><img data-src="../img/newton_optimization_vs_grad_descent.svg"> <small> Newton method (<span class="red">red</span>) uses curvature information to converge faster than gradient descent (<span class="neongreen">green</span>).<br> Source: <a href="https://en.wikipedia.org/wiki/Newton's_method_in_optimization">Wikipedia</a>. </small></p>
 </div>
 </section>
 <section id="stochastic-methods" class="slide level2">
@@ -565,7 +559,7 @@ R^2 = 1 - \frac{\text{variance of the residuals}}{\text{variance of the y-data}}
 <li>nowadays builtin in Microsoft Excel and LibreOffice Calc</li>
 </ul>
 <p>… and many more.</p>
-</section></section>
+</section>
 <section>
 <section id="examples" class="title-slide slide level1 center">
 <h1>Examples</h1>
@@ -598,35 +592,55 @@ v = v_{max} \frac{S}{k_m + S}
 </section>
 <section id="nonlinear-regression-in-r-simple-exponential" class="slide level2">
 <h2>Nonlinear regression in R: simple exponential</h2>
-<div class="column" style="width:46%;">
-<p><strong>Code and Plot</strong></p>
+<div class="column add-space" style="width:49%;">
+<p><strong>Fit model</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># example data</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.6</span>, <span class="fl">1.8</span>, <span class="fl">2.1</span>, <span class="fl">2.8</span>, <span class="fl">3.5</span>, <span class="fl">4.1</span>, <span class="fl">5.1</span>, <span class="fl">5.8</span>, <span class="fl">7.1</span>, <span class="fl">9.0</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># initial parameters for the optimizer</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>pstart <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">1</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># nonlinear least squares</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(y <span class="sc">~</span> a <span class="sc">*</span> <span class="fu">exp</span>(b <span class="sc">*</span> x), <span class="at">start =</span> pstart)</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># additional x-values to get a smooth curve</span></span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="fu">data.frame</span>(<span class="at">x =</span> x1))</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x1, y1, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">1.6</span>, <span class="fl">1.8</span>, <span class="fl">2.1</span>, <span class="fl">2.8</span>, <span class="fl">3.5</span>, </span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>       <span class="fl">4.1</span>, <span class="fl">5.1</span>, <span class="fl">5.8</span>, <span class="fl">7.1</span>, <span class="fl">9.0</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># initial parameters for the optimizer</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>pstart <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">a =</span> <span class="dv">1</span>, <span class="at">b =</span> <span class="dv">1</span>)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co"># nonlinear least squares</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(y <span class="sc">~</span> a <span class="sc">*</span> <span class="fu">exp</span>(b <span class="sc">*</span> x), <span class="at">start =</span> pstart)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Formula: y ~ a * exp(b * x)
+
+Parameters:
+  Estimate Std. Error t value Pr(&gt;|t|)    
+a 1.263586   0.049902   25.32 6.34e-09 ***
+b 0.194659   0.004716   41.27 1.31e-10 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.1525 on 8 degrees of freedom
+
+Number of iterations to convergence: 13 
+Achieved convergence tolerance: 5.956e-08</code></pre>
+</div>
+</div>
+</div>
+<div class="column" style="width:44%;">
+<p><strong>Plot result</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># additional x-values to get a smooth curve</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">1</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">predict</span>(fit, <span class="fu">data.frame</span>(<span class="at">x =</span> x1))</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y)</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x1, y1, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img data-src="08-nonlinear-regression_files/figure-revealjs/nlregexp-1.png" width="576"></p>
 </div>
 </div>
 </div>
-<div class="column" style="width:3%;">
-
-</div>
-<div class="column" style="width:49%;">
-<p><strong>Fitted parameters</strong></p>
+</section>
+<section id="fitted-parameters" class="slide level2">
+<h2>Fitted parameters</h2>
+<p><br></p>
 <div class="cell">
 <div class="cell-output cell-output-stdout">
 <pre><code>
@@ -646,50 +660,49 @@ Achieved convergence tolerance: 5.956e-08</code></pre>
 </div>
 </div>
 <ul>
-<li>“Estimate”: the fitted parameters</li>
-<li>Str. error: <span class="math inline">\(s_{\bar{x}}\)</span>, indicates reliability of the estimate</li>
-<li>t- and p-values: can be misleading in the nonlinear case<br> because “non-significant” parameters can be structurally necessary</li>
+<li><strong>Estimate”:</strong> the fitted parameters</li>
+<li><strong>Std. error:</strong> <span class="math inline">\(s_{\bar{x}}\)</span>: indicates reliability of the estimate</li>
+<li>t- and p-values: no over-interpretation!</li>
+<li>in the non-linear world, “non-significant” parameters can be structurally necessary.</li>
 </ul>
 <p><strong>Coefficient of determination <span class="math inline">\(r^2 = 1-\frac{s_\varepsilon}{s_y}\)</span></strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>(Rsquared <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">var</span>(<span class="fu">residuals</span>(fit))<span class="sc">/</span><span class="fu">var</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>(Rsquared <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">var</span>(<span class="fu">residuals</span>(fit))<span class="sc">/</span><span class="fu">var</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9965644</code></pre>
-</div>
 </div>
 </div>
 </section>
 <section id="michaelis-menten-kinetics" class="slide level2">
 <h2>Michaelis-Menten-Kinetics</h2>
 <p><br></p>
-<div class="column" style="width:49%;">
+<div class="column add-space" style="width:46%;">
 <p><strong>Code</strong></p>
+<div class="smallfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">1.25</span>, <span class="fl">1.25</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">0.0998</span>, <span class="fl">0.0948</span>, <span class="fl">0.076</span>, <span class="fl">0.0724</span>, <span class="fl">0.0557</span>,</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.0575</span>, <span class="fl">0.0399</span>, <span class="fl">0.0381</span>, <span class="fl">0.017</span>, <span class="fl">0.0253</span>)</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Michaelis-Menten kinetics</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(S, Vm, K) { Vm <span class="sc">*</span> S<span class="sc">/</span>(K <span class="sc">+</span> S) }</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>pstart <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Vm =</span> <span class="fl">0.1</span>, <span class="at">K =</span> <span class="dv">5</span>)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>model_fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(V <span class="sc">~</span> <span class="fu">f</span>(S, Vm, K), <span class="at">start =</span> pstart)</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_fit)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(S, V, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(S)), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(V)))</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="at">length =</span> <span class="dv">100</span>)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x1, <span class="fu">predict</span>(model_fit, <span class="fu">data.frame</span>(<span class="at">S =</span> x1)), <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">1.25</span>, <span class="fl">1.25</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">0.0998</span>, <span class="fl">0.0948</span>, <span class="fl">0.076</span>, <span class="fl">0.0724</span>, <span class="fl">0.0557</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.0575</span>, <span class="fl">0.0399</span>, <span class="fl">0.0381</span>, <span class="fl">0.017</span>, <span class="fl">0.0253</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="do">## Michaelis-Menten kinetics</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>f <span class="ot">&lt;-</span> <span class="cf">function</span>(S, Vm, K) { Vm <span class="sc">*</span> S<span class="sc">/</span>(K <span class="sc">+</span> S) }</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>pstart <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="at">Vm =</span> <span class="fl">0.1</span>, <span class="at">K =</span> <span class="dv">5</span>)</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>model_fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(V <span class="sc">~</span> <span class="fu">f</span>(S, Vm, K), <span class="at">start =</span> pstart)</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_fit)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(S, V, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(S)), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(V)))</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="at">length =</span> <span class="dv">100</span>)</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x1, <span class="fu">predict</span>(model_fit, <span class="fu">data.frame</span>(<span class="at">S =</span> x1)), <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><br> Coefficient of determination</p>
+</div>
+<p><br> <strong>Coefficient of determination</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">var</span>(<span class="fu">residuals</span>(model_fit))<span class="sc">/</span><span class="fu">var</span>(V)) <span class="co"># nonlinear r2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>(<span class="dv">1</span> <span class="sc">-</span> <span class="fu">var</span>(<span class="fu">residuals</span>(model_fit))<span class="sc">/</span><span class="fu">var</span>(V))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.9895147</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:3%;">
-
 </div>
 <div class="column" style="width:46%;">
 <p><strong>Results</strong></p>
@@ -726,21 +739,21 @@ Achieved convergence tolerance: 6.678e-06</code></pre>
 <p><strong>Code</strong></p>
 <div class="smallfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">1.25</span>, <span class="fl">1.25</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.0998</span>, <span class="fl">0.0948</span>, <span class="fl">0.076</span>, <span class="fl">0.0724</span>, <span class="fl">0.0557</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>       <span class="fl">0.0575</span>, <span class="fl">0.0399</span>, <span class="fl">0.0381</span>, <span class="fl">0.017</span>, <span class="fl">0.0253</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>model_fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(V <span class="sc">~</span> <span class="fu">SSmicmen</span>(S, Vm, K))</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(S, V, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(S)), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(V)))</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="at">length =</span> <span class="dv">100</span>)</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x1, <span class="fu">predict</span>(model_fit, <span class="fu">data.frame</span>(<span class="at">S =</span> x1)), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">1.25</span>, <span class="fl">1.25</span>)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.0998</span>, <span class="fl">0.0948</span>, <span class="fl">0.076</span>, <span class="fl">0.0724</span>, <span class="fl">0.0557</span>,</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>       <span class="fl">0.0575</span>, <span class="fl">0.0399</span>, <span class="fl">0.0381</span>, <span class="fl">0.017</span>, <span class="fl">0.0253</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>model_fit <span class="ot">&lt;-</span> <span class="fu">nls</span>(V <span class="sc">~</span> <span class="fu">SSmicmen</span>(S, Vm, K))</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(S, V, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(S)), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(V)))</span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="at">length =</span> <span class="dv">100</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x1, <span class="fu">predict</span>(model_fit, <span class="fu">data.frame</span>(<span class="at">S =</span> x1)), <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 <p><strong>Results</strong></p>
 <div class="smallfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_fit, <span class="at">correlation=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(model_fit, <span class="at">correlation=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Formula: V ~ f(S, Vm, K)
@@ -812,42 +825,45 @@ Achieved convergence tolerance: 6.678e-06</code></pre>
 <section id="lineweaver-burk-transformation-vs.-nonlinear-fit" class="slide level2">
 <h2>Lineweaver-Burk transformation vs.&nbsp;nonlinear fit</h2>
 <p><br></p>
-<p><strong>Code for the comparison slide</strong></p>
+<p><strong>Code of the method comparison slide</strong></p>
+<div class="smallfont">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">1.25</span>, <span class="fl">1.25</span>)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">0.0998</span>, <span class="fl">0.0948</span>, <span class="fl">0.076</span>, <span class="fl">0.0724</span>, <span class="fl">0.0557</span>, </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.0575</span>, <span class="fl">0.0399</span>, <span class="fl">0.0381</span>, <span class="fl">0.017</span>, <span class="fl">0.0253</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>model_fit<span class="ot">&lt;-</span><span class="fu">nls</span>(V <span class="sc">~</span> <span class="fu">SSmicmen</span>(S, Vm, K))</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">las=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Lineweaver-Burk</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>S; y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>V</span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">xlab=</span><span class="st">"1/S"</span>, <span class="at">ylab=</span><span class="st">"1/V"</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>,<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">80</span>), <span class="at">pch=</span><span class="dv">16</span>,</span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="st">"Linearisation</span><span class="sc">\n</span><span class="st">(Lineweaver-Burk)"</span>)</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lwd=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">"grey"</span>)</span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">lwd=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">"grey"</span>)</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(m, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>Vm_l <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">coef</span>(m)[<span class="dv">1</span>]</span>
-<span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a>Km_l <span class="ot">&lt;-</span> <span class="fu">coef</span>(m)[<span class="dv">2</span>] <span class="sc">*</span> Vm_l</span>
-<span id="cb12-18"><a href="#cb12-18" aria-hidden="true" tabindex="-1"></a><span class="co">#legend("topleft", c("vmax = 1/intercept", "km = slope * vmax"), </span></span>
-<span id="cb12-19"><a href="#cb12-19" aria-hidden="true" tabindex="-1"></a><span class="co">#        box.lwd=1, bg="white")</span></span>
-<span id="cb12-20"><a href="#cb12-20" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.35</span>, <span class="dv">75</span>, <span class="st">"1/V = 1/vmax + km / vmax * S"</span>)</span>
-<span id="cb12-21"><a href="#cb12-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-22"><a href="#cb12-22" aria-hidden="true" tabindex="-1"></a><span class="do">## retransformed, both together</span></span>
-<span id="cb12-23"><a href="#cb12-23" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(S, V, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(S)),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(V)), <span class="at">pch=</span><span class="dv">16</span>, <span class="at">main=</span><span class="st">"No Transformation"</span>)</span>
-<span id="cb12-24"><a href="#cb12-24" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
-<span id="cb12-25"><a href="#cb12-25" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x1, Vm_l <span class="sc">*</span> x1 <span class="sc">/</span> (Km_l <span class="sc">+</span> x1), <span class="at">col=</span><span class="st">"red"</span>)</span>
-<span id="cb12-26"><a href="#cb12-26" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x1, <span class="fu">predict</span>(model_fit, <span class="fu">data.frame</span>(<span class="at">S=</span>x1)), <span class="at">col=</span><span class="st">"blue"</span>)</span>
-<span id="cb12-27"><a href="#cb12-27" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"linearisation"</span>, <span class="st">"nonlinear"</span>), </span>
-<span id="cb12-28"><a href="#cb12-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">box.lwd=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>))</span>
-<span id="cb12-29"><a href="#cb12-29" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">15</span>, <span class="fl">0.04</span>, <span class="st">"V = S * vmax / (km + S)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>S <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">25</span>, <span class="dv">25</span>, <span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">5</span>, <span class="dv">5</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">1.25</span>, <span class="fl">1.25</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>V <span class="ot">&lt;-</span><span class="fu">c</span>(<span class="fl">0.0998</span>, <span class="fl">0.0948</span>, <span class="fl">0.076</span>, <span class="fl">0.0724</span>, <span class="fl">0.0557</span>, </span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>      <span class="fl">0.0575</span>, <span class="fl">0.0399</span>, <span class="fl">0.0381</span>, <span class="fl">0.017</span>, <span class="fl">0.0253</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>model_fit<span class="ot">&lt;-</span><span class="fu">nls</span>(V <span class="sc">~</span> <span class="fu">SSmicmen</span>(S, Vm, K))</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">las=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>)</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="do">## Lineweaver-Burk</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>S; y <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span>V</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y, <span class="at">xlab=</span><span class="st">"1/S"</span>, <span class="at">ylab=</span><span class="st">"1/V"</span>, <span class="at">xlim=</span><span class="fu">c</span>(<span class="sc">-</span><span class="fl">0.2</span>,<span class="dv">1</span>), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">80</span>), <span class="at">pch=</span><span class="dv">16</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>  <span class="at">main=</span><span class="st">"Linearisation</span><span class="sc">\n</span><span class="st">(Lineweaver-Burk)"</span>)</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lwd=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">"grey"</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">lwd=</span><span class="dv">1</span>, <span class="at">col=</span><span class="st">"grey"</span>)</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x)</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(m, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>Vm_l <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">/</span><span class="fu">coef</span>(m)[<span class="dv">1</span>]</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>Km_l <span class="ot">&lt;-</span> <span class="fu">coef</span>(m)[<span class="dv">2</span>] <span class="sc">*</span> Vm_l</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a><span class="co">#legend("topleft", c("vmax = 1/intercept", "km = slope * vmax"), </span></span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a><span class="co">#        box.lwd=1, bg="white")</span></span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="fl">0.35</span>, <span class="dv">75</span>, <span class="st">"1/V = 1/vmax + km / vmax * S"</span>)</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a><span class="do">## retransformed, both together</span></span>
+<span id="cb14-23"><a href="#cb14-23" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(S, V, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(S)),<span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(V)), <span class="at">pch=</span><span class="dv">16</span>, <span class="at">main=</span><span class="st">"No Transformation"</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span><span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">25</span>, <span class="at">length=</span><span class="dv">100</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x1, Vm_l <span class="sc">*</span> x1 <span class="sc">/</span> (Km_l <span class="sc">+</span> x1), <span class="at">col=</span><span class="st">"red"</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x1, <span class="fu">predict</span>(model_fit, <span class="fu">data.frame</span>(<span class="at">S=</span>x1)), <span class="at">col=</span><span class="st">"blue"</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"bottomright"</span>, <span class="at">legend=</span><span class="fu">c</span>(<span class="st">"linearisation"</span>, <span class="st">"nonlinear"</span>), </span>
+<span id="cb14-28"><a href="#cb14-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">box.lwd=</span><span class="dv">1</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"blue"</span>))</span>
+<span id="cb14-29"><a href="#cb14-29" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(<span class="dv">15</span>, <span class="fl">0.04</span>, <span class="st">"V = S * vmax / (km + S)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <p>See: <a href="https://en.wikipedia.org/wiki/Lineweaver-Burk_plot">https://en.wikipedia.org/wiki/Lineweaver-Burk_plot</a></p>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
+<p><br></p>
 
 <div class="footer footer-default">
 <p><span style="color: white; font-size: small; font-weight:400; float: right; margin-top: 40px; margin-right: 4%;"> <a href="../">🏠 Home</a> </span></p>
