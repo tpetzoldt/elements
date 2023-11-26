@@ -187,12 +187,12 @@ kable(cbind(benthos[c("Site", "Habitat", "Stream", "Flood")], div))
 
 **Why?**
 
-* the distance measure, used in PCA is the so-called Euclidean distance
+* the distance measure, used in PCA is the so-called [Euclidean]{.red} distance
 * it works not well for species lists
 
 **Approach**
 
-* use other distance and dissimilarity measures
+$\rightarrow$ methods that support other distance and dissimilarity measures
 
 
 # Distance and similarity
@@ -202,6 +202,7 @@ kable(cbind(benthos[c("Site", "Habitat", "Stream", "Flood")], div))
 <br>
 
 ```{r triangle-euclidean, echo=FALSE, fig.align='center'}
+par(mar=c(4,4,1,1)+.1)
 plot(NULL, xlim=c(0,10), ylim=c(0,10), las=1, type="n", xlab="x", ylab="y")
 
 x <- c(2, 8)
@@ -209,20 +210,20 @@ y <- c(1, 7)
 points(x, y, pch=16, cex=2, type="b", lwd=2)
 text(x, y + 0.2, c("A", "B"), cex=2, pos=3)
 lines(c(x, x[2]), c(y[1], y[1], y[2]))
-text(mean(x), y[1], "a", pos=1, cex=2)
-text(x[2], mean(y), "b", pos=4, cex=2)
+text(mean(x), y[1], "b", pos=1, cex=2)
+text(x[2], mean(y), "a", pos=4, cex=2)
 text(mean(x), mean(y), "c", pos=3, cex=2)
 ```
 
 
 * PCA works with Euclidean distance
-* rule of Pythagoras
+* Theorem of Pythagoras
 
 $$
 a^2 + b^2 = c^2 \quad \Rightarrow\quad c = \sqrt{a^2 + b^2} = \sqrt{\Delta x^2 + \Delta y^2}
 $$
 
-* but: Euclidean distance is not always the best option.
+$\rightarrow$ but: Euclidean distance is not always the best option.
 
 ## Distance and dissimilarity
 
@@ -295,7 +296,7 @@ it is metric, if:
 
 * **Euclidean** distance: shortest connection between 2 points in space
 * **Manhattan** distance: around the corner, as in Manhattans grid-like streets
-* **Chi-square** distance: for comparison of frequencies,
+* **Chi-square** distance: for comparison of frequencies
 * **Mahalanobis** distance: takes covariance into account
 * **Bray-Curtis** dissimilarity: comparison of species lists in ecology
 * **Jaccard** index: for binary (presence-absence) data
@@ -384,7 +385,7 @@ the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/to
 
 ## Principal coordinate analysis (PCO)
 
-:::{.column width="49%"}
+:::{.column width="54%" .add-space}
 
 <br>
 
@@ -402,11 +403,12 @@ plot(ord, type="n", xlab="PCO 1", ylab="PCO 2")
 text(ord, row.names(species))
 ```
 
-$\rigtarrow$ input is distance matrix (`d`) instead of data matrix (`species`)
+[$\rightarrow$]{.red} distance matrix (`d`) used as input<br>
+and not data matrix (`species`) directly
 :::
 
-:::{.column width="49%"}
-```{r gauernitz-mds, echo=FALSE, fig.width=4, fig.height=4}
+:::{.column width="39%"}
+```{r gauernitz-mds, echo=FALSE, fig.width=6, fig.height=6}
 ```
 :::
 
@@ -417,52 +419,62 @@ $\rigtarrow$ input is distance matrix (`d`) instead of data matrix (`species`)
 * basic version has no biplot, can be added done separately
 
 
-## From PCA to NMDS
+## Single matrix methods I
 
-**PCA: Principal Components analysis**
+**PCA:** Principal Components analysis
 
-▶ Starting point: raw data, covariance or correlation matrix
+▶ input: raw data, covariance or correlation matrix
 
-(+) Basic method, very easy to understand
+(+) basic method, very easy to understand
 
-(+) Biplot: common representation of objects and variables
+(+) biplot: common representation of objects and variables
 
-(--) Only metric distance can be used, not suitable for taxa lists
+(--) only Euclidean distance, not suitable for taxa lists
 
-**PCO: Principal Coordinates Analysis**
+<small><br></small>
 
-[also referred to as (metric) MDS]{.gray}
+**CA:** Correspondence analysis
 
-▶ Starting point: distance matrix
+▶ input: raw data (frequencies)
 
+(+) similar to PCA, but uses $\chi^2$ distance
+
+(+) better for taxa lists
+
+
+<small><br></small>
+
+**PCO:** Principal Coordinates Analysis ([*metric* MDS]{.gray})
+
+▶ input: distance matrix
 
 (+) any distance measure can be used
 
 
-**NMDS: non-metric multidimensional scaling**
-
-
-* starts with results from PCO or random configuration
-* attempts to bring similarity structure better into 2 (or 3) dimensions
-
-
-## NMDS
+## Single matrix methods II: NMDS
 <br>
 
-* is an extension of the PCO
+* non-metric multidimensional scaling
+* is an extension of the PCO (=MDS)
+* $\rightarrow$ attempts to bring similarity structure better into 2 (or 3) dimensions
 * iterative procedure, minimize goodness of fit (called "stress")
 * several variants, mostly algorithm according to Kruskal
 * start: random configuration or PCO
+
+(+) popular, relatively easy to interpret
 
 (+/-) geometric distortion
 
 (--) results not always identical
 
-(--) computer intensive method, for large dada sets
+(--) computer intensive, especially for large data sets
 
 <br>
 
-**Note:** stress is sometimes given as ratio 0...1, sometimes in 0...100%, different values in other statistics programs, e.g. SPSS
+**Note:** 
+
+* stress is sometimes given as ratio 0...1, sometimes in 0...100%
+* differences between packages and statistics programs, e.g. SPSS
 
 
 ## Example
@@ -470,8 +482,7 @@ $\rigtarrow$ input is distance matrix (`d`) instead of data matrix (`species`)
 ```{r}
 benthos <- read.csv("../data/gauernitz.csv")
 row.names(benthos) <- benthos$Site
-
-env <- benthos[c("Habitat", "Stream", "Flood")]
+env <- benthos[c("Habitat", "Stream", "Flood")] # required later
 
 bio <- benthos[c("Mollusca", "Diptera", "Baetis", "Plecoptera", "Coleoptera", 
          "Turbellaria", "Heptageniidae", "Ephemeroptera", "Gammarus", 
@@ -485,13 +496,13 @@ ord <- metaMDS(bio)
 ord
 ```
 
-* `metaMDS` made automatic decisions about transformation, distance and scaling
-* it ran a series of NMDS trials and outputs the best
+* `metaMDS` runs a series of NMDS trials and outputs the best
+* makes automatic decisions about transformation, distance and scaling
 
 **Recommendation**
 
-* specify transformation, scaling and distance explicitly 
-* consider to increase `try`and `trymax` for big and/or difficult data sets
+* specify distance, scaling and transformation explicitly 
+* consider to increase `try` and `trymax` for big and/or difficult data sets, e.g.:
 
 ```{r, eval=FALSE}
 ord <- metaMDS(bio, distance="bray", autotransform=FALSE, try=40)
@@ -503,7 +514,7 @@ ord <- metaMDS(bio, distance="bray", autotransform=FALSE, try=40, trace = FALSE)
 
 ## NMDS Plot
 
-```{r gau-nmds, fig.width=5, fig.height=5, fig.algn='center'}
+```{r gau-nmds, fig.width=5, fig.height=5, fig.align='center'}
 plot(ord, type="text")
 abline(h=0, lty="dashed", col="gray")
 abline(v=0, lty="dashed", col="gray")
@@ -521,11 +532,11 @@ Compares similarity of the ordination with original dissimilarity in all dimensi
 
 ::: {.column width="39%"}
 
-* $\theta(d_{ij})$: observed dissimilaritiy
+* $\theta(d_{ij})$: observed dissimilarity
 * $\tilde{d}|{ij}$: ordination dissimilarity
 
 $$
-S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}|{ij})^2}{\sum_{i \ne j}  \tilde{d}_{ij}^2}}
+S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne j}  \tilde{d}_{ij}^2}}
 $$
 
 :::
@@ -549,6 +560,7 @@ $$
 
 ```{r stressplot1, fig.align='center'}
 stressplot(ord)
+mtext(paste("Stress =", round(ord$stress,2)), side=3)
 ```
 
 ## Stressplot: a good and a poor example
@@ -556,32 +568,26 @@ stressplot(ord)
 <br>
 
 :::{.column width="47%" .add-space}
-
 **Good**
-
 ```{r stressplot2, echo=FALSE, fig.width=4, fig.height=4}
 stressplot(ord, pch=16)
-mtext(paste("Stress=", round(ord$stress,2)), side=3)
+mtext(paste("Stress =", round(ord$stress,2)), side=3)
 ```
-
 :::
 
 :::{.column width="47%"}
-
 **Poor**
-
 ```{r stressplot3, echo=FALSE, fig.width=4, fig.height=4}
 set.seed(123)
 rdat <- matrix(runif(100), nrow=20)
 ord2  <- metaMDS(rdat, distance = "euclid", autotransform=FALSE, trace=FALSE)
 stressplot(ord2, pch=16)
-mtext(paste("Stress=", round(ord2$stress,2)), side=3)
+mtext(paste("Stress =", round(ord2$stress,2)), side=3)
 ```
-
 :::
 
 
-* Important: points should be close to the red line
+* [Points should be close to the red line.]{.red}
 * Pattern of stairs not important (at least not for now)
 * The $R^2$ values are always big, ignore or at least don't overinterpret it.
 
@@ -590,10 +596,10 @@ mtext(paste("Stress=", round(ord2$stress,2)), side=3)
 ## Environmental fitting
 
 ```{r envfit, fig.align='center'}
-ord <- metaMDS(bio, trace=FALSE)
-ef <- envfit(ord, env, permu=1000)
-plot(ord, type="t")
-plot(ef, p.max =0.1)
+ord <- metaMDS(bio, trace = FALSE) # trace: show or suppress intermediate output
+ef <- envfit(ord, env, permu = 1000)
+plot(ord, type = "t")
+plot(ef, p.max = 0.1)
 ```
 
 * Plots arrows if explanation variables are metric.
@@ -609,7 +615,7 @@ ef
 * p-values are based on a permutation test
 * useful, but the ADONIS test is better
 
-## Another example data set from the package
+## Another example data set from the vegan package
 
 ```{r vare-envfit, fig.align='center'}
 data(varechem); data(varespec)
@@ -618,6 +624,33 @@ ef <- envfit(mds, varechem, permu=1000)
 plot(mds, type="t")
 plot(ef, p.max =0.1)
 ```
+
+Data from @vare_effects_1995
+
+
+## The data set
+
+<br>
+
+**varespec**: 24 observations of 44 variables (plant species)
+
+```{r echo=FALSE}
+names(varespec)
+```
+
+<br>
+
+**varechem**: 24 observations of 16 variables
+
+
+```{r, echo=FALSE}
+names(varechem)
+```
+
+<br>
+
+Data from @vare_effects_1995 about influence of reindeer grazin gon understorey 
+vegetation in *Pinus sylvestris* forests in eastern Fennoscandia.
 
 ## Surface fitting
 
@@ -629,6 +662,7 @@ invisible(with(varechem, ordisurf(mds, Al, add=TRUE)))
 invisible(with(varechem, ordisurf(mds, Ca, add=TRUE, col="green4")))
 ```
 
+
 ```{r vare-surf2, fig.align='center', eval=FALSE}
 ef <- envfit(mds ~ Al + Ca, varechem, permu = 1000)
 plot(mds, display = "sites", type = "text")
@@ -637,7 +671,7 @@ with(varechem, ordisurf(mds, Al, add = TRUE))
 with(varechem, ordisurf(mds, Ca, add = TRUE, col = "green4"))
 ```
 
-## Advantages and disadvantages of the methods discussed so far
+## Pros anc cons of the methods discussed so far
 
 **PCA**
 
@@ -667,12 +701,6 @@ with(varechem, ordisurf(mds, Ca, add = TRUE, col = "green4"))
 
 
 ## Alternative and generalized methods I
-
-**CA**
-
-* similar to PCS, but uses $\chi^2$ distance
-* better for taxa lists
-* one-matrix method
 
 **CCA**
 
@@ -738,57 +766,129 @@ plot(cc)
 
 **Workaround**
 
-- detrended correspondence analysis (DCA) used in the past, not anymore recommended
+- detrended correspondence analysis (DCA) used in the past, not anymore recommended (except you know what you do)
 - better: NMDS or a "constrained" (2-matrix) method, e.g. CCA, RDA, dbRDA)
+
+
+# Two matrix methods
+
+![](../img/multivar-two-matrix.svg){fig-align='center'}
+
+
+
+- taxa matrix ([bio]{.blue}): dependend variables, in ecology typically species
+- environmental matrix ([env]{.blue}): explanation variables, also called [constraints]{.blue}
+
+* **Single matrix methods:** ordination of species table alone, environmental variables considered afterwards
+* **Two matrix methods:** Species table and environmental variables treated **simultanaeously**
+
+
+**Many to many relationship**
+     
+$$\mathbf{Y} = f(\mathbf{X})$$
 
 
 ## CCA: Canonical Correspondence Analysis
 
-........... draw a sketch here
-
-* two-matrix method:
-    - taxa matrix (bio)
-    - environmental matrix (env)
-* correlation many - many $\mathbf{Y} =f(\mathbf{X})$
-* response variable is not only a diversity index, but the complete species community
-* allows numerical assessment of "information partition" (inertia)
-
-## Example Gauernitzbach-data
+**Example Gauernitzbach-data**
 
 ```{r}
-ord <- cca(bio ~ ., data=env)
+ord <- cca(bio ~ ., data = env) # ~ . is an abbreviation for all variables in env
 ord
 ```
 
 
-* "inertia" measures error and information (similar to variance)
-* in case of CCA it is $\chi^2$ distance, in case of RDA it is variance
+* [**inertia**]{.blue} measures error and information (similar to variance)
+    - allows separation of variability into information and error
+    - in case of CCA it is $\chi^2$ distance, in case of RDA it is variance
 * in the example
     - 61% is explained by the constrained axes Habitat, Stream and Flood
     - 39% is not explained by the provided environmental variables
 
 ## Triplot
 
-<br>
 
 ```{r gau-cca, fig.width=6, fig.height=6, fig.align='center'}
 plot(ord)
 ```
 
+**Important** 
 
-## Statistical significance tests
+* The plot shows only the part of variation that is explained by the constraints.
+* It the number of constraints is high compared to the number of observations, 
+the ordination shows again the full variation, i.e. becomes unconstrained.
+
+## Statistical significance: ANOVA like permutation test
+
+<br>
 
 ```{r}
-anova(ord, by="terms")
+anova(ord, by = "terms")
 ```
 
+* `anova(ord, by="axis")` tests significance of the CCA axes and 
+`anova(ord, by="margin")` the marginal effects of the terms.
+* can also be called via `permutest`
 
 ## ADONIS test
 
 ```{r}
-adonis2(bio ~Habitat*Stream*Flood, data=env)
+adonis2(bio ~ Habitat * Stream * Flood, data = env, method = "bray")
 ```
 
+* Analysis of variance using distance matrices, uses a permutation test with pseudo-F ratios.
+* Not directly related to CCA, RDA etc. 
+* Can use all dissimilarity measures from the `vegdist`function.
+* More powerful that the permutest-ANOVA, as it can handle interaction effects.
+
+## RDA and dbRDA
+
+**RDA:** redundancy analysis
+
+* is the two-matrix extension of the PCA
+* uses Euclidean distance for the dependent variables
+* very useful, if the dependent matrix ("bio") contains physical and chemical variables, e.g. temperature, nutrients, or aggregated biological data like total biomass or chlorophyll and not abundances of different species
+
+**dbRDA** distance-based RDA / constrained PCoA (Principal Coordinates Analysis)
+
+* extends RDA to use arbitrary distance measures like Bray-Curtis for the dependent matrix (bio)
+* sometimes more difficult to apply than CCA and RDA because of negative eigenvalues
+* very useful for taxa lists, more flexible than CCA
+* works in principle also with Euclidean distance, but is less efficient
+
+
+## Example dbRDA with the Gauernitz data
+
+```{r echo=TRUE, eval=FALSE}
+ord <- dbrda(bio ~ ., data = env, method="bray")
+ord
+plot(ord)
+anova(ord, by="terms")
+```
+
+*   `~ .` is an abbreviation for all variables in env
+* also possible `dbrda(bio ~ Stream + Flood + Habitat, data=env)`
+* similar interpretation like CCA
+* RDA with Euclidean distance can, for example, be applied to the UBA-Lakes dada set
+
+## Partial Analyses: pRDA, pCCA, p-dbRDA
+
+* split constraints into covariates and 
+* can be used to remove the effect of covariates (e.g. conditioning, background or random variables)
+
+**Example**
+
+We know that pools and riffles are different and that the two streams differ somewhat, so we handle this as covariates
+
+```{r}
+ord <- cca(bio ~ Flood + Condition(Habitat, Stream), data = env)
+ord
+```
+
+So the inertia is splitted in three components, Conditional (the covariates), 
+Constrained (flood) and Unconstrained.
+
+The plot shows then the effect of the flood more clearly.
 
 
 ## Which ordination method to start with?
@@ -807,7 +907,6 @@ Experience shows that it can become quite complex and challenging, but also that
 3. Start with NMDS if working with abundance data of species (taxa lists)
 4. Use NMDS with `envfit` to explore influence of explanation variables on the ordination.
 5. use CCA, dbRDA or PCoA to get more quantitative results, compared to NMDS.
-
 
 
 
@@ -918,7 +1017,16 @@ Depending on the question, it may be a disadvantage, that the number of clusters
 needs to be specified beforehand (e.g. from hierarchical clustering) and that we
 do not get a tree diagramm.
 
+## Further reading
+
+<br>
+
+* @oksanen_multivariate_2010
+* @borcard_numerical_2018
+
 
  
 ## References
+
+<br>
 
