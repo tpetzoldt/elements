@@ -998,7 +998,7 @@ cl$cluster
 
 ## Scatterplot of data and clusters
 
-```{r}
+```{r kmeans-scatter}
 plot(log(lakedata), col = cl$cluster, pch=16)
 ```
 

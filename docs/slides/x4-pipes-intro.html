@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2023-11-19">
+  <meta name="dcterms.date" content="2023-11-26">
   <title>Elements of Data Analysis and Statistics - x4-Pipelines in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -431,7 +431,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2023-11-19</p>
+  <p class="date">2023-11-26</p>
 </section>
 <section id="prerequisites" class="slide level2">
 <h2>Prerequisites</h2>
@@ -634,8 +634,8 @@ Thomas Petzoldt
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-cabdd7f702fbab44d80f" style="width:432px;height:384px;"></div>
-<script type="application/json" data-for="htmlwidget-cabdd7f702fbab44d80f">{"x":{"diagram":"digraph functional {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg1, arg2, ...)\"\n           edge [penwidth=1.5]\n              output -> \"function(arg1, arg2, ...)\"[dir=back]\n           edge [penwidth=0.7, tailport = \"e\", headport = \"n\", constraint = false, color=\"tomato\"]\n              \"input\" -> \"function(arg1, arg2, ...)\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-04b10a44426f0af46172" style="width:432px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-04b10a44426f0af46172">{"x":{"diagram":"digraph functional {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg1, arg2, ...)\"\n           edge [penwidth=1.5]\n              output -> \"function(arg1, arg2, ...)\"[dir=back]\n           edge [penwidth=0.7, tailport = \"e\", headport = \"n\", constraint = false, color=\"tomato\"]\n              \"input\" -> \"function(arg1, arg2, ...)\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -646,8 +646,8 @@ Thomas Petzoldt
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-89396e2d0e5435e0ed7a" style="width:432px;height:384px;"></div>
-<script type="application/json" data-for="htmlwidget-89396e2d0e5435e0ed7a">{"x":{"diagram":"digraph pipes {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg2, ...)\"\n           node [shape=none]\n             \"|>\"\n           edge [penwidth=1.5]\n              input -> \"|>\" -> \"function(arg2, ...)\" -> output\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ed7fd0267321e0de7ff3" style="width:432px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-ed7fd0267321e0de7ff3">{"x":{"diagram":"digraph pipes {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg2, ...)\"\n           node [shape=none]\n             \"|>\"\n           edge [penwidth=1.5]\n              input -> \"|>\" -> \"function(arg2, ...)\" -> output\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div>
@@ -1814,7 +1814,7 @@ pivot_wider(elbe,
 <h2>References</h2>
 
 <div class="footer footer-default">
-
+<p><span style="color: white; font-size: small; font-weight:400; float: right; margin-top: 40px; margin-right: 4%;"> <a href="../">🏠 Home</a> </span></p>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-bache_magrittr_2022" class="csl-entry" role="doc-biblioentry">

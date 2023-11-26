@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2023-11-19">
+  <meta name="dcterms.date" content="2023-11-26">
   <title>Elements of Data Analysis and Statistics - 06-Linear Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -427,7 +427,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2023-11-19</p>
+  <p class="date">2023-11-26</p>
 </section>
 <section class="slide level2">
 
@@ -485,7 +485,7 @@ RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2 = \sum_{i=1}^n  \varepsilon^2 \qquad \tex
 <h2>The coefficient of determination</h2>
 <p><span class="math display">\[\begin{align}
      r^2 &amp; = \frac{\text{explained variance}}{\text{total variance}}\\
-         &amp; = \frac{s^2_{\varepsilon}}{s^2_{y|x}}\\
+         &amp; = \frac{s^2_{y|x}}{s^2_y}\\
 \end{align}\]</span></p>
 <p>It can also be expressed as ratio of residual (RSS) and total (TSS) sum of squares:</p>
 <p><span class="math display">\[
@@ -493,7 +493,7 @@ RSS = \sum_{i=1}^n (y_i - \hat{y}_i)^2 = \sum_{i=1}^n  \varepsilon^2 \qquad \tex
 \]</span></p>
 <ul>
 <li>derived from “sum of squares”, scaled as relative variance</li>
-<li>identical to the squared Pearon correlation <span class="math inline">\(r^2\)</span> (in the linear case)</li>
+<li>identical to the squared Pearson correlation <span class="math inline">\(r^2\)</span> (in the linear case)</li>
 <li>very useful interpretation: percentage of variance of the raw data explained by the model</li>
 </ul>
 <p>For the example: <span class="blue"><span class="math inline">\(r^2= 1-\)</span> 15.3 <span class="math inline">\(/\)</span> 40.8 <span class="math inline">\(=\)</span> 0.625</span></p>
@@ -735,14 +735,14 @@ BP = 3.3989, df = 1, p-value = 0.06524</code></pre>
 <li><span class="citation" data-cites="kleiber_applied_2008">Kleiber &amp; Zeileis (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span> Applied econometrics with R. Springer Verlag.</li>
 <li><span class="citation" data-cites="venables_modern_2013">Venables &amp; Ripley (<a href="#/references" role="doc-biblioref" onclick="">2013</a>)</span> Modern applied statistics with S-PLUS (3rd ed.). Springer Science &amp; Business Media.</li>
 <li><span class="citation" data-cites="fox_r_2018">Fox &amp; Weisberg (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span> An R companion to applied regression. Sage publications.</li>
-<li><span class="citation" data-cites="gelman_data_2007">Gelman &amp; Hill (<a href="#/references" role="doc-biblioref" onclick="">2007</a>)</span> Data analysis using regression and multilevelhierarchical models (Vol. 1). Cambridge University Press New York</li>
+<li><span class="citation" data-cites="gelman_data_2007">Gelman &amp; Hill (<a href="#/references" role="doc-biblioref" onclick="">2007</a>)</span> Data analysis using regression and multilevel hierarchical models (Vol. 1). Cambridge University Press, New York.</li>
 </ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 
 <div class="footer footer-default">
-
+<p><span style="color: white; font-size: small; font-weight:400; float: right; margin-top: 40px; margin-right: 4%;"> <a href="../">🏠 Home</a> </span></p>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
 <div id="ref-fox_r_2018" class="csl-entry" role="doc-biblioentry">

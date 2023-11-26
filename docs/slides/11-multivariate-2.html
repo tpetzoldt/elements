@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2023-11-22">
+  <meta name="dcterms.date" content="2023-11-26">
   <title>Elements of Data Analysis and Statistics - 11-Multivariate methods II</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -427,7 +427,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2023-11-22</p>
+  <p class="date">2023-11-26</p>
 </section>
 <section id="data-sets-and-terms-of-use" class="slide level2">
 <h2>Data sets and terms of use</h2>
@@ -1031,13 +1031,11 @@ H = -\sum_{i=1}^S p_i \log_b p_i
 </ul>
 <p><strong>Why?</strong></p>
 <ul>
-<li>the distance measure, used in PCA is the so-called Euclidean distance</li>
+<li>the distance measure, used in PCA is the so-called <span class="red">Euclidean</span> distance</li>
 <li>it works not well for species lists</li>
 </ul>
 <p><strong>Approach</strong></p>
-<ul>
-<li>use other distance and dissimilarity measures</li>
-</ul>
+<p><span class="math inline">\(\rightarrow\)</span> methods that support other distance and dissimilarity measures</p>
 </section>
 <section>
 <section id="distance-and-similarity" class="title-slide slide level1 center">
@@ -1050,14 +1048,12 @@ H = -\sum_{i=1}^S p_i \log_b p_i
 
 <img data-src="11-multivariate-2_files/figure-revealjs/triangle-euclidean-1.png" width="960" class="r-stretch quarto-figure-center"><ul>
 <li>PCA works with Euclidean distance</li>
-<li>rule of Pythagoras</li>
+<li>Theorem of Pythagoras</li>
 </ul>
 <p><span class="math display">\[
 a^2 + b^2 = c^2 \quad \Rightarrow\quad c = \sqrt{a^2 + b^2} = \sqrt{\Delta x^2 + \Delta y^2}
 \]</span></p>
-<ul>
-<li>but: Euclidean distance is not always the best option.</li>
-</ul>
+<p><span class="math inline">\(\rightarrow\)</span> but: Euclidean distance is not always the best option.</p>
 </section>
 <section id="distance-and-dissimilarity" class="slide level2">
 <h2>Distance and dissimilarity</h2>
@@ -1128,7 +1124,7 @@ a^2 + b^2 = c^2 \quad \Rightarrow\quad c = \sqrt{a^2 + b^2} = \sqrt{\Delta x^2 +
 <ul>
 <li><strong>Euclidean</strong> distance: shortest connection between 2 points in space</li>
 <li><strong>Manhattan</strong> distance: around the corner, as in Manhattans grid-like streets</li>
-<li><strong>Chi-square</strong> distance: for comparison of frequencies,</li>
+<li><strong>Chi-square</strong> distance: for comparison of frequencies</li>
 <li><strong>Mahalanobis</strong> distance: takes covariance into account</li>
 <li><strong>Bray-Curtis</strong> dissimilarity: comparison of species lists in ecology</li>
 <li><strong>Jaccard</strong> index: for binary (presence-absence) data</li>
@@ -1168,7 +1164,8 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <li><span class="math inline">\(J\)</span> = (joint) is the number of species that occur on both compared sites</li>
 <li><span class="math inline">\(M\)</span> = number of columns (excluding missing values)</li>
 </ul>
-<p><br> <strong>Applications</strong></p>
+<p><br></p>
+<p><strong>Applications</strong></p>
 <p>Additional distance measures and application suggestions in the <a href="https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/vegdist"><code>vegdist</code></a> help page.</p>
 </section>
 <section id="which-distances-are-supported-by-different-methods" class="slide level2">
@@ -1226,7 +1223,7 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <td>Principal Correspondence Analysis</td>
 <td>one matrix</td>
 <td>any</td>
-<td><code>cmdscale</code></td>
+<td><code>cmdscale</code>, …</td>
 </tr>
 <tr class="even">
 <td>dbRDA</td>
@@ -1281,102 +1278,144 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 </ul>
 </div>
 </section>
-<section id="from-pca-to-nmds" class="slide level2">
-<h2>From PCA to NMDS</h2>
-<p><strong>PCA: Principal Components analysis</strong></p>
-<p>▶ Starting point: raw data, covariance or correlation matrix</p>
-<p>(+) Basic method, very easy to understand</p>
-<p>(+) Biplot: common representation of objects and variables</p>
-<p>(–) Only metric distance can be used, not suitable for taxa lists</p>
-<p><strong>PCO: Principal Coordinates Analysis</strong></p>
-<p><span class="gray">also referred to as (metric) MDS</span></p>
-<p>▶ Starting point: distance matrix</p>
-<p>(+) any distance measure can be used</p>
-<p><strong>NMDS: non-metric multidimensional scaling</strong></p>
+<section id="principal-coordinate-analysis-pco" class="slide level2">
+<h2>Principal coordinate analysis (PCO)</h2>
+<div class="column add-space" style="width:54%;">
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"vegan"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>benthos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/gauernitz.csv"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(benthos) <span class="ot">&lt;-</span> benthos<span class="sc">$</span>Site</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> benthos[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>d   <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(species, <span class="at">method=</span><span class="st">"bray"</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord, <span class="at">type=</span><span class="st">"n"</span>, <span class="at">xlab=</span><span class="st">"PCO 1"</span>, <span class="at">ylab=</span><span class="st">"PCO 2"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(ord, <span class="fu">row.names</span>(species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><span class="red"><span class="math inline">\(\rightarrow\)</span></span> distance matrix (<code>d</code>) used as input<br> and not data matrix (<code>species</code>) directly</p>
+</div>
+<div class="column" style="width:39%;">
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="11-multivariate-2_files/figure-revealjs/gauernitz-mds-1.png" width="576"></p>
+</div>
+</div>
+</div>
 <ul>
-<li>starts with results from PCO or random configuration</li>
-<li>attempts to bring similarity structure better into 2 (or 3) dimensions</li>
+<li>works with arbitrary distance measures, e.g.&nbsp;Bray-Curtis dissimilarity</li>
+<li>supported by different packages, e.g.&nbsp;<strong>stats</strong>, <strong>vegan</strong>, <strong>labdsv</strong>, <strong>ecodist</strong>, <strong>ade4</strong> and <strong>ape</strong></li>
+<li>basic version in package <strong>stats</strong> (base R), other ith packages more specialized versions</li>
+<li>basic version has no biplot, can be added done separately</li>
 </ul>
 </section>
-<section id="nmds" class="slide level2">
-<h2>NMDS</h2>
+<section id="single-matrix-methods-i" class="slide level2">
+<h2>Single matrix methods I</h2>
+<p><strong>PCA:</strong> Principal Components analysis</p>
+<p>▶ input: raw data, covariance or correlation matrix</p>
+<p>(+) basic method, very easy to understand</p>
+<p>(+) biplot: common representation of objects and variables</p>
+<p>(–) only Euclidean distance, not suitable for taxa lists</p>
+<p><small><br></small></p>
+<p><strong>CA:</strong> Correspondence analysis</p>
+<p>▶ input: raw data (frequencies)</p>
+<p>(+) similar to PCA, but uses <span class="math inline">\(\chi^2\)</span> distance</p>
+<p>(+) better for taxa lists</p>
+<p><small><br></small></p>
+<p><strong>PCO:</strong> Principal Coordinates Analysis (<span class="gray"><em>metric</em> MDS</span>)</p>
+<p>▶ input: distance matrix</p>
+<p>(+) any distance measure can be used</p>
+</section>
+<section id="single-matrix-methods-ii-nmds" class="slide level2">
+<h2>Single matrix methods II: NMDS</h2>
 <p><br></p>
 <ul>
-<li>is an extension of the PCO</li>
+<li>non-metric multidimensional scaling</li>
+<li>is an extension of the PCO (=MDS)</li>
+<li><span class="math inline">\(\rightarrow\)</span> attempts to bring similarity structure better into 2 (or 3) dimensions</li>
 <li>iterative procedure, minimize goodness of fit (called “stress”)</li>
 <li>several variants, mostly algorithm according to Kruskal</li>
-<li>start: random configuration or PCO</li>
 </ul>
+<p>▶ input: random configuration or PCO</p>
+<p>(+) popular, relatively easy to interpret</p>
 <p>(+/-) geometric distortion</p>
 <p>(–) results not always identical</p>
-<p>(–) computer intensive method, for large dada sets</p>
+<p>(–) computer intensive, especially for large data sets</p>
 <p><br></p>
-<p><strong>Note:</strong> stress is sometimes given as ratio 0…1, sometimes in 0…100%, different values in other statistics programs, e.g.&nbsp;SPSS</p>
+<p><strong>Note:</strong></p>
+<ul>
+<li>stress is sometimes given as ratio 0…1, sometimes in 0…100%</li>
+<li>differences between packages and statistics programs, e.g.&nbsp;SPSS</li>
+</ul>
 </section>
 <section id="example" class="slide level2">
 <h2>Example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>benthos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/gauernitz.csv"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(benthos) <span class="ot">&lt;-</span> benthos<span class="sc">$</span>Site</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>env <span class="ot">&lt;-</span> benthos[<span class="fu">c</span>(<span class="st">"Habitat"</span>, <span class="st">"Stream"</span>, <span class="st">"Flood"</span>)]</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>bio <span class="ot">&lt;-</span> benthos[<span class="fu">c</span>(<span class="st">"Mollusca"</span>, <span class="st">"Diptera"</span>, <span class="st">"Baetis"</span>, <span class="st">"Plecoptera"</span>, <span class="st">"Coleoptera"</span>, </span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Turbellaria"</span>, <span class="st">"Heptageniidae"</span>, <span class="st">"Ephemeroptera"</span>, <span class="st">"Gammarus"</span>, </span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Trichoptera"</span>, <span class="st">"Acari"</span>, <span class="st">"Nematoda"</span>, <span class="st">"Oligochaeta"</span>)]</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>benthos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/gauernitz.csv"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(benthos) <span class="ot">&lt;-</span> benthos<span class="sc">$</span>Site</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>env <span class="ot">&lt;-</span> benthos[<span class="fu">c</span>(<span class="st">"Habitat"</span>, <span class="st">"Stream"</span>, <span class="st">"Flood"</span>)] <span class="co"># required later</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>bio <span class="ot">&lt;-</span> benthos[<span class="fu">c</span>(<span class="st">"Mollusca"</span>, <span class="st">"Diptera"</span>, <span class="st">"Baetis"</span>, <span class="st">"Plecoptera"</span>, <span class="st">"Coleoptera"</span>, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Turbellaria"</span>, <span class="st">"Heptageniidae"</span>, <span class="st">"Ephemeroptera"</span>, <span class="st">"Gammarus"</span>, </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>         <span class="st">"Trichoptera"</span>, <span class="st">"Acari"</span>, <span class="st">"Nematoda"</span>, <span class="st">"Oligochaeta"</span>)]</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Square root transformation
 Wisconsin double standardization
 Run 0 stress 0.1102424 
-Run 1 stress 0.2560219 
-Run 2 stress 0.1105543 
-... Procrustes: rmse 0.02428942  max resid 0.07216245 
-Run 3 stress 0.1858757 
-Run 4 stress 0.1102424 
-... Procrustes: rmse 1.84355e-05  max resid 5.265787e-05 
+Run 1 stress 0.1102424 
+... Procrustes: rmse 3.033608e-06  max resid 8.041263e-06 
 ... Similar to previous best
+Run 2 stress 0.1102424 
+... Procrustes: rmse 2.731187e-06  max resid 5.963586e-06 
+... Similar to previous best
+Run 3 stress 0.1105543 
+... Procrustes: rmse 0.02421199  max resid 0.07189891 
+Run 4 stress 0.1105543 
+... Procrustes: rmse 0.02425635  max resid 0.07204862 
 Run 5 stress 0.1105543 
-... Procrustes: rmse 0.02424258  max resid 0.07200373 
-Run 6 stress 0.1736877 
+... Procrustes: rmse 0.02429687  max resid 0.07218637 
+Run 6 stress 0.1727865 
 Run 7 stress 0.1105543 
-... Procrustes: rmse 0.02421709  max resid 0.07191801 
-Run 8 stress 0.1105543 
-... Procrustes: rmse 0.02425645  max resid 0.07205195 
+... Procrustes: rmse 0.02420773  max resid 0.07188688 
+Run 8 stress 0.2433619 
 Run 9 stress 0.1105543 
-... Procrustes: rmse 0.02426838  max resid 0.07208859 
+... Procrustes: rmse 0.02415121  max resid 0.07170118 
 Run 10 stress 0.1102424 
-... Procrustes: rmse 2.875104e-06  max resid 6.718182e-06 
+... Procrustes: rmse 1.50777e-05  max resid 3.339566e-05 
 ... Similar to previous best
 Run 11 stress 0.1102424 
-... Procrustes: rmse 3.269254e-06  max resid 7.323184e-06 
+... Procrustes: rmse 1.78221e-05  max resid 5.068668e-05 
 ... Similar to previous best
-Run 12 stress 0.1105543 
-... Procrustes: rmse 0.02430161  max resid 0.07220224 
-Run 13 stress 0.1105544 
-... Procrustes: rmse 0.02432126  max resid 0.07227036 
-Run 14 stress 0.2053265 
-Run 15 stress 0.1102424 
-... Procrustes: rmse 4.984308e-06  max resid 1.407559e-05 
+Run 12 stress 0.1736879 
+Run 13 stress 0.2345638 
+Run 14 stress 0.1105543 
+... Procrustes: rmse 0.02421068  max resid 0.07189717 
+Run 15 stress 0.1105543 
+... Procrustes: rmse 0.02426446  max resid 0.0720779 
+Run 16 stress 0.1102424 
+... New best solution
+... Procrustes: rmse 1.523443e-06  max resid 3.697954e-06 
 ... Similar to previous best
-Run 16 stress 0.1105543 
-... Procrustes: rmse 0.02420566  max resid 0.07188046 
-Run 17 stress 0.1855539 
+Run 17 stress 0.1102424 
+... Procrustes: rmse 5.719866e-06  max resid 1.470382e-05 
+... Similar to previous best
 Run 18 stress 0.1102424 
-... Procrustes: rmse 1.126518e-05  max resid 3.061245e-05 
+... Procrustes: rmse 4.896772e-06  max resid 1.392345e-05 
 ... Similar to previous best
-Run 19 stress 0.1105543 
-... Procrustes: rmse 0.02421721  max resid 0.07191877 
-Run 20 stress 0.1727865 
-*** Best solution repeated 5 times</code></pre>
+Run 19 stress 0.2247335 
+Run 20 stress 0.2403446 
+*** Best solution repeated 3 times</code></pre>
 </div>
 </div>
 </section>
 <section id="results-of-the-nmds" class="slide level2">
 <h2>Results of the NMDS</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1390,23 +1429,23 @@ Distance: bray
 Dimensions: 2 
 Stress:     0.1102424 
 Stress type 1, weak ties
-Best solution was repeated 5 times in 20 tries
-The best solution was from try 0 (metric scaling or null solution)
+Best solution was repeated 3 times in 20 tries
+The best solution was from try 16 (random start)
 Scaling: centring, PC rotation, halfchange scaling 
 Species: expanded scores based on 'wisconsin(sqrt(bio))' </code></pre>
 </div>
 </div>
 <ul>
-<li><code>metaMDS</code> made automatic decisions about transformation, distance and scaling</li>
-<li>it ran a series of NMDS trials and outputs the best</li>
+<li><code>metaMDS</code> runs a series of NMDS trials and outputs the best</li>
+<li>makes automatic decisions about transformation, distance and scaling</li>
 </ul>
 <p><strong>Recommendation</strong></p>
 <ul>
-<li>specify transformation, scaling and distance explicitly</li>
-<li>consider to increase <code>try</code>and <code>trymax</code> for big and/or difficult data sets</li>
+<li>specify distance, scaling and transformation explicitly</li>
+<li>consider to increase <code>try</code> and <code>trymax</code> for big and/or difficult data sets, e.g.:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio, <span class="at">distance=</span><span class="st">"bray"</span>, <span class="at">autotransform=</span><span class="cn">FALSE</span>, <span class="at">try=</span><span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio, <span class="at">distance=</span><span class="st">"bray"</span>, <span class="at">autotransform=</span><span class="cn">FALSE</span>, <span class="at">try=</span><span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 
@@ -1414,14 +1453,14 @@ Species: expanded scores based on 'wisconsin(sqrt(bio))' </code></pre>
 </section>
 <section id="nmds-plot" class="slide level2">
 <h2>NMDS Plot</h2>
-<div class="cell" data-fig.algn="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord, <span class="at">type=</span><span class="st">"text"</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="st">"dashed"</span>, <span class="at">col=</span><span class="st">"gray"</span>)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="st">"dashed"</span>, <span class="at">col=</span><span class="st">"gray"</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">"Stress="</span>, <span class="fu">round</span>(ord<span class="sc">$</span>stress,<span class="dv">2</span>)), <span class="at">side=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord, <span class="at">type=</span><span class="st">"text"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="st">"dashed"</span>, <span class="at">col=</span><span class="st">"gray"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="st">"dashed"</span>, <span class="at">col=</span><span class="st">"gray"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">"Stress="</span>, <span class="fu">round</span>(ord<span class="sc">$</span>stress,<span class="dv">2</span>)), <span class="at">side=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="11-multivariate-2_files/figure-revealjs/gau-nmds-1.png" width="480" class="r-stretch"></section>
+<img data-src="11-multivariate-2_files/figure-revealjs/gau-nmds-1.png" width="480" class="r-stretch quarto-figure-center"></section>
 <section id="stress" class="slide level2">
 <h2>Stress</h2>
 <p><br></p>
@@ -1429,11 +1468,11 @@ Species: expanded scores based on 'wisconsin(sqrt(bio))' </code></pre>
 <p><br></p>
 <div class="column" style="width:39%;">
 <ul>
-<li><span class="math inline">\(\theta(d_{ij})\)</span>: observed dissimilaritiy</li>
+<li><span class="math inline">\(\theta(d_{ij})\)</span>: observed dissimilarity</li>
 <li><span class="math inline">\(\tilde{d}|{ij}\)</span>: ordination dissimilarity</li>
 </ul>
 <p><span class="math display">\[
-S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}|{ij})^2}{\sum_{i \ne j}  \tilde{d}_{ij}^2}}
+S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne j}  \tilde{d}_{ij}^2}}
 \]</span></p>
 </div>
 <div class="column" style="width:39%;">
@@ -1476,7 +1515,8 @@ S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}|{ij})^2}{\sum_{i \ne 
 <section id="stressplot-shepherd-plot" class="slide level2">
 <h2>Stressplot (Shepherd plot)</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stressplot</span>(ord)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">stressplot</span>(ord)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">"Stress ="</span>, <span class="fu">round</span>(ord<span class="sc">$</span>stress,<span class="dv">2</span>)), <span class="at">side=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="11-multivariate-2_files/figure-revealjs/stressplot1-1.png" width="960" class="r-stretch quarto-figure-center"></section>
@@ -1500,7 +1540,7 @@ S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}|{ij})^2}{\sum_{i \ne 
 </div>
 </div>
 <ul>
-<li>Important: points should be close to the red line</li>
+<li><span class="red">Points should be close to the red line.</span></li>
 <li>Pattern of stairs not important (at least not for now)</li>
 <li>The <span class="math inline">\(R^2\)</span> values are always big, ignore or at least don’t overinterpret it.</li>
 </ul>
@@ -1508,10 +1548,10 @@ S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}|{ij})^2}{\sum_{i \ne 
 <section id="environmental-fitting" class="slide level2">
 <h2>Environmental fitting</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>ef <span class="ot">&lt;-</span> <span class="fu">envfit</span>(ord, env, <span class="at">permu=</span><span class="dv">1000</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord, <span class="at">type=</span><span class="st">"t"</span>)</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef, <span class="at">p.max =</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio, <span class="at">trace =</span> <span class="cn">FALSE</span>) <span class="co"># trace: show or suppress intermediate output</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>ef <span class="ot">&lt;-</span> <span class="fu">envfit</span>(ord, env, <span class="at">permu =</span> <span class="dv">1000</span>)</span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord, <span class="at">type =</span> <span class="st">"t"</span>)</span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef, <span class="at">p.max =</span> <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="11-multivariate-2_files/figure-revealjs/envfit-1.png" width="960" class="r-stretch quarto-figure-center"><ul>
@@ -1522,7 +1562,7 @@ S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}|{ij})^2}{\sum_{i \ne 
 <section id="numerical-results-and-p-values" class="slide level2">
 <h2>Numerical results and p-values</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>ef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>ef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ***FACTORS:
@@ -1553,37 +1593,65 @@ Number of permutations: 1000</code></pre>
 <li>useful, but the ADONIS test is better</li>
 </ul>
 </section>
-<section id="another-example-data-set-from-the-package" class="slide level2">
-<h2>Another example data set from the package</h2>
+<section id="another-example-data-set-from-the-vegan-package" class="slide level2">
+<h2>Another example data set from the vegan package</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(varechem); <span class="fu">data</span>(varespec)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>mds <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(varespec, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>ef <span class="ot">&lt;-</span> <span class="fu">envfit</span>(mds, varechem, <span class="at">permu=</span><span class="dv">1000</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds, <span class="at">type=</span><span class="st">"t"</span>)</span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef, <span class="at">p.max =</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(varechem); <span class="fu">data</span>(varespec)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>mds <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(varespec, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>ef <span class="ot">&lt;-</span> <span class="fu">envfit</span>(mds, varechem, <span class="at">permu=</span><span class="dv">1000</span>)</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds, <span class="at">type=</span><span class="st">"t"</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef, <span class="at">p.max =</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="11-multivariate-2_files/figure-revealjs/vare-envfit-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<img data-src="11-multivariate-2_files/figure-revealjs/vare-envfit-1.png" width="960" class="r-stretch quarto-figure-center"><p>Data from <span class="citation" data-cites="vare_effects_1995">Väre et al. (<a href="#/references" role="doc-biblioref" onclick="">1995</a>)</span></p>
+</section>
+<section id="the-data-set" class="slide level2">
+<h2>The data set</h2>
+<p><br></p>
+<p><strong>varespec</strong>: 24 observations of 44 variables (plant species)</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Callvulg" "Empenigr" "Rhodtome" "Vaccmyrt" "Vaccviti" "Pinusylv"
+ [7] "Descflex" "Betupube" "Vacculig" "Diphcomp" "Dicrsp"   "Dicrfusc"
+[13] "Dicrpoly" "Hylosple" "Pleuschr" "Polypili" "Polyjuni" "Polycomm"
+[19] "Pohlnuta" "Ptilcili" "Barbhatc" "Cladarbu" "Cladrang" "Cladstel"
+[25] "Cladunci" "Cladcocc" "Cladcorn" "Cladgrac" "Cladfimb" "Cladcris"
+[31] "Cladchlo" "Cladbotr" "Cladamau" "Cladsp"   "Cetreric" "Cetrisla"
+[37] "Flavniva" "Nepharct" "Stersp"   "Peltapht" "Icmaeric" "Cladcerv"
+[43] "Claddefo" "Cladphyl"</code></pre>
+</div>
+</div>
+<p><br></p>
+<p><strong>varechem</strong>: 24 observations of 16 variables</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "N"        "P"        "K"        "Ca"       "Mg"       "S"       
+ [7] "Al"       "Fe"       "Mn"       "Zn"       "Mo"       "Baresoil"
+[13] "Humdepth" "pH"      </code></pre>
+</div>
+</div>
+<p><br></p>
+<p>Data from <span class="citation" data-cites="vare_effects_1995">Väre et al. (<a href="#/references" role="doc-biblioref" onclick="">1995</a>)</span> about influence of reindeer grazin gon understorey vegetation in <em>Pinus sylvestris</em> forests in eastern Fennoscandia.</p>
+</section>
 <section id="surface-fitting" class="slide level2">
 <h2>Surface fitting</h2>
 
 <img data-src="11-multivariate-2_files/figure-revealjs/vare-surf-1.png" width="960" class="r-stretch quarto-figure-center"><div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>ef <span class="ot">&lt;-</span> <span class="fu">envfit</span>(mds <span class="sc">~</span> Al <span class="sc">+</span> Ca, varechem, <span class="at">permu =</span> <span class="dv">1000</span>)</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds, <span class="at">display =</span> <span class="st">"sites"</span>, <span class="at">type =</span> <span class="st">"text"</span>)</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef)</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(varechem, <span class="fu">ordisurf</span>(mds, Al, <span class="at">add =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(varechem, <span class="fu">ordisurf</span>(mds, Ca, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"green4"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>ef <span class="ot">&lt;-</span> <span class="fu">envfit</span>(mds <span class="sc">~</span> Al <span class="sc">+</span> Ca, varechem, <span class="at">permu =</span> <span class="dv">1000</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds, <span class="at">display =</span> <span class="st">"sites"</span>, <span class="at">type =</span> <span class="st">"text"</span>)</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef)</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(varechem, <span class="fu">ordisurf</span>(mds, Al, <span class="at">add =</span> <span class="cn">TRUE</span>))</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(varechem, <span class="fu">ordisurf</span>(mds, Ca, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"green4"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="advantages-and-disadvantages-of-the-methods-discussed-so-far" class="slide level2">
-<h2>Advantages and disadvantages of the methods discussed so far</h2>
-<p><strong>PCA</strong></p>
+<section id="pros-and-cons-of-the-methods-discussed-so-far" class="slide level2">
+<h2>Pros and cons of the methods discussed so far</h2>
+<p><strong>PCA</strong>, <strong>CCA</strong></p>
 <p>(+) easy to understand, quick and reproducible</p>
 <p>(+) no non-linear distortion</p>
 <p>(–) but: horseshoe effect possible</p>
 <p>(–) information is often still in a “higher dimension”</p>
 <p>(–) Euclidean distance poorly suited for species lists</p>
-<p>(–) one-matrix method (no separate matrices for species and environmental factors)</p>
 <p><strong>NMDS</strong></p>
 <p>(+) any distance measure can be used</p>
 <p>(+) better mapping on low dimensions</p>
@@ -1591,42 +1659,10 @@ Number of permutations: 1000</code></pre>
 <p>(–) numerical effort, iterative method, local minima</p>
 <p>(–) one-matrix method (no separate matrices for species and environmental factors)</p>
 </section>
-<section id="alternative-and-generalized-methods-i" class="slide level2">
-<h2>Alternative and generalized methods I</h2>
-<p><strong>CA</strong></p>
+<section id="interpretation-of-the-ca" class="slide level2">
+<h2>Interpretation of the CA</h2>
 <ul>
-<li>similar to PCS, but uses <span class="math inline">\(\chi^2\)</span> distance</li>
-<li>better for taxa lists</li>
-<li>one-matrix method</li>
-</ul>
-<p><strong>CCA</strong></p>
-<ul>
-<li>extension of the CA (<span class="math inline">\(\chi^2\)</span> distance)</li>
-<li>two-matrix method: species list and environmental factors</li>
-</ul>
-<p><strong>RDA</strong></p>
-<ul>
-<li>extension of the PCA (Euclidean distance)</li>
-<li>two-matrix method: species list and environmental factors</li>
-</ul>
-</section>
-<section id="alternative-and-generalized-methods-i-1" class="slide level2">
-<h2>Alternative and generalized methods I</h2>
-<p><strong>dbRDA</strong> / <strong>capscale</strong></p>
-<ul>
-<li>Extension of the RDA for arbitrary distance measures</li>
-<li>Two-matrix method: species list and environmental factors</li>
-</ul>
-<p><strong>For comparison: environmental fitting</strong></p>
-<ul>
-<li>subsequent overlay of the ordination with environmental factors</li>
-<li>applicable for most ordination methods (CA, PCA, NMDS) ▶ similar to two-matrix method, but both steps independent</li>
-</ul>
-</section>
-<section id="interpretation-of-ca" class="slide level2">
-<h2>Interpretation of CA</h2>
-<ul>
-<li>biplot with species and environmental factors, note scaling (α)!
+<li>biplot with species and environmental factors, note different scaling!
 <ul>
 <li>distance from the origin: <span class="math inline">\(\chi^2\)</span></li>
 <li>species in the middle: either “average species” or poorly explained species.</li>
@@ -1801,29 +1837,29 @@ Number of permutations: 1000</code></pre>
 </div>
 <p><strong>Workaround</strong></p>
 <ul>
-<li>detrended correspondence analysis (DCA) used in the past, not anymore recommended</li>
+<li>detrended correspondence analysis (DCA) used in the past, not anymore recommended (except you know what you do)</li>
 <li>better: NMDS or a “constrained” (2-matrix) method, e.g.&nbsp;CCA, RDA, dbRDA)</li>
 </ul>
+</section></section>
+<section>
+<section id="two-matrix-methods" class="title-slide slide level1 center">
+<h1>Two matrix methods</h1>
+
+<img data-src="../img/multivar-two-matrix.svg" class="r-stretch quarto-figure-center"><ul>
+<li><p>taxa matrix (<span class="blue">bio</span>): dependend variables, in ecology typically species</p></li>
+<li><p>environmental matrix (<span class="blue">env</span>): explanation variables, also called <span class="blue">constraints</span></p></li>
+<li><p><strong>Single matrix methods:</strong> ordination of species table alone, environmental variables considered afterwards</p></li>
+<li><p><strong>Two matrix methods:</strong> Species table and environmental variables treated <strong>simultanaeously</strong></p></li>
+</ul>
+<p><strong>Many to many relationship</strong></p>
+<p><span class="math display">\[\mathbf{Y} = f(\mathbf{X})\]</span></p>
 </section>
 <section id="cca-canonical-correspondence-analysis" class="slide level2">
 <h2>CCA: Canonical Correspondence Analysis</h2>
-<p>……….. draw a sketch here</p>
-<ul>
-<li>two-matrix method:
-<ul>
-<li>taxa matrix (bio)</li>
-<li>environmental matrix (env)</li>
-</ul></li>
-<li>correlation many - many <span class="math inline">\(\mathbf{Y} =f(\mathbf{X})\)</span></li>
-<li>response variable is not only a diversity index, but the complete species community</li>
-<li>allows numerical assessment of “information partition” (inertia)</li>
-</ul>
-</section>
-<section id="example-gauernitzbach-data" class="slide level2">
-<h2>Example Gauernitzbach-data</h2>
+<p><strong>Example Gauernitzbach-data</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cca</span>(bio <span class="sc">~</span> ., <span class="at">data=</span>env)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cca</span>(bio <span class="sc">~</span> ., <span class="at">data =</span> env) <span class="co"># ~ . is an abbreviation for all variables in env</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: cca(formula = bio ~ Habitat + Stream + Flood, data = env)
 
@@ -1845,8 +1881,11 @@ Eigenvalues for unconstrained axes:
 </div>
 </div>
 <ul>
-<li>“inertia” measures error and information (similar to variance)</li>
+<li><span class="blue"><strong>inertia</strong></span> measures error and information (similar to variance)
+<ul>
+<li>allows separation of variability into information and error</li>
 <li>in case of CCA it is <span class="math inline">\(\chi^2\)</span> distance, in case of RDA it is variance</li>
+</ul></li>
 <li>in the example
 <ul>
 <li>61% is explained by the constrained axes Habitat, Stream and Flood</li>
@@ -1856,16 +1895,21 @@ Eigenvalues for unconstrained axes:
 </section>
 <section id="triplot" class="slide level2">
 <h2>Triplot</h2>
-<p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="11-multivariate-2_files/figure-revealjs/gau-cca-1.png" width="576" class="r-stretch quarto-figure-center"></section>
-<section id="statistical-significance-tests" class="slide level2">
-<h2>Statistical significance tests</h2>
+<img data-src="11-multivariate-2_files/figure-revealjs/gau-cca-1.png" width="576" class="r-stretch quarto-figure-center"><p><strong>Important</strong></p>
+<ul>
+<li>The plot shows only the part of variation that is explained by the constraints.</li>
+<li>It the number of constraints is high compared to the number of observations, the ordination shows again the full variation, i.e.&nbsp;becomes unconstrained.</li>
+</ul>
+</section>
+<section id="statistical-significance-anova-like-permutation-test" class="slide level2">
+<h2>Statistical significance: ANOVA like permutation test</h2>
+<p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ord, <span class="at">by=</span><span class="st">"terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ord, <span class="at">by =</span> <span class="st">"terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Permutation test for cca under reduced model
 Terms added sequentially (first to last)
@@ -1882,18 +1926,22 @@ Residual 12   0.33889
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
+<ul>
+<li><code>anova(ord, by="axis")</code> tests significance of the CCA axes and <code>anova(ord, by="margin")</code> the marginal effects of the terms.</li>
+<li>can also be called via <code>permutest</code></li>
+</ul>
 </section>
 <section id="adonis-test" class="slide level2">
 <h2>ADONIS test</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(bio <span class="sc">~</span>Habitat<span class="sc">*</span>Stream<span class="sc">*</span>Flood, <span class="at">data=</span>env)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(bio <span class="sc">~</span> Habitat <span class="sc">*</span> Stream <span class="sc">*</span> Flood, <span class="at">data =</span> env, <span class="at">method =</span> <span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Permutation test for adonis under reduced model
 Terms added sequentially (first to last)
 Permutation: free
 Number of permutations: 999
 
-adonis2(formula = bio ~ Habitat * Stream * Flood, data = env)
+adonis2(formula = bio ~ Habitat * Stream * Flood, data = env, method = "bray")
                      Df SumOfSqs      R2       F Pr(&gt;F)    
 Habitat               1   0.4465 0.12068  7.4916  0.003 ** 
 Stream                1   0.4388 0.11863  7.3637  0.002 ** 
@@ -1908,6 +1956,79 @@ Total                15   3.6994 1.00000
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
+<ul>
+<li>Analysis of variance using distance matrices, uses a permutation test with pseudo-F ratios.</li>
+<li>Not directly related to CCA, RDA etc.</li>
+<li>Can use all dissimilarity measures from the <code>vegdist</code>function.</li>
+<li>More powerful that the permutest-ANOVA, as it can handle interaction effects.</li>
+</ul>
+</section>
+<section id="rda-and-dbrda" class="slide level2">
+<h2>RDA and dbRDA</h2>
+<p><strong>RDA:</strong> redundancy analysis</p>
+<ul>
+<li>is the two-matrix extension of the PCA</li>
+<li>uses Euclidean distance for the dependent variables</li>
+<li>very useful, if the dependent matrix (“bio”) contains physical and chemical variables, e.g.&nbsp;temperature, nutrients, or aggregated biological data like total biomass or chlorophyll and not abundances of different species</li>
+</ul>
+<p><strong>dbRDA</strong> distance-based RDA / constrained PCoA (Principal Coordinates Analysis)</p>
+<ul>
+<li>extends RDA to use arbitrary distance measures like Bray-Curtis for the dependent matrix (bio)</li>
+<li>sometimes more difficult to apply than CCA and RDA because of negative eigenvalues</li>
+<li>very useful for taxa lists, more flexible than CCA</li>
+<li>works in principle also with Euclidean distance, but is less efficient</li>
+</ul>
+</section>
+<section id="example-dbrda-with-the-gauernitz-data" class="slide level2">
+<h2>Example dbRDA with the Gauernitz data</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">dbrda</span>(bio <span class="sc">~</span> ., <span class="at">data =</span> env, <span class="at">method=</span><span class="st">"bray"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>ord</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ord, <span class="at">by=</span><span class="st">"terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>~ .</code> is an abbreviation for all variables in env</li>
+<li>also possible <code>dbrda(bio ~ Stream + Flood + Habitat, data=env)</code></li>
+<li>similar interpretation like CCA</li>
+<li>RDA with Euclidean distance can, for example, be applied to the UBA-Lakes dada set</li>
+</ul>
+</section>
+<section id="partial-analyses-prda-pcca-p-dbrda" class="slide level2">
+<h2>Partial Analyses: pRDA, pCCA, p-dbRDA</h2>
+<ul>
+<li>split constraints into covariates and</li>
+<li>can be used to remove the effect of covariates (e.g.&nbsp;conditioning, background or random variables)</li>
+</ul>
+<p><strong>Example</strong></p>
+<p>We know that pools and riffles are different and that the two streams differ somewhat, so we handle this as covariates</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cca</span>(bio <span class="sc">~</span> Flood <span class="sc">+</span> <span class="fu">Condition</span>(Habitat, Stream), <span class="at">data =</span> env)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call: cca(formula = bio ~ Flood + Condition(Habitat, Stream), data =
+env)
+
+              Inertia Proportion Rank
+Total          0.8599     1.0000     
+Conditional    0.3125     0.3635    1
+Constrained    0.1429     0.1662    1
+Unconstrained  0.4045     0.4704   12
+Inertia is scaled Chi-square 
+
+Eigenvalues for constrained axes:
+  CCA1 
+0.1429 
+
+Eigenvalues for unconstrained axes:
+    CA1     CA2     CA3     CA4     CA5     CA6     CA7     CA8     CA9    CA10 
+0.14749 0.10947 0.07021 0.03126 0.01823 0.01502 0.00512 0.00476 0.00207 0.00064 
+   CA11    CA12 
+0.00014 0.00007 </code></pre>
+</div>
+</div>
+<p>So the inertia is splitted in three components, Conditional (the covariates), Constrained (flood) and Unconstrained.</p>
+<p>The plot shows then the effect of the flood more clearly.</p>
 </section>
 <section id="which-ordination-method-to-start-with" class="slide level2">
 <h2>Which ordination method to start with?</h2>
@@ -2183,33 +2304,33 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="cluster-analysis-1" class="slide level2">
 <h2>Cluster analysis</h2>
 <div class="cell" data-layout-align="center" data-wig.width="12">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(<span class="fu">scale</span>(lakedata2)), <span class="at">method=</span><span class="st">"complete"</span>) <span class="co"># the default</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc)</span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>hc2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(<span class="fu">scale</span>(lakedata2)), <span class="at">method=</span><span class="st">"ward.D2"</span>)</span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(<span class="fu">scale</span>(lakedata2)), <span class="at">method=</span><span class="st">"complete"</span>) <span class="co"># the default</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>hc2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(<span class="fu">scale</span>(lakedata2)), <span class="at">method=</span><span class="st">"ward.D2"</span>)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="11-multivariate-2_files/figure-revealjs/lakes-cluster2 -1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="identification-of-clusters-in-the-tree" class="slide level2">
 <h2>Identification of clusters in the tree</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>)    <span class="co"># -1: extend vertical lines to the bottom</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>)    <span class="co"># -1: extend vertical lines to the bottom</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>grp <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hc, <span class="dv">5</span>)</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="co"># grp                  # can be used to show the groups</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>grp <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hc, <span class="dv">5</span>)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="co"># grp                  # can be used to show the groups</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <img data-src="11-multivariate-2_files/figure-revealjs/lake-clusters2-1.png" width="960" class="r-stretch"></section>
 <section id="color-nmds-according-to-clusters" class="slide level2">
 <h2>Color NMDS according to clusters</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>md <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(lakedata2, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">distance =</span> <span class="st">"euclid"</span>, <span class="at">trace=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>md <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(lakedata2, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">distance =</span> <span class="st">"euclid"</span>, <span class="at">trace=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md, <span class="at">type =</span> <span class="st">"n"</span>)</span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(md<span class="sc">$</span>points, <span class="fu">row.names</span>(lakedata2), <span class="at">col =</span> grp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md, <span class="at">type =</span> <span class="st">"n"</span>)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(md<span class="sc">$</span>points, <span class="fu">row.names</span>(lakedata2), <span class="at">col =</span> grp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="11-multivariate-2_files/figure-revealjs/lake-nmds-colored-1.png" width="960" class="r-stretch"></section>
@@ -2217,16 +2338,51 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2>Non-hierarchical clustering</h2>
 <p>Instead of hierarchical clustering, we can also use a non-hierarchical method, e.g.&nbsp;k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.</p>
 <p>Depending on the question, it may be a disadvantage, that the number of clusters needs to be specified beforehand (e.g.&nbsp;from hierarchical clustering) and that we do not get a tree diagramm.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(<span class="fu">log</span>(lakedata)), <span class="at">centers =</span> <span class="dv">4</span>)</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>cl<span class="sc">$</span>cluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Ammer   Arend   Boden   Chiem   Dober   Muegg   Ploen   Kumme Mueritz   MuerB 
+      4       1       4       4       2       2       3       3       3       1 
+  Plaue   Sacro   Schar   SchwA   SchwI   Starn   Stech   Stein 
+      3       1       1       3       3       4       1       2 </code></pre>
+</div>
+</div>
+</section>
+<section id="scatterplot-of-data-and-clusters" class="slide level2">
+<h2>Scatterplot of data and clusters</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(lakedata), <span class="at">col =</span> cl<span class="sc">$</span>cluster, <span class="at">pch=</span><span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="11-multivariate-2_files/figure-revealjs/kmeans-scatter-1.png" width="960" class="r-stretch"></section>
+<section id="further-reading" class="slide level2">
+<h2>Further reading</h2>
+<p><br></p>
+<ul>
+<li><span class="citation" data-cites="oksanen_multivariate_2010">Oksanen (<a href="#/references" role="doc-biblioref" onclick="">2010</a>)</span></li>
+<li><span class="citation" data-cites="borcard_numerical_2018">Borcard et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span></li>
+</ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
+<p><br></p>
 
 <div class="footer footer-default">
-
+<p><span style="color: white; font-size: small; font-weight:400; float: right; margin-top: 40px; margin-right: 4%;"> <a href="../">🏠 Home</a> </span></p>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-borcard_numerical_2018" class="csl-entry" role="doc-biblioentry">
+Borcard, D., Gillet, F., &amp; Legendre, P. (2018). <em>Numerical ecology with <span>R</span></em>. Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-71404-2">https://doi.org/10.1007/978-3-319-71404-2</a>
+</div>
+<div id="ref-oksanen_multivariate_2010" class="csl-entry" role="doc-biblioentry">
+Oksanen, J. (2010). <em>Multivariate analysis of ecological communities in <span>R</span>: Vegan tutorial</em>.
+</div>
 <div id="ref-UBA2020" class="csl-entry" role="doc-biblioentry">
 Umweltbundesamt. (2021). <em><span class="nocase">Kenndaten ausgewählter Seen Deutschlands</span></em>. <a href="https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen">https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen</a>
+</div>
+<div id="ref-vare_effects_1995" class="csl-entry" role="doc-biblioentry">
+Väre, H., Ohtonen, R., &amp; Oksanen, J. (1995). Effects of reindeer grazing on understorey vegetation in dry <span>P</span>inus sylvestris forests. <em>Journal of Vegetation Science</em>, <em>6</em>(4), 523–530. <a href="https://doi.org/10.2307/3236351">https://doi.org/10.2307/3236351</a>
 </div>
 <div id="ref-winkelmann_fish_2011" class="csl-entry" role="doc-biblioentry">
 Winkelmann, C., Hellmann, C., Worischka, S., Petzoldt, T., &amp; Benndorf, J. (2011). Fish predation affects the structure of a benthic community. <em>Freshwater Biology</em>, <em>56</em>(6), 1030–1046. <a href="https://doi.org/10.1111/j.1365-2427.2010.02543.x">https://doi.org/10.1111/j.1365-2427.2010.02543.x</a>
