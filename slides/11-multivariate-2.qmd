@@ -459,7 +459,8 @@ and not data matrix (`species`) directly
 * $\rightarrow$ attempts to bring similarity structure better into 2 (or 3) dimensions
 * iterative procedure, minimize goodness of fit (called "stress")
 * several variants, mostly algorithm according to Kruskal
-* start: random configuration or PCO
+
+▶ input: random configuration or PCO
 
 (+) popular, relatively easy to interpret
 
@@ -671,9 +672,9 @@ with(varechem, ordisurf(mds, Al, add = TRUE))
 with(varechem, ordisurf(mds, Ca, add = TRUE, col = "green4"))
 ```
 
-## Pros anc cons of the methods discussed so far
+## Pros and cons of the methods discussed so far
 
-**PCA**
+**PCA**, **CCA**
 
 (+) easy to understand, quick and reproducible
 
@@ -684,8 +685,6 @@ with(varechem, ordisurf(mds, Ca, add = TRUE, col = "green4"))
 (--) information is often still in a "higher dimension"
 
 (--) Euclidean distance poorly suited for species lists
-
-(--) one-matrix method (no separate matrices for species and environmental factors)
 
 **NMDS**
 
@@ -700,34 +699,9 @@ with(varechem, ordisurf(mds, Ca, add = TRUE, col = "green4"))
 (--) one-matrix method (no separate matrices for species and environmental factors)
 
 
-## Alternative and generalized methods I
+## Interpretation of the CA
 
-**CCA**
-
-* extension of the CA ($\chi^2$ distance)
-* two-matrix method: species list and environmental factors
-
-**RDA**
-
-* extension of the PCA (Euclidean distance)
-* two-matrix method: species list and environmental factors
-
-## Alternative and generalized methods I
-
-**dbRDA** / **capscale**
-
-* Extension of the RDA for arbitrary distance measures
-* Two-matrix method: species list and environmental factors
-
-**For comparison: environmental fitting**
-
-* subsequent overlay of the ordination with environmental factors
-* applicable for most ordination methods (CA, PCA, NMDS)
-▶ similar to two-matrix method, but both steps independent
-
-## Interpretation of CA
-
-* biplot with species and environmental factors, note scaling (α)!
+* biplot with species and environmental factors, note different scaling!
     - distance from the origin: $\chi^2$
     - species in the middle: either "average species" or poorly explained species.
     - species at the very edge: Attention, often rare species
