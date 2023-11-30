@@ -734,7 +734,7 @@ C      |          72  |          45|
 |------------|---------|---------|---------|----------|
 |Epilimnion  |   50    |    37   |   72    | 159      |
 |Hypolimnion |   87    |    78   |   45    | 210      |
-|Sum {$s_j$} |  137    |   115   |  117    | $n=369$  |
+|Sum $s_j$   |  137    |   115   |  117    | $n=369$  |
 |            |         |         |         |          |
 
 2. Expected frequencies $E_{ij}$ under the $H_0$: ${\mathbf E = s_i \otimes s_j} / n$

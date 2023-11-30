@@ -82,7 +82,7 @@ ggplot(benthos_long, aes(x=Site, y=Abundance, fill=Taxon)) + geom_col()
 
 <br>
 
-Different approaches
+**Different approaches**
 
 1. Direct interpretation
     - raw data, mean values, ...
@@ -242,7 +242,7 @@ Measure of distance $d$ between multidimensional points $x_i$ and $x_j$:
 A distance measure is termed metric, if:
 
 1. $d=0$ applies in the case of equality  only, and
-2. the triangle inequality aapplies.<br>
+2. the triangle inequality applies.<br>
   [The indirect route is longer than the direct route]{.gray}
 
 If one or both of the additional conditions are violated, we speak about **nonmetric**
@@ -294,6 +294,8 @@ it is metric, if:
 
 <br>
 
+<br>
+
 * **Euclidean** distance: shortest connection between 2 points in space
 * **Manhattan** distance: around the corner, as in Manhattans grid-like streets
 * **Chi-square** distance: for comparison of frequencies
@@ -305,7 +307,8 @@ it is metric, if:
 
 ## Distance and dissimilarity of **metric** variables
 
-with $x_{ij}, x_{ik}$ abundance of species  $i$ at sites ($j, k$).
+<br>
+
 
 Euclidean distance:
 
@@ -329,6 +332,8 @@ Bray-Curtis dissimilarity:
 $$
 d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 $$
+
+* with $x_{ij}, x_{ik}$ abundance of species  $i$ at sites ($j, k$).
 
 ## Distance and dissimilarity of binary variables
 
@@ -415,11 +420,13 @@ and not data matrix (`species`) directly
 
 * works with arbitrary distance measures, e.g. Bray-Curtis dissimilarity
 * supported by different packages, e.g. **stats**, **vegan**, **labdsv**, **ecodist**, **ade4** and **ape**
-* basic version in package **stats** (base R), other ith packages more specialized versions
-* basic version has no biplot, can be added done separately
+* basic version in package **stats** (base R), other packages with more specialized versions
+* basic version has no biplot, can be added separately
 
 
 ## Single matrix methods I
+
+<br>
 
 **PCA:** Principal Components analysis
 
@@ -472,7 +479,7 @@ and not data matrix (`species`) directly
 
 <br>
 
-**Note:** 
+**Note** 
 
 * stress is sometimes given as ratio 0...1, sometimes in 0...100%
 * differences between packages and statistics programs, e.g. SPSS
@@ -534,7 +541,7 @@ Compares similarity of the ordination with original dissimilarity in all dimensi
 ::: {.column width="39%"}
 
 * $\theta(d_{ij})$: observed dissimilarity
-* $\tilde{d}|{ij}$: ordination dissimilarity
+* $\tilde{d}_{ij}$: ordination dissimilarity
 
 $$
 S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne j}  \tilde{d}_{ij}^2}}
@@ -674,7 +681,9 @@ with(varechem, ordisurf(mds, Ca, add = TRUE, col = "green4"))
 
 ## Pros and cons of the methods discussed so far
 
-**PCA**, **CCA**
+<br>
+
+**PCA** (and also **CCA**)
 
 (+) easy to understand, quick and reproducible
 
@@ -698,14 +707,6 @@ with(varechem, ordisurf(mds, Ca, add = TRUE, col = "green4"))
 
 (--) one-matrix method (no separate matrices for species and environmental factors)
 
-
-## Interpretation of the CA
-
-* biplot with species and environmental factors, note different scaling!
-    - distance from the origin: $\chi^2$
-    - species in the middle: either "average species" or poorly explained species.
-    - species at the very edge: Attention, often rare species
-- orthogonal angle of species on connecting line origin - centroid of environmental factor
 
 ## Problems of CA (and  PCA)
 
@@ -791,6 +792,22 @@ plot(ord)
 * The plot shows only the part of variation that is explained by the constraints.
 * It the number of constraints is high compared to the number of observations, 
 the ordination shows again the full variation, i.e. becomes unconstrained.
+
+
+
+## Interpretation of the CCA
+
+
+```{r gau-cca, echo=FALSE, fig.width=6, fig.height=6, fig.align='center'}
+```
+
+
+* triplot with observations, species and environmental factors, note different scaling!
+    - distance from the origin: $\chi^2$
+    - species in the middle: either "average species" or poorly explained species
+    - species at the very edge: attention, often rare species
+- orthogonal angle of species on connecting line origin - centroid of environmental factor
+
 
 ## Statistical significance: ANOVA like permutation test
 
@@ -890,6 +907,8 @@ Experience shows that it can become quite complex and challenging, but also that
 
 ## Overview
 
+<br>
+
 * Cluster analysis aims to group data sets in clusters
 
 * Hierarchical clustering
@@ -901,7 +920,7 @@ Experience shows that it can become quite complex and challenging, but also that
   - define how distance is measured between clusters
 
 * Nonhierarchical clustering
-   - subdivide in a given number of groups
+   - split into a given number of groups
    - usually no dendrogram
    - iterative methods
    - e.g. k-means, k-centroids
@@ -983,16 +1002,19 @@ text(md$points, row.names(lakedata2), col = grp)
 
 ## Non-hierarchical clustering
 
-Instead of hierarchical clustering, we can also use a non-hierarchical method,
-e.g. k-means clustering. This is an iterative method, and avoids the problem that 
-cluster assignment depends on the order of clustering and the agglomeration method.
+<br>
 
-Depending on the question, it may be a disadvantage, that the number of clusters 
-needs to be specified beforehand (e.g. from hierarchical clustering) and that we
-do not get a tree diagramm.
+* e.g. k-means clustering
+* an iterative method
+* avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method
+
+**Disadvantages, depending on the question**
+
+* number of clusters needs to be specified beforehand (e.g. from hierarchical clustering)
+* no dendrogramm
 
 ```{r}
-cl <- kmeans(scale(log(lakedata)), centers = 4)
+cl <- kmeans(scale(log(lakedata)), centers = 5)
 cl$cluster
 ```
 
@@ -1007,8 +1029,13 @@ plot(log(lakedata), col = cl$cluster, pch=16)
 
 <br>
 
-* @oksanen_multivariate_2010
-* @borcard_numerical_2018
+ 
+
+* @oksanen_multivariate_2015 Multivariate analysis of ecological communities in R: Vegan tutorial. 
+* Borcard, D., Gillet, F., & Legendre, P. [-@borcard_numerical_2018] Numerical ecology with R. Springer International Publishing. [https://doi.org/10.1007/978-3-319-71404-2](https://doi.org/10.1007/978-3-319-71404-2)
+
+
+
 
 
  

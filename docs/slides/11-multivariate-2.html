@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2023-11-26">
+  <meta name="dcterms.date" content="2023-11-30">
   <title>Elements of Data Analysis and Statistics - 11-Multivariate methods II</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -427,7 +427,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2023-11-26</p>
+  <p class="date">2023-11-30</p>
 </section>
 <section id="data-sets-and-terms-of-use" class="slide level2">
 <h2>Data sets and terms of use</h2>
@@ -751,7 +751,7 @@ Thomas Petzoldt
 <section id="how-to-analyse-this-kind-of-data" class="slide level2">
 <h2>How to analyse this kind of data?</h2>
 <p><br></p>
-<p>Different approaches</p>
+<p><strong>Different approaches</strong></p>
 <ol type="1">
 <li>Direct interpretation
 <ul>
@@ -1068,7 +1068,7 @@ a^2 + b^2 = c^2 \quad \Rightarrow\quad c = \sqrt{a^2 + b^2} = \sqrt{\Delta x^2 +
 <p>A distance measure is termed metric, if:</p>
 <ol type="1">
 <li><span class="math inline">\(d=0\)</span> applies in the case of equality only, and</li>
-<li>the triangle inequality aapplies.<br> <span class="gray">The indirect route is longer than the direct route</span></li>
+<li>the triangle inequality applies.<br> <span class="gray">The indirect route is longer than the direct route</span></li>
 </ol>
 <p>If one or both of the additional conditions are violated, we speak about <strong>nonmetric</strong> measures and use the term <strong>dissimilarity</strong> instead of distance.</p>
 </section>
@@ -1121,6 +1121,7 @@ a^2 + b^2 = c^2 \quad \Rightarrow\quad c = \sqrt{a^2 + b^2} = \sqrt{\Delta x^2 +
 <section id="common-distance-and-dissimilarity-measures" class="slide level2">
 <h2>Common distance and dissimilarity measures</h2>
 <p><br></p>
+<p><br></p>
 <ul>
 <li><strong>Euclidean</strong> distance: shortest connection between 2 points in space</li>
 <li><strong>Manhattan</strong> distance: around the corner, as in Manhattans grid-like streets</li>
@@ -1133,7 +1134,7 @@ a^2 + b^2 = c^2 \quad \Rightarrow\quad c = \sqrt{a^2 + b^2} = \sqrt{\Delta x^2 +
 </section>
 <section id="distance-and-dissimilarity-of-metric-variables" class="slide level2">
 <h2>Distance and dissimilarity of <strong>metric</strong> variables</h2>
-<p>with <span class="math inline">\(x_{ij}, x_{ik}\)</span> abundance of species <span class="math inline">\(i\)</span> at sites (<span class="math inline">\(j, k\)</span>).</p>
+<p><br></p>
 <p>Euclidean distance:</p>
 <p><span class="math display">\[
 d_{jk} = \sqrt{\sum (x_{ij}-x_{ik})^2}
@@ -1147,6 +1148,9 @@ d_{jk} = \frac{1}{M} \sum\frac{|x_{ij}-x_{ik}|}{\max(x_i)-\min(x_i)}
 <p>Bray-Curtis dissimilarity: <span class="math display">\[
 d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 \]</span></p>
+<ul>
+<li>with <span class="math inline">\(x_{ij}, x_{ik}\)</span> abundance of species <span class="math inline">\(i\)</span> at sites (<span class="math inline">\(j, k\)</span>).</li>
+</ul>
 </section>
 <section id="distance-and-dissimilarity-of-binary-variables" class="slide level2">
 <h2>Distance and dissimilarity of binary variables</h2>
@@ -1307,12 +1311,13 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <ul>
 <li>works with arbitrary distance measures, e.g.&nbsp;Bray-Curtis dissimilarity</li>
 <li>supported by different packages, e.g.&nbsp;<strong>stats</strong>, <strong>vegan</strong>, <strong>labdsv</strong>, <strong>ecodist</strong>, <strong>ade4</strong> and <strong>ape</strong></li>
-<li>basic version in package <strong>stats</strong> (base R), other ith packages more specialized versions</li>
-<li>basic version has no biplot, can be added done separately</li>
+<li>basic version in package <strong>stats</strong> (base R), other packages with more specialized versions</li>
+<li>basic version has no biplot, can be added separately</li>
 </ul>
 </section>
 <section id="single-matrix-methods-i" class="slide level2">
 <h2>Single matrix methods I</h2>
+<p><br></p>
 <p><strong>PCA:</strong> Principal Components analysis</p>
 <p>▶ input: raw data, covariance or correlation matrix</p>
 <p>(+) basic method, very easy to understand</p>
@@ -1344,7 +1349,7 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <p>(–) results not always identical</p>
 <p>(–) computer intensive, especially for large data sets</p>
 <p><br></p>
-<p><strong>Note:</strong></p>
+<p><strong>Note</strong></p>
 <ul>
 <li>stress is sometimes given as ratio 0…1, sometimes in 0…100%</li>
 <li>differences between packages and statistics programs, e.g.&nbsp;SPSS</li>
@@ -1366,49 +1371,46 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <pre><code>Square root transformation
 Wisconsin double standardization
 Run 0 stress 0.1102424 
-Run 1 stress 0.1102424 
-... Procrustes: rmse 3.033608e-06  max resid 8.041263e-06 
+Run 1 stress 0.1727865 
+Run 2 stress 0.2053265 
+Run 3 stress 0.1102424 
+... Procrustes: rmse 2.211085e-06  max resid 5.485817e-06 
 ... Similar to previous best
-Run 2 stress 0.1102424 
-... Procrustes: rmse 2.731187e-06  max resid 5.963586e-06 
-... Similar to previous best
-Run 3 stress 0.1105543 
-... Procrustes: rmse 0.02421199  max resid 0.07189891 
 Run 4 stress 0.1105543 
-... Procrustes: rmse 0.02425635  max resid 0.07204862 
-Run 5 stress 0.1105543 
-... Procrustes: rmse 0.02429687  max resid 0.07218637 
-Run 6 stress 0.1727865 
-Run 7 stress 0.1105543 
-... Procrustes: rmse 0.02420773  max resid 0.07188688 
-Run 8 stress 0.2433619 
-Run 9 stress 0.1105543 
-... Procrustes: rmse 0.02415121  max resid 0.07170118 
+... Procrustes: rmse 0.02429889  max resid 0.07219465 
+Run 5 stress 0.1105545 
+... Procrustes: rmse 0.02398051  max resid 0.07113215 
+Run 6 stress 0.2261402 
+Run 7 stress 0.2261403 
+Run 8 stress 0.1727865 
+Run 9 stress 0.1102424 
+... Procrustes: rmse 6.322463e-06  max resid 2.007844e-05 
+... Similar to previous best
 Run 10 stress 0.1102424 
-... Procrustes: rmse 1.50777e-05  max resid 3.339566e-05 
+... Procrustes: rmse 4.06611e-06  max resid 1.148284e-05 
 ... Similar to previous best
 Run 11 stress 0.1102424 
-... Procrustes: rmse 1.78221e-05  max resid 5.068668e-05 
+... Procrustes: rmse 5.998878e-06  max resid 1.578528e-05 
 ... Similar to previous best
-Run 12 stress 0.1736879 
-Run 13 stress 0.2345638 
-Run 14 stress 0.1105543 
-... Procrustes: rmse 0.02421068  max resid 0.07189717 
-Run 15 stress 0.1105543 
-... Procrustes: rmse 0.02426446  max resid 0.0720779 
+Run 12 stress 0.1857967 
+Run 13 stress 0.2261402 
+Run 14 stress 0.1855539 
+Run 15 stress 0.1102424 
+... Procrustes: rmse 1.286801e-06  max resid 2.618357e-06 
+... Similar to previous best
 Run 16 stress 0.1102424 
 ... New best solution
-... Procrustes: rmse 1.523443e-06  max resid 3.697954e-06 
+... Procrustes: rmse 1.360374e-06  max resid 2.226751e-06 
 ... Similar to previous best
-Run 17 stress 0.1102424 
-... Procrustes: rmse 5.719866e-06  max resid 1.470382e-05 
-... Similar to previous best
-Run 18 stress 0.1102424 
-... Procrustes: rmse 4.896772e-06  max resid 1.392345e-05 
-... Similar to previous best
-Run 19 stress 0.2247335 
-Run 20 stress 0.2403446 
-*** Best solution repeated 3 times</code></pre>
+Run 17 stress 0.1105543 
+... Procrustes: rmse 0.0242821  max resid 0.07213465 
+Run 18 stress 0.1105543 
+... Procrustes: rmse 0.02422696  max resid 0.0719506 
+Run 19 stress 0.1105543 
+... Procrustes: rmse 0.02421855  max resid 0.07192233 
+Run 20 stress 0.1105543 
+... Procrustes: rmse 0.02425858  max resid 0.07205777 
+*** Best solution repeated 1 times</code></pre>
 </div>
 </div>
 </section>
@@ -1429,7 +1431,7 @@ Distance: bray
 Dimensions: 2 
 Stress:     0.1102424 
 Stress type 1, weak ties
-Best solution was repeated 3 times in 20 tries
+Best solution was repeated 1 time in 20 tries
 The best solution was from try 16 (random start)
 Scaling: centring, PC rotation, halfchange scaling 
 Species: expanded scores based on 'wisconsin(sqrt(bio))' </code></pre>
@@ -1469,7 +1471,7 @@ Species: expanded scores based on 'wisconsin(sqrt(bio))' </code></pre>
 <div class="column" style="width:39%;">
 <ul>
 <li><span class="math inline">\(\theta(d_{ij})\)</span>: observed dissimilarity</li>
-<li><span class="math inline">\(\tilde{d}|{ij}\)</span>: ordination dissimilarity</li>
+<li><span class="math inline">\(\tilde{d}_{ij}\)</span>: ordination dissimilarity</li>
 </ul>
 <p><span class="math display">\[
 S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne j}  \tilde{d}_{ij}^2}}
@@ -1646,7 +1648,8 @@ Number of permutations: 1000</code></pre>
 </section>
 <section id="pros-and-cons-of-the-methods-discussed-so-far" class="slide level2">
 <h2>Pros and cons of the methods discussed so far</h2>
-<p><strong>PCA</strong>, <strong>CCA</strong></p>
+<p><br></p>
+<p><strong>PCA</strong> (and also <strong>CCA</strong>)</p>
 <p>(+) easy to understand, quick and reproducible</p>
 <p>(+) no non-linear distortion</p>
 <p>(–) but: horseshoe effect possible</p>
@@ -1658,18 +1661,6 @@ Number of permutations: 1000</code></pre>
 <p>(–) bias</p>
 <p>(–) numerical effort, iterative method, local minima</p>
 <p>(–) one-matrix method (no separate matrices for species and environmental factors)</p>
-</section>
-<section id="interpretation-of-the-ca" class="slide level2">
-<h2>Interpretation of the CA</h2>
-<ul>
-<li>biplot with species and environmental factors, note different scaling!
-<ul>
-<li>distance from the origin: <span class="math inline">\(\chi^2\)</span></li>
-<li>species in the middle: either “average species” or poorly explained species.</li>
-<li>species at the very edge: Attention, often rare species</li>
-</ul></li>
-<li>orthogonal angle of species on connecting line origin - centroid of environmental factor</li>
-</ul>
 </section>
 <section id="problems-of-ca-and-pca" class="slide level2">
 <h2>Problems of CA (and PCA)</h2>
@@ -1905,6 +1896,19 @@ Eigenvalues for unconstrained axes:
 <li>It the number of constraints is high compared to the number of observations, the ordination shows again the full variation, i.e.&nbsp;becomes unconstrained.</li>
 </ul>
 </section>
+<section id="interpretation-of-the-cca" class="slide level2">
+<h2>Interpretation of the CCA</h2>
+
+<img data-src="11-multivariate-2_files/figure-revealjs/gau-cca-1.png" width="576" class="r-stretch quarto-figure-center"><ul>
+<li>triplot with observations, species and environmental factors, note different scaling!
+<ul>
+<li>distance from the origin: <span class="math inline">\(\chi^2\)</span></li>
+<li>species in the middle: either “average species” or poorly explained species</li>
+<li>species at the very edge: attention, often rare species</li>
+</ul></li>
+<li>orthogonal angle of species on connecting line origin - centroid of environmental factor</li>
+</ul>
+</section>
 <section id="statistical-significance-anova-like-permutation-test" class="slide level2">
 <h2>Statistical significance: ANOVA like permutation test</h2>
 <p><br></p>
@@ -2051,6 +2055,7 @@ Eigenvalues for unconstrained axes:
 </section>
 <section id="overview" class="slide level2">
 <h2>Overview</h2>
+<p><br></p>
 <ul>
 <li><p>Cluster analysis aims to group data sets in clusters</p></li>
 <li><p>Hierarchical clustering</p>
@@ -2065,7 +2070,7 @@ Eigenvalues for unconstrained axes:
 </ul></li>
 <li><p>Nonhierarchical clustering</p>
 <ul>
-<li>subdivide in a given number of groups</li>
+<li>split into a given number of groups</li>
 <li>usually no dendrogram</li>
 <li>iterative methods</li>
 <li>e.g.&nbsp;k-means, k-centroids</li>
@@ -2336,16 +2341,25 @@ Eigenvalues for unconstrained axes:
 <img data-src="11-multivariate-2_files/figure-revealjs/lake-nmds-colored-1.png" width="960" class="r-stretch"></section>
 <section id="non-hierarchical-clustering" class="slide level2">
 <h2>Non-hierarchical clustering</h2>
-<p>Instead of hierarchical clustering, we can also use a non-hierarchical method, e.g.&nbsp;k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.</p>
-<p>Depending on the question, it may be a disadvantage, that the number of clusters needs to be specified beforehand (e.g.&nbsp;from hierarchical clustering) and that we do not get a tree diagramm.</p>
+<p><br></p>
+<ul>
+<li>e.g.&nbsp;k-means clustering</li>
+<li>an iterative method</li>
+<li>avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method</li>
+</ul>
+<p><strong>Disadvantages, depending on the question</strong></p>
+<ul>
+<li>number of clusters needs to be specified beforehand (e.g.&nbsp;from hierarchical clustering)</li>
+<li>no dendrogramm</li>
+</ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(<span class="fu">log</span>(lakedata)), <span class="at">centers =</span> <span class="dv">4</span>)</span>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(<span class="fu">log</span>(lakedata)), <span class="at">centers =</span> <span class="dv">5</span>)</span>
 <span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>cl<span class="sc">$</span>cluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Ammer   Arend   Boden   Chiem   Dober   Muegg   Ploen   Kumme Mueritz   MuerB 
-      4       1       4       4       2       2       3       3       3       1 
+      5       1       5       5       3       2       4       3       4       1 
   Plaue   Sacro   Schar   SchwA   SchwI   Starn   Stech   Stein 
-      3       1       1       3       3       4       1       2 </code></pre>
+      4       1       4       4       4       5       1       2 </code></pre>
 </div>
 </div>
 </section>
@@ -2360,8 +2374,8 @@ Eigenvalues for unconstrained axes:
 <h2>Further reading</h2>
 <p><br></p>
 <ul>
-<li><span class="citation" data-cites="oksanen_multivariate_2010">Oksanen (<a href="#/references" role="doc-biblioref" onclick="">2010</a>)</span></li>
-<li><span class="citation" data-cites="borcard_numerical_2018">Borcard et al. (<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span></li>
+<li><span class="citation" data-cites="oksanen_multivariate_2015">Oksanen (<a href="#/references" role="doc-biblioref" onclick="">2015</a>)</span> Multivariate analysis of ecological communities in R: Vegan tutorial.</li>
+<li>Borcard, D., Gillet, F., &amp; Legendre, P. <span class="citation" data-cites="borcard_numerical_2018">(<a href="#/references" role="doc-biblioref" onclick="">2018</a>)</span> Numerical ecology with R. Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-71404-2">https://doi.org/10.1007/978-3-319-71404-2</a></li>
 </ul>
 </section>
 <section id="references" class="slide level2 smaller scrollable">
@@ -2375,8 +2389,8 @@ Eigenvalues for unconstrained axes:
 <div id="ref-borcard_numerical_2018" class="csl-entry" role="doc-biblioentry">
 Borcard, D., Gillet, F., &amp; Legendre, P. (2018). <em>Numerical ecology with <span>R</span></em>. Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-71404-2">https://doi.org/10.1007/978-3-319-71404-2</a>
 </div>
-<div id="ref-oksanen_multivariate_2010" class="csl-entry" role="doc-biblioentry">
-Oksanen, J. (2010). <em>Multivariate analysis of ecological communities in <span>R</span>: Vegan tutorial</em>.
+<div id="ref-oksanen_multivariate_2015" class="csl-entry" role="doc-biblioentry">
+Oksanen, J. (2015). <em>Multivariate analysis of ecological communities in <span>R</span>: Vegan tutorial</em>.
 </div>
 <div id="ref-UBA2020" class="csl-entry" role="doc-biblioentry">
 Umweltbundesamt. (2021). <em><span class="nocase">Kenndaten ausgewählter Seen Deutschlands</span></em>. <a href="https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen">https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen</a>
