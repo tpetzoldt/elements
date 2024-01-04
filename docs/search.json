@@ -1516,7 +1516,7 @@
     "href": "slides/09-timeseries-basics.html#time-series-analysis",
     "title": "09-Time Series Basics",
     "section": "Time series analysis",
-    "text": "Time series analysis\n\n\nDeals with development of processes in time: \\(x(t)\\),\nHuge number of specific approaches, only a few examples can be given here.\n\nAims of time series analysis\n\nDoes a trend exist? (significance)\nHow strong is a trend? (effect size)\nIdentification of covariates. (influencing factors)\nTrend, seasonality and random error. (component model)\nStatistical modeling and forecasting.\nBreakpoint analysis, intervention analysis, …, and more."
+    "text": "Time series analysis\n\n\nDeals with development of processes in time: \\(x(t)\\),\nHuge number of specific approaches, only a few examples can be presented here.\n\nAims of time series analysis\n\nDoes a trend exist? (significance)\nHow strong is a trend? (effect size)\nIdentification of covariates. (influencing factors)\nTrend, seasonality and random error. (component model)\nStatistical modeling and forecasting.\nBreakpoint analysis, intervention analysis, …, and more."
   },
   {
     "objectID": "slides/09-timeseries-basics.html#stationarity",
@@ -1537,28 +1537,28 @@
     "href": "slides/09-timeseries-basics.html#two-different-basic-types-time-series",
     "title": "09-Time Series Basics",
     "section": "Two different basic types time series",
-    "text": "Two different basic types time series\n\n\\[\\begin{align}\nx_t &= \\beta_0 + \\beta_1 t + u_t \\label{ts:trendstat} \\\\\nx_t &= x_{t-1} + c + u_t          \\label{ts:diffstat}\n\\end{align}\\]\n\n\nTSP: trend stationary process, linear regression model\n\n\ntime &lt;- 1:100\nTSP &lt;- 2 + 0.2 * time + rnorm(time)\n\n\nDSP: difference stationary process (random walk)\n\n\nDSP &lt;- numeric(length(time))\nDSP[1] &lt;- rnorm(1)\nfor (tt in time[-1])\n  DSP[tt] &lt;- DSP[tt-1] + 0.2 + rnorm(1)"
+    "text": "Two different basic types time series\n\n\\[\\begin{align}\nx_t &= \\beta_0 + \\beta_1 t + u_t \\label{ts:trendstat} \\\\\nx_t &= x_{t-1} + c + u_t          \\label{ts:diffstat}\n\\end{align}\\]\n\n\n\n\n\nTSP: trend stationary process, linear regression model\n\n\ntime <- 1:100\nTSP <- 2 + 0.2 * time + rnorm(time)\n\n\nDSP: difference stationary process (random walk)\n\n\nDSP <- numeric(length(time))\nDSP[1] <- rnorm(1)\nfor (tt in time[-1])\n  DSP[tt] <- DSP[tt-1] + 0.2 + rnorm(1)"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#time-series-classes-in-r",
     "href": "slides/09-timeseries-basics.html#time-series-classes-in-r",
     "title": "09-Time Series Basics",
     "section": "Time series classes in R",
-    "text": "Time series classes in R\n\nts for regularly spaced time series,\nzoo irregularly spaced time series.\n\n\npar(mfrow=c(1, 2), las=1)\nTSP &lt;- ts(TSP)\nDSP &lt;- ts(DSP)\n\nplot(TSP, main=\"trend stationary process\")\nplot(DSP, main=\"difference stationary process\")"
+    "text": "Time series classes in R\n\nts for regularly spaced time series,\nzoo irregularly spaced time series.\n\n\npar(mfrow=c(1, 2), las=1)\nTSP <- ts(TSP)\nDSP <- ts(DSP)\n\nplot(TSP, main=\"trend stationary process\")\nplot(DSP, main=\"difference stationary process\")"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#a-simulation-experiment",
     "href": "slides/09-timeseries-basics.html#a-simulation-experiment",
     "title": "09-Time Series Basics",
     "section": "A Simulation Experiment",
-    "text": "A Simulation Experiment\n\n\nDefine two functions to generate time series with specific properties:\n\n\ngenTSP &lt;- function(time, beta0, beta1)\n  as.ts(beta0 + beta1 * time + rnorm(time))\n\ngenDSP &lt;- function(time, c) {\n  DSP &lt;- numeric(length(time))\n  DSP[1] &lt;- rnorm(1)\n  for (tt in time[-1]) DSP[tt] &lt;- DSP[tt-1] + c + rnorm(1)\n  as.ts(DSP)\n}"
+    "text": "A Simulation Experiment\n\n\nDefine two functions to generate time series with specific properties:\n\n\ngenTSP <- function(time, beta0, beta1)\n  as.ts(beta0 + beta1 * time + rnorm(time))\n\ngenDSP <- function(time, c) {\n  DSP <- numeric(length(time))\n  DSP[1] <- rnorm(1)\n  for (tt in time[-1]) DSP[tt] <- DSP[tt-1] + c + rnorm(1)\n  as.ts(DSP)\n}"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#run-the-experiment",
     "href": "slides/09-timeseries-basics.html#run-the-experiment",
     "title": "09-Time Series Basics",
     "section": "Run the experiment",
-    "text": "Run the experiment\n\nset the trend to zero, so count.signif counts a false positive results.\n\n\ncount.signif &lt;- function(N, time, FUN, ...) {\n  a &lt;- 0\n  for (i in 1:N) {\n    x &lt;- FUN(time, ...)\n    m &lt;- summary(lm(x  ~ time(x)))\n    f &lt;- m$fstatistic\n    p.value &lt;- pf(f[1], f[2], f[3], lower=FALSE)\n    # cat(\"p.value\", p.value, \"\\n\")\n    if (p.value &lt; 0.05) a &lt;- a + 1\n  }\n  a\n}\n\n\ntest for the number of significant F-values,\nrun loop 100 … 1000 times for both types of time series,\n\n\nNruns &lt;- 100 # better 1000 !!!\ncount.signif(N=Nruns, time=time, FUN=genTSP, beta0=0, beta1=0) / Nruns\n\n[1] 0.05\n\ncount.signif(N=Nruns, time=time, FUN=genDSP, c=0) / Nruns\n\n[1] 0.91"
+    "text": "Run the experiment\n\nset the trend to zero, so count.signif counts a false positive results.\n\n\ncount.signif <- function(N, time, FUN, ...) {\n  a <- 0\n  for (i in 1:N) {\n    x <- FUN(time, ...)\n    m <- summary(lm(x  ~ time(x)))\n    f <- m$fstatistic\n    p.value <- pf(f[1], f[2], f[3], lower=FALSE)\n    # cat(\"p.value\", p.value, \"\\n\")\n    if (p.value < 0.05) a <- a + 1\n  }\n  a\n}\n\n\ntest for the number of significant F-values,\nrun loop 100 … 1000 times for both types of time series,\n\n\nNruns <- 100 # better 1000 !!!\ncount.signif(N=Nruns, time=time, FUN=genTSP, beta0=0, beta1=0) / Nruns\n\n[1] 0.05\n\ncount.signif(N=Nruns, time=time, FUN=genDSP, c=0) / Nruns\n\n[1] 0.91"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#autocorrelation-function-acf",
@@ -1614,7 +1614,7 @@
     "href": "slides/09-timeseries-basics.html#trend-tests",
     "title": "09-Time Series Basics",
     "section": "Trend Tests",
-    "text": "Trend Tests\n\n\nMann-Kendall trend test, popular in environmental sciences\nstrictly suitable only for trend-stationary time series, but robust in cases of weak autocorrelation\nnot for “pure” difference-stationary time series, because residuals are autocorrelated\n\\(\\Rightarrow\\) Test stationarity (or autocorrelation) before testing trend !!!\n\n\nlibrary(\"Kendall\")\nMannKendall(TSP)\n\ntau = 0.894, 2-sided pvalue =&lt; 2.22e-16\n\n\nSignificant trend. \n\nMannKendall(DSP)\n\ntau = 0.755, 2-sided pvalue =&lt; 2.22e-16\n\n\nIndicates significant trend, but as process is DSP, interpretation is wrong.\n\n\n 🏠 Home"
+    "text": "Trend Tests\n\n\nMann-Kendall trend test, popular in environmental sciences\nstrictly suitable only for trend-stationary time series, but robust in cases of weak autocorrelation\nnot for “pure” difference-stationary time series, because residuals are autocorrelated\n\\(\\Rightarrow\\) Test stationarity (or autocorrelation) before testing trend !!!\n\n\nlibrary(\"Kendall\")\nMannKendall(TSP)\n\ntau = 0.894, 2-sided pvalue =< 2.22e-16\n\n\nSignificant trend. \n\nMannKendall(DSP)\n\ntau = 0.755, 2-sided pvalue =< 2.22e-16\n\n\nIndicates significant trend, but as process is DSP, interpretation is wrong."
   },
   {
     "objectID": "slides/10-multivariate-1.html#data-sets-and-terms-of-use",
@@ -3372,5 +3372,19 @@
     "title": "11-Multivariate methods II",
     "section": "Interpretation of the CCA",
     "text": "Interpretation of the CCA\n\n\ntriplot with observations, species and environmental factors, note different scaling!\n\ndistance from the origin: \\(\\chi^2\\)\nspecies in the middle: either “average species” or poorly explained species\nspecies at the very edge: attention, often rare species\n\northogonal angle of species on connecting line origin - centroid of environmental factor"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#an-introductory-example",
+    "href": "slides/09-timeseries-basics.html#an-introductory-example",
+    "title": "09-Time Series Basics",
+    "section": "An introductory example",
+    "text": "An introductory example\n\n\nShow the code\nlibrary(dplyr)\nlibrary(readr)\nlibrary(ggplot2)\nlibrary(lubridate)\n\nco2 <- read_csv(\"https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv\", \n                skip = 40, show_col_types = FALSE)\n\nco2 |> \n  mutate(date=as_date(paste(year, month, 15, sep=\".\"))) |>\n  ggplot(aes(date, average)) + \n  geom_line() + ylab(expression(CO[2]~\"in the atmosphere (ppm)\")) + \n  ggtitle(\"Mauna Loa Observatory, Hawaii, Monthly Averages\") +\n  geom_smooth()\n\n\n\nData source:\nKeeling et al. (2001), Tans & Keeling (2023), https://gml.noaa.gov/ccgg/trends/data.html"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#references",
+    "href": "slides/09-timeseries-basics.html#references",
+    "title": "09-Time Series Basics",
+    "section": "References",
+    "text": "References\n\n\n 🏠 Home \n\n\n\nKeeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., & Meijer, H. A. (2001). Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects (p. 88). Scripps Institution of Oceanography, San Diego.\n\n\nTans, P., & Keeling, C. D. (2023). Trends in atmospheric carbon dioxide, Mauna Loa CO2 monthly mean data. NOAA Earth System Research Laboratories, Global Monitoring Laboratory. https://gml.noaa.gov/ccgg/trends/data.html"
   }
 ]

@@ -3,11 +3,55 @@ subtitle: "Applied Statistics -- A Practical Course"
 title: "09-Time Series Basics"
 date:   "`r Sys.Date()`"
 --- 
+```{r packages, echo=FALSE, include=FALSE}
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(lubridate)
+```
 
 
+## An introductory example
 
-# Time Series Basics
+```{r co2-maunaloa-show, eval=FALSE, echo=TRUE}
+#| code-fold: true
+#| code-summary: "Show the code"
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(lubridate)
 
+co2 <- read_csv("https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv", 
+                skip = 40, show_col_types = FALSE)
+
+co2 |> 
+  mutate(date=as_date(paste(year, month, 15, sep="."))) |>
+  ggplot(aes(date, average)) + 
+  geom_line() + ylab(expression(CO[2]~"in the atmosphere (ppm)")) + 
+  ggtitle("Mauna Loa Observatory, Hawaii, Monthly Averages") +
+  geom_smooth()
+```
+
+```{r co2-maunaloa, echo=FALSE, fig.align='center'}
+#co2 <- read_csv("https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv", skip=40) |>
+co2 <- read_csv("../data/co2_mm_mlo.csv", skip=40, show_col_types = FALSE) |>
+  mutate(date=as_date(paste(year, month, 15, sep=".")))
+
+co2 |> ggplot(aes(date, average)) + 
+  geom_line() + ylab(expression(CO[2]~"in the atmosphere (ppm)")) + 
+  ggtitle("Mauna Loa Observatory, Hawaii, Monthly Averages") +
+  geom_smooth()
+```
+
+
+Data source:
+
+@keeling_exchanges_2001, @tans_maunaloa_2023, [https://gml.noaa.gov/ccgg/trends/data.html](https://gml.noaa.gov/ccgg/trends/data.html)
+
+<!--
+https://gml.noaa.gov/ccgg/trends/data.html
+License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric_co2/primary_mlo_co2_record.html)
+-->
 
 ## Time series analysis
 
@@ -15,7 +59,7 @@ date:   "`r Sys.Date()`"
 
 * Deals with development of processes in time: $x(t)$,
 * Huge number of specific approaches, only a few examples can be
-  given here.
+  presented here.
 
 
 **Aims of time series analysis**
@@ -300,4 +344,7 @@ Significant trend.
 MannKendall(DSP)
 ```
 
+
 Indicates significant trend, but as process is DSP, interpretation is wrong.
+
+## References
