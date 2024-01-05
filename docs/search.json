@@ -1516,21 +1516,21 @@
     "href": "slides/09-timeseries-basics.html#time-series-analysis",
     "title": "09-Time Series Basics",
     "section": "Time series analysis",
-    "text": "Time series analysis\n\n\nDeals with development of processes in time: \\(x(t)\\),\nHuge number of specific approaches, only a few examples can be presented here.\n\nAims of time series analysis\n\nDoes a trend exist? (significance)\nHow strong is a trend? (effect size)\nIdentification of covariates. (influencing factors)\nTrend, seasonality and random error. (component model)\nStatistical modeling and forecasting.\nBreakpoint analysis, intervention analysis, …, and more."
+    "text": "Time series analysis\n\n\nDeals with development of processes in time: \\(x(t)\\),\nHuge number of specific approaches, only a few examples can be presented here.\n\nAims\n\nDoes a trend exist? (significance)\nHow strong is a trend? (effect size)\nIdentification of covariates (influencing factors)\nTrend, seasonality and random error (component model)\nStatistical modeling and forecasting\nBreakpoint analysis, intervention analysis, …, and more"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#stationarity",
     "href": "slides/09-timeseries-basics.html#stationarity",
     "title": "09-Time Series Basics",
     "section": "Stationarity",
-    "text": "Stationarity\n\n\nTime series methods have certain assumptions.\nOne of the most common assumptions is stationarity.\n\n\n\nNote: we are often not primarily interested in stationarity itself!\n\\(\\rightarrow\\) It is often just “the ticket” to go further.\n\n\nExample 1: trend analysis\nWe test stationarity to check if a trend test would be appropriate.\nExample 2: linear models\nEstimation of a linear trend or a breakpoint model. We check residuals for stationarity to get in formation about reliability of the fitted model."
+    "text": "Stationarity\n\n\nTime series methods have certain assumptions.\nOne of the most common assumptions is stationarity.\n\n\nNote: We are usually not primarily interested in stationarity itself!\n\\(\\rightarrow\\) It is just “the ticket” for further analyses.\n\nExample 1: trend analysis\n\nWe test stationarity to check if a (simple) trend test would be appropriate.\n\nExample 2: linear models\n\nEstimation of a linear trend or a breakpoint model.\nWe check residuals for stationarity to get in formation about reliability of the fitted model."
   },
   {
     "objectID": "slides/09-timeseries-basics.html#stationarity-1",
     "href": "slides/09-timeseries-basics.html#stationarity-1",
     "title": "09-Time Series Basics",
     "section": "Stationarity",
-    "text": "Stationarity\n\n… is a central concept in time series analysis.\n\nStrictly (or strong) stationary process: distribution of \\((x_{s+t})\\) independent from index \\(s\\).\nWeakly or wide-sense stationary processes: requires only that 1st and 2nd moments (mean, variance and covariance) do not vary with time."
+    "text": "Stationarity\n\n\nShow the code\n  set.seed(123)\n  x <- 1:100\n  par(mfrow = c(1, 3), cex=1.4)\n  plot(x, rnorm(x), type=\"l\", main=\"stationary\", xlab=\"time\", ylab=\"x\")\n  plot(x, 2 * x + rnorm(x), type=\"l\", main=\"linear trend\", xlab=\"time\", ylab=\"x\")\n  plot(x, rnorm(x, sd=seq(0.1,1,length=100)), type=\"l\",\n    main=\"non-stationary variance\", xlab=\"time\", ylab=\"x\")\n\n\n\n… is a central concept in time series analysis.\n\nStrictly (or strong) stationary process: distribution of \\((x_{s+t})\\) independent from index \\(s\\).\nWeakly or wide-sense stationary processes: requires only that 1st and 2nd moments (mean, variance and covariance) do not vary with time."
   },
   {
     "objectID": "slides/09-timeseries-basics.html#two-different-basic-types-time-series",
@@ -1544,7 +1544,7 @@
     "href": "slides/09-timeseries-basics.html#time-series-classes-in-r",
     "title": "09-Time Series Basics",
     "section": "Time series classes in R",
-    "text": "Time series classes in R\n\nts for regularly spaced time series,\nzoo irregularly spaced time series.\n\n\npar(mfrow=c(1, 2), las=1)\nTSP <- ts(TSP)\nDSP <- ts(DSP)\n\nplot(TSP, main=\"trend stationary process\")\nplot(DSP, main=\"difference stationary process\")"
+    "text": "Time series classes in R\n\nts for regularly spaced time series,\nzoo irregularly spaced time series.\n\n\npar(mfrow=c(1, 3), las=1)\nLSP <- ts(LSP)\nTSP <- ts(TSP)\nDSP <- ts(DSP)\n\nplot(LSP, main=\"level stationary process\")\nplot(TSP, main=\"trend stationary process\")\nplot(DSP, main=\"difference stationary process\")"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#a-simulation-experiment",
@@ -1586,35 +1586,35 @@
     "href": "slides/09-timeseries-basics.html#unit-root-test",
     "title": "09-Time Series Basics",
     "section": "Unit root test",
-    "text": "Unit root test\n\n\ndetermine whether a time series is of type “DSP”.\nADF-test (augmented Dickey-Fuller test), contained in R-package tseries:\nRemember: A “TSP” can be made stationary by subtracting a trend.\n\n\\(\\rightarrow\\) This is done automatically by the test.\n\nlibrary(tseries)\nadf.test(TSP)\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  TSP\nDickey-Fuller = -4.0145, Lag order = 4, p-value = 0.01134\nalternative hypothesis: stationary\n\nadf.test(DSP)\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  DSP\nDickey-Fuller = -2.4355, Lag order = 4, p-value = 0.3962\nalternative hypothesis: stationary"
+    "text": "Unit root test\n\n\ndetermine whether a time series is of type “DSP”.\nADF-test (augmented Dickey-Fuller test), contained in R-package tseries:\nRemember: A “TSP” can be made stationary by subtracting a trend.\n\n\\(\\rightarrow\\) This is done automatically by the test.\n\nlibrary(tseries)\nadf.test(TSP)\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  TSP\nDickey-Fuller = -3.87, Lag order = 4, p-value = 0.01831\nalternative hypothesis: stationary\n\nadf.test(DSP)\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  DSP\nDickey-Fuller = -2.1883, Lag order = 4, p-value = 0.4986\nalternative hypothesis: stationary"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#dsp-presence-of-unit-root",
     "href": "slides/09-timeseries-basics.html#dsp-presence-of-unit-root",
     "title": "09-Time Series Basics",
     "section": "DSP: presence of unit root",
-    "text": "DSP: presence of unit root\n\n\nDSP series: presence of an unit root cannot be rejected,\n\\(\\rightarrow\\) non-stationary.\nBut, after differencing, there are no objections against stationarity:\n\n\nadf.test(diff(DSP))\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  diff(DSP)\nDickey-Fuller = -3.9902, Lag order = 4, p-value = 0.01261\nalternative hypothesis: stationary"
+    "text": "DSP: presence of unit root\n\n\nDSP series: presence of an unit root cannot be rejected,\n\\(\\rightarrow\\) non-stationary.\nBut, after differencing, there are no objections against stationarity:\n\n\nadf.test(diff(DSP))\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  diff(DSP)\nDickey-Fuller = -3.62, Lag order = 4, p-value = 0.03504\nalternative hypothesis: stationary"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#kpss-test-kwiatkowski-phillips-schmidt-shin-test",
     "href": "slides/09-timeseries-basics.html#kpss-test-kwiatkowski-phillips-schmidt-shin-test",
     "title": "09-Time Series Basics",
     "section": "KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test",
-    "text": "KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test\n\n… tests directly for stationarity or trend stationarity:\n\nkpss.test(TSP)                # non-stationary\n\n\n    KPSS Test for Level Stationarity\n\ndata:  TSP\nKPSS Level = 2.0842, Truncation lag parameter = 4, p-value = 0.01\n\nkpss.test(TSP, null=\"Trend\")  # stationary after trend removal\n\n\n    KPSS Test for Trend Stationarity\n\ndata:  TSP\nKPSS Trend = 0.068349, Truncation lag parameter = 4, p-value = 0.1\n\n\n\n\ndetrending made the series stationary"
+    "text": "KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test\n\n… tests directly for stationarity or trend stationarity:\n\nkpss.test(TSP)                # non-stationary\n\n\n    KPSS Test for Level Stationarity\n\ndata:  TSP\nKPSS Level = 2.0877, Truncation lag parameter = 4, p-value = 0.01\n\nkpss.test(TSP, null=\"Trend\")  # stationary after trend removal\n\n\n    KPSS Test for Trend Stationarity\n\ndata:  TSP\nKPSS Trend = 0.10306, Truncation lag parameter = 4, p-value = 0.1\n\n\n\n\ndetrending made the series stationary"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#kpss-test-kwiatkowski-phillips-schmidt-shin-test-ii",
     "href": "slides/09-timeseries-basics.html#kpss-test-kwiatkowski-phillips-schmidt-shin-test-ii",
     "title": "09-Time Series Basics",
     "section": "KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test II",
-    "text": "KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test II\n\n\nkpss.test(DSP)                # non-stationary\n\n\n    KPSS Test for Level Stationarity\n\ndata:  DSP\nKPSS Level = 1.6951, Truncation lag parameter = 4, p-value = 0.01\n\nkpss.test(DSP, null=\"Trend\")  # still non-stationary\n\n\n    KPSS Test for Trend Stationarity\n\ndata:  DSP\nKPSS Trend = 0.22627, Truncation lag parameter = 4, p-value = 0.01\n\n\n\n\ndetrending does not cure non-stationarity"
+    "text": "KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test II\n\n\nkpss.test(DSP)                # non-stationary\n\n\n    KPSS Test for Level Stationarity\n\ndata:  DSP\nKPSS Level = 1.5869, Truncation lag parameter = 4, p-value = 0.01\n\nkpss.test(DSP, null=\"Trend\")  # still non-stationary\n\n\n    KPSS Test for Trend Stationarity\n\ndata:  DSP\nKPSS Trend = 0.30063, Truncation lag parameter = 4, p-value = 0.01\n\n\n\n\ndetrending does not cure non-stationarity"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#trend-tests",
     "href": "slides/09-timeseries-basics.html#trend-tests",
     "title": "09-Time Series Basics",
     "section": "Trend Tests",
-    "text": "Trend Tests\n\n\nMann-Kendall trend test, popular in environmental sciences\nstrictly suitable only for trend-stationary time series, but robust in cases of weak autocorrelation\nnot for “pure” difference-stationary time series, because residuals are autocorrelated\n\\(\\Rightarrow\\) Test stationarity (or autocorrelation) before testing trend !!!\n\n\nlibrary(\"Kendall\")\nMannKendall(TSP)\n\ntau = 0.894, 2-sided pvalue =< 2.22e-16\n\n\nSignificant trend. \n\nMannKendall(DSP)\n\ntau = 0.755, 2-sided pvalue =< 2.22e-16\n\n\nIndicates significant trend, but as process is DSP, interpretation is wrong."
+    "text": "Trend Tests\n\n\nMann-Kendall trend test, popular in environmental sciences\nstrictly suitable only for trend-stationary time series, but robust in cases of weak autocorrelation\nnot for “pure” difference-stationary time series, because residuals are autocorrelated\n\\(\\Rightarrow\\) Test stationarity (or autocorrelation) before testing trend !!!\n\n\nlibrary(\"Kendall\")\nMannKendall(TSP)\n\ntau = 0.906, 2-sided pvalue =< 2.22e-16\n\n\nSignificant trend. \n\nMannKendall(DSP)\n\ntau = 0.682, 2-sided pvalue =< 2.22e-16\n\n\nIndicates significant trend, but as process is DSP, interpretation is wrong."
   },
   {
     "objectID": "slides/10-multivariate-1.html#data-sets-and-terms-of-use",
@@ -3385,6 +3385,83 @@
     "href": "slides/09-timeseries-basics.html#references",
     "title": "09-Time Series Basics",
     "section": "References",
-    "text": "References\n\n\n 🏠 Home \n\n\n\nKeeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., & Meijer, H. A. (2001). Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects (p. 88). Scripps Institution of Oceanography, San Diego.\n\n\nTans, P., & Keeling, C. D. (2023). Trends in atmospheric carbon dioxide, Mauna Loa CO2 monthly mean data. NOAA Earth System Research Laboratories, Global Monitoring Laboratory. https://gml.noaa.gov/ccgg/trends/data.html"
+    "text": "References\n\n\n 🏠 Home \n\n\n\nKeeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., & Meijer, H. A. (2001). Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects (p. 88). Scripps Institution of Oceanography, San Diego.\n\n\nKronenberg, F., R. (2021). Das regionale klimainformationssystem ReKIS – #eine gemeinsame plattform für sachsen, sachsen-anhalt und thüringen. https://rekis.hydro.tu-dresden.de/\n\n\nTans, P., & Keeling, C. D. (2023). Trends in atmospheric carbon dioxide, Mauna Loa CO2 monthly mean data. NOAA Earth System Research Laboratories, Global Monitoring Laboratory. https://gml.noaa.gov/ccgg/trends/data.html"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#example-1-co2-in-the-atmosphere",
+    "href": "slides/09-timeseries-basics.html#example-1-co2-in-the-atmosphere",
+    "title": "09-Time Series Basics",
+    "section": "Example 1: CO2 in the atmosphere",
+    "text": "Example 1: CO2 in the atmosphere\n\n\n\nShow the code\nlibrary(dplyr)\nlibrary(readr)\nlibrary(ggplot2)\nlibrary(lubridate)\n\nco2 <- read_csv(\"https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv\", \n                skip = 40, show_col_types = FALSE)\n\nco2 |> \n  mutate(date=as_date(paste(year, month, 15, sep=\".\"))) |>\n  ggplot(aes(date, average)) + \n  geom_line() + ylab(expression(CO[2]~\"in the atmosphere (ppm)\")) + \n  ggtitle(\"Mauna Loa Observatory, Hawaii, Monthly Averages\") +\n  geom_smooth()\n\n\n\n\nData source:\nKeeling et al. (2001), Tans & Keeling (2023), https://gml.noaa.gov/ccgg/trends/data.html"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#example-2-air-temperature",
+    "href": "slides/09-timeseries-basics.html#example-2-air-temperature",
+    "title": "09-Time Series Basics",
+    "section": "Example 2: Air temperature",
+    "text": "Example 2: Air temperature\n\n\nShow the code\nlibrary(dplyr)\nlibrary(readr)\nlibrary(ggplot2)\nlibrary(lubridate)\n\ntempdata <- read_csv(\"../data/airtemp_dresden_daily.csv\") |>\n  select(ZEIT, TM) |>\n  rename(date = ZEIT) |>\n  mutate(year = year(date), month = month(date)) |>\n  group_by(year, month) |>\n  summarise(temp = mean(TM)) |>\n  mutate(date = date(paste(year, month, 15, sep=\"-\")))\n\ntempdata |>\n  ggplot(aes(date, temp)) + \n  geom_line() +\n  ylab(\"Temperature (°C)\") + \n  ggtitle(\"Monthly mean air temperature in Dresden\")\n\n\n\nData downloaded from https://rekis.hydro.tu-dresden.de (Kronenberg, 2021), original source Deutscher Wetterdienst, https://www.dwd.de, data modified and averaged."
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#example-3-annual-mean-air-temperature",
+    "href": "slides/09-timeseries-basics.html#example-3-annual-mean-air-temperature",
+    "title": "09-Time Series Basics",
+    "section": "Example 3: Annual mean air temperature",
+    "text": "Example 3: Annual mean air temperature\n\n\nShow the code\nread_csv(\"../data/airtemp_dresden_daily.csv\") |>\n  select(ZEIT, TM) |>\n  rename(date = ZEIT) |>\n  mutate(year = year(date)) |>\n  group_by(year) |>\n  summarise(temp = mean(TM)) |>\n  ggplot(aes(year, temp)) + \n  geom_line() +\n  geom_smooth(method=\"lm\") +\n  ylab(\"Temperature (°C)\") + \n  ggtitle(\"Annual average air temperature in Dresden\")\n\n\n\nData downloaded from https://rekis.hydro.tu-dresden.de (Kronenberg, 2021), original source Deutscher Wetterdienst, https://www.dwd.de, data modified and averaged."
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#characteristics-of-the-examples",
+    "href": "slides/09-timeseries-basics.html#characteristics-of-the-examples",
+    "title": "09-Time Series Basics",
+    "section": "Characteristics of the examples",
+    "text": "Characteristics of the examples\n\n\nObservations as a function of time\nMeasurements can be serially interdependent, e.g.:\n\ntrend\nseasonality\n\nNo “true” replicates\n\n\n\\(\\Rightarrow\\) independency assumption of simple linear regression is violated"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#example-2-monthly-mean-air-temperature",
+    "href": "slides/09-timeseries-basics.html#example-2-monthly-mean-air-temperature",
+    "title": "09-Time Series Basics",
+    "section": "Example 2: Monthly mean air temperature",
+    "text": "Example 2: Monthly mean air temperature\n\n\nShow the code\nlibrary(dplyr)\nlibrary(readr)\nlibrary(ggplot2)\nlibrary(lubridate)\n\ntempdata <- read_csv(\"../data/airtemp_dresden_daily.csv\") |>\n  select(ZEIT, TM) |>\n  rename(date = ZEIT) |>\n  mutate(year = year(date), month = month(date)) |>\n  group_by(year, month) |>\n  summarise(temp = mean(TM)) |>\n  mutate(date = date(paste(year, month, 15, sep=\"-\")))\n\ntempdata |>\n  ggplot(aes(date, temp)) + \n  geom_line() +\n  ylab(\"Temperature (°C)\") + \n  ggtitle(\"Monthly mean air temperature in Dresden\")\n\n\n\nData downloaded from https://rekis.hydro.tu-dresden.de (Kronenberg, 2021), original source Deutscher Wetterdienst, https://www.dwd.de, data modified and averaged."
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#stationarity-a-central-concept-in-time-series-analysis",
+    "href": "slides/09-timeseries-basics.html#stationarity-a-central-concept-in-time-series-analysis",
+    "title": "09-Time Series Basics",
+    "section": "Stationarity: a central concept in time series analysis",
+    "text": "Stationarity: a central concept in time series analysis\n\n\nShow the code\n  set.seed(123)\n  x <- 1:100\n  par(mfrow = c(1, 3), cex=1.4)\n  plot(x, rnorm(x), type=\"l\", main=\"stationary\", xlab=\"time\", ylab=\"x\")\n  plot(x, 0.01 * x + rnorm(x), type=\"l\", main=\"linear trend\", xlab=\"time\", ylab=\"x\")\n  plot(x, rnorm(x, sd=seq(0.1,1,length=100)), type=\"l\",\n    main=\"increasing variance\", xlab=\"time\", ylab=\"x\")\n\n\n\n\nStrictly or strong stationary process: distribution of \\((x_{s+t})\\) independent from index \\(s\\).\nWide-sense or weakly stationary processes: requires only that 1st and 2nd moments (mean, variance and covariance) do not vary with time."
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#three-basic-types-od-time-series",
+    "href": "slides/09-timeseries-basics.html#three-basic-types-od-time-series",
+    "title": "09-Time Series Basics",
+    "section": "Three basic types od time series",
+    "text": "Three basic types od time series\n\n\\[\\begin{align}\nx_t &= \\beta_0 + u_t \\text{level stationary} \\label{ts:levelstat} \\\\\nx_t &= \\beta_0 + \\beta_1 t + u_t  \\text{trend stationary} \\label{ts:trendstat} \\\\\nx_t &= x_{t-1} + c + u_t           \\text{difference stationary} \\label{ts:diffstat}\n\\end{align}\\]\n\n\nset.seed(1237)\ntime <- 1:100\n\nLSP <- 2 + rnorm(time)\nTSP <- 2 + 0.2 * time + rnorm(time)\n\nDSP <- numeric(length(time))\nDSP[1] <- rnorm(1)\nfor (tt in time[-1])  DSP[tt] <- DSP[tt-1] + 0.2 + rnorm(1)\n\n\n\n\n\n\n\n\nLSP: level stationary process, mean, variance and covariance constant\n\n\n\n\n\n\n\n\n\nTSP: trend stationary process, linear regression model\n\n\n\n\n\n\n\n\n\nDSP: difference stationary process (random walk)"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#three-types-of-basic-time-series",
+    "href": "slides/09-timeseries-basics.html#three-types-of-basic-time-series",
+    "title": "09-Time Series Basics",
+    "section": "Three types of basic time series",
+    "text": "Three types of basic time series\n\n\n\n\n\\(x_t = \\beta_0 + \\varepsilon_t\\)\n\n\n\n\n\n\n“level stationary process”\nmean, variance and covariance constant\nexample: white noise\n\\(=\\) stationary\n\n\n\n\\(x_t = \\beta_0 + \\beta_1 t + \\varepsilon_t\\)\n\n\n\n\n\n\n“trend stationary process”\nlinear regression model\ncan be made stationary by detrending\n\\(\\rightarrow\\) instationary\n\n\n\n\\(x_t = x_{t-1} + c + \\varepsilon_t\\)\n\n\n\n\n\n\n“difference stationary process” (random walk)\ncan be made stationary by differencing\n\\(\\rightarrow\\) instationary"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#code",
+    "href": "slides/09-timeseries-basics.html#code",
+    "title": "09-Time Series Basics",
+    "section": "Code",
+    "text": "Code\n\n\nShow the code\nset.seed(1237)\ntime <- 1:100\n\nLSP <- 4 + rnorm(time)\n\nTSP <- 4 + 0.2 * time + rnorm(time)\n\nDSP <- numeric(length(time))\nDSP[1] <- rnorm(1)\nfor (tt in time[-1])  DSP[tt] <- DSP[tt-1] + 0.2 + rnorm(1)\n\npar(mfrow=c(1,3))\n\nplot(ts(LSP), ylim=c(0, 8), main=\"LSP\", col = \"forestgreen\")\nplot(ts(TSP), main=\"TSP\", col = \"red\")\nplot(ts(DSP), main=\"DSP\", col = \"red\")"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#section",
+    "href": "slides/09-timeseries-basics.html#section",
+    "title": "09-Time Series Basics",
+    "section": "",
+    "text": "Show the code\nset.seed(1237)\ntime <- 1:100\n\nLSP <- 4 + rnorm(time)\n\nTSP <- 4 + 0.2 * time + rnorm(time)\n\nDSP <- numeric(length(time))\nDSP[1] <- rnorm(1)\nfor (tt in time[-1])  DSP[tt] <- DSP[tt-1] + 0.2 + rnorm(1)\n\npar(mfrow=c(1,3))\n\nplot(ts(LSP), ylim=c(0, 8), main=\"LSP\", col = \"forestgreen\")\nplot(ts(TSP), main=\"TSP\", col = \"red\")\nplot(ts(DSP), main=\"DSP\", col = \"red\")"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#why-is-this-important",
+    "href": "slides/09-timeseries-basics.html#why-is-this-important",
+    "title": "09-Time Series Basics",
+    "section": "Why is this important?",
+    "text": "Why is this important?\n\n\nsimple linear models require “independent data”\nor, more precisely: independence of residuals\n\n**But:\n\ntime series data can be serially dependent\ndependent data have “less value” contain less information than independent data\nimportant for calculation of degrees of freedom for the sigificance tests\n\nApproaches\n\nmeasure serial dependency (autocorrelation)\nif yes, handle autocorrelation\n\nremove it or\nmodel it"
   }
 ]

@@ -10,8 +10,11 @@ library(ggplot2)
 library(lubridate)
 ```
 
+# Introductory examples
 
-## An introductory example
+## Example 1: CO2 in the atmosphere
+
+<!-- shown code reads data directly from NOAA -->
 
 ```{r co2-maunaloa-show, eval=FALSE, echo=TRUE}
 #| code-fold: true
@@ -32,13 +35,15 @@ co2 |>
   geom_smooth()
 ```
 
+<!-- slides use locally cached data -->
+
 ```{r co2-maunaloa, echo=FALSE, fig.align='center'}
-#co2 <- read_csv("https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv", skip=40) |>
 co2 <- read_csv("../data/co2_mm_mlo.csv", skip=40, show_col_types = FALSE) |>
   mutate(date=as_date(paste(year, month, 15, sep=".")))
 
 co2 |> ggplot(aes(date, average)) + 
-  geom_line() + ylab(expression(CO[2]~"in the atmosphere (ppm)")) + 
+  geom_line() + 
+  ylab(expression(CO[2]~"in the atmosphere (ppm)")) + 
   ggtitle("Mauna Loa Observatory, Hawaii, Monthly Averages") +
   geom_smooth()
 ```
@@ -53,6 +58,72 @@ https://gml.noaa.gov/ccgg/trends/data.html
 License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric_co2/primary_mlo_co2_record.html)
 -->
 
+## Example 2: Monthly mean air temperature
+
+```{r airtemp-monthly, echo=TRUE}
+#| code-fold: true
+#| code-summary: "Show the code"
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(lubridate)
+
+tempdata <- read_csv("../data/airtemp_dresden_daily.csv") |>
+  select(ZEIT, TM) |>
+  rename(date = ZEIT) |>
+  mutate(year = year(date), month = month(date)) |>
+  group_by(year, month) |>
+  summarise(temp = mean(TM)) |>
+  mutate(date = date(paste(year, month, 15, sep="-")))
+
+tempdata |>
+  ggplot(aes(date, temp)) + 
+  geom_line() +
+  ylab("Temperature (°C)") + 
+  ggtitle("Monthly mean air temperature in Dresden")
+
+```
+
+Data downloaded from [https://rekis.hydro.tu-dresden.de](https://rekis.hydro.tu-dresden.de) 
+[@kronenberg_rekis_2021], original source Deutscher Wetterdienst, https://www.dwd.de, data modified and averaged.
+
+
+## Example 3: Annual mean air temperature
+
+```{r airtemp-annual, echo=TRUE}
+#| code-fold: true
+#| code-summary: "Show the code"
+read_csv("../data/airtemp_dresden_daily.csv") |>
+  select(ZEIT, TM) |>
+  rename(date = ZEIT) |>
+  mutate(year = year(date)) |>
+  group_by(year) |>
+  summarise(temp = mean(TM)) |>
+  ggplot(aes(year, temp)) + 
+  geom_line() +
+  geom_smooth(method="lm") +
+  ylab("Temperature (°C)") + 
+  ggtitle("Annual average air temperature in Dresden")
+```
+
+Data downloaded from [https://rekis.hydro.tu-dresden.de](https://rekis.hydro.tu-dresden.de) 
+[@kronenberg_rekis_2021], original source Deutscher Wetterdienst, https://www.dwd.de, data modified and averaged.
+
+## Characteristics of the examples
+
+<br>
+
+* Observations as a function of time
+* Measurements can be serially interdependent, e.g.:
+    - trend
+    - seasonality
+* No "true" replicates
+
+<br>
+
+$\Rightarrow$ independency assumption of simple linear regression is violated
+
+
 ## Time series analysis
 
 <br>
@@ -62,16 +133,16 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
   presented here.
 
 
-**Aims of time series analysis**
+**Aims**
 
 * Does a trend exist? (significance)
 * How strong is a trend? (effect size)
-* Identification of covariates. (influencing factors)
-* Trend, seasonality and random error. (component model)
-* Statistical modeling and forecasting.
-* Breakpoint analysis, intervention analysis, ..., and more.
+* Identification of covariates (influencing factors)
+* Trend, seasonality and random error (component model)
+* Statistical modeling and forecasting
+* Breakpoint analysis, intervention analysis, ..., and more
 
-
+# Fundamental time series concepts
 
 ## Stationarity
 
@@ -82,74 +153,132 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 
 <br>
 
-:::{.bigfont}
-**Note:** we are often not primarily interested in stationarity itself!
 
-$\rightarrow$ It is often just "the ticket" to go further.
-:::
+**Note:** We are usually not primarily interested in stationarity itself!
+
+$\rightarrow$ It is just "the ticket" for further analyses.
+
 <br>
 
 
 **Example 1: trend analysis**
 
-We test stationarity to check if a trend test would be appropriate.
+* We test stationarity to check if a (simple) trend test would be appropriate.
 
 **Example 2: linear models**
 
-Estimation of a linear trend or a breakpoint model. We check residuals for stationarity
-to get in formation about reliability of the fitted model.
+* Estimation of a linear trend or a breakpoint model. 
+* We check residuals for stationarity to get in formation about reliability of the fitted model.
 
-## Stationarity
+## Stationarity: a central concept in time series analysis
 
-```{r stat-nonstant, fig.align='center'}
+```{r stat-nonstat, echo=TRUE, fig.align='center'}
+#| code-fold: true
+#| code-summary: "Show the code"
   set.seed(123)
-  par(mfrow=c(1, 2), cex=1.4)
-  plot(rnorm(100), type="l", main="stationary", xlab="time", ylab="x")
-  plot(rnorm(100, sd=seq(0.1,1,length=100)), type="l",
-    main="non-stationary", xlab="time", ylab="x")
+  x <- 1:100
+  par(mfrow = c(1, 3), cex=1.4)
+  plot(x, rnorm(x), type="l", main="stationary", xlab="time", ylab="x")
+  plot(x, 0.01 * x + rnorm(x), type="l", main="linear trend", xlab="time", ylab="x")
+  plot(x, rnorm(x, sd=seq(0.1,1,length=100)), type="l",
+    main="increasing variance", xlab="time", ylab="x")
 ```
 
-... is a central concept in time series analysis.
-
-* Strictly (or strong) stationary process: distribution of
+* Strictly or **strong stationary process**: distribution of
   $(x_{s+t})$ independent from index $s$.
-* Weakly or wide-sense stationary processes: requires only that
+* Wide-sense or **weakly stationary processes**: requires only that
   1st and 2nd moments (mean, variance and covariance) do not vary with
   time.
 
-## Two different basic types time series
+## Three types of basic time series
 
-<br>
-
-\begin{align}
-x_t &= \beta_0 + \beta_1 t + u_t \label{ts:trendstat} \\
-x_t &= x_{t-1} + c + u_t          \label{ts:diffstat}
-\end{align}
-
-<br>
-
-```{r}
+```{r gen-LTDsp}
 set.seed(1237)
-```
-
-
-
-* **TSP:** trend stationary process, linear regression model
-
-```{r, echo=TRUE}
 time <- 1:100
-TSP <- 2 + 0.2 * time + rnorm(time)
-```
 
+LSP <- 4 + rnorm(time)
 
-* **DSP:** difference stationary process (random walk)
+TSP <- 4 + 0.2 * time + rnorm(time)
 
-
-```{r, echo=TRUE}
 DSP <- numeric(length(time))
 DSP[1] <- rnorm(1)
-for (tt in time[-1])
-  DSP[tt] <- DSP[tt-1] + 0.2 + rnorm(1)
+for (tt in time[-1])  DSP[tt] <- DSP[tt-1] + 0.2 + rnorm(1)
+```
+
+
+::: {.column width="32%"}
+
+$x_t = \beta_0 + \varepsilon_t$
+
+```{r LSP, fig.height=6, fig.width=6}
+par(cex=2, las=1, mar=c(4,4,2,1))
+plot(ts(LSP), ylim=c(0, 8), main="LSP", col = "forestgreen")
+```
+
+
+* "level stationary process"
+* mean, variance and covariance constant
+* example: white noise
+* $=$ **stationary**
+
+:::
+
+::: {.column width="32%"}
+
+$x_t = \beta_0 + \beta_1 t + \varepsilon_t$
+
+```{r TSP, fig.height=6, fig.width=6}
+par(cex=2, las=1, mar=c(4,4,2,1))
+plot(ts(TSP), main="TSP", col = "red")
+```
+
+
+
+* "trend stationary process"
+* linear regression model
+* can be made stationary by detrending
+* $\rightarrow$ **instationary**
+
+:::
+
+::: {.column width="32%"}
+
+$x_t = x_{t-1} + c + \varepsilon_t$
+
+```{r DSP, fig.height=6, fig.width=6}
+par(cex=2, las=1, mar=c(4,4,2,1))
+plot(ts(DSP), col = "red", main = "DSP")
+```
+
+
+* "difference stationary process" (random walk)
+* can be made stationary by differencing
+* $\rightarrow$ **instationary**
+
+:::
+
+## 
+
+```{r gen-LTDsp-show, echo=TRUE}
+#| code-fold: true
+#| code-summary: "Show the code"
+
+set.seed(1237)
+time <- 1:100
+
+LSP <- 4 + rnorm(time)
+
+TSP <- 4 + 0.2 * time + rnorm(time)
+
+DSP <- numeric(length(time))
+DSP[1] <- rnorm(1)
+for (tt in time[-1])  DSP[tt] <- DSP[tt-1] + 0.2 + rnorm(1)
+
+par(mfrow=c(1,3))
+
+plot(ts(LSP), ylim=c(0, 8), main="LSP", col = "forestgreen")
+plot(ts(TSP), main="TSP", col = "red")
+plot(ts(DSP), main="DSP", col = "red")
 ```
 
 
@@ -160,14 +289,39 @@ for (tt in time[-1])
 
 
 ```{r ts-example1, echo=TRUE, fig.height=5, fig.width=12, fig.align='center'}
-par(mfrow=c(1, 2), las=1)
+par(mfrow=c(1, 3), las=1)
+LSP <- ts(LSP)
 TSP <- ts(TSP)
 DSP <- ts(DSP)
 
+plot(LSP, main="level stationary process")
 plot(TSP, main="trend stationary process")
 plot(DSP, main="difference stationary process")
 ```
 
+## Why is this important?
+
+<br>
+
+* simple linear models require "independent data"
+* or, more precisely: **independence of residuals**
+
+**But**
+
+* time series data can be serially dependent
+* dependent data have "less value" [(contain less information than independent data)]{.gray}
+* important for calculation of degrees of freedom for the sigificance tests
+
+**Approaches**
+
+1. measure serial dependency (autocorrelation)
+2. if yes, handle autocorrelation
+    a) remove it, [or]{.gray}
+    b) model it
+
+
+
+ 
 
 ## A Simulation Experiment
 
