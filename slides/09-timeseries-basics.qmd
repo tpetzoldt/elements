@@ -319,66 +319,64 @@ plot(DSP, main="difference stationary process")
     a) remove it, [or]{.gray}
     b) model it
 
+* autocorrelation is correlation between a time series and the shifted (= lagged) version of itself
 
-
- 
-
-## A Simulation Experiment
+## Autocorrelation
 
 <br>
 
-* Define two functions to generate time series with specific properties:
-
-
-```{r, echo=TRUE}
-genTSP <- function(time, beta0, beta1)
-  as.ts(beta0 + beta1 * time + rnorm(time))
-
-genDSP <- function(time, c) {
-  DSP <- numeric(length(time))
-  DSP[1] <- rnorm(1)
-  for (tt in time[-1]) DSP[tt] <- DSP[tt-1] + c + rnorm(1)
-  as.ts(DSP)
-}
-```
-
-
-## Run the experiment
-
-* set the trend to zero, so  `count.signif` counts `a` false positive results.
-
-```{r, echo=TRUE}
-count.signif <- function(N, time, FUN, ...) {
-  a <- 0
-  for (i in 1:N) {
-    x <- FUN(time, ...)
-    m <- summary(lm(x  ~ time(x)))
-    f <- m$fstatistic
-    p.value <- pf(f[1], f[2], f[3], lower=FALSE)
-    # cat("p.value", p.value, "\n")
-    if (p.value < 0.05) a <- a + 1
+```{r}
+laggedMatrix <- function(x, k) {
+  L <- length(x + k)
+  z <- matrix(NA, nrow = L + k - 1, ncol = k)
+  for (i in 1:k) {
+    z[(1:L) + (i - 1), i] <- x
   }
-  a
+  return(z)
 }
 ```
 
-* test for the number of significant F-values,
-* run loop 100 ... 1000  times for both types of time series,
+**A time series**
 
-```{r, echo=TRUE, fig.align='center'}
-Nruns <- 100 # better 1000 !!!
-count.signif(N=Nruns, time=time, FUN=genTSP, beta0=0, beta1=0) / Nruns
-count.signif(N=Nruns, time=time, FUN=genDSP, c=0) / Nruns
+```{r}
+options(knitr.kable.NA = '')
+x  <- c(1, 3, 2, 4, 5, 4, 3, 2, 8, 5, 4, 3, 6, 7)
+knitr::kable(t(data.frame("x_t" = c(x, NA, NA))))
 ```
+
+**Shifting to the right $\rightarrow$ lags +1 and +2**
+
+```{r}
+options(knitr.kable.NA = '')
+df <- data.frame(laggedMatrix(x, 3))
+names(df) <- c("x_t", "x_t+1", "x_t+2")
+knitr::kable(t(df))
+```
+
+Correlation between $x_t$ and $x_{t+1}$ and $x_{t+2}$:
+
+```{r, echo=TRUE}
+cor(df, use = "pairwise.complete.obs")[1,]
+```
+
+Similar results with `acf`, [deviations for small sample size, because missing values handled differently]{.gray}
+
+```{r, echo=TRUE}
+acf(x, lag = 2, plot = FALSE)
+```
+
+
 
 ## Autocorrelation function (ACF)
 
 * ... correlation between time series and its time-shifted (= lagged) versions,
 * the time shift (lag) is being varied $\rightarrow$ correlogram.
-* indirect dependency, e.g. $x_{t}$ on $x_{t-2}$ because $x_{t-1}$ depends on $x_{t-2}$.
+* considers both, direct and indirect dependency, e.g. $x_{t}$ on $x_{t-2}$ because $x_{t-1}$ depends on $x_{t-2}$.
 * without indirect effects it is called **partial autocorrelation**, PACF.
 * Cross-correlation (CCF): **two** variables; lag is positive or negative.
-* Example: CCF between solar radiation and water temperature.
+* Examples: 
+    - CCF between solar radiation and water temperature.
+    - CCF of discharge at two river kilometers can be used to estimate flow velocity of a flood wave
 
 ```{r acf-example, fig.align='center'}
 par(mfrow=c(1,2), cex=1.4)
@@ -500,5 +498,56 @@ MannKendall(DSP)
 
 
 Indicates significant trend, but as process is DSP, interpretation is wrong.
+
+
+
+## A Simulation Experiment
+
+<br>
+
+* Define two functions to generate time series with specific properties:
+
+
+```{r, echo=TRUE}
+genTSP <- function(time, beta0, beta1)
+  as.ts(beta0 + beta1 * time + rnorm(time))
+
+genDSP <- function(time, c) {
+  DSP <- numeric(length(time))
+  DSP[1] <- rnorm(1)
+  for (tt in time[-1]) DSP[tt] <- DSP[tt-1] + c + rnorm(1)
+  as.ts(DSP)
+}
+```
+
+
+## Run the experiment
+
+* set the trend to zero, so  `count.signif` counts `a` false positive results.
+
+```{r, echo=TRUE}
+count.signif <- function(N, time, FUN, ...) {
+  a <- 0
+  for (i in 1:N) {
+    x <- FUN(time, ...)
+    m <- summary(lm(x  ~ time(x)))
+    f <- m$fstatistic
+    p.value <- pf(f[1], f[2], f[3], lower=FALSE)
+    # cat("p.value", p.value, "\n")
+    if (p.value < 0.05) a <- a + 1
+  }
+  a
+}
+```
+
+* test for the number of significant F-values,
+* run loop 100 ... 1000  times for both types of time series,
+
+```{r, echo=TRUE, fig.align='center'}
+Nruns <- 100 # better 1000 !!!
+count.signif(N=Nruns, time=time, FUN=genTSP, beta0=0, beta1=0) / Nruns
+count.signif(N=Nruns, time=time, FUN=genDSP, c=0) / Nruns
+```
+
 
 ## References
