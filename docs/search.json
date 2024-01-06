@@ -1550,22 +1550,22 @@
     "objectID": "slides/09-timeseries-basics.html#a-simulation-experiment",
     "href": "slides/09-timeseries-basics.html#a-simulation-experiment",
     "title": "09-Time Series Basics",
-    "section": "A Simulation Experiment",
-    "text": "A Simulation Experiment\n\n\nDefine two functions to generate time series with specific properties:\n\n\ngenTSP <- function(time, beta0, beta1)\n  as.ts(beta0 + beta1 * time + rnorm(time))\n\ngenDSP <- function(time, c) {\n  DSP <- numeric(length(time))\n  DSP[1] <- rnorm(1)\n  for (tt in time[-1]) DSP[tt] <- DSP[tt-1] + c + rnorm(1)\n  as.ts(DSP)\n}"
+    "section": "A simulation experiment",
+    "text": "A simulation experiment\n\nDemonstration that application of a simple linear model to a difference stationary time series leads to an increase of false positives.\n\nTools\n\nDefine two functions to generate time series with specific properties:\n\n\ngenTSP <- function(time, beta0, beta1)\n  as.ts(beta0 + beta1 * time + rnorm(time))\n\ngenDSP <- function(time, c) {\n  DSP <- numeric(length(time))\n  DSP[1] <- rnorm(1)\n  for (tt in time[-1]) DSP[tt] <- DSP[tt-1] + c + rnorm(1)\n  ts(DSP)\n}"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#run-the-experiment",
     "href": "slides/09-timeseries-basics.html#run-the-experiment",
     "title": "09-Time Series Basics",
     "section": "Run the experiment",
-    "text": "Run the experiment\n\nset the trend to zero, so count.signif counts a false positive results.\n\n\ncount.signif <- function(N, time, FUN, ...) {\n  a <- 0\n  for (i in 1:N) {\n    x <- FUN(time, ...)\n    m <- summary(lm(x  ~ time(x)))\n    f <- m$fstatistic\n    p.value <- pf(f[1], f[2], f[3], lower=FALSE)\n    # cat(\"p.value\", p.value, \"\\n\")\n    if (p.value < 0.05) a <- a + 1\n  }\n  a\n}\n\n\ntest for the number of significant F-values,\nrun loop 100 … 1000 times for both types of time series,\n\n\nNruns <- 100 # better 1000 !!!\ncount.signif(N=Nruns, time=time, FUN=genTSP, beta0=0, beta1=0) / Nruns\n\n[1] 0.05\n\ncount.signif(N=Nruns, time=time, FUN=genDSP, c=0) / Nruns\n\n[1] 0.91"
+    "text": "Run the experiment\n\nset the trend to zero, so count.signif counts a false positive results.\n\n\ncount.signif <- function(N, time, FUN, ...) {\n  a <- 0\n  for (i in 1:N) {\n    x <- FUN(time, ...)\n    m <- summary(lm(x  ~ time(x)))\n    f <- m$fstatistic\n    p.value <- pf(f[1], f[2], f[3], lower=FALSE)\n    # cat(\"p.value\", p.value, \"\\n\")\n    if (p.value < 0.05) a <- a + 1\n  }\n  a\n}\n\n\ntest for the number of significant F-values,\nrun loop 100 … 1000 times for both types of time series,\n\n\nNruns <- 100 # better 1000 !!!\ntime  <- 1:100\ncount.signif(N=Nruns, time=time, FUN=genTSP, beta0=0, beta1=0) / Nruns\n\n[1] 0.05\n\ncount.signif(N=Nruns, time=time, FUN=genDSP, c=0) / Nruns\n\n[1] 0.91"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#autocorrelation-function-acf",
     "href": "slides/09-timeseries-basics.html#autocorrelation-function-acf",
     "title": "09-Time Series Basics",
     "section": "Autocorrelation function (ACF)",
-    "text": "Autocorrelation function (ACF)\n\n… correlation between time series and its time-shifted (= lagged) versions,\nthe time shift (lag) is being varied \\(\\rightarrow\\) correlogram.\nindirect dependency, e.g. \\(x_{t}\\) on \\(x_{t-2}\\) because \\(x_{t-1}\\) depends on \\(x_{t-2}\\).\nwithout indirect effects it is called partial autocorrelation, PACF.\nCross-correlation (CCF): two variables; lag is positive or negative.\nExample: CCF between solar radiation and water temperature."
+    "text": "Autocorrelation function (ACF)\n\n… correlation between time series and its time-shifted (= lagged) versions\nthe time shift (lag) is being varied \\(\\rightarrow\\) correlogram.\nACF considers both, direct and indirect dependency\nPACF considers only direct effects it is called partial autocorrelation, PACF."
   },
   {
     "objectID": "slides/09-timeseries-basics.html#typical-patterns-of-acf-and-pacf",
@@ -1586,7 +1586,7 @@
     "href": "slides/09-timeseries-basics.html#unit-root-test",
     "title": "09-Time Series Basics",
     "section": "Unit root test",
-    "text": "Unit root test\n\n\ndetermine whether a time series is of type “DSP”.\nADF-test (augmented Dickey-Fuller test), contained in R-package tseries:\nRemember: A “TSP” can be made stationary by subtracting a trend.\n\n\\(\\rightarrow\\) This is done automatically by the test.\n\nlibrary(tseries)\nadf.test(TSP)\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  TSP\nDickey-Fuller = -3.87, Lag order = 4, p-value = 0.01831\nalternative hypothesis: stationary\n\nadf.test(DSP)\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  DSP\nDickey-Fuller = -2.1883, Lag order = 4, p-value = 0.4986\nalternative hypothesis: stationary"
+    "text": "Unit root test\n\n\nCheck whether a time series is of type “DSP”.\nADF-test (augmented Dickey-Fuller test), contained in R-package tseries.\nRemember: A “TSP” can be made stationary by subtracting a trend. \\(\\rightarrow\\) This is done automatically by the test.\nImportant: stationarity is the alternative hypothesis!\n\n\n\nlibrary(tseries)\nadf.test(TSP)\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  TSP\nDickey-Fuller = -3.87, Lag order = 4, p-value = 0.01831\nalternative hypothesis: stationary\n\nadf.test(DSP)\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  DSP\nDickey-Fuller = -2.1883, Lag order = 4, p-value = 0.4986\nalternative hypothesis: stationary"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#dsp-presence-of-unit-root",
@@ -1607,14 +1607,14 @@
     "href": "slides/09-timeseries-basics.html#kpss-test-kwiatkowski-phillips-schmidt-shin-test-ii",
     "title": "09-Time Series Basics",
     "section": "KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test II",
-    "text": "KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test II\n\n\nkpss.test(DSP)                # non-stationary\n\n\n    KPSS Test for Level Stationarity\n\ndata:  DSP\nKPSS Level = 1.5869, Truncation lag parameter = 4, p-value = 0.01\n\nkpss.test(DSP, null=\"Trend\")  # still non-stationary\n\n\n    KPSS Test for Trend Stationarity\n\ndata:  DSP\nKPSS Trend = 0.30063, Truncation lag parameter = 4, p-value = 0.01\n\n\n\n\ndetrending does not cure non-stationarity"
+    "text": "KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test II\n\n\n\nkpss.test(DSP)\n\n\n    KPSS Test for Level Stationarity\n\ndata:  DSP\nKPSS Level = 1.5869, Truncation lag parameter = 4, p-value = 0.01\n\n\n\\(\\rightarrow\\) non-stationary\n\n\n\nkpss.test(DSP, null = \"Trend\")\n\n\n    KPSS Test for Trend Stationarity\n\ndata:  DSP\nKPSS Trend = 0.30063, Truncation lag parameter = 4, p-value = 0.01\n\n\n\\(\\rightarrow\\) trend removal does not cure non-stationarity\n\nTask: Check if a DSP series can be made stationary by differecing."
   },
   {
     "objectID": "slides/09-timeseries-basics.html#trend-tests",
     "href": "slides/09-timeseries-basics.html#trend-tests",
     "title": "09-Time Series Basics",
     "section": "Trend Tests",
-    "text": "Trend Tests\n\n\nMann-Kendall trend test, popular in environmental sciences\nstrictly suitable only for trend-stationary time series, but robust in cases of weak autocorrelation\nnot for “pure” difference-stationary time series, because residuals are autocorrelated\n\\(\\Rightarrow\\) Test stationarity (or autocorrelation) before testing trend !!!\n\n\nlibrary(\"Kendall\")\nMannKendall(TSP)\n\ntau = 0.906, 2-sided pvalue =< 2.22e-16\n\n\nSignificant trend. \n\nMannKendall(DSP)\n\ntau = 0.682, 2-sided pvalue =< 2.22e-16\n\n\nIndicates significant trend, but as process is DSP, interpretation is wrong."
+    "text": "Trend Tests\nMann-Kendall trend test\n\nnonparametric test\npopular in environmental sciences\nstrictly suitable only for trend-stationary time series, robust in case of weak autocorrelation\n\nLinear regression analysis\n\nparametric test for linear trend\nslope gives direct information about effect size\nsensitive against autocorrelation\n\nOther methods\n\nSen’s slope, Pettitt’s Test, Cox-Stuart Test, …\n\nIn general\n\ntrend tests are not adequate for “pure” difference-stationary time series, because residuals are autocorrelated\n\\(\\Rightarrow\\) test stationarity (or autocorrelation) before or after trend testing !!!"
   },
   {
     "objectID": "slides/10-multivariate-1.html#data-sets-and-terms-of-use",
@@ -3385,7 +3385,7 @@
     "href": "slides/09-timeseries-basics.html#references",
     "title": "09-Time Series Basics",
     "section": "References",
-    "text": "References\n\n\n 🏠 Home \n\n\n\nKeeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., & Meijer, H. A. (2001). Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects (p. 88). Scripps Institution of Oceanography, San Diego.\n\n\nKronenberg, F., R. (2021). Das regionale klimainformationssystem ReKIS – #eine gemeinsame plattform für sachsen, sachsen-anhalt und thüringen. https://rekis.hydro.tu-dresden.de/\n\n\nTans, P., & Keeling, C. D. (2023). Trends in atmospheric carbon dioxide, Mauna Loa CO2 monthly mean data. NOAA Earth System Research Laboratories, Global Monitoring Laboratory. https://gml.noaa.gov/ccgg/trends/data.html"
+    "text": "References\n\n\n\n 🏠 Home \n\n\n\nKeeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., & Meijer, H. A. (2001). Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects (p. 88). Scripps Institution of Oceanography, San Diego.\n\n\nKleiber, C., & Zeileis, A. (2008). Applied econometrics with R. Springer.\n\n\nKronenberg, F., R. (2021). Das regionale klimainformationssystem ReKIS – #eine gemeinsame plattform für sachsen, sachsen-anhalt und thüringen. https://rekis.hydro.tu-dresden.de/\n\n\nShumway, R. H., Stoffer, D. S., & Stoffer, D. S. (2000). Time series analysis and its applications (Vol. 3). Springer.\n\n\nShumway, R., & Stoffer, D. (2019). Time series: A data analysis approach using r. CRC Press.\n\n\nTans, P., & Keeling, C. D. (2023). Trends in atmospheric carbon dioxide, Mauna Loa CO2 monthly mean data. NOAA Earth System Research Laboratories, Global Monitoring Laboratory. https://gml.noaa.gov/ccgg/trends/data.html"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#example-1-co2-in-the-atmosphere",
@@ -3441,7 +3441,7 @@
     "href": "slides/09-timeseries-basics.html#three-types-of-basic-time-series",
     "title": "09-Time Series Basics",
     "section": "Three types of basic time series",
-    "text": "Three types of basic time series\n\n\n\n\n\\(x_t = \\beta_0 + \\varepsilon_t\\)\n\n\n\n\n\n\n“level stationary process”\nmean, variance and covariance constant\nexample: white noise\n\\(=\\) stationary\n\n\n\n\\(x_t = \\beta_0 + \\beta_1 t + \\varepsilon_t\\)\n\n\n\n\n\n\n“trend stationary process”\nlinear regression model\ncan be made stationary by detrending\n\\(\\rightarrow\\) instationary\n\n\n\n\\(x_t = x_{t-1} + c + \\varepsilon_t\\)\n\n\n\n\n\n\n“difference stationary process” (random walk)\ncan be made stationary by differencing\n\\(\\rightarrow\\) instationary"
+    "text": "Three types of basic time series\n\n\n\n\n\\(x_t = \\beta_0 + \\varepsilon_t\\)\n\n\n\n\n\n\n“level stationary process”\nmean, variance and covariance constant\nexample: white noise\n\\(=\\) stationary\n\n\n\n\\(x_t = \\beta_0 + \\beta_1 t + \\varepsilon_t\\)\n\n\n\n\n\n\n“trend stationary process”\nlinear regression model\ncan be made stationary by detrending\n\\(\\rightarrow\\) non-stationary\n\n\n\n\\(x_t = x_{t-1} + c + \\varepsilon_t\\)\n\n\n\n\n\n\n“difference stationary process” (random walk)\ncan be made stationary by differencing\n\\(\\rightarrow\\) non-stationary"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#code",
@@ -3462,6 +3462,139 @@
     "href": "slides/09-timeseries-basics.html#why-is-this-important",
     "title": "09-Time Series Basics",
     "section": "Why is this important?",
-    "text": "Why is this important?\n\n\nsimple linear models require “independent data”\nor, more precisely: independence of residuals\n\n**But:\n\ntime series data can be serially dependent\ndependent data have “less value” contain less information than independent data\nimportant for calculation of degrees of freedom for the sigificance tests\n\nApproaches\n\nmeasure serial dependency (autocorrelation)\nif yes, handle autocorrelation\n\nremove it or\nmodel it"
+    "text": "Why is this important?\n\nSimple linear models require “independent data”, or, more precisely: independence of residuals.\nBut\n\ntime series observations can be serially dependent\ndependent data have “less value” (contain less information than independent data)\nimportant for calculation of degrees of freedom for the sigificance tests\n\n\nApproaches\n\nmeasure serial dependency (autocorrelation)\nif yes, handle autocorrelation\n\nremove it, or\nmodel it"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#autocorrelation",
+    "href": "slides/09-timeseries-basics.html#autocorrelation",
+    "title": "09-Time Series Basics",
+    "section": "Autocorrelation",
+    "text": "Autocorrelation\n\n\n\n\nA time series\n\n\n\n\n\nx_t\n1\n3\n2\n4\n5\n4\n3\n2\n8\n5\n4\n3\n6\n7\n\n\n\n\n\n\n\n\n**Shifting to the right\n\n\n\n\n\nx_t\n1\n3\n2\n4\n5\n4\n3\n2\n8\n5\n4\n3\n6\n7\n\n\n\n\nx_t+1\n\n1\n3\n2\n4\n5\n4\n3\n2\n8\n5\n4\n3\n6\n7\n\n\n\nx_t+2\n\n\n1\n3\n2\n4\n5\n4\n3\n2\n8\n5\n4\n3\n6\n7\n\n\n\n\n\n\nCorrelation between \\(x_t\\) and \\(x_{t+1}\\) and \\(x_{t+2}\\):\n\ncor(df, use = \"pairwise.complete.obs\")[1,]\n\n       x_t      x_t+1      x_t+2 \n 1.0000000  0.1847131 -0.1411872 \n\n\nIn practice, autocorrelation is calculated using the acf function of R. The algorithm is somewhat different, especially the treatment of missing values, so results differ, especially for small samples."
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#autocorrelation-and-partial-autocorrelation-acf-pacf",
+    "href": "slides/09-timeseries-basics.html#autocorrelation-and-partial-autocorrelation-acf-pacf",
+    "title": "09-Time Series Basics",
+    "section": "Autocorrelation and partial autocorrelation (ACF, PACF)",
+    "text": "Autocorrelation and partial autocorrelation (ACF, PACF)"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#dsp-presence-of-a-unit-root",
+    "href": "slides/09-timeseries-basics.html#dsp-presence-of-a-unit-root",
+    "title": "09-Time Series Basics",
+    "section": "DSP: presence of a “unit root”",
+    "text": "DSP: presence of a “unit root”\n\n\nDSP series: presence of a unit root cannot be rejected,\n\\(\\rightarrow\\) non-stationary.\nBut, after differencing, there are no objections against stationarity:\n\n\nadf.test(diff(DSP))\n\n\n    Augmented Dickey-Fuller Test\n\ndata:  diff(DSP)\nDickey-Fuller = -3.62, Lag order = 4, p-value = 0.03504\nalternative hypothesis: stationary"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#cross-correlation-ccf",
+    "href": "slides/09-timeseries-basics.html#cross-correlation-ccf",
+    "title": "09-Time Series Basics",
+    "section": "Cross-correlation (CCF)",
+    "text": "Cross-correlation (CCF)\n\n\ntwo or more variables\nlag can be positive or negative\nExamples:\n\nCCF between solar radiation and water temperature\nCCF of discharge at two river kilometers \\(\\rightarrow\\) estimate flow velocity of a flood wave"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#typical-patterns-of-acf",
+    "href": "slides/09-timeseries-basics.html#typical-patterns-of-acf",
+    "title": "09-Time Series Basics",
+    "section": "Typical patterns of ACF",
+    "text": "Typical patterns of ACF\n\n\nShow the code\npar(mfrow=c(2, 2))\nacf(LSP, main = \"level stationary\")\nacf(TSP, main = \"trend stationary\")\nacf(DSP, main = \"difference stationary\")\n\ntime <- seq(0, 4 * pi, length.out = 100)\nperiodic <- ts(cos(time) + rnorm(100, sd = 0.1))\nacf(periodic, lag = 100, main = \"periodic\")"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#removal-of-autocorrelation",
+    "href": "slides/09-timeseries-basics.html#removal-of-autocorrelation",
+    "title": "09-Time Series Basics",
+    "section": "Removal of autocorrelation",
+    "text": "Removal of autocorrelation\n\n\nTrend stationary series: trend removal\n\nExample:\n\nm <- lm(TSP ~ time(TSP), eval = FALSE)\nresiduals(m)\n\n\n\nDifference stationary series: differencing\n\nExample:\n\nx <- c(2, 3, 4, 3, 6, 4, 3, 8, 5, 9)\ndiff(x)\n\n[1]  1  1 -1  3 -2 -1  5 -3  4\n\n\n\n\nPeriodic series: identification and removal of seasonal components\nMethods: spectral analysis, seasonal decomposition, averaging …"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#removal-of-autocorrelation-ii",
+    "href": "slides/09-timeseries-basics.html#removal-of-autocorrelation-ii",
+    "title": "09-Time Series Basics",
+    "section": "Removal of autocorrelation II",
+    "text": "Removal of autocorrelation II\n\n\n\nACF plots of TSP and DSP\nstrong autocorrelation\n\n\n\n\ndifferencing\ndifferences of DSP \\(\\rightarrow\\) stationary\n\n\n\n\ndetrending\nresiduals of TSP \\(\\rightarrow\\) stationary"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#autocorrelation-function-acf-correlogram",
+    "href": "slides/09-timeseries-basics.html#autocorrelation-function-acf-correlogram",
+    "title": "09-Time Series Basics",
+    "section": "Autocorrelation function (ACF): correlogram",
+    "text": "Autocorrelation function (ACF): correlogram\n\n… correlation between time series and its time-shifted (= lagged) versions\nACF considers both, direct and indirect dependency\nPACF considers only direct effects it is called partial autocorrelation, PACF."
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#test-of-stationarity",
+    "href": "slides/09-timeseries-basics.html#test-of-stationarity",
+    "title": "09-Time Series Basics",
+    "section": "Test of stationarity",
+    "text": "Test of stationarity\n\nKwiatkowski-Phillips-Schmidt-Shin test (KPSS test)\nhas built-in trend removal (option null = \"trend\")\n\n\n\n\nkpss.test(TSP)\n\n\n    KPSS Test for Level Stationarity\n\ndata:  TSP\nKPSS Level = 2.0877, Truncation lag parameter = 4, p-value = 0.01\n\n\n\\(\\rightarrow\\) non-stationary\n\n\n\nkpss.test(TSP, null = \"Trend\")\n\n\n    KPSS Test for Trend Stationarity\n\ndata:  TSP\nKPSS Trend = 0.10306, Truncation lag parameter = 4, p-value = 0.1\n\n\n\\(\\rightarrow\\) stationary after trend removal"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#kpss-test-for-a-difference-stationary-process-dsp",
+    "href": "slides/09-timeseries-basics.html#kpss-test-for-a-difference-stationary-process-dsp",
+    "title": "09-Time Series Basics",
+    "section": "KPSS test for a difference stationary process (DSP)",
+    "text": "KPSS test for a difference stationary process (DSP)\n\n\n\n\nkpss.test(DSP)\n\n\n    KPSS Test for Level Stationarity\n\ndata:  DSP\nKPSS Level = 1.5869, Truncation lag parameter = 4, p-value = 0.01\n\n\n\\(\\rightarrow\\) non-stationary\n\n\n\nkpss.test(DSP, null = \"Trend\")\n\n\n    KPSS Test for Trend Stationarity\n\ndata:  DSP\nKPSS Trend = 0.30063, Truncation lag parameter = 4, p-value = 0.01\n\n\n\\(\\rightarrow\\) trend removal does not cure non-stationarity\n\n\nTask: Check if a DSP series can be made stationary by differencing."
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#mann-kendall-test",
+    "href": "slides/09-timeseries-basics.html#mann-kendall-test",
+    "title": "09-Time Series Basics",
+    "section": "Mann-Kendall test",
+    "text": "Mann-Kendall test\n\n\nlibrary(\"Kendall\")\nMannKendall(TSP)\n\ntau = 0.906, 2-sided pvalue =< 2.22e-16\n\n\n\n\\(\\rightarrow\\) significant trend\n\n\n\nMannKendall(DSP)\n\ntau = 0.682, 2-sided pvalue =< 2.22e-16\n\n\n\\(\\rightarrow\\) indicates significant trend, but as process is DSP, interpretation is wrong."
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#application-trend-of-air-temperature-in-april",
+    "href": "slides/09-timeseries-basics.html#application-trend-of-air-temperature-in-april",
+    "title": "09-Time Series Basics",
+    "section": "Application: trend of air temperature in April",
+    "text": "Application: trend of air temperature in April\n\nCheck for stationarity\n\nkpss.test(temp, null = \"Trend\")\n\n\n    KPSS Test for Trend Stationarity\n\ndata:  temp\nKPSS Trend = 0.097853, Truncation lag parameter = 3, p-value = 0.1\n\n\nMann-Kendall-Trend-test\n\nlibrary(Kendall)\nMannKendall(temp)\n\ntau = 0.449, 2-sided pvalue =1.5855e-05"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#application-trend-of-air-temperature",
+    "href": "slides/09-timeseries-basics.html#application-trend-of-air-temperature",
+    "title": "09-Time Series Basics",
+    "section": "Application: trend of air temperature",
+    "text": "Application: trend of air temperature\n\n\ntemp <- read.csv(\"https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/airtemp_april.csv\")\ntemp <- ts(temp$T, start=temp$Year[1])\nplot(temp)\n\n\nData: Air temperature in April, station Dresden-Klotsche (Germany), data source: Deutscher Wetterdienst (https://www.dwd.de), data aggregated and modified."
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#linear-trend",
+    "href": "slides/09-timeseries-basics.html#linear-trend",
+    "title": "09-Time Series Basics",
+    "section": "Linear trend",
+    "text": "Linear trend\n\n\nShow the code\nplot(temp)\nm <- lm(temp ~ time(temp))\nabline(m, col=\"red\")\n\n\n\n\nsummary(m)\n\n\nCall:\nlm(formula = temp ~ time(temp))\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-3.2733 -0.9369 -0.0816  0.6197  2.9386 \n\nCoefficients:\n              Estimate Std. Error t value Pr(>|t|)    \n(Intercept) -150.03413   31.88781  -4.705 2.64e-05 ***\ntime(temp)     0.07972    0.01603   4.973 1.11e-05 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 1.397 on 43 degrees of freedom\nMultiple R-squared:  0.3651,    Adjusted R-squared:  0.3504 \nF-statistic: 24.73 on 1 and 43 DF,  p-value: 1.106e-05"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#mann-kendall-trend-test",
+    "href": "slides/09-timeseries-basics.html#mann-kendall-trend-test",
+    "title": "09-Time Series Basics",
+    "section": "Mann-Kendall-Trend-Test",
+    "text": "Mann-Kendall-Trend-Test\n\n\nlibrary(\"Kendall\")\nMannKendall(TSP)\n\ntau = 0.906, 2-sided pvalue =< 2.22e-16\n\n\n\\(\\rightarrow\\) significant trend\n\n\nMannKendall(DSP)\n\ntau = 0.682, 2-sided pvalue =< 2.22e-16\n\n\n\\(\\rightarrow\\) indicates significant trend, but as process is DSP, interpretation is wrong.\n\n\ncheck assumptions with correlogram and/or KPSS-test"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#stationarity-and-trend-test",
+    "href": "slides/09-timeseries-basics.html#stationarity-and-trend-test",
+    "title": "09-Time Series Basics",
+    "section": "Stationarity and trend test",
+    "text": "Stationarity and trend test\n\nCheck for stationarity\n\nkpss.test(temp, null = \"Trend\")\n\n\n    KPSS Test for Trend Stationarity\n\ndata:  temp\nKPSS Trend = 0.097853, Truncation lag parameter = 3, p-value = 0.1\n\n\n\nMann-Kendall-Trend-test\n\nlibrary(Kendall)\nMannKendall(temp)\n\ntau = 0.449, 2-sided pvalue =1.5855e-05\n\n\n\n\nKPSS test does not reject H0 of trend stationarity\nMann-Kendall is significant \\(\\rightarrow\\) monotonous trend"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#trend-tests-1",
+    "href": "slides/09-timeseries-basics.html#trend-tests-1",
+    "title": "09-Time Series Basics",
+    "section": "Trend Tests",
+    "text": "Trend Tests\nMann-Kendall trend test\n\nnonparametric test\npopular in environmental sciences\nstrictly suitable only for trend-stationary time series, robust in case of weak autocorrelation\n\nLinear regression analysis\n\nparametric test for linear trend\nslope gives direct information about effect size\nsensitive against autocorrelation\n\nOther methods\n\nSen’s slope, Pettitt’s Test, Cox-Stuart Test, …\n\nIn general\n\ntrend tests are not adequate for “pure” difference-stationary time series, because residuals are autocorrelated\n\\(\\Rightarrow\\) test stationarity (or autocorrelation) before or after trend testing !!!"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#autocorrelation-1",
+    "href": "slides/09-timeseries-basics.html#autocorrelation-1",
+    "title": "09-Time Series Basics",
+    "section": "Autocorrelation",
+    "text": "Autocorrelation\n\n\n\n\nA time series\n\n\n\n\n\nx_t\n1\n3\n2\n4\n5\n4\n3\n2\n8\n5\n4\n3\n6\n7\n\n\n\n\n\n\n\n\n**Shifting to the right\n\n\n\n\n\nx_t\n1\n3\n2\n4\n5\n4\n3\n2\n8\n5\n4\n3\n6\n7\n\n\n\n\nx_t+1\n\n1\n3\n2\n4\n5\n4\n3\n2\n8\n5\n4\n3\n6\n7\n\n\n\nx_t+2\n\n\n1\n3\n2\n4\n5\n4\n3\n2\n8\n5\n4\n3\n6\n7\n\n\n\n\n\n\nCorrelation between \\(x_t\\) and \\(x_{t+1}\\) and \\(x_{t+2}\\):\n\ncor(df, use = \"pairwise.complete.obs\")[1,]\n\n       x_t      x_t+1      x_t+2 \n 1.0000000  0.1847131 -0.1411872 \n\n\nIn practice, autocorrelation is calculated using the acf function of R. The algorithm is somewhat different, especially the treatment of missing values, so results differ, especially for small samples."
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#count-significant-tests",
+    "href": "slides/09-timeseries-basics.html#count-significant-tests",
+    "title": "09-Time Series Basics",
+    "section": "Count significant tests",
+    "text": "Count significant tests\n\ncount.signif <- function(N, time, FUN, ...) {\n  a <- 0\n  for (i in 1:N) {\n    x <- FUN(time, ...)\n    m <- summary(lm(x  ~ time(x)))\n    f <- m$fstatistic\n    p.value <- pf(f[1], f[2], f[3], lower=FALSE)\n    # cat(\"p.value\", p.value, \"\\n\")\n    if (p.value < 0.05) a <- a + 1\n  }\n  a\n}\n\nRun the experiment\n\ncount number of significant linear increase (using the F-value)\nif trend parameters (beta1 an c) are set to zero, count.signif counts false positives\nrun loop 100 (or better: 1000) times for both types of time series\n\n\nNruns <- 100 \ntime  <- 1:100\ncount.signif(N=Nruns, time=time, FUN=genTSP, beta0=0, beta1=0) / Nruns\n\n[1] 0.05\n\ncount.signif(N=Nruns, time=time, FUN=genDSP, c=0) / Nruns\n\n[1] 0.91"
   }
 ]

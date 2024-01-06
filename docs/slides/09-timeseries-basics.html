@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-01-04">
+  <meta name="dcterms.date" content="2024-01-06">
   <title>Elements of Data Analysis and Statistics - 09-Time Series Basics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -427,10 +427,16 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-01-04</p>
+  <p class="date">2024-01-06</p>
 </section>
-<section id="an-introductory-example" class="slide level2">
-<h2>An introductory example</h2>
+<section>
+<section id="introductory-examples" class="title-slide slide level1 center">
+<h1>Introductory examples</h1>
+
+</section>
+<section id="example-1-co2-in-the-atmosphere" class="slide level2">
+<h2>Example 1: CO2 in the atmosphere</h2>
+<!-- shown code reads data directly from NOAA -->
 <div class="cell">
 <details>
 <summary>Show the code</summary>
@@ -450,6 +456,7 @@ Thomas Petzoldt
 <span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
+<!-- slides use locally cached data -->
 
 <img data-src="09-timeseries-basics_files/figure-revealjs/co2-maunaloa-1.png" width="960" class="r-stretch quarto-figure-center"><p>Data source:</p>
 <p><span class="citation" data-cites="keeling_exchanges_2001">Keeling et al. (<a href="#/references" role="doc-biblioref" onclick="">2001</a>)</span>, <span class="citation" data-cites="tans_maunaloa_2023">Tans &amp; Keeling (<a href="#/references" role="doc-biblioref" onclick="">2023</a>)</span>, <a href="https://gml.noaa.gov/ccgg/trends/data.html">https://gml.noaa.gov/ccgg/trends/data.html</a></p>
@@ -458,6 +465,70 @@ https://gml.noaa.gov/ccgg/trends/data.html
 License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric_co2/primary_mlo_co2_record.html)
 -->
 </section>
+<section id="example-2-monthly-mean-air-temperature" class="slide level2">
+<h2>Example 2: Monthly mean air temperature</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>tempdata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/airtemp_dresden_daily.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ZEIT, TM) <span class="sc">|&gt;</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">date =</span> ZEIT) <span class="sc">|&gt;</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(date), <span class="at">month =</span> <span class="fu">month</span>(date)) <span class="sc">|&gt;</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year, month) <span class="sc">|&gt;</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temp =</span> <span class="fu">mean</span>(TM)) <span class="sc">|&gt;</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date =</span> <span class="fu">date</span>(<span class="fu">paste</span>(year, month, <span class="dv">15</span>, <span class="at">sep=</span><span class="st">"-"</span>)))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>tempdata <span class="sc">|&gt;</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, temp)) <span class="sc">+</span> </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Temperature (°C)"</span>) <span class="sc">+</span> </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Monthly mean air temperature in Dresden"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="09-timeseries-basics_files/figure-revealjs/airtemp-monthly-1.png" width="960" class="r-stretch"><p>Data downloaded from <a href="https://rekis.hydro.tu-dresden.de">https://rekis.hydro.tu-dresden.de</a> <span class="citation" data-cites="kronenberg_rekis_2021">(<a href="#/references" role="doc-biblioref" onclick="">Kronenberg, 2021</a>)</span>, original source Deutscher Wetterdienst, https://www.dwd.de, data modified and averaged.</p>
+</section>
+<section id="example-3-annual-mean-air-temperature" class="slide level2">
+<h2>Example 3: Annual mean air temperature</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">read_csv</span>(<span class="st">"../data/airtemp_dresden_daily.csv"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(ZEIT, TM) <span class="sc">|&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">date =</span> ZEIT) <span class="sc">|&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">year</span>(date)) <span class="sc">|&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">temp =</span> <span class="fu">mean</span>(TM)) <span class="sc">|&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(year, temp)) <span class="sc">+</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>) <span class="sc">+</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Temperature (°C)"</span>) <span class="sc">+</span> </span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Annual average air temperature in Dresden"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="09-timeseries-basics_files/figure-revealjs/airtemp-annual-1.png" width="960" class="r-stretch"><p>Data downloaded from <a href="https://rekis.hydro.tu-dresden.de">https://rekis.hydro.tu-dresden.de</a> <span class="citation" data-cites="kronenberg_rekis_2021">(<a href="#/references" role="doc-biblioref" onclick="">Kronenberg, 2021</a>)</span>, original source Deutscher Wetterdienst, https://www.dwd.de, data modified and averaged.</p>
+</section>
+<section id="characteristics-of-the-examples" class="slide level2">
+<h2>Characteristics of the examples</h2>
+<p><br></p>
+<ul>
+<li>Observations as a function of time</li>
+<li>Measurements can be serially interdependent, e.g.:
+<ul>
+<li>trend</li>
+<li>seasonality</li>
+</ul></li>
+<li>No “true” replicates</li>
+</ul>
+<p><br></p>
+<p><span class="math inline">\(\Rightarrow\)</span> independency assumption of simple linear regression is violated</p>
+</section>
 <section id="time-series-analysis" class="slide level2">
 <h2>Time series analysis</h2>
 <p><br></p>
@@ -465,15 +536,20 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <li>Deals with development of processes in time: <span class="math inline">\(x(t)\)</span>,</li>
 <li>Huge number of specific approaches, only a few examples can be presented here.</li>
 </ul>
-<p><strong>Aims of time series analysis</strong></p>
+<p><strong>Aims</strong></p>
 <ul>
 <li>Does a trend exist? (significance)</li>
 <li>How strong is a trend? (effect size)</li>
-<li>Identification of covariates. (influencing factors)</li>
-<li>Trend, seasonality and random error. (component model)</li>
-<li>Statistical modeling and forecasting.</li>
-<li>Breakpoint analysis, intervention analysis, …, and more.</li>
+<li>Identification of covariates (influencing factors)</li>
+<li>Trend, seasonality and random error (component model)</li>
+<li>Statistical modeling and forecasting</li>
+<li>Breakpoint analysis, intervention analysis, …, and more</li>
 </ul>
+</section></section>
+<section>
+<section id="fundamental-time-series-concepts" class="title-slide slide level1 center">
+<h1>Fundamental time series concepts</h1>
+
 </section>
 <section id="stationarity" class="slide level2">
 <h2>Stationarity</h2>
@@ -483,287 +559,693 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <li>One of the most common assumptions is <strong>stationarity</strong>.</li>
 </ul>
 <p><br></p>
-<div class="bigfont">
-<p><strong>Note:</strong> we are often not primarily interested in stationarity itself!</p>
-<p><span class="math inline">\(\rightarrow\)</span> It is often just “the ticket” to go further.</p>
-</div>
+<p><strong>Note:</strong> We are usually not primarily interested in stationarity itself!</p>
+<p><span class="math inline">\(\rightarrow\)</span> It is just “the ticket” for further analyses.</p>
 <p><br></p>
 <p><strong>Example 1: trend analysis</strong></p>
-<p>We test stationarity to check if a trend test would be appropriate.</p>
+<ul>
+<li>We test stationarity to check if a (simple) trend test would be appropriate.</li>
+</ul>
 <p><strong>Example 2: linear models</strong></p>
-<p>Estimation of a linear trend or a breakpoint model. We check residuals for stationarity to get in formation about reliability of the fitted model.</p>
-</section>
-<section id="stationarity-1" class="slide level2">
-<h2>Stationarity</h2>
-
-<img data-src="09-timeseries-basics_files/figure-revealjs/stat-nonstant-1.png" width="960" class="r-stretch quarto-figure-center"><p>… is a central concept in time series analysis.</p>
 <ul>
-<li>Strictly (or strong) stationary process: distribution of <span class="math inline">\((x_{s+t})\)</span> independent from index <span class="math inline">\(s\)</span>.</li>
-<li>Weakly or wide-sense stationary processes: requires only that 1st and 2nd moments (mean, variance and covariance) do not vary with time.</li>
+<li>Estimation of a linear trend or a breakpoint model.</li>
+<li>We check residuals for stationarity to get in formation about reliability of the fitted model.</li>
 </ul>
 </section>
-<section id="two-different-basic-types-time-series" class="slide level2">
-<h2>Two different basic types time series</h2>
-<p><br></p>
-<p><span class="math display">\[\begin{align}
-x_t &amp;= \beta_0 + \beta_1 t + u_t \label{ts:trendstat} \\
-x_t &amp;= x_{t-1} + c + u_t          \label{ts:diffstat}
-\end{align}\]</span></p>
-<p><br></p>
-<div class="cell">
-
-</div>
-<ul>
-<li><strong>TSP:</strong> trend stationary process, linear regression model</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>TSP <span class="ot">&lt;-</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fl">0.2</span> <span class="sc">*</span> time <span class="sc">+</span> <span class="fu">rnorm</span>(time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<ul>
-<li><strong>DSP:</strong> difference stationary process (random walk)</li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>DSP <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(time))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>DSP[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (tt <span class="cf">in</span> time[<span class="sc">-</span><span class="dv">1</span>])</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  DSP[tt] <span class="ot">&lt;-</span> DSP[tt<span class="dv">-1</span>] <span class="sc">+</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-</section>
-<section id="time-series-classes-in-r" class="slide level2">
-<h2>Time series classes in R</h2>
-<ul>
-<li><code>ts</code> for regularly spaced time series,</li>
-<li><code>zoo</code> irregularly spaced time series.</li>
-</ul>
+<section id="stationarity-a-central-concept-in-time-series-analysis" class="slide level2">
+<h2>Stationarity: a central concept in time series analysis</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>TSP <span class="ot">&lt;-</span> <span class="fu">ts</span>(TSP)</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>DSP <span class="ot">&lt;-</span> <span class="fu">ts</span>(DSP)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(TSP, <span class="at">main=</span><span class="st">"trend stationary process"</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(DSP, <span class="at">main=</span><span class="st">"difference stationary process"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">cex=</span><span class="fl">1.4</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, <span class="fu">rnorm</span>(x), <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"stationary"</span>, <span class="at">xlab=</span><span class="st">"time"</span>, <span class="at">ylab=</span><span class="st">"x"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, <span class="fl">0.01</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(x), <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"linear trend"</span>, <span class="at">xlab=</span><span class="st">"time"</span>, <span class="at">ylab=</span><span class="st">"x"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, <span class="fu">rnorm</span>(x, <span class="at">sd=</span><span class="fu">seq</span>(<span class="fl">0.1</span>,<span class="dv">1</span>,<span class="at">length=</span><span class="dv">100</span>)), <span class="at">type=</span><span class="st">"l"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">"increasing variance"</span>, <span class="at">xlab=</span><span class="st">"time"</span>, <span class="at">ylab=</span><span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 
 </div>
-<img data-src="09-timeseries-basics_files/figure-revealjs/ts-example1-1.png" width="1152" class="r-stretch quarto-figure-center"></section>
-<section id="a-simulation-experiment" class="slide level2">
-<h2>A Simulation Experiment</h2>
+<img data-src="09-timeseries-basics_files/figure-revealjs/stat-nonstat-1.png" width="960" class="r-stretch quarto-figure-center"><ul>
+<li>Strictly or <strong>strong stationary process</strong>: distribution of <span class="math inline">\((x_{s+t})\)</span> independent from index <span class="math inline">\(s\)</span>.</li>
+<li>Wide-sense or <strong>weakly stationary processes</strong>: requires only that 1st and 2nd moments (mean, variance and covariance) do not vary with time.</li>
+</ul>
+</section>
+<section id="three-types-of-basic-time-series" class="slide level2">
+<h2>Three types of basic time series</h2>
+<div class="cell">
+
+</div>
+<div class="column" style="width:32%;">
+<p><span class="math inline">\(x_t = \beta_0 + \varepsilon_t\)</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="09-timeseries-basics_files/figure-revealjs/LSP-1.png" width="576"></p>
+</div>
+</div>
+<ul>
+<li>“level stationary process”</li>
+<li>mean, variance and covariance constant</li>
+<li>example: white noise</li>
+<li><span class="math inline">\(=\)</span> <strong>stationary</strong></li>
+</ul>
+</div>
+<div class="column" style="width:32%;">
+<p><span class="math inline">\(x_t = \beta_0 + \beta_1 t + \varepsilon_t\)</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="09-timeseries-basics_files/figure-revealjs/TSP-1.png" width="576"></p>
+</div>
+</div>
+<ul>
+<li>“trend stationary process”</li>
+<li>linear regression model</li>
+<li>can be made stationary by detrending</li>
+<li><span class="math inline">\(\rightarrow\)</span> <strong>non-stationary</strong></li>
+</ul>
+</div>
+<div class="column" style="width:32%;">
+<p><span class="math inline">\(x_t = x_{t-1} + c + \varepsilon_t\)</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img data-src="09-timeseries-basics_files/figure-revealjs/DSP-1.png" width="576"></p>
+</div>
+</div>
+<ul>
+<li>“difference stationary process” (random walk)</li>
+<li>can be made stationary by differencing</li>
+<li><span class="math inline">\(\rightarrow\)</span> <strong>non-stationary</strong></li>
+</ul>
+</div>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1237</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>LSP <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="sc">+</span> <span class="fu">rnorm</span>(time)</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>TSP <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="sc">+</span> <span class="fl">0.2</span> <span class="sc">*</span> time <span class="sc">+</span> <span class="fu">rnorm</span>(time)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>DSP <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(time))</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>DSP[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (tt <span class="cf">in</span> time[<span class="sc">-</span><span class="dv">1</span>])  DSP[tt] <span class="ot">&lt;-</span> DSP[tt<span class="dv">-1</span>] <span class="sc">+</span> <span class="fl">0.2</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>))</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ts</span>(LSP), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">8</span>), <span class="at">main=</span><span class="st">"LSP"</span>, <span class="at">col =</span> <span class="st">"forestgreen"</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ts</span>(TSP), <span class="at">main=</span><span class="st">"TSP"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ts</span>(DSP), <span class="at">main=</span><span class="st">"DSP"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="09-timeseries-basics_files/figure-revealjs/gen-LTDsp-show-1.png" width="960" class="r-stretch"></section>
+<section id="why-is-this-important" class="slide level2">
+<h2>Why is this important?</h2>
 <p><br></p>
+<p>Simple linear models require “independent data”, or,<br> more precisely: <strong>independence of residuals</strong>.</p>
+<p><strong>But</strong></p>
+<ul>
+<li>time series observations can be serially dependent</li>
+<li>dependent data have “less value” <span class="gray">(contain less information than independent data)</span></li>
+<li>important for calculation of degrees of freedom for the sigificance tests</li>
+</ul>
+<p><br></p>
+<p><strong>Approaches</strong></p>
+<ol type="1">
+<li>measure serial dependency (autocorrelation)</li>
+<li>if yes, handle autocorrelation
+<ol type="a">
+<li>remove it, <span class="gray">or</span></li>
+<li>model it</li>
+</ol></li>
+</ol>
+</section></section>
+<section>
+<section id="autocorrelation" class="title-slide slide level1 center">
+<h1>Autocorrelation</h1>
+<ul>
+<li>measures temporal dependency (memory) of observations</li>
+</ul>
+</section>
+<section id="autocorrelation-1" class="slide level2">
+<h2>Autocorrelation</h2>
+<p><br></p>
+<div class="cell">
+
+</div>
+<p><strong>A time series</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">x_t</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><br></p>
+<p>**Shifting to the right</p>
+<div class="cell">
+<div class="cell-output-display">
+<table>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">x_t</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">x_t+1</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+<td style="text-align: right;"></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">x_t+2</td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;"></td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">7</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p><br></p>
+<p><strong>Correlation between <span class="math inline">\(x_t\)</span> and <span class="math inline">\(x_{t+1}\)</span> and <span class="math inline">\(x_{t+2}\)</span>:</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)[<span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       x_t      x_t+1      x_t+2 
+ 1.0000000  0.1847131 -0.1411872 </code></pre>
+</div>
+</div>
+<p><span class="gray">In practice, autocorrelation is calculated using the <code>acf</code> function of R. The algorithm is somewhat different, especially the treatment of missing values, so results differ, especially for small samples.</span></p>
+</section>
+<section id="autocorrelation-and-partial-autocorrelation-acf-pacf" class="slide level2">
+<h2>Autocorrelation and partial autocorrelation (ACF, PACF)</h2>
+
+<img data-src="../img/time-series.png" class="r-stretch quarto-figure-center"></section>
+<section id="autocorrelation-function-acf-correlogram" class="slide level2">
+<h2>Autocorrelation function (ACF): correlogram</h2>
+<ul>
+<li><p>… correlation between time series and its time-shifted (= lagged) versions</p></li>
+<li><p>ACF considers both, direct and indirect dependency</p></li>
+<li><p>PACF considers only direct effects it is called <strong>partial autocorrelation</strong>, PACF.</p></li>
+</ul>
+
+<img data-src="09-timeseries-basics_files/figure-revealjs/acf-example-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="cross-correlation-ccf" class="slide level2">
+<h2>Cross-correlation (CCF)</h2>
+<p><br></p>
+<ul>
+<li>two or more variables</li>
+<li>lag can be positive or negative</li>
+<li>Examples:
+<ul>
+<li>CCF between solar radiation and water temperature</li>
+<li>CCF of discharge at two river kilometers <span class="math inline">\(\rightarrow\)</span> estimate flow velocity of a flood wave</li>
+</ul></li>
+</ul>
+</section>
+<section id="typical-patterns-of-acf" class="slide level2">
+<h2>Typical patterns of ACF</h2>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(LSP, <span class="at">main =</span> <span class="st">"level stationary"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(TSP, <span class="at">main =</span> <span class="st">"trend stationary"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(DSP, <span class="at">main =</span> <span class="st">"difference stationary"</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span> <span class="sc">*</span> pi, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>periodic <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">cos</span>(time) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">sd =</span> <span class="fl">0.1</span>))</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(periodic, <span class="at">lag =</span> <span class="dv">100</span>, <span class="at">main =</span> <span class="st">"periodic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="09-timeseries-basics_files/figure-revealjs/acf-patterns-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="removal-of-autocorrelation" class="slide level2">
+<h2>Removal of autocorrelation</h2>
+<p><br></p>
+<ul>
+<li><strong>Trend stationary series:</strong> trend removal</li>
+</ul>
+<p>Example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(TSP <span class="sc">~</span> <span class="fu">time</span>(TSP), <span class="at">eval =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br></p>
+<ul>
+<li><strong>Difference stationary series:</strong> differencing</li>
+</ul>
+<p>Example:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">9</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1]  1  1 -1  3 -2 -1  5 -3  4</code></pre>
+</div>
+</div>
+<p><br></p>
+<ul>
+<li><p><strong>Periodic series:</strong> identification and removal of seasonal components</p></li>
+<li><p>Methods: spectral analysis, seasonal decomposition, averaging …</p></li>
+</ul>
+</section>
+<section id="removal-of-autocorrelation-ii" class="slide level2">
+<h2>Removal of autocorrelation II</h2>
+
+<img data-src="09-timeseries-basics_files/figure-revealjs/acfpatterns-1.png" width="1344" class="r-stretch quarto-figure-center"><div class="column" style="width:34%;">
+<ul>
+<li>ACF plots of TSP and DSP</li>
+<li>strong autocorrelation</li>
+</ul>
+</div>
+<div class="column" style="width:34%;">
+<ul>
+<li>differencing</li>
+<li>differences of DSP<br> <span class="math inline">\(\rightarrow\)</span> stationary</li>
+</ul>
+</div>
+<div class="column" style="width:30%;">
+<ul>
+<li>detrending</li>
+<li>residuals of TSP<br> <span class="math inline">\(\rightarrow\)</span> stationary</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="statistical-tests" class="title-slide slide level1 center">
+<h1>Statistical tests</h1>
+
+</section>
+<section id="test-of-stationarity" class="slide level2">
+<h2>Test of stationarity</h2>
+<ul>
+<li>Kwiatkowski-Phillips-Schmidt-Shin test (KPSS test)</li>
+<li>has built-in trend removal (option <code>null = "trend"</code>)</li>
+</ul>
+
+<img data-src="09-timeseries-basics_files/figure-revealjs/kpss-hypotheses-1.png" width="1344" class="r-stretch quarto-figure-center"><div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(TSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    KPSS Test for Level Stationarity
+
+data:  TSP
+KPSS Level = 2.0877, Truncation lag parameter = 4, p-value = 0.01</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\rightarrow\)</span> non-stationary</p>
+</div>
+<div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(TSP, <span class="at">null =</span> <span class="st">"Trend"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    KPSS Test for Trend Stationarity
+
+data:  TSP
+KPSS Trend = 0.10306, Truncation lag parameter = 4, p-value = 0.1</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\rightarrow\)</span> stationary after trend removal</p>
+</div>
+</section>
+<section id="kpss-test-for-a-difference-stationary-process-dsp" class="slide level2">
+<h2>KPSS test for a difference stationary process (DSP)</h2>
+<p><br></p>
+
+<img data-src="09-timeseries-basics_files/figure-revealjs/kpss-hypotheses2-1.png" width="1344" class="r-stretch quarto-figure-center"><div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(DSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    KPSS Test for Level Stationarity
+
+data:  DSP
+KPSS Level = 1.5869, Truncation lag parameter = 4, p-value = 0.01</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\rightarrow\)</span> non-stationary</p>
+</div>
+<div class="column" style="width:49%;">
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(DSP, <span class="at">null =</span> <span class="st">"Trend"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    KPSS Test for Trend Stationarity
+
+data:  DSP
+KPSS Trend = 0.30063, Truncation lag parameter = 4, p-value = 0.01</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\rightarrow\)</span> trend removal<br> does not cure non-stationarity</p>
+</div>
+<p><br></p>
+<p><strong>Task:</strong> Check if a DSP series can be made stationary by differencing.</p>
+</section>
+<section id="trend-tests" class="slide level2">
+<h2>Trend Tests</h2>
+<p><strong>Mann-Kendall trend test</strong></p>
+<ul>
+<li>nonparametric test</li>
+<li>popular in environmental sciences</li>
+<li>strictly suitable only for trend-stationary time series, robust in case of weak autocorrelation</li>
+</ul>
+<p><strong>Linear regression analysis</strong></p>
+<ul>
+<li>parametric test for linear trend</li>
+<li>slope gives direct information about effect size</li>
+<li>sensitive against autocorrelation</li>
+</ul>
+<p><strong>Other methods</strong></p>
+<ul>
+<li>Sen’s slope, Pettitt’s Test, Cox-Stuart Test, …</li>
+</ul>
+<p><strong>In general</strong></p>
+<ul>
+<li>trend tests are not adequate for “pure” difference-stationary time series, because residuals are autocorrelated</li>
+<li><span class="red"><span class="math inline">\(\Rightarrow\)</span> test stationarity (or autocorrelation) before or after trend testing !!!</span></li>
+</ul>
+</section>
+<section id="mann-kendall-trend-test" class="slide level2">
+<h2>Mann-Kendall-Trend-Test</h2>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Kendall"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(TSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tau = 0.906, 2-sided pvalue =&lt; 2.22e-16</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\rightarrow\)</span> significant trend</p>
+<p><br></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(DSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tau = 0.682, 2-sided pvalue =&lt; 2.22e-16</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(\rightarrow\)</span> indicates significant trend, but as process is DSP, interpretation is wrong.</p>
+<p><br></p>
+<ul>
+<li>check assumptions with correlogram and/or KPSS-test</li>
+</ul>
+</section>
+<section id="application-trend-of-air-temperature" class="slide level2">
+<h2>Application: trend of air temperature</h2>
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/airtemp_april.csv"</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">ts</span>(temp<span class="sc">$</span>T, <span class="at">start=</span>temp<span class="sc">$</span>Year[<span class="dv">1</span>])</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="09-timeseries-basics_files/figure-revealjs/temp-april-1.png" width="864" class="r-stretch quarto-figure-center"><p><span class="gray">Data: Air temperature in April, station Dresden-Klotsche (Germany), data source: Deutscher Wetterdienst (https://www.dwd.de), data aggregated and modified.</span></p>
+</section>
+<section id="stationarity-and-trend-test" class="slide level2">
+<h2>Stationarity and trend test</h2>
+<p><br></p>
+<p>Check for stationarity</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(temp, <span class="at">null =</span> <span class="st">"Trend"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    KPSS Test for Trend Stationarity
+
+data:  temp
+KPSS Trend = 0.097853, Truncation lag parameter = 3, p-value = 0.1</code></pre>
+</div>
+</div>
+<p><br></p>
+<p>Mann-Kendall-Trend-test</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Kendall)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>tau = 0.449, 2-sided pvalue =1.5855e-05</code></pre>
+</div>
+</div>
+<p><br></p>
+<ul>
+<li>KPSS test does not reject H0 of trend stationarity</li>
+<li>Mann-Kendall is significant <span class="math inline">\(\rightarrow\)</span> monotonous trend</li>
+</ul>
+</section>
+<section id="linear-trend" class="slide level2">
+<h2>Linear trend</h2>
+<div class="cell" data-layout-align="center">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp)</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(temp <span class="sc">~</span> <span class="fu">time</span>(temp))</span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(m, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="09-timeseries-basics_files/figure-revealjs/temp-trend-1.png" width="1152" class="r-stretch quarto-figure-center"><div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = temp ~ time(temp))
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-3.2733 -0.9369 -0.0816  0.6197  2.9386 
+
+Coefficients:
+              Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -150.03413   31.88781  -4.705 2.64e-05 ***
+time(temp)     0.07972    0.01603   4.973 1.11e-05 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 1.397 on 43 degrees of freedom
+Multiple R-squared:  0.3651,    Adjusted R-squared:  0.3504 
+F-statistic: 24.73 on 1 and 43 DF,  p-value: 1.106e-05</code></pre>
+</div>
+</div>
+</section></section>
+<section id="further-reading" class="title-slide slide level1 center">
+<h1>Further reading</h1>
+<p><br></p>
+<ul>
+<li><p><span class="citation" data-cites="kleiber_applied_2008">Kleiber &amp; Zeileis (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span></p></li>
+<li><p><span class="citation" data-cites="shumway_time_2000">R. H. Shumway et al. (<a href="#/references" role="doc-biblioref" onclick="">2000</a>)</span></p></li>
+<li><p><span class="citation" data-cites="shumway_time_2019">R. Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span></p></li>
+</ul>
+<p>… and more in the labs and the homework project.</p>
+</section>
+
+<section>
+<section id="appendix" class="title-slide slide level1 center">
+<h1>Appendix</h1>
+<!--
+## Time series classes in R
+
+* `ts` for regularly spaced time series,
+* `zoo` irregularly spaced time series.
+
+
+
+::: {.cell layout-align="center"}
+
+```{.r .cell-code}
+par(mfrow=c(1, 3), las=1)
+LSP <- ts(LSP)
+TSP <- ts(TSP)
+DSP <- ts(DSP)
+
+plot(LSP, main="level stationary process")
+plot(TSP, main="trend stationary process")
+plot(DSP, main="difference stationary process")
+```
+
+::: {.cell-output-display}
+![](09-timeseries-basics_files/figure-revealjs/ts-example1-1.png){fig-align='center' width=1152}
+:::
+:::
+
+-->
+</section>
+<section id="a-simulation-experiment" class="slide level2">
+<h2>A simulation experiment</h2>
+<p><br></p>
+<p>Demonstration that application of a simple linear model to a difference stationary time series leads to an increase of false positives.</p>
+<p><br></p>
+<p><strong>Tools</strong></p>
 <ul>
 <li>Define two functions to generate time series with specific properties:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>genTSP <span class="ot">&lt;-</span> <span class="cf">function</span>(time, beta0, beta1)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.ts</span>(beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> time <span class="sc">+</span> <span class="fu">rnorm</span>(time))</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>genDSP <span class="ot">&lt;-</span> <span class="cf">function</span>(time, c) {</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  DSP <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(time))</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  DSP[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (tt <span class="cf">in</span> time[<span class="sc">-</span><span class="dv">1</span>]) DSP[tt] <span class="ot">&lt;-</span> DSP[tt<span class="dv">-1</span>] <span class="sc">+</span> c <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.ts</span>(DSP)</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>genTSP <span class="ot">&lt;-</span> <span class="cf">function</span>(time, beta0, beta1)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.ts</span>(beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> time <span class="sc">+</span> <span class="fu">rnorm</span>(time))</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>genDSP <span class="ot">&lt;-</span> <span class="cf">function</span>(time, c) {</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  DSP <span class="ot">&lt;-</span> <span class="fu">numeric</span>(<span class="fu">length</span>(time))</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a>  DSP[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
+<span id="cb32-7"><a href="#cb32-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (tt <span class="cf">in</span> time[<span class="sc">-</span><span class="dv">1</span>]) DSP[tt] <span class="ot">&lt;-</span> DSP[tt<span class="dv">-1</span>] <span class="sc">+</span> c <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
+<span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ts</span>(DSP)</span>
+<span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="run-the-experiment" class="slide level2">
-<h2>Run the experiment</h2>
-<ul>
-<li>set the trend to zero, so <code>count.signif</code> counts <code>a</code> false positive results.</li>
-</ul>
+<section id="count-significant-tests" class="slide level2">
+<h2>Count significant tests</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>count.signif <span class="ot">&lt;-</span> <span class="cf">function</span>(N, time, FUN, ...) {</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="dv">0</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) {</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">FUN</span>(time, ...)</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    m <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">lm</span>(x  <span class="sc">~</span> <span class="fu">time</span>(x)))</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    f <span class="ot">&lt;-</span> m<span class="sc">$</span>fstatistic</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    p.value <span class="ot">&lt;-</span> <span class="fu">pf</span>(f[<span class="dv">1</span>], f[<span class="dv">2</span>], f[<span class="dv">3</span>], <span class="at">lower=</span><span class="cn">FALSE</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># cat("p.value", p.value, "\n")</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>) a <span class="ot">&lt;-</span> a <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  }</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  a</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>count.signif <span class="ot">&lt;-</span> <span class="cf">function</span>(N, time, FUN, ...) {</span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="dv">0</span></span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) {</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">FUN</span>(time, ...)</span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>    m <span class="ot">&lt;-</span> <span class="fu">summary</span>(<span class="fu">lm</span>(x  <span class="sc">~</span> <span class="fu">time</span>(x)))</span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>    f <span class="ot">&lt;-</span> m<span class="sc">$</span>fstatistic</span>
+<span id="cb33-7"><a href="#cb33-7" aria-hidden="true" tabindex="-1"></a>    p.value <span class="ot">&lt;-</span> <span class="fu">pf</span>(f[<span class="dv">1</span>], f[<span class="dv">2</span>], f[<span class="dv">3</span>], <span class="at">lower=</span><span class="cn">FALSE</span>)</span>
+<span id="cb33-8"><a href="#cb33-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># cat("p.value", p.value, "\n")</span></span>
+<span id="cb33-9"><a href="#cb33-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>) a <span class="ot">&lt;-</span> a <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb33-10"><a href="#cb33-10" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb33-11"><a href="#cb33-11" aria-hidden="true" tabindex="-1"></a>  a</span>
+<span id="cb33-12"><a href="#cb33-12" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>Run the experiment</strong></p>
 <ul>
-<li>test for the number of significant F-values,</li>
-<li>run loop 100 … 1000 times for both types of time series,</li>
+<li>count number of significant linear increase (using the F-value)</li>
+<li>if trend parameters (<code>beta1</code> an <code>c</code>) are set to zero, <code>count.signif</code> counts false positives</li>
+<li>run loop 100 (or better: 1000) times for both types of time series</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>Nruns <span class="ot">&lt;-</span> <span class="dv">100</span> <span class="co"># better 1000 !!!</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">count.signif</span>(<span class="at">N=</span>Nruns, <span class="at">time=</span>time, <span class="at">FUN=</span>genTSP, <span class="at">beta0=</span><span class="dv">0</span>, <span class="at">beta1=</span><span class="dv">0</span>) <span class="sc">/</span> Nruns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>Nruns <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">count.signif</span>(<span class="at">N=</span>Nruns, <span class="at">time=</span>time, <span class="at">FUN=</span>genTSP, <span class="at">beta0=</span><span class="dv">0</span>, <span class="at">beta1=</span><span class="dv">0</span>) <span class="sc">/</span> Nruns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.05</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count.signif</span>(<span class="at">N=</span>Nruns, <span class="at">time=</span>time, <span class="at">FUN=</span>genDSP, <span class="at">c=</span><span class="dv">0</span>) <span class="sc">/</span> Nruns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">count.signif</span>(<span class="at">N=</span>Nruns, <span class="at">time=</span>time, <span class="at">FUN=</span>genDSP, <span class="at">c=</span><span class="dv">0</span>) <span class="sc">/</span> Nruns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.91</code></pre>
 </div>
-</div>
-</section>
-<section id="autocorrelation-function-acf" class="slide level2">
-<h2>Autocorrelation function (ACF)</h2>
-<ul>
-<li>… correlation between time series and its time-shifted (= lagged) versions,</li>
-<li>the time shift (lag) is being varied <span class="math inline">\(\rightarrow\)</span> correlogram.</li>
-<li>indirect dependency, e.g.&nbsp;<span class="math inline">\(x_{t}\)</span> on <span class="math inline">\(x_{t-2}\)</span> because <span class="math inline">\(x_{t-1}\)</span> depends on <span class="math inline">\(x_{t-2}\)</span>.</li>
-<li>without indirect effects it is called <strong>partial autocorrelation</strong>, PACF.</li>
-<li>Cross-correlation (CCF): <strong>two</strong> variables; lag is positive or negative.</li>
-<li>Example: CCF between solar radiation and water temperature.</li>
-</ul>
-
-<img data-src="09-timeseries-basics_files/figure-revealjs/acf-example-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="typical-patterns-of-acf-and-pacf" class="slide level2">
-<h2>Typical patterns of ACF and PACF</h2>
-
-<img data-src="09-timeseries-basics_files/figure-revealjs/acfpatterns-1.png" width="1152" class="r-stretch quarto-figure-center"><ul>
-<li>ACF plots of TSP and DSP (left) very similar,</li>
-<li>Differentiated time series (middle),</li>
-<li>series with substracted trend (right).</li>
-</ul>
-</section>
-<section id="typical-patterns-of-acf-and-pacf-code" class="slide level2">
-<h2>Typical patterns of ACF and PACF (Code)</h2>
-<p><br></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>,<span class="dv">3</span>), <span class="at">cex=</span><span class="dv">1</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(TSP)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">diff</span>(TSP))</span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(<span class="fu">lm</span>(TSP <span class="sc">~</span> <span class="fu">time</span>(TSP))))</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(DSP)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">diff</span>(DSP))</span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(<span class="fu">lm</span>(DSP <span class="sc">~</span> <span class="fu">time</span>(DSP))))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="unit-root-test" class="slide level2">
 <h2>Unit root test</h2>
 <p><br></p>
 <ul>
-<li>determine whether a time series is of type “DSP”.</li>
-<li>ADF-test (augmented Dickey-Fuller test), contained in R-package <strong>tseries</strong>:</li>
-<li>Remember: A “TSP” can be made stationary by subtracting a trend.</li>
+<li>Check whether a time series is of type “DSP”.</li>
+<li>ADF-test (augmented Dickey-Fuller test), contained in R-package <strong>tseries</strong>.</li>
+<li>Remember: A “TSP” can be made stationary by subtracting a trend.<br> <span class="math inline">\(\rightarrow\)</span> This is done automatically by the test.</li>
+<li><strong>Important:</strong> stationarity is the <strong>alternative</strong> hypothesis!</li>
 </ul>
-<p><span class="math inline">\(\rightarrow\)</span> This is done automatically by the test.</p>
+<p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(TSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(TSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Augmented Dickey-Fuller Test
 
 data:  TSP
-Dickey-Fuller = -4.0145, Lag order = 4, p-value = 0.01134
+Dickey-Fuller = -3.87, Lag order = 4, p-value = 0.01831
 alternative hypothesis: stationary</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(DSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(DSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Augmented Dickey-Fuller Test
 
 data:  DSP
-Dickey-Fuller = -2.4355, Lag order = 4, p-value = 0.3962
+Dickey-Fuller = -2.1883, Lag order = 4, p-value = 0.4986
 alternative hypothesis: stationary</code></pre>
 </div>
 </div>
 </section>
-<section id="dsp-presence-of-unit-root" class="slide level2">
-<h2>DSP: presence of unit root</h2>
+<section id="dsp-presence-of-a-unit-root" class="slide level2">
+<h2>DSP: presence of a “unit root”</h2>
 <p><br></p>
 <ul>
-<li>DSP series: presence of an unit root cannot be rejected,</li>
+<li>DSP series: presence of a unit root cannot be rejected,</li>
 <li><span class="math inline">\(\rightarrow\)</span> non-stationary.</li>
 <li>But, after differencing, there are no objections against stationarity:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(<span class="fu">diff</span>(DSP))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(<span class="fu">diff</span>(DSP))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Augmented Dickey-Fuller Test
 
 data:  diff(DSP)
-Dickey-Fuller = -3.9902, Lag order = 4, p-value = 0.01261
+Dickey-Fuller = -3.62, Lag order = 4, p-value = 0.03504
 alternative hypothesis: stationary</code></pre>
 </div>
 </div>
 </section>
-<section id="kpss-test-kwiatkowski-phillips-schmidt-shin-test" class="slide level2">
-<h2>KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test</h2>
-<p><br></p>
-<p>… tests directly for stationarity or trend stationarity:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(TSP)                <span class="co"># non-stationary</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    KPSS Test for Level Stationarity
-
-data:  TSP
-KPSS Level = 2.0842, Truncation lag parameter = 4, p-value = 0.01</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(TSP, <span class="at">null=</span><span class="st">"Trend"</span>)  <span class="co"># stationary after trend removal</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    KPSS Test for Trend Stationarity
-
-data:  TSP
-KPSS Trend = 0.068349, Truncation lag parameter = 4, p-value = 0.1</code></pre>
-</div>
-</div>
-<p><br></p>
-<ul>
-<li>detrending made the series stationary</li>
-</ul>
-</section>
-<section id="kpss-test-kwiatkowski-phillips-schmidt-shin-test-ii" class="slide level2">
-<h2>KPSS test: Kwiatkowski-Phillips-Schmidt-Shin test II</h2>
-<p><br></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(DSP)                <span class="co"># non-stationary</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    KPSS Test for Level Stationarity
-
-data:  DSP
-KPSS Level = 1.6951, Truncation lag parameter = 4, p-value = 0.01</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(DSP, <span class="at">null=</span><span class="st">"Trend"</span>)  <span class="co"># still non-stationary</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    KPSS Test for Trend Stationarity
-
-data:  DSP
-KPSS Trend = 0.22627, Truncation lag parameter = 4, p-value = 0.01</code></pre>
-</div>
-</div>
-<p><br></p>
-<ul>
-<li>detrending does not cure non-stationarity</li>
-</ul>
-</section>
-<section id="trend-tests" class="slide level2">
-<h2>Trend Tests</h2>
-<p><br></p>
-<ul>
-<li><p><strong>Mann-Kendall trend test</strong>, popular in environmental sciences</p></li>
-<li><p>strictly suitable only for trend-stationary time series, but robust in cases of weak autocorrelation</p></li>
-<li><p>not for “pure” difference-stationary time series, because residuals are autocorrelated</p></li>
-<li><p><span class="math inline">\(\Rightarrow\)</span> Test stationarity (or autocorrelation) before testing trend !!!</p></li>
-</ul>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Kendall"</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(TSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>tau = 0.894, 2-sided pvalue =&lt; 2.22e-16</code></pre>
-</div>
-</div>
-<p>Significant trend. <br></p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(DSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>tau = 0.755, 2-sided pvalue =&lt; 2.22e-16</code></pre>
-</div>
-</div>
-<p>Indicates significant trend, but as process is DSP, interpretation is wrong.</p>
-</section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
+<p><br></p>
 
 <div class="footer footer-default">
 <p><span style="color: white; font-size: small; font-weight:400; float: right; margin-top: 40px; margin-right: 4%;"> <a href="../">🏠 Home</a> </span></p>
@@ -772,11 +1254,23 @@ KPSS Trend = 0.22627, Truncation lag parameter = 4, p-value = 0.01</code></pre>
 <div id="ref-keeling_exchanges_2001" class="csl-entry" role="doc-biblioentry">
 Keeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., &amp; Meijer, H. A. (2001). <em>Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects</em> (p. 88). Scripps Institution of Oceanography, San Diego.
 </div>
+<div id="ref-kleiber_applied_2008" class="csl-entry" role="doc-biblioentry">
+Kleiber, C., &amp; Zeileis, A. (2008). <em>Applied econometrics with <span>R</span></em>. Springer.
+</div>
+<div id="ref-kronenberg_rekis_2021" class="csl-entry" role="doc-biblioentry">
+Kronenberg, F., R. (2021). <em>Das regionale klimainformationssystem ReKIS – #eine gemeinsame plattform für sachsen, sachsen-anhalt und thüringen</em>. <a href="https://rekis.hydro.tu-dresden.de/">https://rekis.hydro.tu-dresden.de/</a>
+</div>
+<div id="ref-shumway_time_2000" class="csl-entry" role="doc-biblioentry">
+Shumway, R. H., Stoffer, D. S., &amp; Stoffer, D. S. (2000). <em>Time series analysis and its applications</em> (Vol. 3). Springer.
+</div>
+<div id="ref-shumway_time_2019" class="csl-entry" role="doc-biblioentry">
+Shumway, R., &amp; Stoffer, D. (2019). <em>Time series: A data analysis approach using r</em>. CRC Press.
+</div>
 <div id="ref-tans_maunaloa_2023" class="csl-entry" role="doc-biblioentry">
 Tans, P., &amp; Keeling, C. D. (2023). <em>Trends in atmospheric carbon dioxide, <span>Mauna Loa</span> <span>CO2</span> monthly mean data</em>. NOAA Earth System Research Laboratories, Global Monitoring Laboratory. <a href="https://gml.noaa.gov/ccgg/trends/data.html">https://gml.noaa.gov/ccgg/trends/data.html</a>
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
