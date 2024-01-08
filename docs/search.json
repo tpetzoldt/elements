@@ -3631,5 +3631,152 @@
     "title": "09-Time Series Basics",
     "section": "Cross correlation between air and water temperature",
     "text": "Cross correlation between air and water temperature"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#time-series-decomposition-1",
+    "href": "slides/10-timeseries-2.html#time-series-decomposition-1",
+    "title": "10-Time Series Outlook",
+    "section": "Time series decomposition",
+    "text": "Time series decomposition\n\nTraditional approach\nDecomposition of time series into:\n\ntrend component,\nseasonal or periodic component and\nstochastic component.\n\nMany of the decomposition methods require normal distribution of the residuals. If this is not the case or, even worse, the variance of a time series changes proportionally with a trend, a transformation might be required.\nFor hydrological or biomass data, which frequently show positive skewness, a logarithmic transformation is often helpful."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#smoothing-methods",
+    "href": "slides/10-timeseries-2.html#smoothing-methods",
+    "title": "10-Time Series Outlook",
+    "section": "Smoothing methods",
+    "text": "Smoothing methods\n\nuse regression vs. time\nor use smoothers (moving averages),\nthen subtract the trend line.\n\n\nlibrary(Kendall)\ndata(PrecipGL)\ntsp(PrecipGL)\n\n[1] 1900 1986    1\n\nplot(PrecipGL)\nkernel <- rep(1, 10)  # a rectangular kernel, vary bandwith\nlines(stats::filter(PrecipGL, kernel/sum(kernel)), lwd = 2, col = \"blue\")\nlines(lowess(time(PrecipGL), PrecipGL), lwd = 3, col = 2)"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#trend-corrected-series",
+    "href": "slides/10-timeseries-2.html#trend-corrected-series",
+    "title": "10-Time Series Outlook",
+    "section": "Trend corrected series",
+    "text": "Trend corrected series\nNow, the trend corrected series can be obtained by subtracting the trend, e.g.:\n\nsmooth <- stats::filter(PrecipGL, kernel/sum(kernel))\n## OR:\n# smooth <- lowess(time(PrecipGL), PrecipGL)$y\nres <- PrecipGL - smooth\nplot(res)"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#trend-corrected-series-1",
+    "href": "slides/10-timeseries-2.html#trend-corrected-series-1",
+    "title": "10-Time Series Outlook",
+    "section": "Trend corrected series",
+    "text": "Trend corrected series\nFor a seasonal time series with monthly values Kleiber & Zeileis (2008) recommend a filter with 13 coefficients.\nExample: water level of Rio Negro 18 km upstream from its confluence with the Amazon River. The data set is contained in the package boot (Canty & Ripley, 2022):\n\nlibrary(boot)\ndata(manaus)\ntsp(manaus)\n\n[1] 1903.000 1992.917   12.000\n\nplot(manaus)\nlines(stats::filter(manaus, c(0.5, rep(1, 11), 0.5)/12), lwd=2, col=\"blue\")\nlines(lowess(time(manaus),manaus),lwd=3, col=2)"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#automatic-time-series-decomposition",
+    "href": "slides/10-timeseries-2.html#automatic-time-series-decomposition",
+    "title": "10-Time Series Outlook",
+    "section": "Automatic time series decomposition",
+    "text": "Automatic time series decomposition\nFunction decompose implements the classical approach with simple symmetric moving average filters.\n\nmanaus_dec <- decompose(manaus)\nplot(manaus_dec)\n\n\nIn this data set the seasonal component possesses an additive character, but a multiplicative component would be possible too (type=\"multiplicative\")."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#automatic-time-series-decomposition-ii",
+    "href": "slides/10-timeseries-2.html#automatic-time-series-decomposition-ii",
+    "title": "10-Time Series Outlook",
+    "section": "Automatic time series decomposition II",
+    "text": "Automatic time series decomposition II\nThe function stl, seasonal time series decomposition (Cleveland et al., 1990) uses a LOESS filter:\n\nmanaus_stl <- stl(manaus, s.window=13)\nplot(manaus_stl)"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#outlook-frequency-analysis-and-arima-modelling",
+    "href": "slides/10-timeseries-2.html#outlook-frequency-analysis-and-arima-modelling",
+    "title": "10-Time Series Outlook",
+    "section": "Outlook: Frequency analysis and ARIMA modelling",
+    "text": "Outlook: Frequency analysis and ARIMA modelling\n\nvery important technique for analyzing time series and for forecasting, not handled here,\nfor the interested: self-study by reading (Kleiber2008?) or Shumway & Stoffer (2019)."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#identification-of-structural-breaks",
+    "href": "slides/10-timeseries-2.html#identification-of-structural-breaks",
+    "title": "10-Time Series Outlook",
+    "section": "Identification of structural breaks",
+    "text": "Identification of structural breaks\nStructural break\nIf one or more statistical parameters are not constant over the whole length of a time series it is called a structural break. For instance a location parameter (e.g. the mean), a trend or another distribution parameter (such as variance or covariance) may change.\nTesting for structural breaks\nThe package strucchange implements a number of tests for identification of structural changes or parameter instability of time series. Generally, two approaches are available: fluctuation tests and F-based tests. Fluctuation tests try to detect the structural instability with cumulative or moving sums (CUSUMs and MOSUMs)."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#model-selection-techniques",
+    "href": "slides/10-timeseries-2.html#model-selection-techniques",
+    "title": "10-Time Series Outlook",
+    "section": "Model Selection Techniques",
+    "text": "Model Selection Techniques\n\nModel Selection is a modern alternative to \\(p\\)-value based testing.\nBased on the principle of parsimony:\nModels with many parameters fit better, but may contain unnecessary factors.\nWe need is an optimal compromize between model fit and complexity.\nKeep it as simple as possible, but not simpler.\n\nCompare different models for the same phenomenon:\nFull model: includes all potential factors.\nSeveral reduced models, derived from the full model.\nNull model without explanatory factors.\n\nSelect minimal adequate model (“optimal”, “most parsimoniuos”).\n\\(\\Rightarrow\\) Compromize between simplicity and goodness of fit.\n\nMore, see Johnson & Omland (2004)"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#model-comparison-with-aic-and-bic",
+    "href": "slides/10-timeseries-2.html#model-comparison-with-aic-and-bic",
+    "title": "10-Time Series Outlook",
+    "section": "Model comparison with AIC and BIC",
+    "text": "Model comparison with AIC and BIC\nModels with many parameters fit better. We want an optimal compromize between fit and model complexity (number of parameters, \\(k\\)).\n\nGoodness of fit can be measured with likelihood \\(L\\) (how likely are the data given a specific model).\nLog likelihood: makes the problem additive.\nPenalty: penalises number of parameters (e.g. \\(2 k\\))\nAIC (Akaike Information Criterion):\n\n\\[\nAIC = - 2 \\ln(L) + 2 k\n\\]\n\nAlternatively: BIC (Bayesian Information Criterion), considers sample size (\\(n\\)):\n\n\\[\nBIC = - 2 \\ln(L) + k \\cdot \\ln(n)\n\\]\nThe model with smallest AIC (resp. BIC) is considered as “optimal” model."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#the-nile-data-set",
+    "href": "slides/10-timeseries-2.html#the-nile-data-set",
+    "title": "10-Time Series Outlook",
+    "section": "The Nile data set",
+    "text": "The Nile data set\nThe Nile data set contains measurements of annual discharge of the Nile at Aswan from 1871 to 1970 (see help page ?Nile for data source):\n\nlibrary(strucchange)\ndata(\"Nile\")\nplot(Nile)"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#test-for-structural-break-at-known-time",
+    "href": "slides/10-timeseries-2.html#test-for-structural-break-at-known-time",
+    "title": "10-Time Series Outlook",
+    "section": "Test for structural break at known time",
+    "text": "Test for structural break at known time\n\nAre there are periods with different flow?\nUse of OLS-CUSUM (ordinary least squares, cumulative sum) or MOSUM tests (moving average sum) can be applied to various types of problems).\nefp = empirical fluctuation model,sctest = structural change test\n\n\nocus <- efp(Nile ~ 1, type = \"OLS-CUSUM\")\nplot(ocus)\n\nsctest(ocus)\n\n\n    OLS-based CUSUM test\n\ndata:  ocus\nS0 = 2.9518, p-value = 5.409e-08"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#breakpoint-analysis",
+    "href": "slides/10-timeseries-2.html#breakpoint-analysis",
+    "title": "10-Time Series Outlook",
+    "section": "Breakpoint analysis",
+    "text": "Breakpoint analysis\n\n\nPurpose: identify if there are structural breaks with respect to a specified linear model, and if yes, their number and location.\nuses BIC-based model selection technique,\nvery general approach, allows different linear models, covariates, …\nwe deal only with the most simplest case here.\nmore, see Bai & Perron (2003), Zeileis et al. (2002), Zeileis et al. (2003)."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#breakpoint-analysis-1",
+    "href": "slides/10-timeseries-2.html#breakpoint-analysis-1",
+    "title": "10-Time Series Outlook",
+    "section": "Breakpoint analysis",
+    "text": "Breakpoint analysis\n\nbp.nile <- breakpoints(Nile ~ 1)\nsummary(bp.nile)\n\n\n     Optimal (m+1)-segment partition: \n\nCall:\nbreakpoints.formula(formula = Nile ~ 1)\n\nBreakpoints at observation number:\n                      \nm = 1      28         \nm = 2      28       83\nm = 3      28    68 83\nm = 4      28 45 68 83\nm = 5   15 30 45 68 83\n\nCorresponding to breakdates:\n                                \nm = 1        1898               \nm = 2        1898           1953\nm = 3        1898      1938 1953\nm = 4        1898 1915 1938 1953\nm = 5   1885 1900 1915 1938 1953\n\nFit:\n                                                   \nm   0       1       2       3       4       5      \nRSS 2835157 1597457 1552924 1538097 1507888 1659994\nBIC    1318    1270    1276    1285    1292    1311"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#likelihood-profile-what-is-the-optimal-number-of-breaks",
+    "href": "slides/10-timeseries-2.html#likelihood-profile-what-is-the-optimal-number-of-breaks",
+    "title": "10-Time Series Outlook",
+    "section": "Likelihood profile: what is the optimal number of breaks?",
+    "text": "Likelihood profile: what is the optimal number of breaks?\n\nbp.nile <- breakpoints(Nile ~ 1)\nplot(bp.nile)\n\n\n\nRSS (residual sum of squares) shows goodness of fit. The smaller the better.\nPenalty = 2 \\(\\cdot\\) number of breakpoints (not shown).\nMinimum BIC indicates optimal model."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#plot-breakpoints-and-confidence-interval",
+    "href": "slides/10-timeseries-2.html#plot-breakpoints-and-confidence-interval",
+    "title": "10-Time Series Outlook",
+    "section": "Plot breakpoints and confidence interval",
+    "text": "Plot breakpoints and confidence interval\n\n## fit null hypothesis model and model with 1 breakpoint\nfm0 <- lm(Nile ~ 1)\nfm1 <- lm(Nile ~ breakfactor(bp.nile,  breaks = 1))\nplot(Nile)\nlines(ts(fitted(fm0),  start = 1871),  col = 3)\nlines(ts(fitted(fm1),  start = 1871),  col = 4)\nlines(bp.nile)\n\n## confidence interval\nci.nile <- confint(bp.nile)\n#ci.nile  # output numerical results\nlines(ci.nile)"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#test-significance-of-breakpoints",
+    "href": "slides/10-timeseries-2.html#test-significance-of-breakpoints",
+    "title": "10-Time Series Outlook",
+    "section": "Test significance of breakpoints",
+    "text": "Test significance of breakpoints\n\n## ===== Likelihood ratio test =====\nanova(fm0, fm1)\n\nAnalysis of Variance Table\n\nModel 1: Nile ~ 1\nModel 2: Nile ~ breakfactor(bp.nile, breaks = 1)\n  Res.Df     RSS Df Sum of Sq     F    Pr(>F)    \n1     99 2835157                                 \n2     98 1597457  1   1237700 75.93 7.439e-14 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n## ===== AIC based comparison  =====\nAIC(fm0, fm1)\n\n    df      AIC\nfm0  2 1313.031\nfm1  3 1257.663\n\n\nWe can see that the model with the structural break in the year 1898 is significantly better than the null model."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#further-diagnostics",
+    "href": "slides/10-timeseries-2.html#further-diagnostics",
+    "title": "10-Time Series Outlook",
+    "section": "Further diagnostics",
+    "text": "Further diagnostics\nOf course, further diagsnostics and analyses can follow for the fitted models, e.g. a diagnostic comparison of autocorrelation and spectral density or a Q-Q-plot to see whether the residuals are normally distributed:\n\nacf(residuals(fm0))\nacf(residuals(fm1))\nspectrum(residuals(fm0), log = \"no\",  spans = c(5, 5))\nspectrum(residuals(fm1), log = \"no\",  spans = c(5, 5))\nqqnorm(residuals(fm0))\nqqnorm(residuals(fm1))\n\n\\(\\Rightarrow\\) test this yourself!"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#references",
+    "href": "slides/10-timeseries-2.html#references",
+    "title": "10-Time Series Outlook",
+    "section": "References",
+    "text": "References\n\n\n 🏠 Home \n\n\n\nBai, J., & Perron, P. (2003). Computation and analysis of multiple structural change models. J. Appl. Econ., 18:, 1–22.\n\n\nCanty, A., & Ripley, B. D. (2022). Boot: Bootstrap r (s-plus) functions.\n\n\nCleveland, R. B., Cleveland, W. S., McRae, J. E., & Terpenning, I. (1990). STL: A seasonal-trend decomposition procedure based on loess. Journal of Official Statistics, 6, 3–73.\n\n\nJohnson, G., Jerald, & Omland, K. S. (2004). Model Selection in Ecology and Evolution. Trends in Ecology and Evolution, 19(2), 101–108. https://doi.org/10.1016/j.tree.2003.10.013\n\n\nKleiber, C., & Zeileis, A. (2008). Applied econometrics with R. Springer.\n\n\nShumway, R., & Stoffer, D. (2019). Time series: A data analysis approach using r. CRC Press.\n\n\nZeileis, A., Kleiber, C., Krämer, W., & Hornik, K. (2003). Testing and dating of structural changes in practice. Computational Statistics and Data Analysis, 44(1–2), 109–123.\n\n\nZeileis, A., Leisch, F., Hornik, K., & Kleiber, C. (2002). Strucchange: An r package for testing for structural change in linear regression models. Journal of Statistical Software, 7(2), 1–38. http://www.jstatsoft.org/v07/i02/"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#identification-of-structural-breaks-1",
+    "href": "slides/10-timeseries-2.html#identification-of-structural-breaks-1",
+    "title": "10-Time Series Outlook",
+    "section": "Identification of structural breaks",
+    "text": "Identification of structural breaks\n\nStructural break\nIf one or more statistical parameters are not constant over the whole length of a time series it is called a structural break. For instance a location parameter (e.g. the mean), a trend or another distribution parameter (such as variance or covariance) may change.\n\nTesting for structural breaks\nThe package strucchange implements a number of tests for identification of structural changes or parameter instability of time series. Generally, two approaches are available: fluctuation tests and F-based tests. Fluctuation tests try to detect the structural instability with cumulative or moving sums (CUSUMs and MOSUMs)."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#likelihood-profile-rightarrow-optimal-number-of-breaks",
+    "href": "slides/10-timeseries-2.html#likelihood-profile-rightarrow-optimal-number-of-breaks",
+    "title": "10-Time Series Outlook",
+    "section": "Likelihood profile: \\(\\rightarrow\\) optimal number of breaks?",
+    "text": "Likelihood profile: \\(\\rightarrow\\) optimal number of breaks?\n\nbp.nile <- breakpoints(Nile ~ 1)\nplot(bp.nile)\n\n\n\nRSS (residual sum of squares) shows goodness of fit. The smaller the better.\nPenalty = 2 \\(\\cdot\\) number of breakpoints (not shown).\nMinimum BIC indicates optimal model."
   }
 ]

@@ -1,0 +1,295 @@
+---
+subtitle: "Applied Statistics -- A Practical Course"
+title: "10-Time Series Outlook"
+date:   "`r Sys.Date()`"
+--- 
+
+
+# Time series decomposition
+
+## Time series decomposition
+
+<br>
+
+**Traditional approach**
+
+Decomposition of time series into:
+
+1. trend component,
+2. seasonal or periodic component and
+3. stochastic component.
+
+Many of the decomposition methods require normal distribution of the residuals.
+If this is not the case or, even worse, the variance of a time series changes proportionally with
+a trend, a transformation might be required. 
+
+For hydrological or biomass data, which frequently
+show positive skewness, a logarithmic transformation is often helpful.
+
+## Smoothing methods
+
+
+* use regression vs. time
+* or use smoothers (moving averages),
+* then subtract the trend line.
+
+```{r filter1,fig=TRUE, echo=TRUE, fig.align='center'}
+library(Kendall)
+data(PrecipGL)
+tsp(PrecipGL)
+plot(PrecipGL)
+kernel <- rep(1, 10)  # a rectangular kernel, vary bandwith
+lines(stats::filter(PrecipGL, kernel/sum(kernel)), lwd = 2, col = "blue")
+lines(lowess(time(PrecipGL), PrecipGL), lwd = 3, col = 2)
+```
+
+## Trend corrected series
+
+Now, the trend corrected series can be obtained by subtracting the trend, e.g.:
+
+```{r filter2, echo=TRUE}
+smooth <- stats::filter(PrecipGL, kernel/sum(kernel))
+## OR:
+# smooth <- lowess(time(PrecipGL), PrecipGL)$y
+res <- PrecipGL - smooth
+plot(res)
+```
+
+
+## Trend corrected series
+
+For a seasonal time series with monthly values @kleiber_applied_2008 recommend
+a filter with 13 coefficients.
+
+Example: water level of Rio Negro 18 km upstream from its confluence with
+the Amazon River. The data set is contained in the package **boot**
+[@canty_boot_2022]:
+
+```{r filter3,fig=TRUE, echo=TRUE, fig.align='center'}
+library(boot)
+data(manaus)
+tsp(manaus)
+plot(manaus)
+lines(stats::filter(manaus, c(0.5, rep(1, 11), 0.5)/12), lwd=2, col="blue")
+lines(lowess(time(manaus),manaus),lwd=3, col=2)
+```
+
+
+## Automatic time series decomposition
+
+Function `decompose` implements the classical approach with simple symmetric moving average
+filters.
+
+```{r decompose,echo=TRUE,fig=TRUE,width=10, height=10, fig.align='center'}
+manaus_dec <- decompose(manaus)
+plot(manaus_dec)
+```
+
+In this data set the seasonal component possesses an additive character,
+but a multiplicative component would be possible too (`type="multiplicative"`).
+
+
+## Automatic time series decomposition II
+
+The function `stl`, seasonal time series decomposition
+[@cleveland_stl_1990] uses a LOESS filter:
+
+```{r stl,fig=TRUE, echo=TRUE,width=10, height=8, fig.align='center'}
+manaus_stl <- stl(manaus, s.window=13)
+plot(manaus_stl)
+```
+
+# Outlook: Frequency analysis and ARIMA modelling
+
+<br>
+
+* very important techniques for analyzing time series and for forecasting,
+ not handled here,
+* for the interested: self-study by reading @kleiber_applied_2008 or @shumway_time_2019.
+
+
+# Identification of structural breaks
+
+
+## Identification of structural breaks
+
+<br>
+
+**Structural break**
+
+If one or more statistical parameters are not constant over the whole length of a
+time series it is called a structural break. For instance a location parameter
+(e.g. the mean), a trend or another distribution parameter (such as variance or
+covariance) may change.
+
+<br>
+
+**Testing for structural breaks**
+
+The package **strucchange** implements a number of tests
+for identification of structural changes or parameter instability of time 
+series. Generally, two approaches are available: fluctuation tests and
+F-based tests. Fluctuation tests try to detect the structural instability with
+cumulative or moving sums (CUSUMs and MOSUMs).
+
+
+## Model Selection Techniques
+
+* Model Selection is a modern alternative to $p$-value based testing.
+* Based on the principle of parsimony:
+* Models with many parameters fit better, but may contain unnecessary factors.
+* We need is an **optimal compromize** between model fit and complexity.
+* Keep it as simple as possible, but not simpler.
+
+    * Compare different models for the same phenomenon:
+    * [Full model]{.blue}: includes all potential factors.
+    * Several [reduced models]{.blue}, derived from the full model.
+    * [Null model]{.blue} without explanatory factors.
+
+* Select [minimal adequate model]{.blue}  ("optimal", "most parsimoniuos").
+* $\Rightarrow$ Compromize between simplicity and goodness of fit.
+
+More, see @JohnsonOmland2004
+
+
+
+## Model comparison with AIC and BIC
+
+Models with many parameters fit better. We want an
+**optimal compromize** between fit and model complexity
+(number of parameters, $k$).
+
+
+* Goodness of fit can be measured with likelihood $L$<br>
+  [(how likely are the data given a specific model).]{.gray}
+* Log likelihood: makes the problem additive.
+* Penalty: penalises number of parameters (e.g. $2 k$)
+* AIC (Akaike Information Criterion):
+
+$$
+ AIC = - 2 \ln(L) + 2 k
+$$
+
+* Alternatively: BIC (Bayesian Information Criterion),
+ considers sample size ($n$):
+ 
+$$
+ BIC = - 2 \ln(L) + k \cdot \ln(n)
+$$
+
+
+The model with smallest AIC (resp. BIC) is considered as "optimal" model.
+
+
+
+## The Nile data set
+
+The Nile data set contains
+measurements of annual discharge of the Nile at Aswan from 1871 to 1970
+[(see help page ?Nile for data source):]{.gray}
+
+```{r nile, fig=TRUE, echo=TRUE, fig.align='center'}
+library(strucchange)
+data("Nile")
+plot(Nile)
+```
+
+
+## Test for structural break at known time
+
+* Are there are periods with different flow?
+* Use of OLS-CUSUM (ordinary least squares, cumulative sum)
+ or MOSUM tests (moving average sum) can be applied to various types of problems).
+* `efp` = empirical fluctuation model,`sctest` = structural change test
+
+
+```{r ocus, fig=TRUE, echo=TRUE, fig.align='center'}
+ocus <- efp(Nile ~ 1, type = "OLS-CUSUM")
+plot(ocus)
+sctest(ocus)
+```
+
+
+## Breakpoint analysis
+
+<br>
+
+* Purpose: identify if there are structural breaks with respect to a
+  specified linear model, and if yes, their number and location.
+* uses BIC-based model selection technique,
+* very general approach, allows different linear models, covariates, ...
+* we deal only with the most simplest case here.
+* more, see @Bai2003, @Zeileis2002, @Zeileis2003.
+
+    
+
+## Breakpoint analysis
+
+```{r fig=FALSE, echo=TRUE}
+bp.nile <- breakpoints(Nile ~ 1)
+summary(bp.nile)
+```
+
+
+## Likelihood profile: $\rightarrow$ optimal number of breaks?
+
+```{r bp-nile, fig=TRUE, echo=TRUE}
+bp.nile <- breakpoints(Nile ~ 1)
+plot(bp.nile)
+```
+
+
+* RSS (residual sum of squares) shows goodness of fit. The smaller the better.
+* Penalty = 2 $\cdot$ number of breakpoints (not shown).
+* Minimum BIC indicates optimal model.
+
+
+## Plot breakpoints and confidence interval
+
+```{r ci-nile, fig=TRUE, echo=TRUE}
+## fit null hypothesis model and model with 1 breakpoint
+fm0 <- lm(Nile ~ 1)
+fm1 <- lm(Nile ~ breakfactor(bp.nile,  breaks = 1))
+plot(Nile)
+lines(ts(fitted(fm0),  start = 1871),  col = 3)
+lines(ts(fitted(fm1),  start = 1871),  col = 4)
+lines(bp.nile)
+
+## confidence interval
+ci.nile <- confint(bp.nile)
+#ci.nile  # output numerical results
+lines(ci.nile)
+```
+
+## Test significance of breakpoints
+
+```{r fig=FALSE, echo=TRUE}
+## ===== Likelihood ratio test =====
+anova(fm0, fm1)
+## ===== AIC based comparison  =====
+AIC(fm0, fm1)
+```
+
+We can see that the model with the structural break in the year 1898 is 
+significantly better than the null model.
+
+
+## Further diagnostics
+
+Of course, further diagsnostics and analyses can follow for the fitted models, e.g.
+a diagnostic comparison of autocorrelation and spectral density
+or a Q-Q-plot to see whether the residuals are normally distributed:
+
+```{r fig=FALSE,eval=FALSE, echo=TRUE}
+acf(residuals(fm0))
+acf(residuals(fm1))
+spectrum(residuals(fm0), log = "no",  spans = c(5, 5))
+spectrum(residuals(fm1), log = "no",  spans = c(5, 5))
+qqnorm(residuals(fm0))
+qqnorm(residuals(fm1))
+```
+
+$\Rightarrow$ test this yourself!
+
+
+## References
