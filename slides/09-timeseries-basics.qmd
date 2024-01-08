@@ -373,16 +373,73 @@ acf(TSP, main = "acf(TSP)")
 pacf(TSP, main = "acf(TSP)")
 ```
 
-## Cross-correlation (CCF)
+# Cross-correlation (CCF)
 
 <br>
 
-* two or more variables
+* time-shift between two or more variables
 * lag can be positive or negative
-* Examples:
-    - CCF between solar radiation and water temperature
-    - CCF of discharge at two river kilometers $\rightarrow$ estimate flow velocity of a flood wave
 
+
+**Examples**
+
+- CCF between air and water temperature in rivers and lakes
+- CCF of discharge at two river kilometers $\rightarrow$ estimate flow velocity of a flood wave
+
+## Delay between air and water temperature in a lake
+
+
+```{r air-water-timeseries, fig.align='center'}
+water <- read_csv("../data/saidenbach-water-temperature.csv", show_col_types = FALSE) |>
+  mutate(Date = as.Date(Date), Year = year(Date), doy=yday(Date)) |>
+  filter(Depth == 5, 2009 < Year, Year < 2016)
+
+days <- seq(as.Date("2010-01-01"), as.Date("2015-12-31"), by = 1)
+
+water <- approx(water$Date, water$WT, days, ties=mean, rule=2) |>
+  as.data.frame() |>
+  rename(Date=x, WT=y) |>
+  mutate(Year = year(Date), doy=yday(Date))
+
+air <- read.csv("../data/airtemp_dresden_daily.csv") |>
+  mutate(Date = as.Date(ZEIT), Year = year(Date)) |>
+  filter(2009 < Year, Year < 2016) |>
+  select(Date, TX, TM, TN)
+
+water_air <- left_join(water, air, by ="Date")
+
+par(mar=c(4,4,1,1))
+plot(TM ~ Date, data=water_air, col="red", las=1, type = "l", ylab=c("temperature (°C)"))
+lines(WT ~ Date, data=water_air, col="blue", lwd=3)
+legend("bottomright", lty=1, lwd=c(1, 3), col=c("red", "blue"), legend=c("air", "water"))
+```
+
+* air temperature, station Dresden-Klotsche, data from German Weather Service 
+* water temperature in Saidenbach Reservoir, 5m below the surface<br>
+(Data from Ecological Station Neunzehnhain), @horn_drei_2006, @paul_saidenbach_2020
+
+## Cross correlation between air and water temperature
+
+<br>
+
+```{r air-water-ccf, fig.align='center'}
+cc <- ccf(water_air$WT, water_air$TM, lag.max=180, main="CCF between water and air temperature",
+          axes=FALSE, xlab="Lag (days)", ylab="CCF")
+axis(2, las=1)
+axis(1, seq(-180, 180, 30))
+box()
+acfmax <- cc$lag[cc$acf == max(cc$acf)]
+
+abline(v=acfmax, col="blue", lwd=3)
+abline(v=0, col="red", lty="dashed", lwd=3)
+
+arrows(x0=0, y0=-0.2, x1=acfmax, angle=15, lwd=3)
+text(acfmax, -0.2, paste(acfmax, "days"), pos=4)
+legend("bottomright", lty=c("solid", "dashed"), lwd=c(1, 3), 
+       col=c("red", "blue"), legend=c("air", "water"))
+```
+
+# Interpretation and removal of autocorrelation
 
 ## Typical patterns of ACF
 
@@ -640,11 +697,12 @@ summary(m)
 
 <br>
 
-* @kleiber_applied_2008
+* @kleiber_applied_2008: a very practical book about econometrics with well understandable time series chapters
 
-* @shumway_time_2000
 
-* @shumway_time_2019
+* @shumway_time_2019: a book with a time series good introduction and good balance between mathematics and R programming
+
+* @shumway_time_2000: contains additional methods and more mathematical background
 
 ... and more in the labs and the homework project.
 

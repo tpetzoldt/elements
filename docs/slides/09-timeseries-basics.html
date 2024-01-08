@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-01-06">
+  <meta name="dcterms.date" content="2024-01-08">
   <title>Elements of Data Analysis and Statistics - 09-Time Series Basics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -427,7 +427,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-01-06</p>
+  <p class="date">2024-01-08</p>
 </section>
 <section>
 <section id="introductory-examples" class="title-slide slide level1 center">
@@ -816,19 +816,38 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <li><p>PACF considers only direct effects it is called <strong>partial autocorrelation</strong>, PACF.</p></li>
 </ul>
 
-<img data-src="09-timeseries-basics_files/figure-revealjs/acf-example-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="cross-correlation-ccf" class="slide level2">
-<h2>Cross-correlation (CCF)</h2>
+<img data-src="09-timeseries-basics_files/figure-revealjs/acf-example-1.png" width="960" class="r-stretch quarto-figure-center"></section></section>
+<section>
+<section id="cross-correlation-ccf" class="title-slide slide level1 center">
+<h1>Cross-correlation (CCF)</h1>
 <p><br></p>
 <ul>
 <li>two or more variables</li>
 <li>lag can be positive or negative</li>
-<li>Examples:
-<ul>
-<li>CCF between solar radiation and water temperature</li>
-<li>CCF of discharge at two river kilometers <span class="math inline">\(\rightarrow\)</span> estimate flow velocity of a flood wave</li>
-</ul></li>
 </ul>
+<p><strong>Examples</strong></p>
+<ul>
+<li>CCF between air and water temperature</li>
+<li>CCF of discharge at two river kilometers <span class="math inline">\(\rightarrow\)</span> estimate flow velocity of a flood wave</li>
+</ul>
+</section>
+<section id="delay-between-air-and-water-temperature-in-a-lake" class="slide level2">
+<h2>Delay between air and water temperature in a lake</h2>
+
+<img data-src="09-timeseries-basics_files/figure-revealjs/air-water-timeseries-1.png" width="960" class="r-stretch quarto-figure-center"><ul>
+<li>air temperature, station Dresden-Klotsche, data from German Weather Service</li>
+<li>water temperature in Saidenbach Reservoir, 5m below the surface<br> (Data from Ecological Station Neunzehnhain), <span class="citation" data-cites="horn_drei_2006">Horn et al. (<a href="#/references" role="doc-biblioref" onclick="">2006</a>)</span>, <span class="citation" data-cites="paul_saidenbach_2020">Paul et al. (<a href="#/references" role="doc-biblioref" onclick="">2020</a>)</span></li>
+</ul>
+</section>
+<section id="cross-correlation-between-air-and-water-temperature" class="slide level2">
+<h2>Cross correlation between air and water temperature</h2>
+<p><br></p>
+
+<img data-src="09-timeseries-basics_files/figure-revealjs/air-water-ccf-1.png" width="960" class="r-stretch quarto-figure-center"></section></section>
+<section>
+<section id="interpretation-and-removal-of-autocorrelation" class="title-slide slide level1 center">
+<h1>Interpretation and removal of autocorrelation</h1>
+
 </section>
 <section id="typical-patterns-of-acf" class="slide level2">
 <h2>Typical patterns of ACF</h2>
@@ -1097,9 +1116,9 @@ F-statistic: 24.73 on 1 and 43 DF,  p-value: 1.106e-05</code></pre>
 <h1>Further reading</h1>
 <p><br></p>
 <ul>
-<li><p><span class="citation" data-cites="kleiber_applied_2008">Kleiber &amp; Zeileis (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span></p></li>
-<li><p><span class="citation" data-cites="shumway_time_2000">R. H. Shumway et al. (<a href="#/references" role="doc-biblioref" onclick="">2000</a>)</span></p></li>
-<li><p><span class="citation" data-cites="shumway_time_2019">R. Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span></p></li>
+<li><p><span class="citation" data-cites="kleiber_applied_2008">Kleiber &amp; Zeileis (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span>: a very practical book about econometrics with very practical time series chapters</p></li>
+<li><p><span class="citation" data-cites="shumway_time_2019">R. Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>: a book with a time series good introduction and good balance between mathematics and R programming</p></li>
+<li><p><span class="citation" data-cites="shumway_time_2000">R. H. Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2000</a>)</span>: contains additional methods and more mathematical background</p></li>
 </ul>
 <p>… and more in the labs and the homework project.</p>
 </section>
@@ -1251,6 +1270,9 @@ alternative hypothesis: stationary</code></pre>
 <p><span style="color: white; font-size: small; font-weight:400; float: right; margin-top: 40px; margin-right: 4%;"> <a href="../">🏠 Home</a> </span></p>
 </div>
 <div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
+<div id="ref-horn_drei_2006" class="csl-entry" role="doc-biblioentry">
+Horn, H., Horn, W., Paul, L., Uhlmann, D., &amp; Röske, I. (2006). <em><span class="nocase">Drei Jahrzehnte kontinuierliche Untersuchungen an der Talsperre Saidenbach: Fakten, Zusammenhänge, Trends. Abschlussbericht zum Projekt "Langzeitstabilität der biologischen Struktur von Talsperren-Ökosystemen" der Arbeitsgruppe "Limnologie von Talsperren" der Sächsischen Akademie der Wissenschaften zu Leipzig</span></em> (pp. 1–178). Verlag Dr. Uwe Miersch, Ossling.
+</div>
 <div id="ref-keeling_exchanges_2001" class="csl-entry" role="doc-biblioentry">
 Keeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., &amp; Meijer, H. A. (2001). <em>Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects</em> (p. 88). Scripps Institution of Oceanography, San Diego.
 </div>
@@ -1258,10 +1280,13 @@ Keeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann
 Kleiber, C., &amp; Zeileis, A. (2008). <em>Applied econometrics with <span>R</span></em>. Springer.
 </div>
 <div id="ref-kronenberg_rekis_2021" class="csl-entry" role="doc-biblioentry">
-Kronenberg, F., R. (2021). <em>Das regionale klimainformationssystem ReKIS – #eine gemeinsame plattform für sachsen, sachsen-anhalt und thüringen</em>. <a href="https://rekis.hydro.tu-dresden.de/">https://rekis.hydro.tu-dresden.de/</a>
+Kronenberg, F., R. (2021). <em>Das regionale klimainformationssystem ReKIS – eine gemeinsame plattform für sachsen, sachsen-anhalt und thüringen</em>. <a href="https://rekis.hydro.tu-dresden.de/">https://rekis.hydro.tu-dresden.de/</a>
+</div>
+<div id="ref-paul_saidenbach_2020" class="csl-entry" role="doc-biblioentry">
+Paul, L., Horn, H., &amp; W., H. (2020). <em>Saidenbach reservoir in situ and <span>S</span>aidenbach reservoir inlets. Data packages 20, 23 and 177 from the <span>IGB</span> freshwater research and environmental database (FRED). Available according to the ODB CC-BY license.</em> <a href="https://fred.igb-berlin.de">https://fred.igb-berlin.de</a>
 </div>
 <div id="ref-shumway_time_2000" class="csl-entry" role="doc-biblioentry">
-Shumway, R. H., Stoffer, D. S., &amp; Stoffer, D. S. (2000). <em>Time series analysis and its applications</em> (Vol. 3). Springer.
+Shumway, R. H., &amp; Stoffer, D. S. (2000). <em>Time series analysis and its applications</em> (Vol. 3). Springer.
 </div>
 <div id="ref-shumway_time_2019" class="csl-entry" role="doc-biblioentry">
 Shumway, R., &amp; Stoffer, D. (2019). <em>Time series: A data analysis approach using r</em>. CRC Press.

@@ -3385,7 +3385,7 @@
     "href": "slides/09-timeseries-basics.html#references",
     "title": "09-Time Series Basics",
     "section": "References",
-    "text": "References\n\n\n\n 🏠 Home \n\n\n\nKeeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., & Meijer, H. A. (2001). Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects (p. 88). Scripps Institution of Oceanography, San Diego.\n\n\nKleiber, C., & Zeileis, A. (2008). Applied econometrics with R. Springer.\n\n\nKronenberg, F., R. (2021). Das regionale klimainformationssystem ReKIS – #eine gemeinsame plattform für sachsen, sachsen-anhalt und thüringen. https://rekis.hydro.tu-dresden.de/\n\n\nShumway, R. H., Stoffer, D. S., & Stoffer, D. S. (2000). Time series analysis and its applications (Vol. 3). Springer.\n\n\nShumway, R., & Stoffer, D. (2019). Time series: A data analysis approach using r. CRC Press.\n\n\nTans, P., & Keeling, C. D. (2023). Trends in atmospheric carbon dioxide, Mauna Loa CO2 monthly mean data. NOAA Earth System Research Laboratories, Global Monitoring Laboratory. https://gml.noaa.gov/ccgg/trends/data.html"
+    "text": "References\n\n\n\n 🏠 Home \n\n\n\nHorn, H., Horn, W., Paul, L., Uhlmann, D., & Röske, I. (2006). Drei Jahrzehnte kontinuierliche Untersuchungen an der Talsperre Saidenbach: Fakten, Zusammenhänge, Trends. Abschlussbericht zum Projekt \"Langzeitstabilität der biologischen Struktur von Talsperren-Ökosystemen\" der Arbeitsgruppe \"Limnologie von Talsperren\" der Sächsischen Akademie der Wissenschaften zu Leipzig (pp. 1–178). Verlag Dr. Uwe Miersch, Ossling.\n\n\nKeeling, C. D., Piper, S. C., Bacastow, R. B., Wahlen, M., Whorf, T. P., Heimann, M., & Meijer, H. A. (2001). Exchanges of atmospheric CO2 and 13CO2 with the terrestrial biosphere and oceans from 1978 to 2000. I. Global aspects (p. 88). Scripps Institution of Oceanography, San Diego.\n\n\nKleiber, C., & Zeileis, A. (2008). Applied econometrics with R. Springer.\n\n\nKronenberg, F., R. (2021). Das regionale klimainformationssystem ReKIS – eine gemeinsame plattform für sachsen, sachsen-anhalt und thüringen. https://rekis.hydro.tu-dresden.de/\n\n\nPaul, L., Horn, H., & W., H. (2020). Saidenbach reservoir in situ and Saidenbach reservoir inlets. Data packages 20, 23 and 177 from the IGB freshwater research and environmental database (FRED). Available according to the ODB CC-BY license. https://fred.igb-berlin.de\n\n\nShumway, R. H., & Stoffer, D. S. (2000). Time series analysis and its applications (Vol. 3). Springer.\n\n\nShumway, R., & Stoffer, D. (2019). Time series: A data analysis approach using r. CRC Press.\n\n\nTans, P., & Keeling, C. D. (2023). Trends in atmospheric carbon dioxide, Mauna Loa CO2 monthly mean data. NOAA Earth System Research Laboratories, Global Monitoring Laboratory. https://gml.noaa.gov/ccgg/trends/data.html"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#example-1-co2-in-the-atmosphere",
@@ -3490,7 +3490,7 @@
     "href": "slides/09-timeseries-basics.html#cross-correlation-ccf",
     "title": "09-Time Series Basics",
     "section": "Cross-correlation (CCF)",
-    "text": "Cross-correlation (CCF)\n\n\ntwo or more variables\nlag can be positive or negative\nExamples:\n\nCCF between solar radiation and water temperature\nCCF of discharge at two river kilometers \\(\\rightarrow\\) estimate flow velocity of a flood wave"
+    "text": "Cross-correlation (CCF)\n\n\ntwo or more variables\nlag can be positive or negative\nExamples:\n\nCCF between air and water temperature\nCCF of discharge at two river kilometers \\(\\rightarrow\\) estimate flow velocity of a flood wave"
   },
   {
     "objectID": "slides/09-timeseries-basics.html#typical-patterns-of-acf",
@@ -3596,5 +3596,40 @@
     "title": "09-Time Series Basics",
     "section": "Count significant tests",
     "text": "Count significant tests\n\ncount.signif <- function(N, time, FUN, ...) {\n  a <- 0\n  for (i in 1:N) {\n    x <- FUN(time, ...)\n    m <- summary(lm(x  ~ time(x)))\n    f <- m$fstatistic\n    p.value <- pf(f[1], f[2], f[3], lower=FALSE)\n    # cat(\"p.value\", p.value, \"\\n\")\n    if (p.value < 0.05) a <- a + 1\n  }\n  a\n}\n\nRun the experiment\n\ncount number of significant linear increase (using the F-value)\nif trend parameters (beta1 an c) are set to zero, count.signif counts false positives\nrun loop 100 (or better: 1000) times for both types of time series\n\n\nNruns <- 100 \ntime  <- 1:100\ncount.signif(N=Nruns, time=time, FUN=genTSP, beta0=0, beta1=0) / Nruns\n\n[1] 0.05\n\ncount.signif(N=Nruns, time=time, FUN=genDSP, c=0) / Nruns\n\n[1] 0.91"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#example",
+    "href": "slides/09-timeseries-basics.html#example",
+    "title": "09-Time Series Basics",
+    "section": "Example",
+    "text": "Example\n\n\n\n\n\n\n\n\n\nAir temperature, station Dresden-Klotsche, data from German Weather Service\nWater temperature, Saidenbach Reservoir (Data from Ecological Station Neunzehnhain), Horn et al. (2006), Paul et al. (2020)"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#example-delay-between-air-and-water-temperature-in-a-lake",
+    "href": "slides/09-timeseries-basics.html#example-delay-between-air-and-water-temperature-in-a-lake",
+    "title": "09-Time Series Basics",
+    "section": "Example: delay between air and water temperature in a lake",
+    "text": "Example: delay between air and water temperature in a lake\n\nAir temperature, station Dresden-Klotsche, data from German Weather Service\nWater temperature, Saidenbach Reservoir (Data from Ecological Station Neunzehnhain), Horn et al. (2006), Paul et al. (2020)"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#crosscorrelation",
+    "href": "slides/09-timeseries-basics.html#crosscorrelation",
+    "title": "09-Time Series Basics",
+    "section": "Crosscorrelation",
+    "text": "Crosscorrelation"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#delay-between-air-and-water-temperature-in-a-lake",
+    "href": "slides/09-timeseries-basics.html#delay-between-air-and-water-temperature-in-a-lake",
+    "title": "09-Time Series Basics",
+    "section": "Delay between air and water temperature in a lake",
+    "text": "Delay between air and water temperature in a lake\n\n\nair temperature, station Dresden-Klotsche, data from German Weather Service\nwater temperature in Saidenbach Reservoir, 5m below the surface (Data from Ecological Station Neunzehnhain), Horn et al. (2006), Paul et al. (2020)"
+  },
+  {
+    "objectID": "slides/09-timeseries-basics.html#cross-correlation-between-air-and-water-temperature",
+    "href": "slides/09-timeseries-basics.html#cross-correlation-between-air-and-water-temperature",
+    "title": "09-Time Series Basics",
+    "section": "Cross correlation between air and water temperature",
+    "text": "Cross correlation between air and water temperature"
   }
 ]
