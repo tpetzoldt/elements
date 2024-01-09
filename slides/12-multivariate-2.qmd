@@ -1,5 +1,5 @@
 ---
-title: "11-Multivariate methods II"
+title: "12-Multivariate methods II"
 author: "Thomas Petzoldt"
 date:   "`r Sys.Date()`"
 ---
