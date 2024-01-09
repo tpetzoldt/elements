@@ -24,8 +24,9 @@ website:
           - slides/07-anova.qmd
           - slides/08-nonlinear-regression.qmd
           - slides/09-timeseries-basics.qmd
-          - slides/10-multivariate-1.qmd
-          - slides/11-multivariate-2.qmd
+          - slides/10-timeseries-outlook.qmd
+          - slides/11-multivariate-1.qmd
+          - slides/12-multivariate-2.qmd
       - section: Tutorials
         contents:
           - tutorials/s1-introductory-r-session.Rmd
