@@ -473,7 +473,7 @@ Thomas Petzoldt
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/filter1-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/filter1-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="trend-corrected-series" class="slide level2">
 <h2>Trend corrected series</h2>
 <p>Now, the trend corrected series can be obtained by subtracting the trend, e.g.:</p>
@@ -485,7 +485,7 @@ Thomas Petzoldt
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/filter2-1.png" width="960" class="r-stretch"></section>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/filter2-1.png" width="960" class="r-stretch"></section>
 <section id="trend-corrected-series-1" class="slide level2">
 <h2>Trend corrected series</h2>
 <p>For a seasonal time series with monthly values <span class="citation" data-cites="kleiber_applied_2008">Kleiber &amp; Zeileis (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span> recommend a filter with 13 coefficients.</p>
@@ -502,7 +502,7 @@ Thomas Petzoldt
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(manaus),manaus),<span class="at">lwd=</span><span class="dv">3</span>, <span class="at">col=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/filter3-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/filter3-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="automatic-time-series-decomposition" class="slide level2">
 <h2>Automatic time series decomposition</h2>
 <p>Function <code>decompose</code> implements the classical approach with simple symmetric moving average filters.</p>
@@ -511,7 +511,7 @@ Thomas Petzoldt
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus_dec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/decompose-1.png" width="960" class="r-stretch quarto-figure-center"><p>In this data set the seasonal component possesses an additive character, but a multiplicative component would be possible too (<code>type="multiplicative"</code>).</p>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/decompose-1.png" width="960" class="r-stretch quarto-figure-center"><p>In this data set the seasonal component possesses an additive character, but a multiplicative component would be possible too (<code>type="multiplicative"</code>).</p>
 </section>
 <section id="automatic-time-series-decomposition-ii" class="slide level2">
 <h2>Automatic time series decomposition II</h2>
@@ -521,7 +521,7 @@ Thomas Petzoldt
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus_stl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/stl-1.png" width="960" class="r-stretch quarto-figure-center"></section></section>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/stl-1.png" width="960" class="r-stretch quarto-figure-center"></section></section>
 <section>
 <section id="outlook-arma-and-arima-models" class="title-slide slide level1 center">
 <h1>Outlook: ARMA and ARIMA models</h1>
@@ -558,7 +558,7 @@ Thomas Petzoldt
 </details>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/co2-sarima0-1.png" width="960" class="r-stretch"></section>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/co2-sarima0-1.png" width="960" class="r-stretch"></section>
 <section id="fit-sarima-model-to-co2-data" class="slide level2">
 <h2>Fit SARIMA model to CO2 data</h2>
 <div class="cell">
@@ -574,7 +574,7 @@ Thomas Petzoldt
 </details>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/co2-sarima1-1.png" width="960" class="r-stretch"><p>Mathematical details can be found in <span class="citation" data-cites="shumway_time_2019">Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>.</p>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/co2-sarima1-1.png" width="960" class="r-stretch"><p>Mathematical details can be found in <span class="citation" data-cites="shumway_time_2019">Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>.</p>
 </section>
 <section id="sarima-forecast-of-co2" class="slide level2">
 <h2>SARIMA-forecast of CO2</h2>
@@ -587,7 +587,7 @@ Thomas Petzoldt
 </details>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/co2-sarima2-1.png" width="960" class="r-stretch"><p>Mathematical details can be found in <span class="citation" data-cites="shumway_time_2019">Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>.</p>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/co2-sarima2-1.png" width="960" class="r-stretch"><p>Mathematical details can be found in <span class="citation" data-cites="shumway_time_2019">Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>.</p>
 </section></section>
 <section>
 <section id="identification-of-structural-breaks" class="title-slide slide level1 center">
@@ -597,7 +597,7 @@ Thomas Petzoldt
 <section id="identification-of-structural-breaks-1" class="slide level2">
 <h2>Identification of structural breaks</h2>
 
-<img data-src="10-timeseries-2_files/figure-revealjs/nile-intro-1.png" width="960" class="r-stretch quarto-figure-center"><p><strong>Structural break</strong></p>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/nile-intro-1.png" width="960" class="r-stretch quarto-figure-center"><p><strong>Structural break</strong></p>
 <p>If one or more statistical parameters are not constant over the whole length of a time series it is called a structural break. For instance a location parameter (e.g.&nbsp;the mean), a trend or another distribution parameter (such as variance or covariance) may change.</p>
 <p><br></p>
 <p><strong>Testing for structural breaks</strong></p>
@@ -612,7 +612,7 @@ Thomas Petzoldt
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/nile-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/nile-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="test-for-structural-break-at-known-time" class="slide level2">
 <h2>Test for structural break at known time</h2>
 <ul>
@@ -633,7 +633,7 @@ data:  ocus
 S0 = 2.9518, p-value = 5.409e-08</code></pre>
 </div>
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/ocus-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/ocus-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="breakpoint-analysis" class="slide level2">
 <h2>Breakpoint analysis</h2>
 <p><br></p>
@@ -746,7 +746,7 @@ BIC    1318    1270    1276    1285    1292    1311</code></pre>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/bp-nile-1.png" width="960" class="r-stretch quarto-figure-center"><ul>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/bp-nile-1.png" width="960" class="r-stretch quarto-figure-center"><ul>
 <li>RSS (residual sum of squares) shows goodness of fit. The smaller the better.</li>
 <li>Penalty = 2 <span class="math inline">\(\cdot\)</span> number of breakpoints (not shown).</li>
 <li>Minimum BIC indicates optimal model.</li>
@@ -769,7 +769,7 @@ BIC    1318    1270    1276    1285    1292    1311</code></pre>
 <span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ci.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/ci-nile-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/ci-nile-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="test-significance-of-breakpoints" class="slide level2">
 <h2>Test significance of breakpoints</h2>
 <p><br></p>
@@ -823,7 +823,7 @@ fm1  3 1257.663</code></pre>
 #spectrum(residuals(fm0), log = "no",  spans = c(5, 5))
 #spectrum(residuals(fm1), log = "no",  spans = c(5, 5))
 -->
-<img data-src="10-timeseries-2_files/figure-revealjs/nile-diagnostics-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/nile-diagnostics-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 <p><br></p>
