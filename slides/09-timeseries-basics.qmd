@@ -370,7 +370,7 @@ so results differ, especially for small samples.]{.gray}
 ```{r acf-example, fig.align='center'}
 par(mfrow=c(1,2), cex=1.4)
 acf(TSP, main = "acf(TSP)")
-pacf(TSP, main = "acf(TSP)")
+pacf(TSP, main = "pacf(TSP)")
 ```
 
 # Cross-correlation (CCF)
@@ -465,7 +465,7 @@ acf(periodic, lag = 100, main = "periodic")
 Example:
 
 ```{r, echo=TRUE, eval=FALSE}
-m <- lm(TSP ~ time(TSP), eval = FALSE)
+m <- lm(TSP ~ time(TSP))
 residuals(m)
 ```
 
