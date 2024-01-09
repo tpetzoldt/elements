@@ -4,6 +4,13 @@ title: "10-Time Series Outlook"
 date:   "`r Sys.Date()`"
 --- 
 
+```{r setup, echo=FALSE}
+library(Kendall)
+library(dplyr)
+library(readr)
+library(ggplot2)
+library(lubridate)
+```
 
 # Time series decomposition
 
@@ -99,21 +106,82 @@ manaus_stl <- stl(manaus, s.window=13)
 plot(manaus_stl)
 ```
 
-# Outlook: Frequency analysis and ARIMA modelling
+# Outlook: ARMA and ARIMA models
 
 <br>
 
-* very important techniques for analyzing time series and for forecasting,
- not handled here,
+* based on autoregressive (AR) and moving average (AR) terms
+* the "I" in ARIMA stands for differencing
+* seasonal ARIMA models (SARIMA) consider seasonal dependency,<br>
+  e.g. differencing with a lag of 12 months
+* very important techniques for analyzing time series and for forecasting
 * for the interested: self-study by reading @kleiber_applied_2008 or @shumway_time_2019.
 
+## Example: SARIMA model for CO2 in the atmosphere
+
+```{r co2-sarima0, echo=TRUE}
+#| code-fold: true
+#| code-summary: "Show the code"
+## read data directly from NOAA
+#co2 <- read_csv("https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv", 
+#                skip = 40, show_col_types = FALSE)
+
+## local version
+co2 <- read_csv("../data/co2_mm_mlo.csv", skip=40, show_col_types = FALSE)
+
+## year 1958 is incomplete, so let's start with 1959
+co2 <- filter(co2, year > 1958) 
+
+co2 |> 
+  mutate(date=as_date(paste(year, month, 15, sep="."))) |>
+  ggplot(aes(date, average)) + 
+  geom_line() + ylab(expression(CO[2]~"in the atmosphere (ppm)")) + 
+  ggtitle("Mauna Loa Observatory, Hawaii, Monthly Averages") +
+  geom_smooth()
+```
+
+
+## Fit SARIMA model to CO2 data
+```{r co2-sarima1, echo=TRUE, results='hide'}
+#| code-fold: true
+#| code-summary: "Show the code"
+library(astsa)
+
+## convert to a time series object
+co2ts <- ts(co2$average, start=1959, frequency = 12)
+
+## fit a SARIMA model and show the results
+m <- sarima(co2ts, p = 1, d = 1, q = 1, P = 0, D = 1, Q = 1, S = 12)
+```
+Mathematical details can be found in @shumway_time_2019.
+
+
+## SARIMA-forecast of CO2 
+
+```{r co2-sarima2, echo=TRUE}
+#| code-fold: true
+#| code-summary: "Show the code"
+m <- sarima.for(co2ts, n.ahead = 12 * 27, 
+           p = 1, d = 1, q = 1, P = 0, D = 1, Q = 1, S = 12, 
+           plot.all = TRUE)
+```
+Mathematical details can be found in @shumway_time_2019.
 
 # Identification of structural breaks
 
 
 ## Identification of structural breaks
 
-<br>
+```{r nile-intro, fig.align='center', fig.width=10, fig.height=3}
+par(mar=c(4,5,2,1))
+library(strucchange)
+data("Nile")
+bp.nile <- breakpoints(Nile ~ 1)
+fm1 <- lm(Nile ~ breakfactor(bp.nile,  breaks = 1))
+plot(Nile, las=1, ylab=expression(10^~m^3), main="Discharge of the river Nile")
+lines(ts(fitted(fm1),  start = 1871),  col = 4, lwd=2)
+```
+
 
 **Structural break**
 
@@ -131,56 +199,6 @@ for identification of structural changes or parameter instability of time
 series. Generally, two approaches are available: fluctuation tests and
 F-based tests. Fluctuation tests try to detect the structural instability with
 cumulative or moving sums (CUSUMs and MOSUMs).
-
-
-## Model Selection Techniques
-
-* Model Selection is a modern alternative to $p$-value based testing.
-* Based on the principle of parsimony:
-* Models with many parameters fit better, but may contain unnecessary factors.
-* We need is an **optimal compromize** between model fit and complexity.
-* Keep it as simple as possible, but not simpler.
-
-    * Compare different models for the same phenomenon:
-    * [Full model]{.blue}: includes all potential factors.
-    * Several [reduced models]{.blue}, derived from the full model.
-    * [Null model]{.blue} without explanatory factors.
-
-* Select [minimal adequate model]{.blue}  ("optimal", "most parsimoniuos").
-* $\Rightarrow$ Compromize between simplicity and goodness of fit.
-
-More, see @JohnsonOmland2004
-
-
-
-## Model comparison with AIC and BIC
-
-Models with many parameters fit better. We want an
-**optimal compromize** between fit and model complexity
-(number of parameters, $k$).
-
-
-* Goodness of fit can be measured with likelihood $L$<br>
-  [(how likely are the data given a specific model).]{.gray}
-* Log likelihood: makes the problem additive.
-* Penalty: penalises number of parameters (e.g. $2 k$)
-* AIC (Akaike Information Criterion):
-
-$$
- AIC = - 2 \ln(L) + 2 k
-$$
-
-* Alternatively: BIC (Bayesian Information Criterion),
- considers sample size ($n$):
- 
-$$
- BIC = - 2 \ln(L) + k \cdot \ln(n)
-$$
-
-
-The model with smallest AIC (resp. BIC) is considered as "optimal" model.
-
-
 
 ## The Nile data set
 
@@ -214,26 +232,95 @@ sctest(ocus)
 
 <br>
 
-* Purpose: identify if there are structural breaks with respect to a
-  specified linear model, and if yes, their number and location.
-* uses BIC-based model selection technique,
-* very general approach, allows different linear models, covariates, ...
-* we deal only with the most simplest case here.
-* more, see @Bai2003, @Zeileis2002, @Zeileis2003.
+**Purpose**
 
-    
+* identify if there are structural breaks with respect to a
+  specified linear model
+* identify their number and location
+* very general approach, allows different linear models, covariates, ...
+* we deal only with the most simplest case here
+
+**Method**
+
+* uses a BIC-based model selection technique
+* Which model is the best?
+
+**See also**
+
+* @Bai2003, @Zeileis2002, @Zeileis2003.
+
+
+
+## Remember: model selection techniques
+
+<br>
+
+* Model Selection is a modern alternative to $p$-value based testing.
+* Based on the principle of parsimony:
+    * Models with many parameters fit better, but may contain unnecessary factors.
+    * We need is an **optimal compromize** between model fit and complexity.
+    * Keep it as simple as possible, but not simpler.
+
+* Compare different models for the same phenomenon:
+    * [Full model]{.blue}: includes all potential factors.
+    * Several [reduced models]{.blue}, derived from the full model.
+    * [Null model]{.blue} without explanatory factors.
+
+* Select [minimal adequate model]{.blue}  (= "optimal", "most parsimoniuos").
+* $\Rightarrow$ Compromize between simplicity and goodness of fit.
+
+More, see @JohnsonOmland2004
+
+
+
+## Model comparison with AIC and BIC
+
+<br>
+
+Models with many parameters fit better. We want an
+**optimal compromize** between fit and model complexity
+(number of parameters, $k$).
+
+
+* Goodness of fit can be measured with likelihood $L$<br>
+  [(how likely are the data given a specific model).]{.gray}
+* Log likelihood: makes the problem additive.
+* Penalty: penalises number of parameters (e.g. $2 k$)
+* AIC (Akaike Information Criterion):
+
+$$
+ AIC = - 2 \ln(L) + 2 k
+$$
+
+* Alternatively: BIC (Bayesian Information Criterion),
+ considers sample size ($n$):
+ 
+$$
+ BIC = - 2 \ln(L) + k \cdot \ln(n)
+$$
+
+
+The model with smallest AIC (resp. BIC) is considered as "optimal" model.
+
+
 
 ## Breakpoint analysis
+
+<br>
 
 ```{r fig=FALSE, echo=TRUE}
 bp.nile <- breakpoints(Nile ~ 1)
 summary(bp.nile)
 ```
 
+**Notes**
+
+* computationally intensive
+* consider to adapt model and parameter `h`, see help page
 
 ## Likelihood profile: $\rightarrow$ optimal number of breaks?
 
-```{r bp-nile, fig=TRUE, echo=TRUE}
+```{r bp-nile, fig=TRUE, echo=TRUE, fig.align='center'}
 bp.nile <- breakpoints(Nile ~ 1)
 plot(bp.nile)
 ```
@@ -246,7 +333,7 @@ plot(bp.nile)
 
 ## Plot breakpoints and confidence interval
 
-```{r ci-nile, fig=TRUE, echo=TRUE}
+```{r ci-nile, fig=TRUE, echo=TRUE, fig.align='center'}
 ## fit null hypothesis model and model with 1 breakpoint
 fm0 <- lm(Nile ~ 1)
 fm1 <- lm(Nile ~ breakfactor(bp.nile,  breaks = 1))
@@ -263,33 +350,52 @@ lines(ci.nile)
 
 ## Test significance of breakpoints
 
+<br>
+
+**Likelihood ratio test**
+
 ```{r fig=FALSE, echo=TRUE}
-## ===== Likelihood ratio test =====
+
 anova(fm0, fm1)
-## ===== AIC based comparison  =====
+```
+
+**BIC based comparison**
+
+```{r fig=FALSE, echo=TRUE}
+BIC(fm0, fm1)
+```
+
+**AIC based comparison**
+
+```{r fig=FALSE, echo=TRUE}
 AIC(fm0, fm1)
 ```
 
-We can see that the model with the structural break in the year 1898 is 
+
+$\rightarrow$ model with structural break in 1898 is 
 significantly better than the null model.
 
 
-## Further diagnostics
+## Diagnostics
 
-Of course, further diagsnostics and analyses can follow for the fitted models, e.g.
-a diagnostic comparison of autocorrelation and spectral density
-or a Q-Q-plot to see whether the residuals are normally distributed:
+<br>
 
-```{r fig=FALSE,eval=FALSE, echo=TRUE}
-acf(residuals(fm0))
-acf(residuals(fm1))
-spectrum(residuals(fm0), log = "no",  spans = c(5, 5))
-spectrum(residuals(fm1), log = "no",  spans = c(5, 5))
+
+```{r nile-diagnostics, echo=TRUE, fig.align='center'}
+par(mfrow = c(2, 2))
+acf(residuals(fm0))     # model without breaks
+acf(residuals(fm1))     # model with 1 breakpoint
 qqnorm(residuals(fm0))
 qqnorm(residuals(fm1))
 ```
 
-$\Rightarrow$ test this yourself!
+<!--
+#spectrum(residuals(fm0), log = "no",  spans = c(5, 5))
+#spectrum(residuals(fm1), log = "no",  spans = c(5, 5))
+-->
 
 
 ## References
+
+<br>
+

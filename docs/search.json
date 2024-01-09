@@ -3700,7 +3700,7 @@
     "href": "slides/10-timeseries-2.html#model-comparison-with-aic-and-bic",
     "title": "10-Time Series Outlook",
     "section": "Model comparison with AIC and BIC",
-    "text": "Model comparison with AIC and BIC\nModels with many parameters fit better. We want an optimal compromize between fit and model complexity (number of parameters, \\(k\\)).\n\nGoodness of fit can be measured with likelihood \\(L\\) (how likely are the data given a specific model).\nLog likelihood: makes the problem additive.\nPenalty: penalises number of parameters (e.g. \\(2 k\\))\nAIC (Akaike Information Criterion):\n\n\\[\nAIC = - 2 \\ln(L) + 2 k\n\\]\n\nAlternatively: BIC (Bayesian Information Criterion), considers sample size (\\(n\\)):\n\n\\[\nBIC = - 2 \\ln(L) + k \\cdot \\ln(n)\n\\]\nThe model with smallest AIC (resp. BIC) is considered as “optimal” model."
+    "text": "Model comparison with AIC and BIC\n\nModels with many parameters fit better. We want an optimal compromize between fit and model complexity (number of parameters, \\(k\\)).\n\nGoodness of fit can be measured with likelihood \\(L\\) (how likely are the data given a specific model).\nLog likelihood: makes the problem additive.\nPenalty: penalises number of parameters (e.g. \\(2 k\\))\nAIC (Akaike Information Criterion):\n\n\\[\nAIC = - 2 \\ln(L) + 2 k\n\\]\n\nAlternatively: BIC (Bayesian Information Criterion), considers sample size (\\(n\\)):\n\n\\[\nBIC = - 2 \\ln(L) + k \\cdot \\ln(n)\n\\]\nThe model with smallest AIC (resp. BIC) is considered as “optimal” model."
   },
   {
     "objectID": "slides/10-timeseries-2.html#the-nile-data-set",
@@ -3721,14 +3721,14 @@
     "href": "slides/10-timeseries-2.html#breakpoint-analysis",
     "title": "10-Time Series Outlook",
     "section": "Breakpoint analysis",
-    "text": "Breakpoint analysis\n\n\nPurpose: identify if there are structural breaks with respect to a specified linear model, and if yes, their number and location.\nuses BIC-based model selection technique,\nvery general approach, allows different linear models, covariates, …\nwe deal only with the most simplest case here.\nmore, see Bai & Perron (2003), Zeileis et al. (2002), Zeileis et al. (2003)."
+    "text": "Breakpoint analysis\n\nPurpose\n\nidentify if there are structural breaks with respect to a specified linear model\nidentify their number and location\nvery general approach, allows different linear models, covariates, …\nwe deal only with the most simplest case here\n\nMethod\n\nuses a BIC-based model selection technique\nWhich model is the best?\n\nSee also\n\nBai & Perron (2003), Zeileis et al. (2002), Zeileis et al. (2003)."
   },
   {
     "objectID": "slides/10-timeseries-2.html#breakpoint-analysis-1",
     "href": "slides/10-timeseries-2.html#breakpoint-analysis-1",
     "title": "10-Time Series Outlook",
     "section": "Breakpoint analysis",
-    "text": "Breakpoint analysis\n\nbp.nile <- breakpoints(Nile ~ 1)\nsummary(bp.nile)\n\n\n     Optimal (m+1)-segment partition: \n\nCall:\nbreakpoints.formula(formula = Nile ~ 1)\n\nBreakpoints at observation number:\n                      \nm = 1      28         \nm = 2      28       83\nm = 3      28    68 83\nm = 4      28 45 68 83\nm = 5   15 30 45 68 83\n\nCorresponding to breakdates:\n                                \nm = 1        1898               \nm = 2        1898           1953\nm = 3        1898      1938 1953\nm = 4        1898 1915 1938 1953\nm = 5   1885 1900 1915 1938 1953\n\nFit:\n                                                   \nm   0       1       2       3       4       5      \nRSS 2835157 1597457 1552924 1538097 1507888 1659994\nBIC    1318    1270    1276    1285    1292    1311"
+    "text": "Breakpoint analysis\n\n\nbp.nile <- breakpoints(Nile ~ 1)\nsummary(bp.nile)\n\n\n     Optimal (m+1)-segment partition: \n\nCall:\nbreakpoints.formula(formula = Nile ~ 1)\n\nBreakpoints at observation number:\n                      \nm = 1      28         \nm = 2      28       83\nm = 3      28    68 83\nm = 4      28 45 68 83\nm = 5   15 30 45 68 83\n\nCorresponding to breakdates:\n                                \nm = 1        1898               \nm = 2        1898           1953\nm = 3        1898      1938 1953\nm = 4        1898 1915 1938 1953\nm = 5   1885 1900 1915 1938 1953\n\nFit:\n                                                   \nm   0       1       2       3       4       5      \nRSS 2835157 1597457 1552924 1538097 1507888 1659994\nBIC    1318    1270    1276    1285    1292    1311\n\n\nNotes\n\ncomputationally intensive\nconsider to adapt model and parameter h, see help page"
   },
   {
     "objectID": "slides/10-timeseries-2.html#likelihood-profile-what-is-the-optimal-number-of-breaks",
@@ -3749,21 +3749,21 @@
     "href": "slides/10-timeseries-2.html#test-significance-of-breakpoints",
     "title": "10-Time Series Outlook",
     "section": "Test significance of breakpoints",
-    "text": "Test significance of breakpoints\n\n## ===== Likelihood ratio test =====\nanova(fm0, fm1)\n\nAnalysis of Variance Table\n\nModel 1: Nile ~ 1\nModel 2: Nile ~ breakfactor(bp.nile, breaks = 1)\n  Res.Df     RSS Df Sum of Sq     F    Pr(>F)    \n1     99 2835157                                 \n2     98 1597457  1   1237700 75.93 7.439e-14 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n## ===== AIC based comparison  =====\nAIC(fm0, fm1)\n\n    df      AIC\nfm0  2 1313.031\nfm1  3 1257.663\n\n\nWe can see that the model with the structural break in the year 1898 is significantly better than the null model."
+    "text": "Test significance of breakpoints\n\nLikelihood ratio test\n\nanova(fm0, fm1)\n\nAnalysis of Variance Table\n\nModel 1: Nile ~ 1\nModel 2: Nile ~ breakfactor(bp.nile, breaks = 1)\n  Res.Df     RSS Df Sum of Sq     F    Pr(>F)    \n1     99 2835157                                 \n2     98 1597457  1   1237700 75.93 7.439e-14 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nBIC based comparison\n\nBIC(fm0, fm1)\n\n    df      BIC\nfm0  2 1318.242\nfm1  3 1265.479\n\n\nAIC based comparison\n\nAIC(fm0, fm1)\n\n    df      AIC\nfm0  2 1313.031\nfm1  3 1257.663\n\n\n\\(\\rightarrow\\) model with structural break in 1898 is significantly better than the null model."
   },
   {
     "objectID": "slides/10-timeseries-2.html#further-diagnostics",
     "href": "slides/10-timeseries-2.html#further-diagnostics",
     "title": "10-Time Series Outlook",
     "section": "Further diagnostics",
-    "text": "Further diagnostics\nOf course, further diagsnostics and analyses can follow for the fitted models, e.g. a diagnostic comparison of autocorrelation and spectral density or a Q-Q-plot to see whether the residuals are normally distributed:\n\nacf(residuals(fm0))\nacf(residuals(fm1))\nspectrum(residuals(fm0), log = \"no\",  spans = c(5, 5))\nspectrum(residuals(fm1), log = \"no\",  spans = c(5, 5))\nqqnorm(residuals(fm0))\nqqnorm(residuals(fm1))\n\n\\(\\Rightarrow\\) test this yourself!"
+    "text": "Further diagnostics\n\n\npar(mfrow = c(2, 2))\nacf(residuals(fm0))\nacf(residuals(fm1))\nqqnorm(residuals(fm0))\nqqnorm(residuals(fm1))"
   },
   {
     "objectID": "slides/10-timeseries-2.html#references",
     "href": "slides/10-timeseries-2.html#references",
     "title": "10-Time Series Outlook",
     "section": "References",
-    "text": "References\n\n\n 🏠 Home \n\n\n\nBai, J., & Perron, P. (2003). Computation and analysis of multiple structural change models. J. Appl. Econ., 18:, 1–22.\n\n\nCanty, A., & Ripley, B. D. (2022). Boot: Bootstrap r (s-plus) functions.\n\n\nCleveland, R. B., Cleveland, W. S., McRae, J. E., & Terpenning, I. (1990). STL: A seasonal-trend decomposition procedure based on loess. Journal of Official Statistics, 6, 3–73.\n\n\nJohnson, G., Jerald, & Omland, K. S. (2004). Model Selection in Ecology and Evolution. Trends in Ecology and Evolution, 19(2), 101–108. https://doi.org/10.1016/j.tree.2003.10.013\n\n\nKleiber, C., & Zeileis, A. (2008). Applied econometrics with R. Springer.\n\n\nShumway, R., & Stoffer, D. (2019). Time series: A data analysis approach using r. CRC Press.\n\n\nZeileis, A., Kleiber, C., Krämer, W., & Hornik, K. (2003). Testing and dating of structural changes in practice. Computational Statistics and Data Analysis, 44(1–2), 109–123.\n\n\nZeileis, A., Leisch, F., Hornik, K., & Kleiber, C. (2002). Strucchange: An r package for testing for structural change in linear regression models. Journal of Statistical Software, 7(2), 1–38. http://www.jstatsoft.org/v07/i02/"
+    "text": "References\n\n\n\n 🏠 Home \n\n\n\nBai, J., & Perron, P. (2003). Computation and analysis of multiple structural change models. J. Appl. Econ., 18:, 1–22.\n\n\nCanty, A., & Ripley, B. D. (2022). Boot: Bootstrap r (s-plus) functions.\n\n\nCleveland, R. B., Cleveland, W. S., McRae, J. E., & Terpenning, I. (1990). STL: A seasonal-trend decomposition procedure based on loess. Journal of Official Statistics, 6, 3–73.\n\n\nJohnson, G., Jerald, & Omland, K. S. (2004). Model Selection in Ecology and Evolution. Trends in Ecology and Evolution, 19(2), 101–108. https://doi.org/10.1016/j.tree.2003.10.013\n\n\nKleiber, C., & Zeileis, A. (2008). Applied econometrics with R. Springer.\n\n\nShumway, R., & Stoffer, D. (2019). Time series: A data analysis approach using r. CRC Press.\n\n\nZeileis, A., Kleiber, C., Krämer, W., & Hornik, K. (2003). Testing and dating of structural changes in practice. Computational Statistics and Data Analysis, 44(1–2), 109–123.\n\n\nZeileis, A., Leisch, F., Hornik, K., & Kleiber, C. (2002). Strucchange: An r package for testing for structural change in linear regression models. Journal of Statistical Software, 7(2), 1–38. http://www.jstatsoft.org/v07/i02/"
   },
   {
     "objectID": "slides/10-timeseries-2.html#identification-of-structural-breaks-1",
@@ -3778,5 +3778,61 @@
     "title": "10-Time Series Outlook",
     "section": "Likelihood profile: \\(\\rightarrow\\) optimal number of breaks?",
     "text": "Likelihood profile: \\(\\rightarrow\\) optimal number of breaks?\n\nbp.nile <- breakpoints(Nile ~ 1)\nplot(bp.nile)\n\n\n\nRSS (residual sum of squares) shows goodness of fit. The smaller the better.\nPenalty = 2 \\(\\cdot\\) number of breakpoints (not shown).\nMinimum BIC indicates optimal model."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#example-sarima-model-for-co2-concentration-in-the-atmosphere",
+    "href": "slides/10-timeseries-2.html#example-sarima-model-for-co2-concentration-in-the-atmosphere",
+    "title": "10-Time Series Outlook",
+    "section": "Example: SARIMA model for CO2 concentration in the atmosphere",
+    "text": "Example: SARIMA model for CO2 concentration in the atmosphere\n\n\nShow the code\n## read data directly from NOAA\n#co2 <- read_csv(\"https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv\", \n#                skip = 40, show_col_types = FALSE)\n\n## local version\nco2 <- read_csv(\"../data/co2_mm_mlo.csv\", skip=40, show_col_types = FALSE)\n\n## year 1958 is incomplete, so let's start with 1959\nco2 <- filter(co2, year > 1958) \n\nco2 |> \n  mutate(date=as_date(paste(year, month, 15, sep=\".\"))) |>\n  ggplot(aes(date, average)) + \n  geom_line() + ylab(expression(CO[2]~\"in the atmosphere (ppm)\")) + \n  ggtitle(\"Mauna Loa Observatory, Hawaii, Monthly Averages\") +\n  geom_smooth()"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#forecast-of-the-sarima-model",
+    "href": "slides/10-timeseries-2.html#forecast-of-the-sarima-model",
+    "title": "10-Time Series Outlook",
+    "section": "Forecast of the SARIMA model",
+    "text": "Forecast of the SARIMA model\n\n\nShow the code\nm <- sarima.for(co2ts, n.ahead = 12 * 27, \n           p = 1, d = 1, q = 1, P = 0, D = 1, Q = 1, S = 12, \n           plot.all = TRUE)"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#fit-sarima-model-to-the-data",
+    "href": "slides/10-timeseries-2.html#fit-sarima-model-to-the-data",
+    "title": "10-Time Series Outlook",
+    "section": "Fit SARIMA model to the data",
+    "text": "Fit SARIMA model to the data\n\n\nShow the code\nlibrary(astsa)\n\n## convert to a time series object\nco2ts <- ts(co2$average, start=1959, frequency = 12)\n\n## fit a SARIMA model and show the results\nm <- sarima(co2ts, p = 1, d = 1, q = 1, P = 0, D = 1, Q = 1, S = 12)"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#example-sarima-model-for-co2-in-the-atmosphere",
+    "href": "slides/10-timeseries-2.html#example-sarima-model-for-co2-in-the-atmosphere",
+    "title": "10-Time Series Outlook",
+    "section": "Example: SARIMA model for CO2 in the atmosphere",
+    "text": "Example: SARIMA model for CO2 in the atmosphere\n\n\nShow the code\n## read data directly from NOAA\n#co2 <- read_csv(\"https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv\", \n#                skip = 40, show_col_types = FALSE)\n\n## local version\nco2 <- read_csv(\"../data/co2_mm_mlo.csv\", skip=40, show_col_types = FALSE)\n\n## year 1958 is incomplete, so let's start with 1959\nco2 <- filter(co2, year > 1958) \n\nco2 |> \n  mutate(date=as_date(paste(year, month, 15, sep=\".\"))) |>\n  ggplot(aes(date, average)) + \n  geom_line() + ylab(expression(CO[2]~\"in the atmosphere (ppm)\")) + \n  ggtitle(\"Mauna Loa Observatory, Hawaii, Monthly Averages\") +\n  geom_smooth()"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#fit-sarima-model-to-co2-data",
+    "href": "slides/10-timeseries-2.html#fit-sarima-model-to-co2-data",
+    "title": "10-Time Series Outlook",
+    "section": "Fit SARIMA model to CO2 data",
+    "text": "Fit SARIMA model to CO2 data\n\n\nShow the code\nlibrary(astsa)\n\n## convert to a time series object\nco2ts <- ts(co2$average, start=1959, frequency = 12)\n\n## fit a SARIMA model and show the results\nm <- sarima(co2ts, p = 1, d = 1, q = 1, P = 0, D = 1, Q = 1, S = 12)\n\n\n\nMathematical details can be found in Shumway & Stoffer (2019)."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#sarima-forecast-of-co2",
+    "href": "slides/10-timeseries-2.html#sarima-forecast-of-co2",
+    "title": "10-Time Series Outlook",
+    "section": "SARIMA-forecast of CO2",
+    "text": "SARIMA-forecast of CO2\n\n\nShow the code\nm <- sarima.for(co2ts, n.ahead = 12 * 27, \n           p = 1, d = 1, q = 1, P = 0, D = 1, Q = 1, S = 12, \n           plot.all = TRUE)\n\n\n\nMathematical details can be found in Shumway & Stoffer (2019)."
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#remember-model-selection-techniques",
+    "href": "slides/10-timeseries-2.html#remember-model-selection-techniques",
+    "title": "10-Time Series Outlook",
+    "section": "Remember: model selection techniques",
+    "text": "Remember: model selection techniques\n\n\nModel Selection is a modern alternative to \\(p\\)-value based testing.\nBased on the principle of parsimony:\n\nModels with many parameters fit better, but may contain unnecessary factors.\nWe need is an optimal compromize between model fit and complexity.\nKeep it as simple as possible, but not simpler.\n\nCompare different models for the same phenomenon:\n\nFull model: includes all potential factors.\nSeveral reduced models, derived from the full model.\nNull model without explanatory factors.\n\nSelect minimal adequate model (= “optimal”, “most parsimoniuos”).\n\\(\\Rightarrow\\) Compromize between simplicity and goodness of fit.\n\nMore, see Johnson & Omland (2004)"
+  },
+  {
+    "objectID": "slides/10-timeseries-2.html#diagnostics",
+    "href": "slides/10-timeseries-2.html#diagnostics",
+    "title": "10-Time Series Outlook",
+    "section": "Diagnostics",
+    "text": "Diagnostics\n\n\npar(mfrow = c(2, 2))\nacf(residuals(fm0))     # model without breaks\nacf(residuals(fm1))     # model with 1 breakpoint\nqqnorm(residuals(fm0))\nqqnorm(residuals(fm1))"
   }
 ]

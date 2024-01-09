@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.2.280">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-01-08">
+  <meta name="dcterms.date" content="2024-01-09">
   <title>Elements of Data Analysis and Statistics - 10-Time Series Outlook</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -427,7 +427,13 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-01-08</p>
+  <p class="date">2024-01-09</p>
+</section>
+<section class="slide level2">
+
+<div class="cell">
+
+</div>
 </section>
 <section>
 <section id="time-series-decomposition" class="title-slide slide level1 center">
@@ -516,15 +522,73 @@ Thomas Petzoldt
 
 </div>
 <img data-src="10-timeseries-2_files/figure-revealjs/stl-1.png" width="960" class="r-stretch quarto-figure-center"></section></section>
-<section id="outlook-frequency-analysis-and-arima-modelling" class="title-slide slide level1 center">
-<h1>Outlook: Frequency analysis and ARIMA modelling</h1>
+<section>
+<section id="outlook-arma-and-arima-models" class="title-slide slide level1 center">
+<h1>Outlook: ARMA and ARIMA models</h1>
 <p><br></p>
 <ul>
-<li>very important techniques for analyzing time series and for forecasting, not handled here,</li>
+<li>based on autoregressive (AR) and moving average (AR) terms</li>
+<li>the “I” in ARIMA stands for differencing</li>
+<li>seasonal ARIMA models (SARIMA) consider seasonal dependency,<br> e.g.&nbsp;differencing with a lag of 12 months</li>
+<li>very important techniques for analyzing time series and for forecasting</li>
 <li>for the interested: self-study by reading <span class="citation" data-cites="kleiber_applied_2008">Kleiber &amp; Zeileis (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span> or <span class="citation" data-cites="shumway_time_2019">Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>.</li>
 </ul>
 </section>
+<section id="example-sarima-model-for-co2-in-the-atmosphere" class="slide level2">
+<h2>Example: SARIMA model for CO2 in the atmosphere</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="do">## read data directly from NOAA</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#co2 &lt;- read_csv("https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv", </span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="co">#                skip = 40, show_col_types = FALSE)</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="do">## local version</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>co2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/co2_mm_mlo.csv"</span>, <span class="at">skip=</span><span class="dv">40</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="do">## year 1958 is incomplete, so let's start with 1959</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>co2 <span class="ot">&lt;-</span> <span class="fu">filter</span>(co2, year <span class="sc">&gt;</span> <span class="dv">1958</span>) </span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>co2 <span class="sc">|&gt;</span> </span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date=</span><span class="fu">as_date</span>(<span class="fu">paste</span>(year, month, <span class="dv">15</span>, <span class="at">sep=</span><span class="st">"."</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, average)) <span class="sc">+</span> </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="fu">expression</span>(CO[<span class="dv">2</span>]<span class="sc">~</span><span class="st">"in the atmosphere (ppm)"</span>)) <span class="sc">+</span> </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Mauna Loa Observatory, Hawaii, Monthly Averages"</span>) <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 
+</div>
+<img data-src="10-timeseries-2_files/figure-revealjs/co2-sarima0-1.png" width="960" class="r-stretch"></section>
+<section id="fit-sarima-model-to-co2-data" class="slide level2">
+<h2>Fit SARIMA model to CO2 data</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(astsa)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="do">## convert to a time series object</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>co2ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(co2<span class="sc">$</span>average, <span class="at">start=</span><span class="dv">1959</span>, <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="do">## fit a SARIMA model and show the results</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">sarima</span>(co2ts, <span class="at">p =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">q =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">Q =</span> <span class="dv">1</span>, <span class="at">S =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="10-timeseries-2_files/figure-revealjs/co2-sarima1-1.png" width="960" class="r-stretch"><p>Mathematical details can be found in <span class="citation" data-cites="shumway_time_2019">Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>.</p>
+</section>
+<section id="sarima-forecast-of-co2" class="slide level2">
+<h2>SARIMA-forecast of CO2</h2>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">sarima.for</span>(co2ts, <span class="at">n.ahead =</span> <span class="dv">12</span> <span class="sc">*</span> <span class="dv">27</span>, </span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>           <span class="at">p =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">q =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">Q =</span> <span class="dv">1</span>, <span class="at">S =</span> <span class="dv">12</span>, </span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>           <span class="at">plot.all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="10-timeseries-2_files/figure-revealjs/co2-sarima2-1.png" width="960" class="r-stretch"><p>Mathematical details can be found in <span class="citation" data-cites="shumway_time_2019">Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>.</p>
+</section></section>
 <section>
 <section id="identification-of-structural-breaks" class="title-slide slide level1 center">
 <h1>Identification of structural breaks</h1>
@@ -532,34 +596,89 @@ Thomas Petzoldt
 </section>
 <section id="identification-of-structural-breaks-1" class="slide level2">
 <h2>Identification of structural breaks</h2>
-<p><br></p>
-<p><strong>Structural break</strong></p>
+
+<img data-src="10-timeseries-2_files/figure-revealjs/nile-intro-1.png" width="960" class="r-stretch quarto-figure-center"><p><strong>Structural break</strong></p>
 <p>If one or more statistical parameters are not constant over the whole length of a time series it is called a structural break. For instance a location parameter (e.g.&nbsp;the mean), a trend or another distribution parameter (such as variance or covariance) may change.</p>
 <p><br></p>
 <p><strong>Testing for structural breaks</strong></p>
 <p>The package <strong>strucchange</strong> implements a number of tests for identification of structural changes or parameter instability of time series. Generally, two approaches are available: fluctuation tests and F-based tests. Fluctuation tests try to detect the structural instability with cumulative or moving sums (CUSUMs and MOSUMs).</p>
 </section>
-<section id="model-selection-techniques" class="slide level2">
-<h2>Model Selection Techniques</h2>
+<section id="the-nile-data-set" class="slide level2">
+<h2>The Nile data set</h2>
+<p>The Nile data set contains measurements of annual discharge of the Nile at Aswan from 1871 to 1970 <span class="gray">(see help page ?Nile for data source):</span></p>
+<div class="cell" data-layout-align="center" data-fig="true">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(strucchange)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Nile"</span>)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="10-timeseries-2_files/figure-revealjs/nile-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="test-for-structural-break-at-known-time" class="slide level2">
+<h2>Test for structural break at known time</h2>
 <ul>
-<li><p>Model Selection is a modern alternative to <span class="math inline">\(p\)</span>-value based testing.</p></li>
-<li><p>Based on the principle of parsimony:</p></li>
-<li><p>Models with many parameters fit better, but may contain unnecessary factors.</p></li>
-<li><p>We need is an <strong>optimal compromize</strong> between model fit and complexity.</p></li>
-<li><p>Keep it as simple as possible, but not simpler.</p>
+<li>Are there are periods with different flow?</li>
+<li>Use of OLS-CUSUM (ordinary least squares, cumulative sum) or MOSUM tests (moving average sum) can be applied to various types of problems).</li>
+<li><code>efp</code> = empirical fluctuation model,<code>sctest</code> = structural change test</li>
+</ul>
+<div class="cell" data-layout-align="center" data-fig="true">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>ocus <span class="ot">&lt;-</span> <span class="fu">efp</span>(Nile <span class="sc">~</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"OLS-CUSUM"</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ocus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sctest</span>(ocus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    OLS-based CUSUM test
+
+data:  ocus
+S0 = 2.9518, p-value = 5.409e-08</code></pre>
+</div>
+</div>
+<img data-src="10-timeseries-2_files/figure-revealjs/ocus-1.png" width="960" class="r-stretch quarto-figure-center"></section>
+<section id="breakpoint-analysis" class="slide level2">
+<h2>Breakpoint analysis</h2>
+<p><br></p>
+<p><strong>Purpose</strong></p>
 <ul>
-<li>Compare different models for the same phenomenon:</li>
+<li>identify if there are structural breaks with respect to a specified linear model</li>
+<li>identify their number and location</li>
+<li>very general approach, allows different linear models, covariates, …</li>
+<li>we deal only with the most simplest case here</li>
+</ul>
+<p><strong>Method</strong></p>
+<ul>
+<li>uses a BIC-based model selection technique</li>
+<li>Which model is the best?</li>
+</ul>
+<p><strong>See also</strong></p>
+<ul>
+<li><span class="citation" data-cites="Bai2003">Bai &amp; Perron (<a href="#/references" role="doc-biblioref" onclick="">2003</a>)</span>, <span class="citation" data-cites="Zeileis2002">Zeileis et al. (<a href="#/references" role="doc-biblioref" onclick="">2002</a>)</span>, <span class="citation" data-cites="Zeileis2003">Zeileis et al. (<a href="#/references" role="doc-biblioref" onclick="">2003</a>)</span>.</li>
+</ul>
+</section>
+<section id="remember-model-selection-techniques" class="slide level2">
+<h2>Remember: model selection techniques</h2>
+<p><br></p>
+<ul>
+<li>Model Selection is a modern alternative to <span class="math inline">\(p\)</span>-value based testing.</li>
+<li>Based on the principle of parsimony:
+<ul>
+<li>Models with many parameters fit better, but may contain unnecessary factors.</li>
+<li>We need is an <strong>optimal compromize</strong> between model fit and complexity.</li>
+<li>Keep it as simple as possible, but not simpler.</li>
+</ul></li>
+<li>Compare different models for the same phenomenon:
+<ul>
 <li><span class="blue">Full model</span>: includes all potential factors.</li>
 <li>Several <span class="blue">reduced models</span>, derived from the full model.</li>
 <li><span class="blue">Null model</span> without explanatory factors.</li>
 </ul></li>
-<li><p>Select <span class="blue">minimal adequate model</span> (“optimal”, “most parsimoniuos”).</p></li>
-<li><p><span class="math inline">\(\Rightarrow\)</span> Compromize between simplicity and goodness of fit.</p></li>
+<li>Select <span class="blue">minimal adequate model</span> (= “optimal”, “most parsimoniuos”).</li>
+<li><span class="math inline">\(\Rightarrow\)</span> Compromize between simplicity and goodness of fit.</li>
 </ul>
 <p>More, see <span class="citation" data-cites="JohnsonOmland2004">Johnson &amp; Omland (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span></p>
 </section>
 <section id="model-comparison-with-aic-and-bic" class="slide level2">
 <h2>Model comparison with AIC and BIC</h2>
+<p><br></p>
 <p>Models with many parameters fit better. We want an <strong>optimal compromize</strong> between fit and model complexity (number of parameters, <span class="math inline">\(k\)</span>).</p>
 <ul>
 <li>Goodness of fit can be measured with likelihood <span class="math inline">\(L\)</span><br> <span class="gray">(how likely are the data given a specific model).</span></li>
@@ -578,53 +697,12 @@ BIC = - 2 \ln(L) + k \cdot \ln(n)
 \]</span></p>
 <p>The model with smallest AIC (resp. BIC) is considered as “optimal” model.</p>
 </section>
-<section id="the-nile-data-set" class="slide level2">
-<h2>The Nile data set</h2>
-<p>The Nile data set contains measurements of annual discharge of the Nile at Aswan from 1871 to 1970 <span class="gray">(see help page ?Nile for data source):</span></p>
-<div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(strucchange)</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Nile"</span>)</span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-</div>
-<img data-src="10-timeseries-2_files/figure-revealjs/nile-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="test-for-structural-break-at-known-time" class="slide level2">
-<h2>Test for structural break at known time</h2>
-<ul>
-<li>Are there are periods with different flow?</li>
-<li>Use of OLS-CUSUM (ordinary least squares, cumulative sum) or MOSUM tests (moving average sum) can be applied to various types of problems).</li>
-<li><code>efp</code> = empirical fluctuation model,<code>sctest</code> = structural change test</li>
-</ul>
-<div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>ocus <span class="ot">&lt;-</span> <span class="fu">efp</span>(Nile <span class="sc">~</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"OLS-CUSUM"</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ocus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sctest</span>(ocus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>
-    OLS-based CUSUM test
-
-data:  ocus
-S0 = 2.9518, p-value = 5.409e-08</code></pre>
-</div>
-</div>
-<img data-src="10-timeseries-2_files/figure-revealjs/ocus-1.png" width="960" class="r-stretch quarto-figure-center"></section>
-<section id="breakpoint-analysis" class="slide level2">
-<h2>Breakpoint analysis</h2>
-<p><br></p>
-<ul>
-<li>Purpose: identify if there are structural breaks with respect to a specified linear model, and if yes, their number and location.</li>
-<li>uses BIC-based model selection technique,</li>
-<li>very general approach, allows different linear models, covariates, …</li>
-<li>we deal only with the most simplest case here.</li>
-<li>more, see <span class="citation" data-cites="Bai2003">Bai &amp; Perron (<a href="#/references" role="doc-biblioref" onclick="">2003</a>)</span>, <span class="citation" data-cites="Zeileis2002">Zeileis et al. (<a href="#/references" role="doc-biblioref" onclick="">2002</a>)</span>, <span class="citation" data-cites="Zeileis2003">Zeileis et al. (<a href="#/references" role="doc-biblioref" onclick="">2003</a>)</span>.</li>
-</ul>
-</section>
 <section id="breakpoint-analysis-1" class="slide level2">
 <h2>Breakpoint analysis</h2>
+<p><br></p>
 <div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Optimal (m+1)-segment partition: 
@@ -655,15 +733,20 @@ RSS 2835157 1597457 1552924 1538097 1507888 1659994
 BIC    1318    1270    1276    1285    1292    1311</code></pre>
 </div>
 </div>
+<p><strong>Notes</strong></p>
+<ul>
+<li>computationally intensive</li>
+<li>consider to adapt model and parameter <code>h</code>, see help page</li>
+</ul>
 </section>
 <section id="likelihood-profile-rightarrow-optimal-number-of-breaks" class="slide level2">
 <h2>Likelihood profile: <span class="math inline">\(\rightarrow\)</span> optimal number of breaks?</h2>
-<div class="cell" data-fig="true">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center" data-fig="true">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/bp-nile-1.png" width="960" class="r-stretch"><ul>
+<img data-src="10-timeseries-2_files/figure-revealjs/bp-nile-1.png" width="960" class="r-stretch quarto-figure-center"><ul>
 <li>RSS (residual sum of squares) shows goodness of fit. The smaller the better.</li>
 <li>Penalty = 2 <span class="math inline">\(\cdot\)</span> number of breakpoints (not shown).</li>
 <li>Minimum BIC indicates optimal model.</li>
@@ -671,27 +754,28 @@ BIC    1318    1270    1276    1285    1292    1311</code></pre>
 </section>
 <section id="plot-breakpoints-and-confidence-interval" class="slide level2">
 <h2>Plot breakpoints and confidence interval</h2>
-<div class="cell" data-fig="true">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="do">## fit null hypothesis model and model with 1 breakpoint</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>fm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Nile <span class="sc">~</span> <span class="fu">breakfactor</span>(bp.nile,  <span class="at">breaks =</span> <span class="dv">1</span>))</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ts</span>(<span class="fu">fitted</span>(fm0),  <span class="at">start =</span> <span class="dv">1871</span>),  <span class="at">col =</span> <span class="dv">3</span>)</span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ts</span>(<span class="fu">fitted</span>(fm1),  <span class="at">start =</span> <span class="dv">1871</span>),  <span class="at">col =</span> <span class="dv">4</span>)</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(bp.nile)</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="do">## confidence interval</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>ci.nile <span class="ot">&lt;-</span> <span class="fu">confint</span>(bp.nile)</span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="co">#ci.nile  # output numerical results</span></span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ci.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center" data-fig="true">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## fit null hypothesis model and model with 1 breakpoint</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>fm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Nile <span class="sc">~</span> <span class="fu">breakfactor</span>(bp.nile,  <span class="at">breaks =</span> <span class="dv">1</span>))</span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ts</span>(<span class="fu">fitted</span>(fm0),  <span class="at">start =</span> <span class="dv">1871</span>),  <span class="at">col =</span> <span class="dv">3</span>)</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ts</span>(<span class="fu">fitted</span>(fm1),  <span class="at">start =</span> <span class="dv">1871</span>),  <span class="at">col =</span> <span class="dv">4</span>)</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(bp.nile)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a><span class="do">## confidence interval</span></span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>ci.nile <span class="ot">&lt;-</span> <span class="fu">confint</span>(bp.nile)</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="co">#ci.nile  # output numerical results</span></span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ci.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-2_files/figure-revealjs/ci-nile-1.png" width="960" class="r-stretch"></section>
+<img data-src="10-timeseries-2_files/figure-revealjs/ci-nile-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="test-significance-of-breakpoints" class="slide level2">
 <h2>Test significance of breakpoints</h2>
+<p><br></p>
+<p><strong>Likelihood ratio test</strong></p>
 <div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ===== Likelihood ratio test =====</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -703,31 +787,46 @@ Model 2: Nile ~ breakfactor(bp.nile, breaks = 1)
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="do">## ===== AIC based comparison  =====</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><strong>BIC based comparison</strong></p>
+<div class="cell" data-fig="false">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    df      BIC
+fm0  2 1318.242
+fm1  3 1265.479</code></pre>
+</div>
+</div>
+<p><strong>AIC based comparison</strong></p>
+<div class="cell" data-fig="false">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    df      AIC
 fm0  2 1313.031
 fm1  3 1257.663</code></pre>
 </div>
 </div>
-<p>We can see that the model with the structural break in the year 1898 is significantly better than the null model.</p>
+<p><span class="math inline">\(\rightarrow\)</span> model with structural break in 1898 is significantly better than the null model.</p>
 </section>
-<section id="further-diagnostics" class="slide level2">
-<h2>Further diagnostics</h2>
-<p>Of course, further diagsnostics and analyses can follow for the fitted models, e.g. a diagnostic comparison of autocorrelation and spectral density or a Q-Q-plot to see whether the residuals are normally distributed:</p>
-<div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(fm0))</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(fm1))</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="fu">spectrum</span>(<span class="fu">residuals</span>(fm0), <span class="at">log =</span> <span class="st">"no"</span>,  <span class="at">spans =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="fu">spectrum</span>(<span class="fu">residuals</span>(fm1), <span class="at">log =</span> <span class="st">"no"</span>,  <span class="at">spans =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>))</span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm0))</span>
-<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="diagnostics" class="slide level2">
+<h2>Diagnostics</h2>
+<p><br></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(fm0))     <span class="co"># model without breaks</span></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(fm1))     <span class="co"># model with 1 breakpoint</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm0))</span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
 </div>
-<p><span class="math inline">\(\Rightarrow\)</span> test this yourself!</p>
-</section>
+<!--
+#spectrum(residuals(fm0), log = "no",  spans = c(5, 5))
+#spectrum(residuals(fm1), log = "no",  spans = c(5, 5))
+-->
+<img data-src="10-timeseries-2_files/figure-revealjs/nile-diagnostics-1.png" width="960" class="r-stretch quarto-figure-center"></section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
+<p><br></p>
 
 <div class="footer footer-default">
 <p><span style="color: white; font-size: small; font-weight:400; float: right; margin-top: 40px; margin-right: 4%;"> <a href="../">🏠 Home</a> </span></p>
