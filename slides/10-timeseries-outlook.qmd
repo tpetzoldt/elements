@@ -166,6 +166,7 @@ see:  [https://en.wikipedia.org/wiki/List_of_trigonometric_identities](https://e
 #| code-fold: true
 #| code-summary: "Show the code"
 # create an arbitrary time series
+set.seed(123)
 n   <- 360
 t   <- 0:(n-1)
 x   <- sin(t*2*pi/n) + rnorm(n, sd = 0.2)
