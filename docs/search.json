@@ -1740,56 +1740,56 @@
     "href": "slides/10-timeseries-outlook.html#smoothing-methods",
     "title": "10-Time Series Outlook",
     "section": "Smoothing methods",
-    "text": "Smoothing methods\n\nuse regression vs. time\nor use smoothers (moving averages),\nthen subtract the trend line.\n\n\nlibrary(Kendall)\ndata(PrecipGL)\ntsp(PrecipGL)\n\n[1] 1900 1986    1\n\nplot(PrecipGL)\nkernel <- rep(1, 10)  # a rectangular kernel, vary bandwith\nlines(stats::filter(PrecipGL, kernel/sum(kernel)), lwd = 2, col = \"blue\")\nlines(lowess(time(PrecipGL), PrecipGL), lwd = 3, col = 2)"
+    "text": "Smoothing methods\n\nuse regression vs. time (linear or nonlinear regression)\nor use smoothers (moving averages)\nthen subtract the trend line\n\n\nlibrary(Kendall)\ndata(PrecipGL)\ntsp(PrecipGL)\n\n[1] 1900 1986    1\n\nplot(PrecipGL)\nkernel &lt;- rep(1, 10)  # a rectangular kernel, vary bandwith\nlines(stats::filter(PrecipGL, kernel/sum(kernel)), lwd = 2, col = \"blue\")"
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#trend-corrected-series",
     "href": "slides/10-timeseries-outlook.html#trend-corrected-series",
     "title": "10-Time Series Outlook",
     "section": "Trend corrected series",
-    "text": "Trend corrected series\nNow, the trend corrected series can be obtained by subtracting the trend, e.g.:\n\nsmooth <- stats::filter(PrecipGL, kernel/sum(kernel))\n## OR:\n# smooth <- lowess(time(PrecipGL), PrecipGL)$y\nres <- PrecipGL - smooth\nplot(res)"
+    "text": "Trend corrected series\nNow, the trend corrected series can be obtained by subtracting the trend, e.g.:\n\nsmooth &lt;- stats::filter(PrecipGL, kernel/sum(kernel))\nres &lt;- PrecipGL - smooth\nplot(res)\n\n\nNote: use stats::filter to avoid potential conflict with dplyr::filter."
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#trend-corrected-series-1",
     "href": "slides/10-timeseries-outlook.html#trend-corrected-series-1",
     "title": "10-Time Series Outlook",
     "section": "Trend corrected series",
-    "text": "Trend corrected series\nFor a seasonal time series with monthly values Kleiber & Zeileis (2008) recommend a filter with 13 coefficients.\nExample: water level of Rio Negro 18 km upstream from its confluence with the Amazon River. The data set is contained in the package boot (Canty & Ripley, 2022):\n\nlibrary(boot)\ndata(manaus)\ntsp(manaus)\n\n[1] 1903.000 1992.917   12.000\n\nplot(manaus)\nlines(stats::filter(manaus, c(0.5, rep(1, 11), 0.5)/12), lwd=2, col=\"blue\")\nlines(lowess(time(manaus),manaus),lwd=3, col=2)"
+    "text": "Trend corrected series\nFor a seasonal time series with monthly values Kleiber & Zeileis (2008) recommend a filter with 13 coefficients.\nExample: water level of Rio Negro 18 km upstream from its confluence with the Amazon River. The data set is contained in the package boot (Canty & Ripley, 2022):\n\nlibrary(boot)\ndata(manaus)\ntsp(manaus)\n\n[1] 1903.000 1992.917   12.000\n\nplot(manaus)\nlines(stats::filter(manaus, c(0.5, rep(1, 11), 0.5)/12), lwd=2, col=\"blue\")"
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#automatic-time-series-decomposition",
     "href": "slides/10-timeseries-outlook.html#automatic-time-series-decomposition",
     "title": "10-Time Series Outlook",
     "section": "Automatic time series decomposition",
-    "text": "Automatic time series decomposition\nFunction decompose implements the classical approach with simple symmetric moving average filters.\n\nmanaus_dec <- decompose(manaus)\nplot(manaus_dec)\n\n\nIn this data set the seasonal component possesses an additive character, but a multiplicative component would be possible too (type=\"multiplicative\")."
+    "text": "Automatic time series decomposition\nFunction decompose implements the classical approach with simple symmetric moving average filters.\n\nmanaus_dec &lt;- decompose(manaus)\nplot(manaus_dec)\n\n\nIn this data set the seasonal component possesses an additive character, but a multiplicative component would be possible too (type=\"multiplicative\")."
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#automatic-time-series-decomposition-ii",
     "href": "slides/10-timeseries-outlook.html#automatic-time-series-decomposition-ii",
     "title": "10-Time Series Outlook",
     "section": "Automatic time series decomposition II",
-    "text": "Automatic time series decomposition II\nThe function stl, seasonal time series decomposition (Cleveland et al., 1990) uses a LOESS filter:\n\nmanaus_stl <- stl(manaus, s.window=13)\nplot(manaus_stl)"
+    "text": "Automatic time series decomposition II\nThe function stl, seasonal time series decomposition (Cleveland et al., 1990) uses a LOESS filter:\n\nmanaus_stl &lt;- stl(manaus, s.window=13)\nplot(manaus_stl)"
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#example-sarima-model-for-co2-in-the-atmosphere",
     "href": "slides/10-timeseries-outlook.html#example-sarima-model-for-co2-in-the-atmosphere",
     "title": "10-Time Series Outlook",
     "section": "Example: SARIMA model for CO2 in the atmosphere",
-    "text": "Example: SARIMA model for CO2 in the atmosphere\n\n\nShow the code\n## read data directly from NOAA\n#co2 <- read_csv(\"https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv\", \n#                skip = 40, show_col_types = FALSE)\n\n## local version\nco2 <- read_csv(\"../data/co2_mm_mlo.csv\", skip=40, show_col_types = FALSE)\n\n## year 1958 is incomplete, so let's start with 1959\nco2 <- filter(co2, year > 1958) \n\nco2 |> \n  mutate(date=as_date(paste(year, month, 15, sep=\".\"))) |>\n  ggplot(aes(date, average)) + \n  geom_line() + ylab(expression(CO[2]~\"in the atmosphere (ppm)\")) + \n  ggtitle(\"Mauna Loa Observatory, Hawaii, Monthly Averages\") +\n  geom_smooth()"
+    "text": "Example: SARIMA model for CO2 in the atmosphere\n\n\nShow the code\n## read data directly from NOAA\n#co2 &lt;- read_csv(\"https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv\", \n#                skip = 40, show_col_types = FALSE)\n\n## local version\nco2 &lt;- read_csv(\"../data/co2_mm_mlo.csv\", skip=40, show_col_types = FALSE)\n\n## year 1958 is incomplete, so let's start with 1959\nco2 &lt;- filter(co2, year &gt; 1958) \n\nco2 |&gt; \n  mutate(date=as_date(paste(year, month, 15, sep=\".\"))) |&gt;\n  ggplot(aes(date, average)) + \n  geom_line() + ylab(expression(CO[2]~\"in the atmosphere (ppm)\")) + \n  ggtitle(\"Mauna Loa Observatory, Hawaii, Monthly Averages\") +\n  geom_smooth()"
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#fit-sarima-model-to-co2-data",
     "href": "slides/10-timeseries-outlook.html#fit-sarima-model-to-co2-data",
     "title": "10-Time Series Outlook",
     "section": "Fit SARIMA model to CO2 data",
-    "text": "Fit SARIMA model to CO2 data\n\n\nShow the code\nlibrary(astsa)\n\n## convert to a time series object\nco2ts <- ts(co2$average, start=1959, frequency = 12)\n\n## fit a SARIMA model and show the results\nm <- sarima(co2ts, p = 1, d = 1, q = 1, P = 0, D = 1, Q = 1, S = 12)\n\n\n\nMathematical details can be found in Shumway & Stoffer (2019)."
+    "text": "Fit SARIMA model to CO2 data\n\n\nShow the code\nlibrary(astsa)\n\n## convert to a time series object\nco2ts &lt;- ts(co2$average, start=1959, frequency = 12)\n\n## fit a SARIMA model and show the results\nm &lt;- sarima(co2ts, p = 1, d = 1, q = 1, P = 0, D = 1, Q = 1, S = 12)\n\n\n\nMathematical details can be found in Shumway & Stoffer (2019)."
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#sarima-forecast-of-co2",
     "href": "slides/10-timeseries-outlook.html#sarima-forecast-of-co2",
     "title": "10-Time Series Outlook",
     "section": "SARIMA-forecast of CO2",
-    "text": "SARIMA-forecast of CO2\n\n\nShow the code\nm <- sarima.for(co2ts, n.ahead = 12 * 27, \n           p = 1, d = 1, q = 1, P = 0, D = 1, Q = 1, S = 12, \n           plot.all = TRUE)\n\n\n\nMathematical details can be found in Shumway & Stoffer (2019)."
+    "text": "SARIMA-forecast of CO2\n\n\nShow the code\nm &lt;- sarima.for(co2ts, n.ahead = 12 * 27, \n           p = 1, d = 1, q = 1, P = 0, D = 1, Q = 1, S = 12, \n           plot.all = TRUE)\n\n\n\nMathematical details can be found in Shumway & Stoffer (2019)."
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#identification-of-structural-breaks-1",
@@ -1810,7 +1810,7 @@
     "href": "slides/10-timeseries-outlook.html#test-for-structural-break-at-known-time",
     "title": "10-Time Series Outlook",
     "section": "Test for structural break at known time",
-    "text": "Test for structural break at known time\n\nAre there are periods with different flow?\nUse of OLS-CUSUM (ordinary least squares, cumulative sum) or MOSUM tests (moving average sum) can be applied to various types of problems).\nefp = empirical fluctuation model,sctest = structural change test\n\n\nocus <- efp(Nile ~ 1, type = \"OLS-CUSUM\")\nplot(ocus)\n\nsctest(ocus)\n\n\n    OLS-based CUSUM test\n\ndata:  ocus\nS0 = 2.9518, p-value = 5.409e-08"
+    "text": "Test for structural break at known time\n\nAre there are periods with different flow?\nUse of OLS-CUSUM (ordinary least squares, cumulative sum) or MOSUM tests (moving average sum) can be applied to various types of problems).\nefp = empirical fluctuation model,sctest = structural change test\n\n\nocus &lt;- efp(Nile ~ 1, type = \"OLS-CUSUM\")\nplot(ocus)\n\nsctest(ocus)\n\n\n    OLS-based CUSUM test\n\ndata:  ocus\nS0 = 2.9518, p-value = 5.409e-08"
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#breakpoint-analysis",
@@ -1838,28 +1838,28 @@
     "href": "slides/10-timeseries-outlook.html#breakpoint-analysis-1",
     "title": "10-Time Series Outlook",
     "section": "Breakpoint analysis",
-    "text": "Breakpoint analysis\n\n\nbp.nile <- breakpoints(Nile ~ 1)\nsummary(bp.nile)\n\n\n     Optimal (m+1)-segment partition: \n\nCall:\nbreakpoints.formula(formula = Nile ~ 1)\n\nBreakpoints at observation number:\n                      \nm = 1      28         \nm = 2      28       83\nm = 3      28    68 83\nm = 4      28 45 68 83\nm = 5   15 30 45 68 83\n\nCorresponding to breakdates:\n                                \nm = 1        1898               \nm = 2        1898           1953\nm = 3        1898      1938 1953\nm = 4        1898 1915 1938 1953\nm = 5   1885 1900 1915 1938 1953\n\nFit:\n                                                   \nm   0       1       2       3       4       5      \nRSS 2835157 1597457 1552924 1538097 1507888 1659994\nBIC    1318    1270    1276    1285    1292    1311\n\n\nNotes\n\ncomputationally intensive\nconsider to adapt model and parameter h, see help page"
+    "text": "Breakpoint analysis\n\n\nbp.nile &lt;- breakpoints(Nile ~ 1)\nsummary(bp.nile)\n\n\n     Optimal (m+1)-segment partition: \n\nCall:\nbreakpoints.formula(formula = Nile ~ 1)\n\nBreakpoints at observation number:\n                      \nm = 1      28         \nm = 2      28       83\nm = 3      28    68 83\nm = 4      28 45 68 83\nm = 5   15 30 45 68 83\n\nCorresponding to breakdates:\n                                \nm = 1        1898               \nm = 2        1898           1953\nm = 3        1898      1938 1953\nm = 4        1898 1915 1938 1953\nm = 5   1885 1900 1915 1938 1953\n\nFit:\n                                                   \nm   0       1       2       3       4       5      \nRSS 2835157 1597457 1552924 1538097 1507888 1659994\nBIC    1318    1270    1276    1285    1292    1311\n\n\nNotes\n\ncomputationally intensive\nconsider to adapt model and parameter h, see help page"
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#likelihood-profile-rightarrow-optimal-number-of-breaks",
     "href": "slides/10-timeseries-outlook.html#likelihood-profile-rightarrow-optimal-number-of-breaks",
     "title": "10-Time Series Outlook",
     "section": "Likelihood profile: \\(\\rightarrow\\) optimal number of breaks?",
-    "text": "Likelihood profile: \\(\\rightarrow\\) optimal number of breaks?\n\nbp.nile <- breakpoints(Nile ~ 1)\nplot(bp.nile)\n\n\n\nRSS (residual sum of squares) shows goodness of fit. The smaller the better.\nPenalty = 2 \\(\\cdot\\) number of breakpoints (not shown).\nMinimum BIC indicates optimal model."
+    "text": "Likelihood profile: \\(\\rightarrow\\) optimal number of breaks?\n\nbp.nile &lt;- breakpoints(Nile ~ 1)\nplot(bp.nile)\n\n\n\nRSS (residual sum of squares) shows goodness of fit. The smaller the better.\nPenalty = 2 \\(\\cdot\\) number of breakpoints (not shown).\nMinimum BIC indicates optimal model."
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#plot-breakpoints-and-confidence-interval",
     "href": "slides/10-timeseries-outlook.html#plot-breakpoints-and-confidence-interval",
     "title": "10-Time Series Outlook",
     "section": "Plot breakpoints and confidence interval",
-    "text": "Plot breakpoints and confidence interval\n\n## fit null hypothesis model and model with 1 breakpoint\nfm0 <- lm(Nile ~ 1)\nfm1 <- lm(Nile ~ breakfactor(bp.nile,  breaks = 1))\nplot(Nile)\nlines(ts(fitted(fm0),  start = 1871),  col = 3)\nlines(ts(fitted(fm1),  start = 1871),  col = 4)\nlines(bp.nile)\n\n## confidence interval\nci.nile <- confint(bp.nile)\n#ci.nile  # output numerical results\nlines(ci.nile)"
+    "text": "Plot breakpoints and confidence interval\n\n## fit null hypothesis model and model with 1 breakpoint\nfm0 &lt;- lm(Nile ~ 1)\nfm1 &lt;- lm(Nile ~ breakfactor(bp.nile,  breaks = 1))\nplot(Nile)\nlines(ts(fitted(fm0),  start = 1871),  col = 3)\nlines(ts(fitted(fm1),  start = 1871),  col = 4)\nlines(bp.nile)\n\n## confidence interval\nci.nile &lt;- confint(bp.nile)\n#ci.nile  # output numerical results\nlines(ci.nile)"
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#test-significance-of-breakpoints",
     "href": "slides/10-timeseries-outlook.html#test-significance-of-breakpoints",
     "title": "10-Time Series Outlook",
     "section": "Test significance of breakpoints",
-    "text": "Test significance of breakpoints\n\nLikelihood ratio test\n\nanova(fm0, fm1)\n\nAnalysis of Variance Table\n\nModel 1: Nile ~ 1\nModel 2: Nile ~ breakfactor(bp.nile, breaks = 1)\n  Res.Df     RSS Df Sum of Sq     F    Pr(>F)    \n1     99 2835157                                 \n2     98 1597457  1   1237700 75.93 7.439e-14 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nBIC based comparison\n\nBIC(fm0, fm1)\n\n    df      BIC\nfm0  2 1318.242\nfm1  3 1265.479\n\n\nAIC based comparison\n\nAIC(fm0, fm1)\n\n    df      AIC\nfm0  2 1313.031\nfm1  3 1257.663\n\n\n\\(\\rightarrow\\) model with structural break in 1898 is significantly better than the null model."
+    "text": "Test significance of breakpoints\n\nLikelihood ratio test\n\nanova(fm0, fm1)\n\nAnalysis of Variance Table\n\nModel 1: Nile ~ 1\nModel 2: Nile ~ breakfactor(bp.nile, breaks = 1)\n  Res.Df     RSS Df Sum of Sq     F    Pr(&gt;F)    \n1     99 2835157                                 \n2     98 1597457  1   1237700 75.93 7.439e-14 ***\n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\n\nBIC based comparison\n\nBIC(fm0, fm1)\n\n    df      BIC\nfm0  2 1318.242\nfm1  3 1265.479\n\n\nAIC based comparison\n\nAIC(fm0, fm1)\n\n    df      AIC\nfm0  2 1313.031\nfm1  3 1257.663\n\n\n\\(\\rightarrow\\) model with structural break in 1898 is significantly better than the null model."
   },
   {
     "objectID": "slides/10-timeseries-outlook.html#diagnostics",
@@ -3610,5 +3610,40 @@
     "title": "Multivariate Lake Data Example",
     "section": "6 Task",
     "text": "6 Task\n\nTry to understand the analysis,\ndiscuss the results,\nask questions.\nThe idea is to work on this report together and to make it more complete."
+  },
+  {
+    "objectID": "slides/10-timeseries-outlook.html#identification-of-seasonal-components",
+    "href": "slides/10-timeseries-outlook.html#identification-of-seasonal-components",
+    "title": "10-Time Series Outlook",
+    "section": "Identification of seasonal components",
+    "text": "Identification of seasonal components\n\nPeriodic phenomena are common in nature\n\nseasonal course of solar radiation and temperature\nseasonal development of vegetation\nheartbeat of animals.\n\nHarmonic analysis\n\nevery time series can be described as a sum of sine and a cosine functions with different periods (Fourier series)\n\n\\[\nx_t = a_0 + \\sum_{p=1}^{N/2-1} \\big(a_p \\cos(2 \\pi p t/N)\n                                 +    b_p \\sin(2 \\pi p t/N)\\big)\n           +a_{N/2} \\cos(\\pi t), \\qquad t=1 \\dots N\n\\]\nwith\n\\(x_t\\): equidistant time series, \\(t\\): time step, \\(N\\): number of data, \\(a_p, b_p\\): Fourier coefficients, \\(a_0 = \\bar{x}\\), \\(p\\): order of the periodic component"
+  },
+  {
+    "objectID": "slides/10-timeseries-outlook.html#formulation-with-a-single-cosine-term",
+    "href": "slides/10-timeseries-outlook.html#formulation-with-a-single-cosine-term",
+    "title": "10-Time Series Outlook",
+    "section": "Formulation with a single cosine term",
+    "text": "Formulation with a single cosine term\n\nThe equation with sine and cosine terms can be transformed in an equation with cosine terms only, using the trigonometric addition formulas:\n\n\\[\nx_t = a_0 + \\sum(R_p \\cdot \\cos(2 \\pi p t / N + \\Phi_p)\n\\]\nwith:\n\namplitude: \\(R_p = \\sqrt{a_p^2 + b_p^2}\\)\nphase shift: \\(\\Phi_p = \\arctan(-b_p/a_p)\\)\n\n see: https://en.wikipedia.org/wiki/List_of_trigonometric_identities"
+  },
+  {
+    "objectID": "slides/10-timeseries-outlook.html#identification-of-seasonal-parameters",
+    "href": "slides/10-timeseries-outlook.html#identification-of-seasonal-parameters",
+    "title": "10-Time Series Outlook",
+    "section": "Identification of seasonal parameters",
+    "text": "Identification of seasonal parameters\n\nlinear regression with the lm function, example for the simple case with a single periodic component m &lt;- lm(x ~ sin(2 * pi * t / N) + cos(2 * pi * t / N))\nnonlinear regression with nls (allows to identify the period as nonlinear parameter)\nClassical Fourier analysis:\n\n\\[\\begin{align}\n     a_0 &= \\bar{x}\\\\\na_{N/2} &= \\sum_{t=1}^{N}(-1)^tx_t/N\\\\\na_p     &= 2 \\frac{\\sum_{t=1}^{N} x_t \\cos(2 \\pi p t/N)}{N}\\\\\nb_p     &= 2 \\frac{\\sum_{t=1}^{N} x_t \\sin(2 \\pi p t/N)}{N}\n\\end{align}\\]\n\nFast Fourer transform (FFT) using complex numbers used in signal processing (CD and MP3 players, mobile phones, …"
+  },
+  {
+    "objectID": "slides/10-timeseries-outlook.html#fast-fourier-transform",
+    "href": "slides/10-timeseries-outlook.html#fast-fourier-transform",
+    "title": "10-Time Series Outlook",
+    "section": "Fast Fourier transform",
+    "text": "Fast Fourier transform\n\n\nShow the code\n# create an arbitrary time series\nn   &lt;- 360\nt   &lt;- 0:(n-1)\nx   &lt;- sin(t*2*pi/n) + rnorm(n, sd = 0.2)\nplot(t, x, xlim = c(-10, 370))\n  \n# perform the FFT\np       &lt;- fft(x)\n\n# invert the FFT for the main period only (keep parameters 1..3)\np[4:n]  &lt;- 0 # set higher order parameters to zero\nx_sim      &lt;- fft(p, inverse = TRUE)\nlines(t, 2 * Re(x_sim)/n - Re(p[1])/n, col = \"blue\", lwd = 4)\n\n\n## perform FFT and invert it for all periods\np       &lt;- fft(x)\np[(n/2):n] &lt;- 0 # set only the \"redundant frequencies\" to zero\nx_sim         &lt;- fft(p, inverse = TRUE)\nlines(t, 2 * Re(x_sim)/n - Re(p[1])/n, col = \"red\", lwd = 1)"
+  },
+  {
+    "objectID": "slides/10-timeseries-outlook.html#practical-smoothing-with-the-lowess-filter",
+    "href": "slides/10-timeseries-outlook.html#practical-smoothing-with-the-lowess-filter",
+    "title": "10-Time Series Outlook",
+    "section": "Practical smoothing with the LOWESS filter",
+    "text": "Practical smoothing with the LOWESS filter\n\n\nShow the code\nplot(PrecipGL)\nlines(lowess(time(PrecipGL), PrecipGL, f = 2/3), lwd = 3, col = \"blue\")\nlines(lowess(time(PrecipGL), PrecipGL, f = 1/3), lwd = 3, col = \"forestgreen\")\nlines(lowess(time(PrecipGL), PrecipGL, f = 0.1), lwd = 3, col = \"red\")\n\n\n\n\nlocally weighted polynomial regression\ndifferent functions available in R: lowess and loess\nallows to adjust smoothness (smoother span f)\n\n Cleveland, W. S. (1979). Robust locally weighted regression and smoothing scatterplots. Journal of the American Statistical Association, 74, 829–836. doi:10.1080/01621459.1979.10481038."
   }
 ]

@@ -36,9 +36,9 @@ show positive skewness, a logarithmic transformation is often helpful.
 ## Smoothing methods
 
 
-* use regression vs. time
-* or use smoothers (moving averages),
-* then subtract the trend line.
+* use regression vs. time (linear or nonlinear regression)
+* or use smoothers (moving averages)
+* then subtract the trend line
 
 ```{r filter1,fig=TRUE, echo=TRUE, fig.align='center'}
 library(Kendall)
@@ -47,21 +47,19 @@ tsp(PrecipGL)
 plot(PrecipGL)
 kernel <- rep(1, 10)  # a rectangular kernel, vary bandwith
 lines(stats::filter(PrecipGL, kernel/sum(kernel)), lwd = 2, col = "blue")
-lines(lowess(time(PrecipGL), PrecipGL), lwd = 3, col = 2)
 ```
 
 ## Trend corrected series
 
 Now, the trend corrected series can be obtained by subtracting the trend, e.g.:
 
-```{r filter2, echo=TRUE}
+```{r filter2, echo=TRUE, fig.align='center'}
 smooth <- stats::filter(PrecipGL, kernel/sum(kernel))
-## OR:
-# smooth <- lowess(time(PrecipGL), PrecipGL)$y
 res <- PrecipGL - smooth
 plot(res)
 ```
 
+Note: use `stats::filter` to avoid potential conflict with `dplyr::filter`.
 
 ## Trend corrected series
 
@@ -78,8 +76,119 @@ data(manaus)
 tsp(manaus)
 plot(manaus)
 lines(stats::filter(manaus, c(0.5, rep(1, 11), 0.5)/12), lwd=2, col="blue")
-lines(lowess(time(manaus),manaus),lwd=3, col=2)
 ```
+
+## Practical smoothing with the LOWESS filter
+
+```{r lowess, echo=TRUE, fig.align='center'}
+#| code-fold: true
+#| code-summary: "Show the code"
+plot(PrecipGL)
+lines(lowess(time(PrecipGL), PrecipGL, f = 2/3), lwd = 3, col = "blue")
+lines(lowess(time(PrecipGL), PrecipGL, f = 1/3), lwd = 3, col = "forestgreen")
+lines(lowess(time(PrecipGL), PrecipGL, f = 0.1), lwd = 3, col = "red")
+```
+
+* locally weighted polynomial regression
+* different functions available in **R**: `lowess` and `loess`
+* allows to adjust smoothness (smoother span `f`)
+
+<small>
+Cleveland, W. S. (1979). Robust locally weighted regression and smoothing scatterplots. Journal of the American Statistical Association, 74, 829–836. doi:10.1080/01621459.1979.10481038.
+</small>
+
+## Identification of seasonal components
+
+<br>
+
+**Periodic phenomena are common in nature**
+
+* seasonal course of solar radiation and temperature
+* seasonal development of vegetation 
+* heartbeat of animals.
+
+**Harmonic analysis**
+
+* every time series can be described as a sum of sine and a cosine
+functions with different periods (Fourier series)
+
+$$
+ x_t = a_0 + \sum_{p=1}^{N/2-1} \big(a_p \cos(2 \pi p t/N)
+                                 +    b_p \sin(2 \pi p t/N)\big)
+           +a_{N/2} \cos(\pi t), \qquad t=1 \dots N
+$$
+
+**with**
+
+$x_t$: equidistant time series, $t$: time step, $N$: number of data, $a_p, b_p$: Fourier coefficients,<br>
+$a_0 = \bar{x}$, $p$: order of the periodic component
+
+
+## Formulation with a single cosine term
+
+<br>
+
+The equation with sine and cosine terms can be transformed in an equation with cosine terms only,
+using the trigonometric addition formulas:
+
+<br>
+
+$$
+x_t = a_0 + \sum(R_p \cdot \cos(2 \pi p t / N + \Phi_p)
+$$
+
+with:
+
+* amplitude: $R_p = \sqrt{a_p^2 + b_p^2}$
+* phase shift: $\Phi_p = \arctan(-b_p/a_p)$
+
+<br>
+see:  [https://en.wikipedia.org/wiki/List_of_trigonometric_identities](https://en.wikipedia.org/wiki/List_of_trigonometric_identities)
+
+## Identification of seasonal parameters
+
+
+1. linear regression with the `lm` function, example for the simple case with a single periodic component<br> `m <- lm(x ~ sin(2 * pi * t / N) + cos(2 * pi * t / N))`
+2. nonlinear regression with `nls` [(allows to identify the period as nonlinear parameter)]{.gray}
+3. Classical Fourier analysis:
+
+\begin{align}
+     a_0 &= \bar{x}\\
+ a_{N/2} &= \sum_{t=1}^{N}(-1)^tx_t/N\\
+ a_p     &= 2 \frac{\sum_{t=1}^{N} x_t \cos(2 \pi p t/N)}{N}\\
+ b_p     &= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
+\end{align} 
+
+4. Fast Fourer transform (FFT) using complex numbers
+  [used in signal processing (CD and MP3 players, mobile phones, ...]{.gray}
+
+## Fast Fourier transform
+
+```{r fft-demo, echo=TRUE}
+#| code-fold: true
+#| code-summary: "Show the code"
+# create an arbitrary time series
+n   <- 360
+t   <- 0:(n-1)
+x   <- sin(t*2*pi/n) + rnorm(n, sd = 0.2)
+plot(t, x, xlim = c(-10, 370))
+  
+# perform the FFT
+p       <- fft(x)
+
+# invert the FFT for the main period only (keep parameters 1..3)
+p[4:n]  <- 0 # set higher order parameters to zero
+x_sim      <- fft(p, inverse = TRUE)
+lines(t, 2 * Re(x_sim)/n - Re(p[1])/n, col = "blue", lwd = 4)
+
+
+## perform FFT and invert it for all periods
+p       <- fft(x)
+p[(n/2):n] <- 0 # set only the "redundant frequencies" to zero
+x_sim         <- fft(p, inverse = TRUE)
+lines(t, 2 * Re(x_sim)/n - Re(p[1])/n, col = "red", lwd = 1)
+```
+
 
 
 ## Automatic time series decomposition
