@@ -20,8 +20,8 @@ and online material to dig in deeper in the diverse and fascinating field of sta
 
 - Dalgaard, P., 2008: Introductory Statistics with **R**. Springer, New York, 2nd edition. 
       [https://link.springer.com/book/10.1007/b97671](https://link.springer.com/book/10.1007/b97671)
-- Verzani, J. (2019). Using R for introductory statistics. CRC press. 
-      [https://doi.org/10.1111/anzs.12146](https://doi.org/10.1111/anzs.12146)
+- Verzani, J. (2014). Using R for introductory statistics. CRC press. 
+      [Publisher](https://www.routledge.com/Using-R-for-Introductory-Statistics/Verzani/p/book/9781466590731)
 - Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R,
     Springer Verlag, New York. [https://link.springer.com/book/10.1007/978-0-387-77318-6](https://link.springer.com/book/10.1007/978-0-387-77318-6)
 - Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science.
@@ -42,4 +42,4 @@ https://tu-dresden.de/Members/thomas.petzoldt
 
 https://github.com/tpetzoldt
 
-2024-01-09
+2024-08-23

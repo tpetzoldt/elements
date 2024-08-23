@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.280">
+<meta name="generator" content="quarto-1.4.555">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -19,11 +19,12 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -48,48 +49,20 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
-.hanging div.csl-entry {
+.hanging-indent div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -103,8 +76,7 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}
-</style>
+}</style>
 
 
 <script src="../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -129,7 +101,13 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -138,8 +116,10 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit"
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
   }
 }</script>
 
@@ -151,11 +131,16 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-    <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Multivariate Lake Data Example</h1>
-      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
-        <i class="bi bi-chevron-right"></i>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tutorials/s1-introductory-r-session.html">Tutorials</a></li><li class="breadcrumb-item"><a href="../tutorials/s3-multivar-lakes.html">Multivariate Lake Data Example</a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
       </button>
     </div>
   </nav>
@@ -163,140 +148,162 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation docked overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="../">Elements of Data Analysis and Statistics</a> 
     </div>
       </div>
-      <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-      </div>
+        </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Basic Statistics</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Basic Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/01-introduction.html" class="sidebar-item-text sidebar-link">01-Introduction</a>
+  <a href="../slides/01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">01-Introduction</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/02-terminology.html" class="sidebar-item-text sidebar-link">02-Basic Terminology</a>
+  <a href="../slides/02-terminology.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">02-Basic Terminology</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/03-statparams.html" class="sidebar-item-text sidebar-link">03-Statistical Parameters</a>
+  <a href="../slides/03-statparams.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">03-Statistical Parameters</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/04-distributions.html" class="sidebar-item-text sidebar-link">04-Distributions</a>
+  <a href="../slides/04-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">04-Distributions</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/05-classtests.html" class="sidebar-item-text sidebar-link">05-Classical Tests</a>
+  <a href="../slides/05-classtests.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">05-Classical Tests</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/06-linear.html" class="sidebar-item-text sidebar-link">06-Linear Regression</a>
+  <a href="../slides/06-linear.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">06-Linear Regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/07-anova.html" class="sidebar-item-text sidebar-link">07-One and two-way ANOVA</a>
+  <a href="../slides/07-anova.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">07-One and two-way ANOVA</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/08-nonlinear-regression.html" class="sidebar-item-text sidebar-link">08-Nonlinear Regression</a>
+  <a href="../slides/08-nonlinear-regression.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">08-Nonlinear Regression</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/09-timeseries-basics.html" class="sidebar-item-text sidebar-link">09-Time Series Basics</a>
+  <a href="../slides/09-timeseries-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">09-Time Series Basics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/10-timeseries-outlook.html" class="sidebar-item-text sidebar-link">10-Time Series Outlook</a>
+  <a href="../slides/10-timeseries-outlook.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">10-Time Series Outlook</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/11-multivariate-1.html" class="sidebar-item-text sidebar-link">11-Multivariate methods I</a>
+  <a href="../slides/11-multivariate-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">11-Multivariate methods I</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/12-multivariate-2.html" class="sidebar-item-text sidebar-link">12-Multivariate methods II</a>
+  <a href="../slides/12-multivariate-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">12-Multivariate methods II</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">Tutorials</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Tutorials</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/s1-introductory-r-session.html" class="sidebar-item-text sidebar-link">An Introductory R Session</a>
+  <a href="../tutorials/s1-introductory-r-session.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">An Introductory R Session</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/s2-multivar-3d.html" class="sidebar-item-text sidebar-link">Ordination and Clustering</a>
+  <a href="../tutorials/s2-multivar-3d.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Ordination and Clustering</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../tutorials/s3-multivar-lakes.html" class="sidebar-item-text sidebar-link active">Multivariate Lake Data Example</a>
+  <a href="../tutorials/s3-multivar-lakes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Multivariate Lake Data Example</span></a>
   </div>
 </li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">R Topics</a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">R Topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
       <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/x1-r-basics.html" class="sidebar-item-text sidebar-link">x1-R Basics</a>
+  <a href="../slides/x1-r-basics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">x1-R Basics</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/x2-r-graphics.html" class="sidebar-item-text sidebar-link">x2-Graphics with R</a>
+  <a href="../slides/x2-r-graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">x2-Graphics with R</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/x3-r-functions.html" class="sidebar-item-text sidebar-link">x3-Functions Everywhere</a>
+  <a href="../slides/x3-r-functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">x3-Functions Everywhere</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../slides/x4-pipes-intro.html" class="sidebar-item-text sidebar-link">x4-Pipelines in R</a>
+  <a href="../slides/x4-pipes-intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">x4-Pipelines in R</span></a>
   </div>
 </li>
       </ul>
@@ -304,33 +311,34 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="toc-section-number">1</span>  Introduction</a></li>
-  <li><a href="#data-set-and-terms-of-use" id="toc-data-set-and-terms-of-use" class="nav-link" data-scroll-target="#data-set-and-terms-of-use"><span class="toc-section-number">2</span>  Data set and terms of use</a></li>
-  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data"><span class="toc-section-number">3</span>  Load the data</a></li>
-  <li><a href="#data-inspection" id="toc-data-inspection" class="nav-link" data-scroll-target="#data-inspection"><span class="toc-section-number">4</span>  Data inspection</a></li>
-  <li><a href="#multivariate-analysis" id="toc-multivariate-analysis" class="nav-link" data-scroll-target="#multivariate-analysis"><span class="toc-section-number">5</span>  Multivariate Analysis</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">1</span> Introduction</a></li>
+  <li><a href="#data-set-and-terms-of-use" id="toc-data-set-and-terms-of-use" class="nav-link" data-scroll-target="#data-set-and-terms-of-use"><span class="header-section-number">2</span> Data set and terms of use</a></li>
+  <li><a href="#load-the-data" id="toc-load-the-data" class="nav-link" data-scroll-target="#load-the-data"><span class="header-section-number">3</span> Load the data</a></li>
+  <li><a href="#data-inspection" id="toc-data-inspection" class="nav-link" data-scroll-target="#data-inspection"><span class="header-section-number">4</span> Data inspection</a></li>
+  <li><a href="#multivariate-analysis" id="toc-multivariate-analysis" class="nav-link" data-scroll-target="#multivariate-analysis"><span class="header-section-number">5</span> Multivariate Analysis</a>
   <ul class="collapse">
-  <li><a href="#principal-components-pca" id="toc-principal-components-pca" class="nav-link" data-scroll-target="#principal-components-pca"><span class="toc-section-number">5.1</span>  Principal Components: PCA</a></li>
-  <li><a href="#nonmetric-multidimensional-scaling-nmds" id="toc-nonmetric-multidimensional-scaling-nmds" class="nav-link" data-scroll-target="#nonmetric-multidimensional-scaling-nmds"><span class="toc-section-number">5.2</span>  Nonmetric Multidimensional Scaling: NMDS</a></li>
-  <li><a href="#cluster-analysis" id="toc-cluster-analysis" class="nav-link" data-scroll-target="#cluster-analysis"><span class="toc-section-number">5.3</span>  Cluster analysis</a></li>
+  <li><a href="#principal-components-pca" id="toc-principal-components-pca" class="nav-link" data-scroll-target="#principal-components-pca"><span class="header-section-number">5.1</span> Principal Components: PCA</a></li>
+  <li><a href="#nonmetric-multidimensional-scaling-nmds" id="toc-nonmetric-multidimensional-scaling-nmds" class="nav-link" data-scroll-target="#nonmetric-multidimensional-scaling-nmds"><span class="header-section-number">5.2</span> Nonmetric Multidimensional Scaling: NMDS</a></li>
+  <li><a href="#cluster-analysis" id="toc-cluster-analysis" class="nav-link" data-scroll-target="#cluster-analysis"><span class="header-section-number">5.3</span> Cluster analysis</a></li>
   </ul></li>
-  <li><a href="#task" id="toc-task" class="nav-link" data-scroll-target="#task"><span class="toc-section-number">6</span>  Task</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">7</span>  References</a></li>
+  <li><a href="#task" id="toc-task" class="nav-link" data-scroll-target="#task"><span class="header-section-number">6</span> Task</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">7</span> References</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../tutorials/s1-introductory-r-session.html">Tutorials</a></li><li class="breadcrumb-item"><a href="../tutorials/s3-multivar-lakes.html">Multivariate Lake Data Example</a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Multivariate Lake Data Example</h1>
+<h1 class="title">Multivariate Lake Data Example</h1>
 <p class="subtitle lead">Applied Statistics – A Practical Course</p>
 </div>
 
@@ -356,7 +364,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <section id="introduction" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
@@ -403,12 +413,20 @@ div.csl-indent {
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">7</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">1</span>) <span class="sc">+</span> .<span class="dv">1</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">scale</span>(dat), <span class="at">las =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="s3-multivar-lakes_files/figure-html/lakes-boxplot-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="s3-multivar-lakes_files/figure-html/lakes-boxplot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>dat<span class="sc">$</span>altitude <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(dat<span class="sc">$</span>altitude <span class="sc">&lt;</span> <span class="dv">0</span>, <span class="dv">0</span>, dat<span class="sc">$</span>altitude)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(<span class="fu">scale</span>(<span class="fu">sqrt</span>(dat)), <span class="at">las=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="s3-multivar-lakes_files/figure-html/lakes-boxplot-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="s3-multivar-lakes_files/figure-html/lakes-boxplot-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -432,11 +450,19 @@ Cumulative Proportion  0.99875 0.99939 0.99991 1.00000</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="s3-multivar-lakes_files/figure-html/lakes-pca1-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="s3-multivar-lakes_files/figure-html/lakes-pca1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(pc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="s3-multivar-lakes_files/figure-html/lakes-pca1-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="s3-multivar-lakes_files/figure-html/lakes-pca1-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>As the PCA with the untransformed data looks somewhat asymmetric, we repeat it with square transformed data. In addition, also the 3rd PC is plotted.</p>
@@ -460,7 +486,11 @@ Cumulative Proportion  0.99666 0.99840 0.99972 1.00000</code></pre>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(pc2, <span class="at">cex=</span><span class="fl">0.6</span>)</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="fu">biplot</span>(pc2, <span class="at">cex=</span><span class="fl">0.6</span>, <span class="at">choices=</span><span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="s3-multivar-lakes_files/figure-html/lakes-pca2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="s3-multivar-lakes_files/figure-html/lakes-pca2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>A PCA is also possible with the <code>rda</code> function of the <strong>vegan</strong> package. The syntax of the plot functions is somewhat different. Instead of <code>biplot</code> as above, we can directly use <code>plot</code>. Details are found in the <strong>vegan</strong> documentation.</p>
@@ -483,7 +513,11 @@ Eigenvalues for unconstrained axes:
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="co">#summary(pc3)</span></span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(pc3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="s3-multivar-lakes_files/figure-html/lakes-pca-rda-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="s3-multivar-lakes_files/figure-html/lakes-pca-rda-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -496,49 +530,41 @@ Eigenvalues for unconstrained axes:
 <pre><code>Square root transformation
 Wisconsin double standardization
 Run 0 stress 0.1181117 
-Run 1 stress 0.1230331 
-Run 2 stress 0.1768603 
-Run 3 stress 0.1181116 
-... New best solution
-... Procrustes: rmse 0.0001096059  max resid 0.0003064521 
+Run 1 stress 0.1181118 
+... Procrustes: rmse 6.249567e-05  max resid 0.0001774713 
 ... Similar to previous best
-Run 4 stress 0.1181118 
-... Procrustes: rmse 0.0002047576  max resid 0.000586677 
-... Similar to previous best
-Run 5 stress 0.1207019 
-Run 6 stress 0.2099927 
-Run 7 stress 0.1207022 
-Run 8 stress 0.1181116 
-... Procrustes: rmse 5.028569e-05  max resid 0.0001415644 
-... Similar to previous best
+Run 2 stress 0.1207019 
+Run 3 stress 0.1230331 
+Run 4 stress 0.1207023 
+Run 5 stress 0.1230331 
+Run 6 stress 0.1208975 
+Run 7 stress 0.1230331 
+Run 8 stress 0.1207021 
 Run 9 stress 0.1230331 
-Run 10 stress 0.1230331 
-Run 11 stress 0.1181117 
-... Procrustes: rmse 0.0001039214  max resid 0.0002891055 
-... Similar to previous best
+Run 10 stress 0.185611 
+Run 11 stress 0.2128084 
 Run 12 stress 0.1230331 
-Run 13 stress 0.1208973 
-Run 14 stress 0.1230331 
+Run 13 stress 0.1230331 
+Run 14 stress 0.3773314 
 Run 15 stress 0.1181117 
-... Procrustes: rmse 9.38382e-05  max resid 0.0002579103 
+... Procrustes: rmse 1.006549e-05  max resid 2.49955e-05 
 ... Similar to previous best
-Run 16 stress 0.1230331 
-Run 17 stress 0.1207022 
-Run 18 stress 0.1181117 
-... Procrustes: rmse 7.544484e-05  max resid 0.0002098043 
-... Similar to previous best
-Run 19 stress 0.1181116 
-... New best solution
-... Procrustes: rmse 1.526402e-05  max resid 3.08341e-05 
-... Similar to previous best
+Run 16 stress 0.1208978 
+Run 17 stress 0.120702 
+Run 18 stress 0.1673797 
+Run 19 stress 0.1207021 
 Run 20 stress 0.1230331 
-*** Best solution repeated 1 times</code></pre>
+*** Best solution repeated 2 times</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md, <span class="at">type=</span><span class="st">"text"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">col=</span><span class="st">"grey"</span>, <span class="at">lty=</span><span class="st">"dotted"</span>)</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">col=</span><span class="st">"grey"</span>, <span class="at">lty=</span><span class="st">"dotted"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="s3-multivar-lakes_files/figure-html/lakes-nmds-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="s3-multivar-lakes_files/figure-html/lakes-nmds-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -553,7 +579,11 @@ Run 20 stress 0.1230331
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>hc2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(<span class="fu">scale</span>(dat2)), <span class="at">method=</span><span class="st">"ward.D2"</span>)</span>
 <span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="s3-multivar-lakes_files/figure-html/lakes-hclust1-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="s3-multivar-lakes_files/figure-html/lakes-hclust1-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>We can also use the clusters to indicate groups in the NMDS plot. Function <code>rect.hclust</code> indicates a given number of clusters in the dendrogram, then we cut the tree with <code>cutree</code> and use the groups <code>grp</code> as color codes. <strong>R</strong> has 8 standard colors. If we need more, we can define an own palette.</p>
@@ -561,14 +591,22 @@ Run 20 stress 0.1230331
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="s3-multivar-lakes_files/figure-html/lakes-hclust2-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="s3-multivar-lakes_files/figure-html/lakes-hclust2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>grp <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hc, <span class="dv">5</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># grp                  # can be used to show the groups</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md, <span class="at">type =</span> <span class="st">"n"</span>)</span>
 <span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(md<span class="sc">$</span>points, <span class="fu">row.names</span>(dat2), <span class="at">col =</span> grp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="s3-multivar-lakes_files/figure-html/lakes-hclust2-2.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="s3-multivar-lakes_files/figure-html/lakes-hclust2-2.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>Instead of hierarchical clustering, we can also use a non-hierarchical method, e.g.&nbsp;k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.</p>
@@ -591,17 +629,17 @@ Run 20 stress 0.1230331
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">7 References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="doc-bibliography">
-<div id="ref-Borcard2018" class="csl-entry" role="doc-biblioentry">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">7 References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list">
+<div id="ref-Borcard2018" class="csl-entry" role="listitem">
 Borcard, D., Gillet, F., &amp; Legendre, P. (2018). <em>Numerical <span>Ecology</span> with <span>R</span></em>. <span>Springer International Publishing</span>. <a href="https://doi.org/10.1007/978-3-319-71404-2">https://doi.org/10.1007/978-3-319-71404-2</a>
 </div>
-<div id="ref-Legendre1998" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Legendre1998" class="csl-entry" role="listitem">
 Legendre, P., &amp; Legendre, L. (1998). <em>Numerical <span>Ecology</span></em> (2nd English ed.). <span>Elsevier</span>.
 </div>
-<div id="ref-Oksanen2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-Oksanen2020" class="csl-entry" role="listitem">
 Oksanen, J., Blanchet, F. G., Friendly, M., Kindt, R., Legendre, P., McGlinn, D., Minchin, P. R., O’Hara, R. B., Simpson, G. L., Solymos, P., Stevens, M. H. H., Szoecs, E., &amp; Wagner, H. (2020). <em>Vegan: Community ecology package</em>. <a href="https://CRAN.R-project.org/package=vegan">https://CRAN.R-project.org/package=vegan</a>
 </div>
-<div id="ref-UBA2020" class="csl-entry" role="doc-biblioentry">
+<div id="ref-UBA2020" class="csl-entry" role="listitem">
 Umweltbundesamt. (2021). <em><span class="nocase">Kenndaten ausgewählter Seen Deutschlands</span></em>. <a href="https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen">https://www.umweltbundesamt.de/daten/wasser/zustand-der-seen#okologischer-zustand-der-seen</a>
 </div>
 </div></section></div></main> <!-- /main -->
@@ -632,9 +670,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -670,10 +722,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -683,8 +752,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -696,9 +774,245 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -739,6 +1053,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
