@@ -18,22 +18,21 @@ and online material to dig in deeper in the diverse and fascinating field of sta
 
 ## Further reading
 
-- Dalgaard, P., 2008: Introductory Statistics with **R**. Springer, New York, 2nd edition. 
+- Dalgaard, P, 2008: Introductory Statistics with **R**. Springer Verlag, New York, 2nd edition. 
       [https://link.springer.com/book/10.1007/b97671](https://link.springer.com/book/10.1007/b97671)
-- Verzani, J. (2014). Using R for introductory statistics. CRC press. 
+- Kleiber, C and Zeileis, A, 2008: Applied Econometrics with R. Springer Verlag, New York. 
+    [https://link.springer.com/book/10.1007/978-0-387-77318-6](https://link.springer.com/book/10.1007/978-0-387-77318-6)
+- Verzani, J, 2014: Using R for introductory statistics. CRC press. 
       [Publisher](https://www.routledge.com/Using-R-for-Introductory-Statistics/Verzani/p/book/9781466590731)
-- Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R,
-    Springer Verlag, New York. [https://link.springer.com/book/10.1007/978-0-387-77318-6](https://link.springer.com/book/10.1007/978-0-387-77318-6)
 - Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science.
-  [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
+      [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
 
 ## Status
 
-This is a beta version of slides for basic statistics courses.
-The selection of topics is somewhat arbitrary and without question very basic. It reflects my experience what I think is useful as door-opener.
-
-It is based on former PDF slides and other material. It is still in an early 
-stage of development, constructive comments and suggestions for improvement are welcome.
+The selection of topics reflects what I think is useful as door-opener into 
+various fields, useful in ecology and aquatic sciences. The material is 
+based on former PDF slides and other course material, constructive comments and 
+suggestions for improvement are welcome.
 
 
 ## Author
