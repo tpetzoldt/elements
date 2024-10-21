@@ -8,11 +8,11 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.555">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-08-23">
-  <title>Elements of Data Analysis and Statistics - x1-R Basics</title>
+  <meta name="dcterms.date" content="2024-10-21">
+  <title>Elements of Data Analysis and Statistics – x1-R Basics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -43,7 +43,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -71,7 +71,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -85,7 +85,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -411,7 +411,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-08-23</p>
+  <p class="date">2024-10-21</p>
 </section>
 <section id="prerequisites" class="title-slide slide level1 center">
 <h1>Prerequisites</h1>
@@ -479,8 +479,7 @@ Thomas Petzoldt
 <li>result is printed to the screen</li>
 <li>the <code>[1]</code> indicates that the value shown at the beginning of the line is the first (and here the only) element</li>
 </ul>
-</div>
-<div class="column" style="width:47%;">
+</div><div class="column" style="width:47%;">
 <p><strong>Assignment</strong></p>
 <div class="bigfont">
 <div class="cell">
@@ -492,8 +491,7 @@ Thomas Petzoldt
 <li>The arrow is spelled as “a gets …”</li>
 <li>To avoid confusion: use <code>&lt;-</code> for assignment and let <code>=</code> for parameter matching</li>
 </ul>
-</div>
-</section>
+</div></section>
 <section id="constants-variables-and-assignments" class="slide level2">
 <h2>Constants, variables and assignments</h2>
 <p>Assignment of constants and variables to a variable</p>
@@ -624,8 +622,7 @@ Thomas Petzoldt
 </table>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="cell-output-display">
 <table class="caption-top">
@@ -688,8 +685,7 @@ Thomas Petzoldt
 </table>
 </div>
 </div>
-</div>
-<p>… and more</p>
+</div><p>… and more</p>
 </section>
 <section id="functions" class="slide level2">
 <h2>Functions</h2>
@@ -851,11 +847,9 @@ Thomas Petzoldt
 [3,]   15   18   21   24</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:10%;">
+</div><div class="column" style="width:10%;">
 
-</div>
-<div class="column" style="width:44%;">
+</div><div class="column" style="width:44%;">
 <ul>
 <li><strong>elements</strong> of a matrix or array</li>
 </ul>
@@ -884,8 +878,7 @@ Thomas Petzoldt
 [4,]   10   22</code></pre>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="reordering-and-indirect-indexing" class="slide level2">
 <h2>Reordering and indirect indexing</h2>
 <div class="column" style="width:49%;">
@@ -911,8 +904,7 @@ Thomas Petzoldt
 [4,]    1    5    9   13   17</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <p>Indirect index</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a aria-hidden="true" tabindex="-1"></a>x[<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">2</span>), <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">4</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -942,8 +934,7 @@ Thomas Petzoldt
 [2,]    1    5    9   13   17</code></pre>
 </div>
 </div>
-</div>
-</section></section>
+</div></section></section>
 <section>
 <section id="matrix-algebra" class="title-slide slide level1 center">
 <h1>Matrix algebra</h1>
@@ -975,8 +966,7 @@ Thomas Petzoldt
 [2,]    2    8</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <p>Outer product (and sum)</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-hidden="true" tabindex="-1"></a><span class="dv">1</span><span class="sc">:</span><span class="dv">4</span> <span class="sc">%o%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1005,8 +995,7 @@ Thomas Petzoldt
 [2,]    2    4</code></pre>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="matrix-multiplication-explained" class="slide level2">
 <h2>Matrix multiplication explained</h2>
 <p><br></p>
@@ -1031,11 +1020,9 @@ Thomas Petzoldt
 [2,]   35   44   37   32</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <p><img data-src="../img/matrix-multiplication.svg"></p>
-</div>
-</section>
+</div></section>
 <section id="transpose-and-inverse" class="slide level2">
 <h2>Transpose and inverse</h2>
 <p>Matrix</p>
@@ -1332,8 +1319,7 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 [4,]  4  8 12 16</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:55%;">
+</div><div class="column" style="width:55%;">
 <p><strong>Append column</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb83"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a aria-hidden="true" tabindex="-1"></a>df2 <span class="ot">&lt;-</span> <span class="fu">cbind</span>(df,</span>
@@ -1360,8 +1346,7 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 <li>all columns are now character</li>
 <li>matrix does not support mixed data</li>
 </ul>
-</div>
-</section>
+</div></section>
 <section id="selection-of-data-frame-columns" class="slide level2">
 <h2>Selection of data frame columns</h2>
 <p>Create a data frame from a matrix</p>
@@ -1438,8 +1423,7 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 2 2 6 10 14</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:45%;">
+</div><div class="column" style="width:45%;">
 <p>Conditional selection of rows</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb101"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a aria-hidden="true" tabindex="-1"></a>df[df<span class="sc">$</span>P <span class="sc">&gt;</span> <span class="dv">6</span>, ]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1469,8 +1453,7 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 <pre><code>[1] 5 6 7 8</code></pre>
 </div>
 </div>
-</div>
-</section></section>
+</div></section></section>
 <section>
 <section id="lists" class="title-slide slide level1 center">
 <h1>Lists</h1>
@@ -1494,10 +1477,10 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 <span id="cb109-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 6
- $ breaks  : num [1:8] -3 -2 -1 0 1 2 3 4
- $ counts  : int [1:7] 1 13 33 35 16 1 1
- $ density : num [1:7] 0.01 0.13 0.33 0.35 0.16 0.01 0.01
- $ mids    : num [1:7] -2.5 -1.5 -0.5 0.5 1.5 2.5 3.5
+ $ breaks  : num [1:12] -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 ...
+ $ counts  : int [1:11] 1 6 6 13 23 16 16 10 7 1 ...
+ $ density : num [1:11] 0.02 0.12 0.12 0.26 0.46 0.32 0.32 0.2 0.14 0.02 ...
+ $ mids    : num [1:11] -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25 ...
  $ xname   : chr "rnorm(100)"
  $ equidist: logi TRUE
  - attr(*, "class")= chr "histogram"</code></pre>
@@ -1537,11 +1520,9 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 <pre><code> [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:5%;">
+</div><div class="column" style="width:5%;">
 
-</div>
-<div class="column" style="width:46%;">
+</div><div class="column" style="width:46%;">
 <p>or with indices</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb119"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a aria-hidden="true" tabindex="-1"></a>L2[<span class="dv">1</span>]   <span class="co"># a list with 1 element</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1554,8 +1535,7 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 <pre><code>[1] 5 6 7</code></pre>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="lists-ii" class="slide level2">
 <h2>Lists II</h2>
 <p><br></p>
@@ -1593,6 +1573,8 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 ::: {.column width="39%" .add-space}
 Convert vector to list
 
+
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -1613,6 +1595,8 @@ List of 3
 
 :::
 :::
+
+
 
 :::
 --->
@@ -1687,11 +1671,9 @@ $C
  2.5  6.5 10.5 14.5 </code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:10%;">
+</div><div class="column" style="width:10%;">
 
-</div>
-<div class="column" style="width:44%;">
+</div><div class="column" style="width:44%;">
 <p>Row wise apply</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb140"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb140-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">apply</span>(df, <span class="at">MARGIN =</span> <span class="dv">1</span>, sum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1720,8 +1702,7 @@ $C
 0.6455 0.6455 0.6455 0.6455 </code></pre>
 </div>
 </div>
-</div>
-</section></section>
+</div></section></section>
 <section>
 <section id="loops-and-conditional-execution" class="title-slide slide level1 center">
 <h1>Loops and conditional execution</h1>
@@ -1831,11 +1812,9 @@ $C
 </div>
 </div>
 <p>… also possible <code>colMeans</code></p>
-</div>
-<div class="column" style="width:10%;">
+</div><div class="column" style="width:10%;">
 
-</div>
-<div class="column" style="width:44%;">
+</div><div class="column" style="width:44%;">
 <p>An infinite series:</p>
 <p><span class="math display">\[
 \sum_{k=1}^{\infty}\frac{(-1)^{k-1}}{2k-1} = 1 - \frac{1}{3} + \frac{1}{5} - \frac{1}{7}
@@ -1853,8 +1832,7 @@ $C
 </div>
 </div>
 <p><span class="math inline">\(\Rightarrow\)</span> Can you vectorize this?</p>
-</div>
-</section>
+</div></section>
 <section id="unavoidable-loop" class="slide level2">
 <h2>Unavoidable loop</h2>
 <p>The same series:</p>
@@ -1909,11 +1887,9 @@ $C
 <li>Professionals indent always.</li>
 <li>Please do!</li>
 </ul>
-</div>
-<div class="column" style="width:10%;">
+</div><div class="column" style="width:10%;">
 
-</div>
-<div class="column" style="width:44%;">
+</div><div class="column" style="width:44%;">
 <p>Use of <span class="red"><code>{}</code></span> to group statements</p>
 <ul>
 <li><code>statement</code> can of be a compound statement with curly brackets <code>{}</code></li>
@@ -1929,8 +1905,7 @@ $C
 <span id="cb163-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">print</span>(<span class="st">"x is positive"</span>)</span>
 <span id="cb163-7"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="vectorized-if" class="slide level2">
 <h2>Vectorized if</h2>
 <p>Often, a vectorized <code>ifelse</code> is more appropropriate than an <code>if</code>-function.</p>
@@ -2293,18 +2268,7 @@ attr(,"class")
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -2336,7 +2300,29 @@ attr(,"class")
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -2344,7 +2330,7 @@ attr(,"class")
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

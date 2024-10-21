@@ -4,6 +4,12 @@ subtitle: "Applied Statistics -- A Practical Course"
 date:   "`r Sys.Date()`"
 ---
 
+```{r, echo=FALSE, include=FALSE}
+library("dplyr")
+library("tidyr")
+library("kableExtra")
+```
+
 
 # Preface{data-background-color="#006ab2"}
 
@@ -45,11 +51,19 @@ $\rightarrow$ More important than facts learned by heart.
 
 <br>
 
-* Slides
-* Exercises
-* Course script for self study "Data Analysis with R – Selected Topics and Examples"
-* **Note:** Slides, script and exercises are regularly updated, depending on the progress of the course.
-* **Exam:** Written exam at the end of the semester.<br>
+* Slides, Tutorials: [tpetzoldt.github.io/elements](https://tpetzoldt.github.io/elements)
+* Exercises:  [tpetzoldt.github.io/element-labs](https://tpetzoldt.github.io/element-labs)
+
+:::{.smallfont}
+$\rightarrow$ Slides and exercises are regularly updated, depending on the progress of the course. Comments are welcome.
+:::
+
+<br>
+
+* Written exam at the end of the semester
+  
+  $\rightarrow$ [> 50% practical questions]{.blue}
+  
   $\rightarrow$ [Attend the labs!]{.red}
 
 <br>
@@ -211,6 +225,8 @@ treatment influence growth of aquatic animals? → ANOVA
 
 ## Statistical modeling
 
+<br>
+
 **Fit a statistical model to the data**
 
 * Select proper modelling strategy
@@ -276,7 +292,157 @@ The parameter $r$ is the Pearson correlation coefficient.
 
 # How to do this in practice?{data-background-color="#006ab2"}
 
-## Required software
+1. Data
+2. Mathematics
+3. Computing
+
+## Which **data** structure is better?
+
+<br>
+
+
+```{r}
+data_long <- data.frame(
+  year = rep(2021:2023, each = 5),
+  station = rep(LETTERS[1:5], times = 3),
+  value = sample(1:20, 15, replace = TRUE)
+)
+
+data_wide <- data_long |> pivot_wider(names_from = year)
+```
+
+
+::: {.column width="49%"}
+
+**Wide format**
+
+<br>
+
+```{r}
+knitr::kable(data_wide)
+```
+:::
+
+
+::: {.column width="49%"}
+
+**Long format**
+
+:::: { .smallfont}
+```{r}
+knitr::kable(data_long)
+```
+::::
+:::
+
+
+## Example: An algae growth experiment
+<br>
+
+```{r, echo=FALSE}
+algae <- data.frame(
+  treat  = factor(c("Fertilizer", "Fertilizer", "Fertilizer", 
+             "F. open", "F. open", "F. open", 
+             "F.+sugar", "F.+sugar", "F.+sugar", 
+             "F.+CaCO3", "F.+CaCO3", "F.+CaCO3", 
+             "Bas.med.", "Bas.med.", "Bas.med.", 
+             "A.dest", "A.dest", "A.dest", 
+             "Tap water", "Tap water"),
+             levels=c("Fertilizer", "F. open", "F.+sugar", 
+                    "F.+CaCO3", "Bas.med.", "A.dest", "Tap water")),
+  rep   = c(1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2, 3, 1, 2), 
+  growth = c(0.02, -0.217, -0.273, 0.94, 0.78, 0.555, 0.188, -0.1, 0.02, 
+             0.245, 0.236, 0.456, 0.699, 0.727, 0.656, -0.01, 0, -0.01, 0.03, -0.07)
+)
+
+xalgae <- 
+  algae |> 
+  pivot_wider(id_cols = treat, names_from = rep, values_from = growth, names_prefix = "replicate ")
+```
+
+### Wide format
+
+```{r}
+#| label: tbl-algae-growth
+#| tbl-cap: "Growth of algae within 4 days (relative units)"
+
+xalgae |>
+  kable('html') |> 
+  kable_styling(bootstrap_options = "striped", full_width = FALSE)
+```
+
+
+
+* [NA]{.red} means "not available", i.e. a missing value
+
+
+## Data in long format
+
+::: {.column width="59%"}
+
+<br>
+
+### Advantages
+
+* looks "stupid" but is better for data analysis
+* dependent variable **growth** and <br>explanation variable **treat** clearly visible
+* model formula: `growth ~ treat`
+* easily extensible to $>1$ explanation variable
+
+:::
+
+
+::: {.column width="39%"}
+```{r}
+algae |> 
+  head(12) |>
+  kable('html') |>
+  kable_styling(bootstrap_options = c("striped"), full_width = FALSE)
+```
+:::
+
+## Why using long format?
+
+<br>
+
+**Advantages**
+
+* **Clear and consistent:** 
+    - avoids duplications 
+    - data structure easier to understand
+* **Flexible:** 
+    - for various statistical analyses, e.g. ANOVA, multiple regression, time series
+    - easy to transform to wide formats when necessary
+* **Compatibile:** 
+    - modern data analysis tools like R and Python prefer long format
+    - compatible with data base systems
+
+**Therefore:**
+
+* **Try to avoid wide format.** It can lead to inconsistencies and complications in analysis.
+* **Tidy data before doing the analysis** and convert wide to long format.
+
+<br>
+
+$\rightarrow$ Lab-exercise with Elbe River time series.
+
+## Mathematics
+
+<br>
+
+1. **Linear Algebra:** The foundation for many statistical methods, especially matrices and vectors.
+2. **Calculus:** Optimization problems, deriving statistical formulas, understanding function behavior.
+3. **Numerical Analysis:** Implementation of statistical methods on computers, especially with large or complex datasets.
+4. **Probability Theory:** Sampling and modeling data, understanding statistical inference, developing algorithms.
+5. **Statistical Modeling:** Regression analysis, time series analysis, Bayesian modeling, machine learning.
+
+<br>
+
+[$\rightarrow$ Proper use of ready-made software packages requires fundamental understanding.]{.red}
+
+## Computing
+
+**Required software**
 
 * A spreadsheet program, Excel or LibreOffice [https://www.libreoffice.org/](https://www.libreoffice.org/)
 * The **R** system for data analysis and graphics [https://www.r-project.org](https://www.r-project.org)
@@ -317,10 +483,8 @@ In contrast to other systems Copy & Paste is allowed! – just cite it.
 
 * Well-readable introductions
     - Dalgaard, P., 2008: Introductory Statistics with **R**. Springer, New York, 2nd edition. (fulltext of the 1st edition [freely available](https://link.springer.com/book/10.1007/b97671))
-    - Verzani, J. (2019). Using R for introductory statistics. CRC press. Fulltext available via DOI [https://doi.org/10.1111/anzs.12146](https://doi.org/10.1111/anzs.12146)
-
-* A very well understandable introduction into many fields:
-   of statistics, especially regression and time series analysis:
+    - Verzani, J. (2019). Using R for introductory statistics. CRC press.
+* A very well understandable introduction into many fields of statistics, especially regression and time series analysis:
   - Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R,
     Springer Verlag, New York. [https://link.springer.com/book/10.1007/978-0-387-77318-6](https://link.springer.com/book/10.1007/978-0-387-77318-6)
 
@@ -328,7 +492,7 @@ In contrast to other systems Copy & Paste is allowed! – just cite it.
     
 * An introduction to data science using the modern "tidyverse" approach:
   - Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science.
-  [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
+  Free ebook: [https://r4ds.hadley.nz/](https://r4ds.hadley.nz/)
 
 
 ::: aside

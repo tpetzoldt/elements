@@ -8,11 +8,11 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.555">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-08-23">
-  <title>Elements of Data Analysis and Statistics - 07-One and two-way ANOVA</title>
+  <meta name="dcterms.date" content="2024-10-21">
+  <title>Elements of Data Analysis and Statistics – 07-One and two-way ANOVA</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -43,7 +43,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -71,7 +71,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -85,7 +85,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -435,7 +435,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-08-23</p>
+  <p class="date">2024-10-21</p>
 </section>
 <section id="anova-analysis-of-variances" class="slide level2">
 <h2>ANOVA – Analysis of Variances</h2>
@@ -465,11 +465,9 @@ Thomas Petzoldt
 <li>cheap, easy to handle</li>
 <li>suitable for students courses and classroom experiments</li>
 </ul>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <p><img data-src="../img/ansaetze.jpg"></p>
-</div>
-<p><strong>Idea</strong></p>
+</div><p><strong>Idea</strong></p>
 <ul>
 <li>use a commercial fertilizer with the main nutrients N and P</li>
 <li>mineral water with trace elements</li>
@@ -515,7 +513,7 @@ Thomas Petzoldt
 <h2>The data set</h2>
 <p><br></p>
 <div class="cell">
-<div id="tbl-algae-growth" class="cell quarto-float">
+<div id="tbl-algae-growth" class="cell quarto-float quarto-figure quarto-figure-center">
 <figure class="quarto-float quarto-float-tbl">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-algae-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Table&nbsp;1: Growth from day 2 to day 6 (relative units)
@@ -600,8 +598,7 @@ Table&nbsp;1: Growth from day 2 to day 6 (relative units)
 <li>model formula: <code>growth ~ treat</code></li>
 <li>easily extensible to <span class="math inline">\(&gt;1\)</span> explanation variable</li>
 </ul>
-</div>
-<div class="column" style="width:39%;">
+</div><div class="column" style="width:39%;">
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-striped caption-top" data-quarto-postprocess="true" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -679,8 +676,7 @@ Table&nbsp;1: Growth from day 2 to day 6 (relative units)
 
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="the-data-in-r" class="slide level2">
 <h2>The data in R</h2>
 <p><br><br></p>
@@ -967,8 +963,7 @@ Tap water-A.dest     -0.01333333 -0.40796806  0.38130140 0.9999997</code></pre>
 <li>Approximate normality of errors</li>
 </ol>
 <p>Graphical checks are preferred.</p>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -980,8 +975,7 @@ Tap water-A.dest     -0.01333333 -0.40796806  0.38130140 0.9999997</code></pre>
 </div>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="numerical-tests" class="slide level2">
 <h2>Numerical tests</h2>
 <p><br><br></p>
@@ -1003,8 +997,7 @@ data:  growth by treat
 Fligner-Killeen:med chi-squared = 4.2095, df = 6, p-value = 0.6483</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <p><strong>Test of normal distribution</strong></p>
 <ul>
 <li>The Shapiro-Wilks test can be misleading.</li>
@@ -1021,8 +1014,7 @@ Fligner-Killeen:med chi-squared = 4.2095, df = 6, p-value = 0.6483</code></pre>
 </div>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="one-way-anova-with-heterogeneous-variances" class="slide level2">
 <h2>One-way ANOVA with heterogeneous variances</h2>
 <p><br><br></p>
@@ -1114,8 +1106,7 @@ F = 115.09, num df = 6.0000, denom df = 4.6224, p-value = 6.57e-05</code></pre>
 <span id="cb31-5"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">coat =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"light"</span>, <span class="st">"dark"</span>), <span class="at">each=</span><span class="dv">6</span>)</span>
 <span id="cb31-6"><a aria-hidden="true" tabindex="-1"></a>                   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div>
-<div class="column" style="width:39%;">
+</div><div class="column" style="width:39%;">
 <div class="cell">
 <div class="cell-output-display">
 <table class="table table-striped caption-top" data-quarto-postprocess="true" style="width: auto !important; margin-left: auto; margin-right: auto;">
@@ -1206,8 +1197,7 @@ F = 115.09, num df = 6.0000, denom df = 4.6224, p-value = 6.57e-05</code></pre>
 
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="model-formula-examples" class="slide level2">
 <h2>Model formula examples</h2>
 <table class="caption-top">
@@ -1556,6 +1546,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 ## How this works
 
 
+
+
 ::: {.cell}
 
 ```{.r .cell-code}
@@ -1575,6 +1567,8 @@ abline(fem, col="black", lty="dashed")
 abline(mal, col="black", lty="dashed")
 ```
 :::
+
+
 
 --------------------------->
 <img data-src="07-anova_files/figure-revealjs/dobson-ancova-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
@@ -1747,8 +1741,7 @@ growth ~ diet + coat
 - coat  1    2.6133 5.4700 -3.4275</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(opt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1774,8 +1767,7 @@ Multiple R-squared:  0.6486,    Adjusted R-squared:  0.5169
 F-statistic: 4.923 on 3 and 8 DF,  p-value: 0.03178</code></pre>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
 <ul>
@@ -2177,18 +2169,7 @@ Zilliges, Y., Kehr, J.-C., Meissner, S., Ishida, K., Mikkat, S., Hagemann, M., K
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -2220,7 +2201,29 @@ Zilliges, Y., Kehr, J.-C., Meissner, S., Ishida, K., Mikkat, S., Hagemann, M., K
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -2228,7 +2231,7 @@ Zilliges, Y., Kehr, J.-C., Meissner, S., Ishida, K., Mikkat, S., Hagemann, M., K
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

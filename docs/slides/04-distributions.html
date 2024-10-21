@@ -8,11 +8,11 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.555">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-08-23">
-  <title>Elements of Data Analysis and Statistics - 04-Distributions</title>
+  <meta name="dcterms.date" content="2024-10-21">
+  <title>Elements of Data Analysis and Statistics – 04-Distributions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -43,7 +43,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -71,7 +71,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -85,7 +85,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -411,7 +411,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-08-23</p>
+  <p class="date">2024-10-21</p>
 </section>
 <section id="distributions" class="slide level2">
 <h2>Distributions</h2>
@@ -502,8 +502,8 @@ Thomas Petzoldt
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.9445105 0.6344562 0.5459689 0.3767251 0.7011191 0.3785438 0.2352648
- [8] 0.8190890 0.5083157 0.4270305</code></pre>
+<pre><code> [1] 0.47393697 0.38291846 0.91750077 0.03268089 0.13099893 0.98948859
+ [7] 0.17602793 0.70688168 0.08091871 0.03218540</code></pre>
 </div>
 </div>
 <p><br> <br></p>
@@ -513,8 +513,7 @@ Thomas Petzoldt
 <div class="bigfont">
 
 </div>
-</div>
-<div class="column" style="width:39%;">
+</div><div class="column" style="width:39%;">
 <div class="cell" data-layout-align="right">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-right">
@@ -524,8 +523,7 @@ Thomas Petzoldt
 </div>
 </div>
 </div>
-</div>
-<!---
+</div><!---
 $$
 X \sim U(x_{min}, x_{max})
 $$
@@ -567,8 +565,7 @@ F(x) = \begin{cases}
          1                     &amp; \text{for } x &gt; x_{max}
        \end{cases}
 \]</span></p>
-</div>
-<div class="column" style="width:39%;">
+</div><div class="column" style="width:39%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -578,8 +575,7 @@ F(x) = \begin{cases}
 </div>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="quantile-function" class="slide level2">
 <h2>Quantile function</h2>
 <p><br></p>
@@ -595,8 +591,7 @@ F(x) = \begin{cases}
 </div>
 </div>
 <p><span class="blue">Cumulative density function</span></p>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -607,8 +602,7 @@ F(x) = \begin{cases}
 </div>
 </div>
 <p><span class="blue">Quantile function</span></p>
-</div>
-<p>Example: In which range can we find 95% of a uniform distribution <span class="math inline">\(\mathbf{U}(40,60)\)</span>?</p>
+</div><p>Example: In which range can we find 95% of a uniform distribution <span class="math inline">\(\mathbf{U}(40,60)\)</span>?</p>
 </section>
 <section id="summary-uniform-distribution" class="slide level2">
 <h2>Summary: Uniform distribution</h2>
@@ -736,13 +730,11 @@ f(x) = \frac{1}{\sigma\sqrt{2\pi}} \, \mathrm{e}^{-\frac{(x-\mu)^2}{2 \sigma^2}}
 <p><span class="math display">\[
 f(x) = \frac{1}{\sigma\sqrt{2\pi}} \, \mathrm{e}^{-\frac{(x-\mu)^2}{2 \sigma^2}}
 \]</span></p>
-</div>
-<div class="column" style="width:18%;">
+</div><div class="column" style="width:18%;">
 <p><br><br><br><br> <span class="math display">\[
 z = \frac{x-\mu}{\sigma}
 \]</span> <span class="math inline">\(\longrightarrow\)</span> <span class="math inline">\(\longrightarrow\)</span> <span class="math inline">\(\longrightarrow\)</span></p>
-</div>
-<div class="column" style="width:40%;">
+</div><div class="column" style="width:40%;">
 <p><strong>Standard normal distribution</strong></p>
 <div class="cell">
 <div class="cell-output-display">
@@ -756,8 +748,7 @@ z = \frac{x-\mu}{\sigma}
 <p><span class="math display">\[
 f(x) = \frac{1}{\sqrt{2\pi}} \, \mathrm{e}^{-\frac{1}{2}x^2}
 \]</span></p>
-</div>
-</section>
+</div></section>
 <section id="t-distribution-mathbftx-df" class="slide level2">
 <h2>t-Distribution <span class="math inline">\(\mathbf{t}(x, df)\)</span></h2>
 
@@ -921,11 +912,15 @@ As we see the gamma distribution is very flexible. For visualization we
 will draw a few examples (@fig-dgamma):
 
 
+
+
 ::: {.cell}
 ::: {.cell-output-display}
 ![](04-distributions_files/figure-revealjs/gamma, dgamma-1.png){width=960}
 :::
 :::
+
+
 
 
 
@@ -942,11 +937,15 @@ moments (fig-prknit1):
 
 
 
+
+
 ::: {.cell}
 ::: {.cell-output-display}
 ![Histogram of the Nitzschia data set and its estimated gamma distribution.](04-distributions_files/figure-revealjs/fig-prknit1-1.png){#fig-prknit1 width=960}
 :::
 :::
+
+
 
 
 -->
@@ -1004,8 +1003,7 @@ W = 0.99064, p-value = 0.7165</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1015,8 +1013,7 @@ W = 0.99064, p-value = 0.7165</code></pre>
 </div>
 </div>
 </div>
-</div>
-<ul>
+</div><ul>
 <li><span class="math inline">\(x\)</span>: theoretical quantiles where a value should be found if the distribution is normal</li>
 <li><span class="math inline">\(y\)</span>: normalized and ordered measured values (<span class="math inline">\(z\)</span>-scores)</li>
 <li>scaled in the unit of standard deviations</li>
@@ -1074,11 +1071,15 @@ model" to test the full data set without explanation variables
 the ANOVA chapter.
 
 
+
+
 ::: {.cell}
 ::: {.cell-output-display}
 ![](04-distributions_files/figure-revealjs/boxcox-1.png){width=960}
 :::
 :::
+
+
 
 
 The dotted vertical lines and the horizontal 95\,\%-line show the
@@ -1087,6 +1088,8 @@ either a logarithmic transformation ($\lambda=0$) or a power of
 approximately 0.5 are suitable.
 
 It is also possible to obtain the numerical value directly:
+
+
 
 
 ::: {.cell fig='false'}
@@ -1112,6 +1115,8 @@ List of 2
 :::
 
 
+
+
 We should keep in mind that these are approximate numbers so that
 it makes not much sense to use more than one decimal.
 
@@ -1120,11 +1125,15 @@ using explanatory variables (here `group`) on the right hand side of
 the model formula:
 
 
+
+
 ::: {.cell}
 ::: {.cell-output-display}
 ![Log-Likelihood profile of a Box-Cox-transformation for the pooled data sets Nit85 and Nit90.](04-distributions_files/figure-revealjs/fig-boxcox2-1.png){#fig-boxcox2 width=960}
 :::
 :::
+
+
 
 
 -------------------------------------------------------------------------------></p>
@@ -1160,8 +1169,7 @@ the model formula:
 <pre><code>[1] 0.8915663</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <p><br><br><br></p>
 <div class="cell" data-layout-align="right">
 <div class="cell-output-display">
@@ -1172,8 +1180,7 @@ the model formula:
 </div>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="the-central-limit-theorem-clt" class="slide level2">
 <h2>The central limit theorem (CLT)</h2>
 <blockquote>
@@ -1211,8 +1218,7 @@ the model formula:
 <span id="cb14-9"><a aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(xs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><br><span class="blue"><span class="math inline">\(\rightarrow\)</span> row sums are approximately normal distributed</span></p>
-</div>
-<div class="column" style="width:39%;">
+</div><div class="column" style="width:39%;">
 <div class="cell" data-fig.aling="center">
 <div class="cell-output-display">
 <div>
@@ -1222,8 +1228,7 @@ the model formula:
 </div>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="sample-intervals-and-confidence-intervals" class="slide level2">
 <h2>Sample intervals and Confidence intervals</h2>
 <p><br></p>
@@ -1682,18 +1687,7 @@ CI_{95\%} = \bigg(\bar{x} - t_{0.975, n-1} \cdot \frac{s}{\sqrt{n}},
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1725,7 +1719,29 @@ CI_{95\%} = \bigg(\bar{x} - t_{0.975, n-1} \cdot \frac{s}{\sqrt{n}},
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1733,7 +1749,7 @@ CI_{95\%} = \bigg(\bar{x} - t_{0.975, n-1} \cdot \frac{s}{\sqrt{n}},
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

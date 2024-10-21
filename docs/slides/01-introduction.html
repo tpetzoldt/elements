@@ -8,11 +8,11 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.555">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-08-23">
-  <title>Elements of Data Analysis and Statistics - 01-Introduction</title>
+  <meta name="dcterms.date" content="2024-10-21">
+  <title>Elements of Data Analysis and Statistics – 01-Introduction</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -322,6 +322,10 @@
       margin-right: 0; 
     }
   </style>
+  <script src="../site_libs/kePrint-0.0.1/kePrint.js"></script>
+
+  <link href="../site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
   <style>
   #title-slide 
     .title {color: #ee7f00;}
@@ -346,7 +350,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-08-23</p>
+  <p class="date">2024-10-21</p>
 </section>
 <section>
 <section id="preface" class="title-slide slide level1 center" data-background-color="#006ab2">
@@ -393,11 +397,17 @@ Thomas Petzoldt
 <h2>Material</h2>
 <p><br></p>
 <ul>
-<li>Slides</li>
-<li>Exercises</li>
-<li>Course script for self study “Data Analysis with R – Selected Topics and Examples”</li>
-<li><strong>Note:</strong> Slides, script and exercises are regularly updated, depending on the progress of the course.</li>
-<li><strong>Exam:</strong> Written exam at the end of the semester.<br> <span class="math inline">\(\rightarrow\)</span> <span class="red">Attend the labs!</span></li>
+<li>Slides, Tutorials: <a href="https://tpetzoldt.github.io/elements">tpetzoldt.github.io/elements</a></li>
+<li>Exercises: <a href="https://tpetzoldt.github.io/element-labs">tpetzoldt.github.io/element-labs</a></li>
+</ul>
+<div class="smallfont">
+<p><span class="math inline">\(\rightarrow\)</span> Slides and exercises are regularly updated, depending on the progress of the course. Comments are welcome.</p>
+</div>
+<p><br></p>
+<ul>
+<li><p>Written exam at the end of the semester</p>
+<p><span class="math inline">\(\rightarrow\)</span> <span class="blue">&gt; 50% practical questions</span></p>
+<p><span class="math inline">\(\rightarrow\)</span> <span class="red">Attend the labs!</span></p></li>
 </ul>
 <p><br></p>
 <div class="bigfont fragment highlight-red">
@@ -520,6 +530,7 @@ Thomas Petzoldt
 </section>
 <section id="statistical-modeling" class="slide level2">
 <h2>Statistical modeling</h2>
+<p><br></p>
 <p><strong>Fit a statistical model to the data</strong></p>
 <ul>
 <li>Select proper modelling strategy</li>
@@ -564,10 +575,371 @@ Thomas Petzoldt
 <section>
 <section id="how-to-do-this-in-practice" class="title-slide slide level1 center" data-background-color="#006ab2">
 <h1>How to do this in practice?</h1>
-
+<ol type="1">
+<li>Data</li>
+<li>Mathematics</li>
+<li>Computing</li>
+</ol>
 </section>
-<section id="required-software" class="slide level2">
-<h2>Required software</h2>
+<section id="which-data-structure-is-better" class="slide level2">
+<h2>Which <strong>data</strong> structure is better?</h2>
+<p><br></p>
+<div class="column" style="width:49%;">
+<p><strong>Wide format</strong></p>
+<p><br></p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: left;">station</th>
+<th style="text-align: right;">2021</th>
+<th style="text-align: right;">2022</th>
+<th style="text-align: right;">2023</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">4</td>
+<td style="text-align: right;">19</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">18</td>
+<td style="text-align: right;">15</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div><div class="column" style="width:49%;">
+<p><strong>Long format</strong></p>
+<div class="smallfont">
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top">
+<thead>
+<tr class="header">
+<th style="text-align: right;">year</th>
+<th style="text-align: left;">station</th>
+<th style="text-align: right;">value</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2021</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">13</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2021</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2021</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2021</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2021</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">19</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2022</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">18</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">5</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">2023</td>
+<td style="text-align: left;">E</td>
+<td style="text-align: right;">15</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div></section>
+<section id="example-an-algae-growth-experiment" class="slide level2">
+<h2>Example: An algae growth experiment</h2>
+<p><br></p>
+<h3 id="wide-format">Wide format</h3>
+<div class="cell">
+<div id="tbl-algae-growth" class="cell quarto-float quarto-figure quarto-figure-center">
+<figure class="quarto-float quarto-float-tbl">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-algae-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Growth of algae within 4 days (relative units)
+</figcaption>
+<div aria-describedby="tbl-algae-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="table table-striped do-not-create-environment cell caption-top" data-quarto-postprocess="true" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">treat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">replicate 1</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">replicate 2</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">replicate 3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fertilizer</td>
+<td style="text-align: right;">0.020</td>
+<td style="text-align: right;">-0.217</td>
+<td style="text-align: right;">-0.273</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F. open</td>
+<td style="text-align: right;">0.940</td>
+<td style="text-align: right;">0.780</td>
+<td style="text-align: right;">0.555</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">F.+sugar</td>
+<td style="text-align: right;">0.188</td>
+<td style="text-align: right;">-0.100</td>
+<td style="text-align: right;">0.020</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F.+CaCO3</td>
+<td style="text-align: right;">0.245</td>
+<td style="text-align: right;">0.236</td>
+<td style="text-align: right;">0.456</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Bas.med.</td>
+<td style="text-align: right;">0.699</td>
+<td style="text-align: right;">0.727</td>
+<td style="text-align: right;">0.656</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A.dest</td>
+<td style="text-align: right;">-0.010</td>
+<td style="text-align: right;">0.000</td>
+<td style="text-align: right;">-0.010</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tap water</td>
+<td style="text-align: right;">0.030</td>
+<td style="text-align: right;">-0.070</td>
+<td style="text-align: right;">NA</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</figure>
+</div>
+</div>
+<ul>
+<li><span class="red">NA</span> means “not available”, i.e.&nbsp;a missing value</li>
+</ul>
+</section>
+<section id="data-in-long-format" class="slide level2">
+<h2>Data in long format</h2>
+<div class="column" style="width:59%;">
+<p><br></p>
+<h3 id="advantages">Advantages</h3>
+<ul>
+<li>looks “stupid” but is better for data analysis</li>
+<li>dependent variable <strong>growth</strong> and <br>explanation variable <strong>treat</strong> clearly visible</li>
+<li>model formula: <code>growth ~ treat</code></li>
+<li>easily extensible to <span class="math inline">\(&gt;1\)</span> explanation variable</li>
+</ul>
+</div><div class="column" style="width:39%;">
+<div class="cell">
+<div class="cell-output-display">
+<table class="table table-striped caption-top" data-quarto-postprocess="true" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">treat</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">rep</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">growth</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Fertilizer</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.020</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Fertilizer</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-0.217</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fertilizer</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">-0.273</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F. open</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.940</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">F. open</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.780</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F. open</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.555</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">F.+sugar</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.188</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F.+sugar</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">-0.100</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">F.+sugar</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.020</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F.+CaCO3</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">0.245</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">F.+CaCO3</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.236</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">F.+CaCO3</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.456</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</div></section>
+<section id="why-using-long-format" class="slide level2">
+<h2>Why using long format?</h2>
+<p><br></p>
+<p><strong>Advantages</strong></p>
+<ul>
+<li><strong>Clear and consistent:</strong>
+<ul>
+<li>avoids duplications</li>
+<li>data structure easier to understand</li>
+</ul></li>
+<li><strong>Flexible:</strong>
+<ul>
+<li>for various statistical analyses, e.g.&nbsp;ANOVA, multiple regression, time series</li>
+<li>easy to transform to wide formats when necessary</li>
+</ul></li>
+<li><strong>Compatibile:</strong>
+<ul>
+<li>modern data analysis tools like R and Python prefer long format</li>
+<li>compatible with data base systems</li>
+</ul></li>
+</ul>
+<p><strong>Therefore:</strong></p>
+<ul>
+<li><strong>Try to avoid wide format.</strong> It can lead to inconsistencies and complications in analysis.</li>
+<li><strong>Tidy data before doing the analysis</strong> and convert wide to long format.</li>
+</ul>
+<p><br></p>
+<p><span class="math inline">\(\rightarrow\)</span> Lab-exercise with Elbe River time series.</p>
+</section>
+<section id="mathematics" class="slide level2">
+<h2>Mathematics</h2>
+<p><br></p>
+<ol type="1">
+<li><strong>Linear Algebra:</strong> The foundation for many statistical methods, especially matrices and vectors.</li>
+<li><strong>Calculus:</strong> Optimization problems, deriving statistical formulas, understanding function behavior.</li>
+<li><strong>Numerical Analysis:</strong> Implementation of statistical methods on computers, especially with large or complex datasets.</li>
+<li><strong>Probability Theory:</strong> Sampling and modeling data, understanding statistical inference, developing algorithms.</li>
+<li><strong>Statistical Modeling:</strong> Regression analysis, time series analysis, Bayesian modeling, machine learning.</li>
+</ol>
+<p><br></p>
+<p><span class="red"><span class="math inline">\(\rightarrow\)</span> Proper use of ready-made software packages requires fundamental understanding.</span></p>
+</section>
+<section id="computing" class="slide level2">
+<h2>Computing</h2>
+<p><strong>Required software</strong></p>
 <ul>
 <li>A spreadsheet program, Excel or LibreOffice <a href="https://www.libreoffice.org/">https://www.libreoffice.org/</a></li>
 <li>The <strong>R</strong> system for data analysis and graphics <a href="https://www.r-project.org">https://www.r-project.org</a></li>
@@ -598,11 +970,9 @@ Thomas Petzoldt
 <li>huge number of books and online scripts</li>
 </ul></li>
 </ol>
-</div>
-<div class="column" style="width:41%;">
+</div><div class="column" style="width:41%;">
 <p><img data-src="../img/r-homepage.png"></p>
-</div>
-<p>In contrast to other systems Copy &amp; Paste is allowed! – just cite it.</p>
+</div><p>In contrast to other systems Copy &amp; Paste is allowed! – just cite it.</p>
 </section>
 <section id="books" class="slide level2">
 <h2>Books</h2>
@@ -611,9 +981,9 @@ Thomas Petzoldt
 <li>Well-readable introductions
 <ul>
 <li>Dalgaard, P., 2008: Introductory Statistics with <strong>R</strong>. Springer, New York, 2nd edition. (fulltext of the 1st edition <a href="https://link.springer.com/book/10.1007/b97671">freely available</a>)</li>
-<li>Verzani, J. (2019). Using R for introductory statistics. CRC press. Fulltext available via DOI <a href="https://doi.org/10.1111/anzs.12146">https://doi.org/10.1111/anzs.12146</a></li>
+<li>Verzani, J. (2019). Using R for introductory statistics. CRC press.</li>
 </ul></li>
-<li>A very well understandable introduction into many fields: of statistics, especially regression and time series analysis:
+<li>A very well understandable introduction into many fields of statistics, especially regression and time series analysis:
 <ul>
 <li>Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R, Springer Verlag, New York. <a href="https://link.springer.com/book/10.1007/978-0-387-77318-6">https://link.springer.com/book/10.1007/978-0-387-77318-6</a></li>
 </ul></li>
@@ -622,7 +992,7 @@ Thomas Petzoldt
 <ul>
 <li>An introduction to data science using the modern “tidyverse” approach:
 <ul>
-<li>Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a></li>
+<li>Wickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. Free ebook: <a href="https://r4ds.hadley.nz/">https://r4ds.hadley.nz/</a></li>
 </ul></li>
 </ul>
 
@@ -953,18 +1323,7 @@ Thomas Petzoldt
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -996,7 +1355,29 @@ Thomas Petzoldt
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1004,7 +1385,7 @@ Thomas Petzoldt
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

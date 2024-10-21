@@ -8,11 +8,11 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.555">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-08-23">
-  <title>Elements of Data Analysis and Statistics - 05-Classical Tests</title>
+  <meta name="dcterms.date" content="2024-10-21">
+  <title>Elements of Data Analysis and Statistics – 05-Classical Tests</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -43,7 +43,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -71,7 +71,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -85,7 +85,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -431,7 +431,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-08-23</p>
+  <p class="date">2024-10-21</p>
 </section>
 <section>
 <section id="hypotheses-errors-and-the-p-value" class="title-slide slide level1 center">
@@ -802,8 +802,7 @@ mean of x mean of y
 <p><span class="math display">\[
 t_{obs} =\frac{|\bar{x}_1-\bar{x}_2|}{s_{tot}} \cdot \sqrt{\frac{n_1 n_2}{n_1+n_2}}
 \]</span></p>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -813,8 +812,7 @@ t_{obs} =\frac{|\bar{x}_1-\bar{x}_2|}{s_{tot}} \cdot \sqrt{\frac{n_1 n_2}{n_1+n_
 </div>
 </div>
 </div>
-</div>
-<p><strong>pooled standard deviation</strong></p>
+</div><p><strong>pooled standard deviation</strong></p>
 <p><span class="math display">\[
 s_{tot} = \sqrt{{({n}_1 - 1)\cdot s_1^2 + ({n}_2 - 1)\cdot s_2^2
 \over ({n}_1 + {n}_2 - 2)}}
@@ -872,8 +870,7 @@ mean of x mean of y
 <li>larger of the two variances in the enumerator <span class="math inline">\((s^2_1 &gt;  s^2_2)\)</span></li>
 <li>separate degrees of freedom (<span class="math inline">\(n-1\)</span>)</li>
 </ul>
-</div>
-<div class="column" style="width:29%;">
+</div><div class="column" style="width:29%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -883,8 +880,7 @@ mean of x mean of y
 </div>
 </div>
 </div>
-</div>
-<p><strong>Example:</strong></p>
+</div><p><strong>Example:</strong></p>
 <ul>
 <li><span class="red"><span class="math inline">\(s_1=1\)</span></span>, <span class="blue"><span class="math inline">\(s_2 =2\)</span></span>, <span class="math inline">\(n_1=5, n_2=10, F=\frac{2^2}{1^2}=4\)</span></li>
 <li>deg. of freedom: <span class="math inline">\(9 \atop 4\)</span></li>
@@ -917,8 +913,7 @@ data:  list(x1, x2, x3)
 Fligner-Killeen:med chi-squared = 2.2486, df = 2, p-value = 0.3249</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:39%;">
+</div><div class="column" style="width:39%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -928,8 +923,7 @@ Fligner-Killeen:med chi-squared = 2.2486, df = 2, p-value = 0.3249</code></pre>
 </div>
 </div>
 </div>
-</div>
-<ul>
+</div><ul>
 <li>tests are often used to check assumptions of the ANOVA</li>
 </ul>
 <!------------------------------------------------------------------------------
@@ -938,6 +932,8 @@ Fligner-Killeen:med chi-squared = 2.2486, df = 2, p-value = 0.3249</code></pre>
 The classical procedure would be as follows:
 
 1. Perform a check for the identity of both variances with `var.test` beforehand:
+
+
 
 
 ::: {.cell}
@@ -968,9 +964,13 @@ ratio of variances
 
 
 
+
+
 2. if $p < 0.05$ $\Rightarrow$ variances are significantly different $\rightarrow$ Welch test (`var.equal=FALSE`).
 
 3. if $p> 0.05$, $\Rightarrow$ assume equal variances $\rigtarrow$ "ordinary" t-test (`var.equal=TRUE`)
+
+
 
 
 ::: {.cell}
@@ -998,6 +998,8 @@ mean of x mean of y
 
 :::
 :::
+
+
 
 ------------------------------------------------------------------------------->
 </section>
@@ -1053,8 +1055,7 @@ mean of x mean of y
 </div>
 </div>
 <p>p=0.20, not significant</p>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>)</span>
 <span id="cb19-2"><a aria-hidden="true" tabindex="-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">6</span>, <span class="dv">8</span>)</span>
@@ -1074,8 +1075,7 @@ mean difference
 </div>
 </div>
 <p>p=0.016, significant</p>
-</div>
-<p>It can be seen that the paired t-test has a greater discriminatory power in this case.</p>
+</div><p>It can be seen that the paired t-test has a greater discriminatory power in this case.</p>
 </section>
 <section id="mann-whitney-and-wilcoxon-test" class="slide level2">
 <h2>Mann-Whitney and Wilcoxon-test</h2>
@@ -1517,8 +1517,7 @@ alternative hypothesis: Two.sided</code></pre>
 <p><span class="math display">\[
   r_{x,y} = \frac{q_{x,y}}{s_x \cdot s_y}
 \]</span></p>
-</div>
-<div class="column" style="width:39%;">
+</div><div class="column" style="width:39%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1528,8 +1527,7 @@ alternative hypothesis: Two.sided</code></pre>
 </div>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="correlation-coefficient-after-pearson" class="slide level2">
 <h2>Correlation coefficient after Pearson</h2>
 <p><br></p>
@@ -1568,8 +1566,7 @@ r_p=\frac {\sum xy - \sum y \sum y / n}
 </tr>
 </tbody>
 </table>
-</div>
-<div class="column" style="width:29%;">
+</div><div class="column" style="width:29%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1579,8 +1576,7 @@ r_p=\frac {\sum xy - \sum y \sum y / n}
 </div>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="which-size-of-correlation-indicates-dependency" class="slide level2">
 <h2>Which size of correlation indicates dependency?</h2>
 <div class="column" style="width:49%;">
@@ -1594,8 +1590,7 @@ r_p=\frac {\sum xy - \sum y \sum y / n}
 </div>
 </div>
 <p><span class="math inline">\(r=0.4, \quad p=0.0039\)</span></p>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1606,8 +1601,7 @@ r_p=\frac {\sum xy - \sum y \sum y / n}
 </div>
 </div>
 <p><span class="math inline">\(r=0.85, \quad p=0.07\)</span></p>
-</div>
-</section>
+</div></section>
 <section id="significant-correlation" class="slide level2">
 <h2>Significant correlation?</h2>
 <p><span class="math display">\[
@@ -2294,18 +2288,7 @@ Zimmerman, D. W. (2004). A note on preliminary tests of equality of variances. <
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -2337,7 +2320,29 @@ Zimmerman, D. W. (2004). A note on preliminary tests of equality of variances. <
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -2345,7 +2350,7 @@ Zimmerman, D. W. (2004). A note on preliminary tests of equality of variances. <
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {
