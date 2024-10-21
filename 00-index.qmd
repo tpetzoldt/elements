@@ -1,11 +1,7 @@
 ---
 title: "Elements of applied statistics -- a practical course"
 subtitle: "Teaching material"
-format:
-  html:
-    theme: cosmo
-    css: colors.css
-    toc: true
+format: html
 ---
 
 ## Introduction
@@ -41,4 +37,4 @@ https://tu-dresden.de/Members/thomas.petzoldt
 
 https://github.com/tpetzoldt
 
-2024-08-23
+2024-10-21

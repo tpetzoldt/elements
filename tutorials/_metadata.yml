@@ -3,7 +3,6 @@ subtitle: "Applied Statistics -- A Practical Course"
 date-format: "YYYY-MM-DD"
 format:
   html:
-    theme: cosmo
     css: ../thpe.css
     toc: true
     number-sections: true
