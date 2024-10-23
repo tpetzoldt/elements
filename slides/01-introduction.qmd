@@ -216,7 +216,9 @@ which is no more than 1.5 times the interquartile range from the box.
 
 * Turn scientific into statistical hypothesis
 * Estimate probability (p value) of a given hypothesis
-Examples
+
+**Examples**
+
 * Is a medical treatment successful or not? → $\chi^2$-test
 * Does a specific food diet increase yield of a fish farm? → t-test
 * Which factors (e.g. food, temperature, pH) of a combined
