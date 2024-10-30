@@ -30,9 +30,9 @@ website:
           - slides/12-multivariate-2.qmd
       - section: Tutorials
         contents:
-          - tutorials/s1-introductory-r-session.Rmd
-          - tutorials/s2-multivar-3d.Rmd
-          - tutorials/s3-multivar-lakes.Rmd
+          - tutorials/s1-introductory-r-session.qmd
+          - tutorials/s2-multivar-3d.qmd
+          - tutorials/s3-multivar-lakes.qmd
       - section: R Topics
         contents:
           - slides/x1-r-basics.qmd
