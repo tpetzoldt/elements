@@ -8,11 +8,11 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.5.57">
+  <meta name="generator" content="quarto-1.4.554">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-10-22">
-  <title>Elements of Data Analysis and Statistics – x4-Pipelines in R</title>
+  <meta name="dcterms.date" content="2024-10-30">
+  <title>Elements of Data Analysis and Statistics - x4-Pipelines in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -43,7 +43,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -71,7 +71,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.cf { color: #003b4f; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -85,7 +85,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.kw { color: #003b4f; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -441,7 +441,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-10-22</p>
+  <p class="date">2024-10-30</p>
 </section>
 <section id="prerequisites" class="slide level2">
 <h2>Prerequisites</h2>
@@ -491,9 +491,11 @@ Thomas Petzoldt
 6   HSE  6    225   139    91</code></pre>
 </div>
 </div>
-</div><div class="column" style="width:34%;">
+</div>
+<div class="column" style="width:34%;">
 <p><img data-src="../img/leaves_measures.png"></p>
-</div></section>
+</div>
+</section>
 <section id="a-boxplot" class="slide level2">
 <h2>A boxplot</h2>
 <p><br></p>
@@ -642,22 +644,24 @@ Thomas Petzoldt
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-8af596cca92165214648" style="width:432px;height:384px;"></div>
-<script type="application/json" data-for="htmlwidget-8af596cca92165214648">{"x":{"diagram":"digraph functional {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg1, arg2, ...)\"\n           edge [penwidth=1.5]\n              output -> \"function(arg1, arg2, ...)\"[dir=back]\n           edge [penwidth=0.7, tailport = \"e\", headport = \"n\", constraint = false, color=\"tomato\"]\n              \"input\" -> \"function(arg1, arg2, ...)\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-fb76cff0cd50d054175b" style="width:432px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-fb76cff0cd50d054175b">{"x":{"diagram":"digraph functional {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg1, arg2, ...)\"\n           edge [penwidth=1.5]\n              output -> \"function(arg1, arg2, ...)\"[dir=back]\n           edge [penwidth=0.7, tailport = \"e\", headport = \"n\", constraint = false, color=\"tomato\"]\n              \"input\" -> \"function(arg1, arg2, ...)\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-</div><div class="column" style="width:49%;">
+</div>
+<div class="column" style="width:49%;">
 <p><strong>Pipeline style</strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a>leaves <span class="sc">|&gt;</span> <span class="fu">group_by</span>(group)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-f4f57ba0e44777be3c02" style="width:432px;height:384px;"></div>
-<script type="application/json" data-for="htmlwidget-f4f57ba0e44777be3c02">{"x":{"diagram":"digraph pipes {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg2, ...)\"\n           node [shape=none]\n             \"|>\"\n           edge [penwidth=1.5]\n              input -> \"|>\" -> \"function(arg2, ...)\" -> output\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-de1094935963827ade4f" style="width:432px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-de1094935963827ade4f">{"x":{"diagram":"digraph pipes {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg2, ...)\"\n           node [shape=none]\n             \"|>\"\n           edge [penwidth=1.5]\n              input -> \"|>\" -> \"function(arg2, ...)\" -> output\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
-</div></section>
+</div>
+</section>
 <section id="summary-statistics-for-all-variables" class="slide level2">
 <h2>Summary statistics for all variables</h2>
 <ul>
@@ -701,7 +705,7 @@ Thomas Petzoldt
 <p><strong>Wide format</strong></p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top">
+<table>
 <thead>
 <tr class="header">
 <th style="text-align: left;">group</th>
@@ -786,11 +790,12 @@ Thomas Petzoldt
 </table>
 </div>
 </div>
-</div><div class="column" style="width:49%;">
+</div>
+<div class="column" style="width:49%;">
 <p><strong>Long format</strong></p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top">
+<table>
 <thead>
 <tr class="header">
 <th style="text-align: left;">group</th>
@@ -865,7 +870,8 @@ Thomas Petzoldt
 </div>
 </div>
 <p>… … …</p>
-</div></section>
+</div>
+</section>
 <section id="long-data-format-with-pivot_longer" class="slide level2">
 <h2>Long data format with <code>pivot_longer</code></h2>
 <p><br></p>
@@ -1012,7 +1018,7 @@ Thomas Petzoldt
 <p><strong>Table “fruits”</strong></p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top">
+<table>
 <thead>
 <tr class="header">
 <th style="text-align: right;">year</th>
@@ -1111,11 +1117,12 @@ Thomas Petzoldt
 </table>
 </div>
 </div>
-</div><div class="column" style="width:49%;">
+</div>
+<div class="column" style="width:49%;">
 <p><strong>Table “brands”</strong></p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top">
+<table>
 <thead>
 <tr class="header">
 <th style="text-align: right;">year</th>
@@ -1186,7 +1193,8 @@ Thomas Petzoldt
 </table>
 </div>
 </div>
-</div></section>
+</div>
+</section>
 <section id="database-join" class="slide level2">
 <h2>Database join</h2>
 <ul>
@@ -1202,7 +1210,7 @@ Thomas Petzoldt
 <div class="smallfont">
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top" style="width:100%;">
+<table style="width:100%;">
 <colgroup>
 <col style="width: 4%">
 <col style="width: 6%">
@@ -1390,7 +1398,8 @@ Thomas Petzoldt
 <span id="cb34-2"><a aria-hidden="true" tabindex="-1"></a>  fruits2 <span class="sc">|&gt;</span></span>
 <span id="cb34-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">L_mean =</span> weight<span class="sc">^</span>(<span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</div><div class="column" style="width:49%;">
+</div>
+<div class="column" style="width:49%;">
 <p><strong>Show results</strong></p>
 <p>Classical <code>boxplot</code></p>
 <p><br></p>
@@ -1404,7 +1413,8 @@ Thomas Petzoldt
 </div>
 </div>
 </div>
-</div></section>
+</div>
+</section>
 <section id="plot-in-tidyverse-style-with-pipes-and-ggplot" class="slide level2">
 <h2>Plot in “tidyverse”-style with pipes and <code>ggplot</code></h2>
 <div class="cell" data-layout-align="center">
@@ -1435,7 +1445,8 @@ V = 4/3 \pi \cdot \rm (length/2)^2 \cdot height/2
 </div>
 <p>The “+” operator in <code>ggplot</code> looks like a pipeline, but works differently.</p>
 <p>It adds elements to a plot.</p>
-</div><div class="column" style="width:49%;">
+</div>
+<div class="column" style="width:49%;">
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1445,7 +1456,8 @@ V = 4/3 \pi \cdot \rm (length/2)^2 \cdot height/2
 </div>
 </div>
 </div>
-</div></section>
+</div>
+</section>
 <section id="color-coded-points" class="slide level2">
 <h2>Color coded points</h2>
 <div class="cell" data-layout-align="center">
@@ -1518,7 +1530,7 @@ V = 4/3 \pi \cdot \rm (length/2)^2 \cdot height/2
 <p>If we work with <strong>RStudio</strong>, may have a look at the “Global Environment” pane and inspect the data structure of the <code>elbe</code> data frame.</p>
 <div class="cell">
 <div class="cell-output-display">
-<table class="caption-top">
+<table>
 <thead>
 <tr class="header">
 <th style="text-align: left;">date</th>
@@ -2147,7 +2159,18 @@ Wickham, H., François, R., Henry, L., Müller, K., &amp; Vaughan, D. (2023). <e
         }
         return false;
       }
-      const onCopySuccess = function(e) {
+      const clipboard = new window.ClipboardJS('.code-copy-button', {
+        text: function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+        }
+      });
+      clipboard.on('success', function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -2179,29 +2202,7 @@ Wickham, H., François, R., Henry, L., Müller, K., &amp; Vaughan, D. (2023). <e
         }, 1000);
         // clear code selection
         e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
       });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        // For code content inside modals, clipBoardJS needs to be initialized with a container option
-        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -2209,7 +2210,7 @@ Wickham, H., François, R., Henry, L., Müller, K., &amp; Vaughan, D. (2023). <e
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {
