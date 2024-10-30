@@ -553,7 +553,7 @@ f <- factor(text)
 f
 ```
 
-We se that the character variable is printed with quotes and the factor without quotes, but with an additional information about the **Levels**. The reason for this is, that the factor is internally encoded as integer values with assigned levels as a translation table:
+We see that the character variable is printed with quotes and the factor without quotes, but with an additional information about the **Levels**. The reason for this is, that the factor is internally encoded as integer values with assigned levels as a translation table:
 
 ```{r, eval=TRUE}
 levels(f)
