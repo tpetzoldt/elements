@@ -8,11 +8,11 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-10-30">
-  <title>Elements of Data Analysis and Statistics - x2-Graphics with R</title>
+  <meta name="dcterms.date" content="2024-11-05">
+  <title>Elements of Data Analysis and Statistics – x2-Graphics with R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -43,7 +43,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -71,7 +71,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -85,7 +85,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -411,7 +411,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-10-30</p>
+  <p class="date">2024-11-05</p>
 </section>
 <section>
 <section id="preface" class="title-slide slide level1 center">
@@ -481,8 +481,7 @@ Thomas Petzoldt
 </div>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>Petal.Length,</span>
 <span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>     <span class="at">col=</span>iris<span class="sc">$</span>Species)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -494,8 +493,7 @@ Thomas Petzoldt
 </div>
 </div>
 </div>
-</div>
-<p>A column of a <code>data.frame</code> is accessed with <code>$</code>.</p>
+</div><p>A column of a <code>data.frame</code> is accessed with <code>$</code>.</p>
 </section>
 <section id="the-use-of-with-saves-dollars" class="slide level2">
 <h2>The use of <code>with()</code> saves dollars</h2>
@@ -512,8 +510,7 @@ Thomas Petzoldt
 </div>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(iris, <span class="fu">plot</span>(Sepal.Length, Petal.Length, </span>
 <span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>                <span class="at">col=</span>Species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -525,8 +522,7 @@ Thomas Petzoldt
 </div>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="colors-and-plotting-symbols-in-r" class="slide level2">
 <h2>Colors and plotting symbols in R</h2>
 <p><strong>R</strong> allows to change style and color of plotting symbols:</p>
@@ -644,8 +640,7 @@ Thomas Petzoldt
 </div>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a>opar <span class="ot">&lt;-</span> <span class="fu">par</span>(<span class="at">cex=</span><span class="dv">2</span>, <span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>,<span class="dv">4</span>,<span class="dv">1</span>,<span class="dv">1</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
 <span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(iris<span class="sc">$</span>Sepal.Length, iris<span class="sc">$</span>Petal.Length, </span>
@@ -661,8 +656,7 @@ Thomas Petzoldt
 </div>
 </div>
 </div>
-</div>
-<ul>
+</div><ul>
 <li>change font size, margins and axis label orientation</li>
 <li>opar stores previuos parameter and allows resetting</li>
 </ul>
@@ -673,7 +667,7 @@ Thomas Petzoldt
 <li>Easiest way ist to use the RStudio’s <strong>Export –&gt; Save as Image</strong> (or copy to clipboard)</li>
 <li><strong>Important:</strong> Select correct image format and image size!</li>
 </ul>
-<table>
+<table class="caption-top">
 <colgroup>
 <col style="width: 12%">
 <col style="width: 7%">
@@ -813,7 +807,7 @@ Thomas Petzoldt
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">format</span>(x, <span class="at">format =</span> <span class="st">""</span>, <span class="at">tz =</span> <span class="st">""</span>, <span class="at">usetz =</span> <span class="cn">FALSE</span>, ...)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<table>
+<table class="caption-top">
 <tbody>
 <tr class="odd">
 <td>%Y</td>
@@ -1380,18 +1374,7 @@ Thomas Petzoldt
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1423,7 +1406,29 @@ Thomas Petzoldt
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1431,7 +1436,7 @@ Thomas Petzoldt
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

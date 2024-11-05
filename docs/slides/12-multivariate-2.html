@@ -8,11 +8,11 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-10-30">
-  <title>Elements of Data Analysis and Statistics - 12-Multivariate methods II</title>
+  <meta name="dcterms.date" content="2024-11-05">
+  <title>Elements of Data Analysis and Statistics – 12-Multivariate methods II</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -43,7 +43,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -71,7 +71,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -85,7 +85,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -431,7 +431,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-10-30</p>
+  <p class="date">2024-11-05</p>
 </section>
 <section id="data-sets-and-terms-of-use" class="slide level2">
 <h2>Data sets and terms of use</h2>
@@ -447,7 +447,7 @@ Thomas Petzoldt
 <p><small></small></p><small>
 <div class="cell">
 <div class="cell-output-display">
-<table>
+<table class="caption-top">
 <colgroup>
 <col style="width: 3%">
 <col style="width: 6%">
@@ -802,8 +802,7 @@ D = \sum_{i=1}^S p_i^2
 <li>in most cases, Simpson index is given as <span class="math inline">\(\tilde{D} = 1 - D\)</span><br> <span class="gray">(large values – high diversity)</span></li>
 <li>also possible: inverse Simpson index: <span class="math inline">\(D' = 1 / D\)</span><br></li>
 </ul>
-</div>
-<div class="column" style="width:48%;">
+</div><div class="column" style="width:48%;">
 <p><strong>Shannon index</strong></p>
 <p><span class="math display">\[
 H = -\sum_{i=1}^S p_i \log_b p_i
@@ -818,8 +817,7 @@ H = -\sum_{i=1}^S p_i \log_b p_i
 <ul>
 <li><span class="math inline">\(S\)</span>: number of species</li>
 </ul>
-</div>
-<hr>
+</div><hr>
 
 <ul>
 <li>more indices: species richness, species deficit, Fisher’s <span class="math inline">\(\alpha\)</span> …</li>
@@ -829,12 +827,11 @@ H = -\sum_{i=1}^S p_i \log_b p_i
 <h2>Diversity indices</h2>
 <div class="column" style="width:20%;">
 
-</div>
-<div class="column" style="width:60%;">
+</div><div class="column" style="width:60%;">
 <p><small></small></p><small>
 <div class="cell">
 <div class="cell-output-display">
-<table>
+<table class="caption-top">
 <colgroup>
 <col style="width: 6%">
 <col style="width: 10%">
@@ -1041,8 +1038,7 @@ H = -\sum_{i=1}^S p_i \log_b p_i
 </div>
 </div>
 </small><p><small></small></p>
-</div>
-<ul>
+</div><ul>
 <li>aggregated data but which of the indices tells what?</li>
 <li><span class="math inline">\(\rightarrow\)</span> information loss compared to the original list</li>
 </ul>
@@ -1119,7 +1115,7 @@ a^2 + b^2 = c^2 \quad \Rightarrow\quad c = \sqrt{a^2 + b^2} = \sqrt{\Delta x^2 +
 <p><br></p>
 <p><br></p>
 <div class="bigfont">
-<table>
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th>similarity</th>
@@ -1203,7 +1199,7 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <h2>Which distances are supported by different methods?</h2>
 <p><br></p>
 <div class="smallfont">
-<table>
+<table class="caption-top">
 <colgroup>
 <col style="width: 9%">
 <col style="width: 39%">
@@ -1327,8 +1323,7 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(ord, <span class="fu">row.names</span>(species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><span class="red"><span class="math inline">\(\rightarrow\)</span></span> distance matrix (<code>d</code>) used as input<br> and not data matrix (<code>species</code>) directly</p>
-</div>
-<div class="column" style="width:39%;">
+</div><div class="column" style="width:39%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1338,8 +1333,7 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 </div>
 </div>
 </div>
-</div>
-<ul>
+</div><ul>
 <li>works with arbitrary distance measures, e.g.&nbsp;Bray-Curtis dissimilarity</li>
 <li>supported by different packages, e.g.&nbsp;<strong>stats</strong>, <strong>vegan</strong>, <strong>labdsv</strong>, <strong>ecodist</strong>, <strong>ade4</strong> and <strong>ape</strong></li>
 <li>basic version in package <strong>stats</strong> (base R), other packages with more specialized versions</li>
@@ -1403,50 +1397,47 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 Wisconsin double standardization
 Run 0 stress 0.1102424 
 Run 1 stress 0.1102424 
-... Procrustes: rmse 3.706787e-06  max resid 9.569026e-06 
+... Procrustes: rmse 2.771308e-06  max resid 6.486379e-06 
 ... Similar to previous best
 Run 2 stress 0.1727865 
-Run 3 stress 0.1102424 
-... Procrustes: rmse 4.536692e-06  max resid 1.063091e-05 
-... Similar to previous best
-Run 4 stress 0.1102424 
-... Procrustes: rmse 1.089348e-05  max resid 3.078684e-05 
-... Similar to previous best
+Run 3 stress 0.2332634 
+Run 4 stress 0.1105543 
+... Procrustes: rmse 0.02422316  max resid 0.0719385 
 Run 5 stress 0.1105543 
-... Procrustes: rmse 0.02421938  max resid 0.07192581 
-Run 6 stress 0.1727865 
+... Procrustes: rmse 0.02424675  max resid 0.07201721 
+Run 6 stress 0.1102424 
+... Procrustes: rmse 5.9631e-06  max resid 1.638667e-05 
+... Similar to previous best
 Run 7 stress 0.1102424 
-... Procrustes: rmse 4.431245e-06  max resid 8.427332e-06 
+... Procrustes: rmse 4.273231e-06  max resid 1.16034e-05 
 ... Similar to previous best
-Run 8 stress 0.1105543 
-... Procrustes: rmse 0.02418063  max resid 0.07179626 
-Run 9 stress 0.1102424 
-... Procrustes: rmse 1.137722e-05  max resid 2.251732e-05 
+Run 8 stress 0.1102424 
+... Procrustes: rmse 3.20235e-06  max resid 8.894875e-06 
 ... Similar to previous best
-Run 10 stress 0.1105543 
-... Procrustes: rmse 0.0242657  max resid 0.0720815 
-Run 11 stress 0.1105543 
-... Procrustes: rmse 0.02420246  max resid 0.07186885 
+Run 9 stress 0.1105543 
+... Procrustes: rmse 0.02422596  max resid 0.0719482 
+Run 10 stress 0.2403446 
+Run 11 stress 0.1102424 
+... Procrustes: rmse 1.893959e-05  max resid 4.584891e-05 
+... Similar to previous best
 Run 12 stress 0.1105543 
-... Procrustes: rmse 0.02429623  max resid 0.07218302 
-Run 13 stress 0.1105544 
-... Procrustes: rmse 0.02431056  max resid 0.07223179 
+... Procrustes: rmse 0.02420534  max resid 0.07187842 
+Run 13 stress 0.1105543 
+... Procrustes: rmse 0.02421554  max resid 0.07191375 
 Run 14 stress 0.1102424 
-... Procrustes: rmse 1.208915e-05  max resid 3.282713e-05 
+... Procrustes: rmse 1.325544e-06  max resid 2.878638e-06 
 ... Similar to previous best
-Run 15 stress 0.2449646 
+Run 15 stress 0.1727865 
 Run 16 stress 0.1102424 
-... Procrustes: rmse 3.823988e-06  max resid 1.01611e-05 
+... Procrustes: rmse 3.574433e-05  max resid 0.0001012774 
 ... Similar to previous best
-Run 17 stress 0.1105543 
-... Procrustes: rmse 0.02429939  max resid 0.07219394 
+Run 17 stress 0.225322 
 Run 18 stress 0.1102424 
-... Procrustes: rmse 3.375904e-06  max resid 8.732301e-06 
+... Procrustes: rmse 2.914132e-06  max resid 7.259496e-06 
 ... Similar to previous best
-Run 19 stress 0.1105543 
-... Procrustes: rmse 0.02422191  max resid 0.07193446 
+Run 19 stress 0.1736875 
 Run 20 stress 0.1105543 
-... Procrustes: rmse 0.02424152  max resid 0.07200027 
+... Procrustes: rmse 0.02429318  max resid 0.07217496 
 *** Best solution repeated 8 times</code></pre>
 </div>
 </div>
@@ -1510,9 +1501,8 @@ Species: expanded scores based on 'wisconsin(sqrt(bio))' </code></pre>
 <p><span class="math display">\[
 S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne j}  \tilde{d}_{ij}^2}}
 \]</span></p>
-</div>
-<div class="column" style="width:39%;">
-<table>
+</div><div class="column" style="width:39%;">
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th>Quality of ordination</th>
@@ -1546,8 +1536,7 @@ S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne 
 </tr>
 </tbody>
 </table>
-</div>
-</section>
+</div></section>
 <section id="stressplot-shepherd-plot" class="slide level2">
 <h2>Stressplot (Shepherd plot)</h2>
 <div class="cell" data-layout-align="center">
@@ -1570,8 +1559,7 @@ S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne 
 </div>
 </div>
 </div>
-</div>
-<div class="column" style="width:47%;">
+</div><div class="column" style="width:47%;">
 <p><strong>Poor</strong></p>
 <div class="cell">
 <div class="cell-output-display">
@@ -1582,8 +1570,7 @@ S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne 
 </div>
 </div>
 </div>
-</div>
-<ul>
+</div><ul>
 <li><span class="red">Points should be close to the red line.</span></li>
 <li>Pattern of stairs not important (at least not for now)</li>
 <li>The <span class="math inline">\(R^2\)</span> values are always big, ignore or at least don’t overinterpret it.</li>
@@ -1712,7 +1699,7 @@ Number of permutations: 1000</code></pre>
 </ul>
 <div class="cell">
 <div class="cell-output-display">
-<table>
+<table class="caption-top">
 <tbody>
 <tr class="odd">
 <td style="text-align: right;">1</td>
@@ -1858,8 +1845,7 @@ Number of permutations: 1000</code></pre>
 </table>
 </div>
 </div>
-</div>
-<div class="column" style="width:44%;">
+</div><div class="column" style="width:44%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1869,8 +1855,7 @@ Number of permutations: 1000</code></pre>
 </div>
 </div>
 </div>
-</div>
-<p><strong>Workaround</strong></p>
+</div><p><strong>Workaround</strong></p>
 <ul>
 <li>detrended correspondence analysis (DCA) used in the past, not anymore recommended (except you know what you do)</li>
 <li>better: NMDS or a “constrained” (2-matrix) method, e.g.&nbsp;CCA, RDA, dbRDA)</li>
@@ -1898,11 +1883,16 @@ Number of permutations: 1000</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call: cca(formula = bio ~ Habitat + Stream + Flood, data = env)
 
+-- Model Summary --
+
               Inertia Proportion Rank
 Total          0.8599     1.0000     
 Constrained    0.5210     0.6059    3
 Unconstrained  0.3389     0.3941   12
-Inertia is scaled Chi-square 
+
+Inertia is scaled Chi-square
+
+-- Eigenvalues --
 
 Eigenvalues for constrained axes:
   CCA1   CCA2   CCA3 
@@ -1985,21 +1975,14 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(bio <span class="sc">~</span> Habitat <span class="sc">*</span> Stream <span class="sc">*</span> Flood, <span class="at">data =</span> env, <span class="at">method =</span> <span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Permutation test for adonis under reduced model
-Terms added sequentially (first to last)
 Permutation: free
 Number of permutations: 999
 
 adonis2(formula = bio ~ Habitat * Stream * Flood, data = env, method = "bray")
-                     Df SumOfSqs      R2       F Pr(&gt;F)    
-Habitat               1   0.4465 0.12068  7.4916  0.003 ** 
-Stream                1   0.4388 0.11863  7.3637  0.002 ** 
-Flood                 1   1.4603 0.39474 24.5039  0.001 ***
-Habitat:Stream        1   0.2827 0.07642  4.7439  0.015 *  
-Habitat:Flood         1   0.1549 0.04187  2.5989  0.064 .  
-Stream:Flood          1   0.3001 0.08113  5.0363  0.004 ** 
-Habitat:Stream:Flood  1   0.1393 0.03765  2.3371  0.078 .  
-Residual              8   0.4768 0.12888                   
-Total                15   3.6994 1.00000                   
+         Df SumOfSqs      R2      F Pr(&gt;F)    
+Model     7   3.2227 0.87112 7.7251  0.001 ***
+Residual  8   0.4768 0.12888                  
+Total    15   3.6994 1.00000                  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -2054,15 +2037,19 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cca</span>(bio <span class="sc">~</span> Flood <span class="sc">+</span> <span class="fu">Condition</span>(Habitat, Stream), <span class="at">data =</span> env)</span>
 <span id="cb26-2"><a aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Call: cca(formula = bio ~ Flood + Condition(Habitat, Stream), data =
-env)
+<pre><code>Call: cca(formula = bio ~ Flood + Condition(Habitat, Stream), data = env)
+
+-- Model Summary --
 
               Inertia Proportion Rank
 Total          0.8599     1.0000     
 Conditional    0.3125     0.3635    1
 Constrained    0.1429     0.1662    1
 Unconstrained  0.4045     0.4704   12
-Inertia is scaled Chi-square 
+
+Inertia is scaled Chi-square
+
+-- Eigenvalues --
 
 Eigenvalues for constrained axes:
   CCA1 
@@ -2126,7 +2113,7 @@ Eigenvalues for unconstrained axes:
 <p><small></small></p><small>
 <div class="cell">
 <div class="cell-output-display">
-<table>
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th style="text-align: left;"></th>
@@ -2762,18 +2749,7 @@ Winkelmann, C., Hellmann, C., Worischka, S., Petzoldt, T., &amp; Benndorf, J. (2
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -2805,7 +2781,29 @@ Winkelmann, C., Hellmann, C., Worischka, S., Petzoldt, T., &amp; Benndorf, J. (2
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -2813,7 +2811,7 @@ Winkelmann, C., Hellmann, C., Worischka, S., Petzoldt, T., &amp; Benndorf, J. (2
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {

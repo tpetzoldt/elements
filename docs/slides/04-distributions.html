@@ -8,11 +8,11 @@
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.4.554">
+  <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-10-30">
-  <title>Elements of Data Analysis and Statistics - 04-Distributions</title>
+  <meta name="dcterms.date" content="2024-11-05">
+  <title>Elements of Data Analysis and Statistics – 04-Distributions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -43,7 +43,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -71,7 +71,7 @@
     code span.at { color: #657422; } /* Attribute */
     code span.bn { color: #ad0000; } /* BaseN */
     code span.bu { } /* BuiltIn */
-    code span.cf { color: #003b4f; } /* ControlFlow */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #20794d; } /* Char */
     code span.cn { color: #8f5902; } /* Constant */
     code span.co { color: #5e5e5e; } /* Comment */
@@ -85,7 +85,7 @@
     code span.fu { color: #4758ab; } /* Function */
     code span.im { color: #00769e; } /* Import */
     code span.in { color: #5e5e5e; } /* Information */
-    code span.kw { color: #003b4f; } /* Keyword */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
     code span.op { color: #5e5e5e; } /* Operator */
     code span.ot { color: #003b4f; } /* Other */
     code span.pp { color: #ad0000; } /* Preprocessor */
@@ -411,34 +411,31 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-10-30</p>
+  <p class="date">2024-11-05</p>
 </section>
-<section id="distributions" class="slide level2">
-<h2>Distributions</h2>
+<section id="probability-distributions" class="slide level2">
+<h2>Probability Distributions</h2>
 <p><br></p>
-<p><strong>Probability distribution</strong></p>
+<p><strong>Definition</strong></p>
 <ul>
-<li>mathematical function</li>
+<li>a mathematical function</li>
 <li>probabilities of occurrence of different possible outcomes for an experiment</li>
 </ul>
 <p><a href="https://en.wikipedia.org/wiki/Probability_distribution"><span class="math inline">\(\rightarrow\)</span> https://en.wikipedia.org/wiki/Probability_distribution</a></p>
 <p><br></p>
-<p><strong>Characteristics of a probability distribution</strong></p>
+<p><strong>Characteristics</strong></p>
 <ol type="1">
 <li>a specific shape (distribution type, a mathematical formula)</li>
 <li>can be described by its parameters (e.g.&nbsp;mean <span class="math inline">\(\mu\)</span> and standard deviation <span class="math inline">\(\sigma\)</span>).</li>
 </ol>
-<p>Probability distributions are one of the core concepts in statistics and many statistics courses start with coin tossing or dice rolls. We begin with a small classroom experiment.</p>
-
-<aside><div>
-<p>Researchers found out that coin flipping does not exactly result in a 50 : 50 chance. <a href="https://youtu.be/AYnJv68T3MM"><span class="math inline">\(\rightarrow\)</span> youtube video</a></p>
-</div></aside></section>
+<p>Probability distributions are one of the core concepts in statistics and many statistics courses start with coin tossing<sup>1</sup> or dice rolls. We begin with a small classroom experiment.</p>
+<aside><ol class="aside-footnotes"><li id="fn1"><p>We expect that the chances are 50:50. Researchers found out that there is a very small deviation, see <a href="https://youtu.be/AYnJv68T3MM"><span class="math inline">\(\rightarrow\)</span> youtube video</a></p></li></ol></aside></section>
 <section id="what-is-your-favorite-number" class="slide level2">
 <h2>What is your favorite number?</h2>
 <p>In a classroom experiment, students of an international course were asked for their favorite number from 1 to 9.</p>
 <div class="cell">
 <div class="cell-output-display">
-<table>
+<table class="caption-top">
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">number</td>
@@ -454,15 +451,15 @@ Thomas Petzoldt
 </tr>
 <tr class="even">
 <td style="text-align: left;">freqency</td>
+<td style="text-align: right;">0</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">8</td>
-<td style="text-align: right;">1</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">2</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">5</td>
+<td style="text-align: right;">6</td>
 <td style="text-align: right;">4</td>
+<td style="text-align: right;">12</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">3</td>
 </tr>
 </tbody>
 </table>
@@ -475,21 +472,23 @@ Thomas Petzoldt
 <li><strong>discrete:</strong> only discrete numbers (1, 2, 3 …, 9) possible, no fractions</li>
 </ul>
 </section>
-<section id="computer-simulations-with-random-numbers" class="slide level2">
-<h2>Computer simulations with random numbers</h2>
+<section id="computer-simulations" class="slide level2">
+<h2>Computer simulations</h2>
 <p><br></p>
-<p>Instead of real-world experiments, we use often computer simulations.</p>
+<p>Instead of real-world experiments, we can also use simulated random numbers.</p>
 <ul>
-<li><strong>disadvantage:</strong> somewhat abstract</li>
 <li><strong>advantage:</strong> we can simulate data from distributions with known properties</li>
+<li><strong>challenge:</strong> somewhat abstract</li>
 </ul>
 <p><strong>Purpose</strong></p>
 <ul>
-<li>get a feeling about randomness, how a sample from a given “theory” can look like</li>
-<li>explore and test statistical methods and to train understanding</li>
+<li>get a feeling about randomness, how a sample following a given “theory” can look like</li>
+<li>explore and test statistical methods and train understanding</li>
 <li>a tool for experimental design</li>
 <li>testing application and power of an analysis beforehand</li>
 </ul>
+<p><br></p>
+<p><span class="red"><span class="math inline">\(\rightarrow\)</span> Simulation: important tool for statistical method development and understanding!</span></p>
 </section>
 <section id="continuos-uniform-distribution-mathbfu0-1" class="slide level2">
 <h2>Continuos uniform distribution <span class="math inline">\(\mathbf{U}(0, 1)\)</span></h2>
@@ -502,8 +501,8 @@ Thomas Petzoldt
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.849221420 0.816832004 0.002810544 0.799202482 0.616843538 0.346112072
- [7] 0.105404730 0.698406070 0.639069232 0.129235026</code></pre>
+<pre><code> [1] 0.5104024 0.3053001 0.3888669 0.6422320 0.2372132 0.7978391 0.4161124
+ [8] 0.9294047 0.9163995 0.2454612</code></pre>
 </div>
 </div>
 <p><br> <br></p>
@@ -513,8 +512,7 @@ Thomas Petzoldt
 <div class="bigfont">
 
 </div>
-</div>
-<div class="column" style="width:39%;">
+</div><div class="column" style="width:39%;">
 <div class="cell" data-layout-align="right">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-right">
@@ -524,8 +522,7 @@ Thomas Petzoldt
 </div>
 </div>
 </div>
-</div>
-<!---
+</div><!---
 $$
 X \sim U(x_{min}, x_{max})
 $$
@@ -567,8 +564,7 @@ F(x) = \begin{cases}
          1                     &amp; \text{for } x &gt; x_{max}
        \end{cases}
 \]</span></p>
-</div>
-<div class="column" style="width:39%;">
+</div><div class="column" style="width:39%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -578,8 +574,7 @@ F(x) = \begin{cases}
 </div>
 </div>
 </div>
-</div>
-</section>
+</div></section>
 <section id="quantile-function" class="slide level2">
 <h2>Quantile function</h2>
 <p><br></p>
@@ -595,8 +590,7 @@ F(x) = \begin{cases}
 </div>
 </div>
 <p><span class="blue">Cumulative density function</span></p>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -607,8 +601,7 @@ F(x) = \begin{cases}
 </div>
 </div>
 <p><span class="blue">Quantile function</span></p>
-</div>
-<p>Example: In which range can we find 95% of a uniform distribution <span class="math inline">\(\mathbf{U}(40,60)\)</span>?</p>
+</div><p>Example: In which range can we find 95% of a uniform distribution <span class="math inline">\(\mathbf{U}(40,60)\)</span>?</p>
 </section>
 <section id="summary-uniform-distribution" class="slide level2">
 <h2>Summary: Uniform distribution</h2>
@@ -632,12 +625,52 @@ f(x) = \frac{1}{\sigma\sqrt{2\pi}} \, \mathrm{e}^{-\frac{(x-\mu)^2}{2 \sigma^2}}
 \]</span></p>
 
 <img data-src="../img/10_DM_Serie4_Vorderseite.jpg" class="r-stretch quarto-figure-center"><p class="caption">C.F. Gauss, Gauss curve and formula on a German DM banknote from 1991–2001 (<a href="https://de.wikipedia.org/wiki/Bargeld_der_Deutschen_Mark">Wikipedia</a>, CC0)</p></section>
+<section id="the-central-limit-theorem-clt" class="slide level2">
+<h2>The central limit theorem (CLT)</h2>
+<p><br></p>
+<blockquote>
+<p>Sums of a large number <span class="math inline">\(n\)</span> of independent and identically distributed random values are normally distributed, independently on the type of the original distribution.</p>
+</blockquote>
+<p><br></p>
+
+<img data-src="04-distributions_files/figure-revealjs/clt-simulation2a-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="a-simulation-experiment" class="slide level2">
+<h2>A Simulation experiment</h2>
+<p><br></p>
+<div class="column" style="width:59%;">
+<ol type="1">
+<li>generate a matrix with 100 rows and 25 columns of uniformly distributed random numbers</li>
+<li>compute the row sums</li>
+</ol>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a>x  <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">25</span> <span class="sc">*</span> <span class="dv">100</span>), <span class="at">ncol =</span> <span class="dv">25</span>)</span>
+<span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a aria-hidden="true" tabindex="-1"></a><span class="co"># View(x) # uncomment this to show the matrix</span></span>
+<span id="cb3-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a aria-hidden="true" tabindex="-1"></a>x_sums <span class="ot">&lt;-</span> <span class="fu">rowSums</span>(x)</span>
+<span id="cb3-8"><a aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span>
+<span id="cb3-9"><a aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x_sums)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p><br><span class="blue"><span class="math inline">\(\rightarrow\)</span> row sums are approximately normal distributed</span></p>
+</div><div class="column" style="width:39%;">
+<div class="cell" data-fig.aling="center">
+<div class="cell-output-display">
+<div>
+<figure>
+<p><img data-src="04-distributions_files/figure-revealjs/clt-simulation-1.png" width="384"></p>
+</figure>
+</div>
+</div>
+</div>
+</div></section>
 <section id="random-numbers-and-density-function" class="slide level2">
 <h2>Random numbers and density function</h2>
 
 <img data-src="04-distributions_files/figure-revealjs/normal-random-1.png" width="960" class="r-stretch"></section>
-<section id="density-and-quantiles-of-the-standard-normal-distribution" class="slide level2">
-<h2>Density and quantiles of the standard normal distribution</h2>
+<section id="density-and-quantiles-of-the-standard-normal" class="slide level2">
+<h2>Density and quantiles of the standard normal</h2>
 
 <img data-src="04-distributions_files/figure-revealjs/normal-density95-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
 <li>in theory, 50% of the values are below and 50% above the mean value</li>
@@ -647,7 +680,7 @@ f(x) = \frac{1}{\sigma\sqrt{2\pi}} \, \mathrm{e}^{-\frac{(x-\mu)^2}{2 \sigma^2}}
 <section id="cumulative-distribution-function-quantile-function" class="slide level2">
 <h2>Cumulative distribution function – Quantile function</h2>
 
-<img data-src="04-distributions_files/figure-revealjs/normal-cdf-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><table>
+<img data-src="04-distributions_files/figure-revealjs/normal-cdf-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><table class="caption-top">
 <colgroup>
 <col style="width: 12%">
 <col style="width: 10%">
@@ -736,13 +769,11 @@ f(x) = \frac{1}{\sigma\sqrt{2\pi}} \, \mathrm{e}^{-\frac{(x-\mu)^2}{2 \sigma^2}}
 <p><span class="math display">\[
 f(x) = \frac{1}{\sigma\sqrt{2\pi}} \, \mathrm{e}^{-\frac{(x-\mu)^2}{2 \sigma^2}}
 \]</span></p>
-</div>
-<div class="column" style="width:18%;">
+</div><div class="column" style="width:18%;">
 <p><br><br><br><br> <span class="math display">\[
 z = \frac{x-\mu}{\sigma}
 \]</span> <span class="math inline">\(\longrightarrow\)</span> <span class="math inline">\(\longrightarrow\)</span> <span class="math inline">\(\longrightarrow\)</span></p>
-</div>
-<div class="column" style="width:40%;">
+</div><div class="column" style="width:40%;">
 <p><strong>Standard normal distribution</strong></p>
 <div class="cell">
 <div class="cell-output-display">
@@ -756,8 +787,7 @@ z = \frac{x-\mu}{\sigma}
 <p><span class="math display">\[
 f(x) = \frac{1}{\sqrt{2\pi}} \, \mathrm{e}^{-\frac{1}{2}x^2}
 \]</span></p>
-</div>
-</section>
+</div></section>
 <section id="t-distribution-mathbftx-df" class="slide level2">
 <h2>t-Distribution <span class="math inline">\(\mathbf{t}(x, df)\)</span></h2>
 
@@ -772,7 +802,7 @@ f(x) = \frac{1}{\sqrt{2\pi}} \, \mathrm{e}^{-\frac{1}{2}x^2}
 
 <img data-src="04-distributions_files/figure-revealjs/t-from-df-1.png" width="960" class="r-stretch"><div class="cell">
 <div class="cell-output-display">
-<table>
+<table class="caption-top">
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">df</td>
@@ -849,7 +879,7 @@ f(x) = \frac{1}{\sqrt{2\pi}} \, \mathrm{e}^{-\frac{1}{2}x^2}
 <img data-src="04-distributions_files/figure-revealjs/poisson-ci-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><p><strong>Typical error of cell counting:</strong> 95% confidence interval</p>
 <div class="cell">
 <div class="cell-output-display">
-<table>
+<table class="caption-top">
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">counts</td>
@@ -921,11 +951,15 @@ As we see the gamma distribution is very flexible. For visualization we
 will draw a few examples (@fig-dgamma):
 
 
+
+
 ::: {.cell}
 ::: {.cell-output-display}
 ![](04-distributions_files/figure-revealjs/gamma, dgamma-1.png){width=960}
 :::
 :::
+
+
 
 
 
@@ -942,11 +976,15 @@ moments (fig-prknit1):
 
 
 
+
+
 ::: {.cell}
 ::: {.cell-output-display}
 ![Histogram of the Nitzschia data set and its estimated gamma distribution.](04-distributions_files/figure-revealjs/fig-prknit1-1.png){#fig-prknit1 width=960}
 :::
 :::
+
+
 
 
 -->
@@ -970,8 +1008,8 @@ moments (fig-prknit1):
 <h2>Shapiro-Wilks-W-Test</h2>
 <p><span class="math inline">\(\rightarrow\)</span> standard test for normality testing</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
-<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
@@ -1004,8 +1042,7 @@ W = 0.99064, p-value = 0.7165</code></pre>
 </div>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1015,25 +1052,25 @@ W = 0.99064, p-value = 0.7165</code></pre>
 </div>
 </div>
 </div>
-</div>
-<ul>
+</div><ul>
 <li><span class="math inline">\(x\)</span>: theoretical quantiles where a value should be found if the distribution is normal</li>
 <li><span class="math inline">\(y\)</span>: normalized and ordered measured values (<span class="math inline">\(z\)</span>-scores)</li>
 <li>scaled in the unit of standard deviations</li>
 <li>normal distribution if the points follow a straight line</li>
 </ul>
+<p><span class="red">Recommendation: Use graphical checks. Don’t trust the Shapiro Wilks!</span></p>
 </section>
 <section id="transformation" class="slide level2">
 <h2>Transformation</h2>
 <ul>
-<li>allows to apply methods designed for normally distributed data for non-normal cases</li>
+<li>allows to apply methods designed for normally distributed data to non-normal cases</li>
 <li>very common in the in the past, still sometimes useful</li>
-<li>modern methods can handle other distributions directly, such as binomial, gamma, or Poisson.</li>
+<li>modern methods can handle certain distributions directly, such as binomial, gamma, or Poisson.</li>
 </ul>
 <p><strong>Transformations for right-skewed data</strong></p>
 <ul>
-<li>$x’=(x)</li>
-<li>x’=(x+a)$</li>
+<li><span class="math inline">\(x'=\log(x)\)</span></li>
+<li><span class="red"><span class="math inline">\(x'=\log(x + a)\)</span></span></li>
 <li><span class="math inline">\(x'=(x+a)^c\)</span> <span class="gray">(<span class="math inline">\(a\)</span> between 0.5 and 1)</span></li>
 <li><span class="math inline">\(x'=1/x\)</span> <span class="gray">(“very powerful”, i.e.&nbsp;to extreme in most cases)</span></li>
 <li><span class="math inline">\(x'=a - 1/\sqrt{x}\)</span> <span class="gray">(to make scale more convenient)</span></li>
@@ -1047,9 +1084,9 @@ W = 0.99064, p-value = 0.7165</code></pre>
 <ul>
 <li><span class="math inline">\(x'=\sqrt{3/8+x}\)</span> <span class="gray">(counts: 1, 2, 3 <span class="math inline">\(\rightarrow\)</span> 0.61, 1.17, 1.54, 1.84, )</span></li>
 <li><span class="math inline">\(x'=\lg(x+3/8)\)</span></li>
-<li><span class="math inline">\(x'=\ln(\ln(x))\)</span> <span class="gray">for giant numbers</span></li>
+<li><span class="math inline">\(x'=\log(\log(x))\)</span> <span class="gray">for giant numbers</span></li>
 </ul>
-<p><span class="blue"><span class="math inline">\(\rightarrow\)</span> consider a GLM with family Poisson or quasipoisson instead</span></p>
+<p><span class="blue"><span class="math inline">\(\rightarrow\)</span> consider a GLM with family Poisson or quasi-Poisson instead</span></p>
 <p><strong>Ratios and percentages</strong></p>
 <ul>
 <li><span class="math inline">\(x'=\arcsin \sqrt{x/n}\)</span></li>
@@ -1074,11 +1111,15 @@ model" to test the full data set without explanation variables
 the ANOVA chapter.
 
 
+
+
 ::: {.cell}
 ::: {.cell-output-display}
 ![](04-distributions_files/figure-revealjs/boxcox-1.png){width=960}
 :::
 :::
+
+
 
 
 The dotted vertical lines and the horizontal 95\,\%-line show the
@@ -1087,6 +1128,8 @@ either a logarithmic transformation ($\lambda=0$) or a power of
 approximately 0.5 are suitable.
 
 It is also possible to obtain the numerical value directly:
+
+
 
 
 ::: {.cell fig='false'}
@@ -1112,6 +1155,8 @@ List of 2
 :::
 
 
+
+
 We should keep in mind that these are approximate numbers so that
 it makes not much sense to use more than one decimal.
 
@@ -1120,11 +1165,15 @@ using explanatory variables (here `group`) on the right hand side of
 the model formula:
 
 
+
+
 ::: {.cell}
 ::: {.cell-output-display}
 ![Log-Likelihood profile of a Box-Cox-transformation for the pooled data sets Nit85 and Nit90.](04-distributions_files/figure-revealjs/fig-boxcox2-1.png){#fig-boxcox2 width=960}
 :::
 :::
+
+
 
 
 -------------------------------------------------------------------------------></p>
@@ -1135,33 +1184,32 @@ the model formula:
 <div class="column" style="width:49%;">
 <p><br> Data set</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">5</span> ,<span class="dv">6</span>,  <span class="dv">7</span>)</span>
-<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">5</span> ,<span class="dv">6</span>,  <span class="dv">7</span>)</span>
+<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Ranks</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.0 2.0 3.0 5.5 4.0 5.5 7.0 8.0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">rank</span>(y)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.0 2.0 4.5 3.0 4.5 6.0 7.0 8.0</code></pre>
 </div>
 </div>
 <p>Two ways of calculation</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(x, y, <span class="at">method =</span> <span class="st">"spearman"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8915663</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">rank</span>(x), <span class="fu">rank</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(<span class="fu">rank</span>(x), <span class="fu">rank</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8915663</code></pre>
 </div>
 </div>
-</div>
-<div class="column" style="width:49%;">
+</div><div class="column" style="width:49%;">
 <p><br><br><br></p>
 <div class="cell" data-layout-align="right">
 <div class="cell-output-display">
@@ -1172,10 +1220,9 @@ the model formula:
 </div>
 </div>
 </div>
-</div>
-</section>
-<section id="the-central-limit-theorem-clt" class="slide level2">
-<h2>The central limit theorem (CLT)</h2>
+</div></section>
+<section id="remember-the-central-limit-theorem-clt" class="slide level2">
+<h2>Remember: The central limit theorem (CLT)</h2>
 <blockquote>
 <p>Sums of a large number <span class="math inline">\(n\)</span> of independent and identically distributed random values are normally distributed, independently on the type of the original distribution.</p>
 </blockquote>
@@ -1190,54 +1237,6 @@ the model formula:
 <p><br></p>
 
 <img data-src="04-distributions_files/figure-revealjs/clt-simulation2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><p><strong>Reason:</strong> Methods like t-test or ANOVA are based on mean values.</p>
-</section>
-<section id="a-simulation-experiment" class="slide level2">
-<h2>A Simulation experiment</h2>
-<p><br></p>
-<div class="column" style="width:59%;">
-<ol type="1">
-<li>generate a matrix with 100 rows and 25 columns of uniformly distributed random numbers</li>
-<li>compute the row sums</li>
-</ol>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">1</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb14-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb14-3"><a aria-hidden="true" tabindex="-1"></a>x  <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">runif</span>(<span class="dv">25</span> <span class="sc">*</span> <span class="dv">100</span>), <span class="at">nrow =</span> <span class="dv">25</span>)</span>
-<span id="cb14-4"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-5"><a aria-hidden="true" tabindex="-1"></a><span class="co"># View(x) # uncomment this to show the matrix</span></span>
-<span id="cb14-6"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb14-7"><a aria-hidden="true" tabindex="-1"></a>xs <span class="ot">&lt;-</span> <span class="fu">colSums</span>(x)</span>
-<span id="cb14-8"><a aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(x)</span>
-<span id="cb14-9"><a aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(xs)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<p><br><span class="blue"><span class="math inline">\(\rightarrow\)</span> row sums are approximately normal distributed</span></p>
-</div>
-<div class="column" style="width:39%;">
-<div class="cell" data-fig.aling="center">
-<div class="cell-output-display">
-<div>
-<figure>
-<p><img data-src="04-distributions_files/figure-revealjs/clt-simulation-1.png" width="384"></p>
-</figure>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section id="sample-intervals-and-confidence-intervals" class="slide level2">
-<h2>Sample intervals and Confidence intervals</h2>
-<p><br></p>
-<ul>
-<li><p><strong>sample interval:</strong> characterizes the distribution of the data from the parameters of the sample (e.g.&nbsp;mean, standard deviation)</p></li>
-<li><p>standard deviation <span class="math inline">\(s_x\)</span> measures the variability of the original data</p></li>
-<li><p>reconstruct the original distribution if its type is known (e.g.&nbsp;normal, lognormal)</p></li>
-</ul>
-<p><br></p>
-<ul>
-<li><p><strong>confidence interval:</strong> characterizes the precision of a statistical parameter, based on its standard error</p></li>
-<li><p>Using <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(s_\bar{x}\)</span>, estimate the interval where we find <span class="math inline">\(\mu\)</span> with a certain probability</p></li>
-<li><p>less dependent on the original distribution of the data due to the CLT</p></li>
-</ul>
 </section>
 <section id="confidence-intervals-of-the-mean" class="slide level2">
 <h2>Confidence intervals of the mean</h2>
@@ -1259,6 +1258,21 @@ CI_{95\%} = \bigg(\bar{x} - z_{0.975} \cdot \frac{s}{\sqrt{n}},
 <div class="hugefont">
 <p><span class="red"><span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(2\sigma\)</span> rule</span></p>
 </div>
+</section>
+<section id="difference-between-sample-and-confidence-intervals" class="slide level2">
+<h2>Difference between sample and confidence intervals</h2>
+<p><br></p>
+<ul>
+<li><p><strong>sample interval:</strong> characterizes the distribution of the data from the parameters of the sample (e.g.&nbsp;mean, standard deviation)</p></li>
+<li><p>standard deviation <span class="math inline">\(s_x\)</span> measures the variability of the original data</p></li>
+<li><p>reconstruct the original distribution if its type is known (e.g.&nbsp;normal, lognormal)</p></li>
+</ul>
+<p><br></p>
+<ul>
+<li><p><strong>confidence interval:</strong> characterizes the precision of a statistical parameter, based on its standard error</p></li>
+<li><p>Using <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(s_\bar{x}\)</span>, estimate the interval where we find <span class="math inline">\(\mu\)</span> with a certain probability</p></li>
+<li><p>less dependent on the original distribution of the data due to the CLT</p></li>
+</ul>
 </section>
 <section id="use-the-t-distribution-for-small-samples" class="slide level2">
 <h2>Use the t-distribution for small samples</h2>
@@ -1357,6 +1371,9 @@ CI_{95\%} = \bigg(\bar{x} - t_{0.975, n-1} \cdot \frac{s}{\sqrt{n}},
 <li><strong>middle:</strong> distribution is right-skewed</li>
 <li><strong>right:</strong> transformation (3-parametric lognormal) <span class="math inline">\(\rightarrow\)</span> symmetric distribution, no outliers!</li>
 </ul>
+</section>
+<section id="more-in-the-labs" class="slide level2">
+<h2>More in the labs …</h2>
 
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">
@@ -1364,6 +1381,7 @@ CI_{95\%} = \bigg(\bar{x} - t_{0.975, n-1} \cdot \frac{s}{\sqrt{n}},
 </div>
 </div>
 </section></section>
+
     </div>
   </div>
 
@@ -1682,18 +1700,7 @@ CI_{95\%} = \bigg(\bar{x} - t_{0.975, n-1} \cdot \frac{s}{\sqrt{n}},
         }
         return false;
       }
-      const clipboard = new window.ClipboardJS('.code-copy-button', {
-        text: function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
-          for (const childEl of codeEl.children) {
-            if (isCodeAnnotation(childEl)) {
-              childEl.remove();
-            }
-          }
-          return codeEl.innerText;
-        }
-      });
-      clipboard.on('success', function(e) {
+      const onCopySuccess = function(e) {
         // button target
         const button = e.trigger;
         // don't keep focus
@@ -1725,7 +1732,29 @@ CI_{95\%} = \bigg(\bar{x} - t_{0.975, n-1} \cdot \frac{s}{\sqrt{n}},
         }, 1000);
         // clear code selection
         e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
       });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
         var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
         var mailtoRegex = new RegExp(/^mailto:/);
           var filterRegex = new RegExp('/' + window.location.host + '/');
@@ -1733,7 +1762,7 @@ CI_{95\%} = \bigg(\bar{x} - t_{0.975, n-1} \cdot \frac{s}{\sqrt{n}},
             return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
         // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
         for (var i=0; i<links.length; i++) {
           const link = links[i];
           if (!isInternal(link.href)) {
