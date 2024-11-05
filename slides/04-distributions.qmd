@@ -11,31 +11,31 @@ library("knitr")
 
 
 
-## Distributions
+## Probability Distributions
 
 <br>
 
-**Probability distribution**
+**Definition**
 
-* mathematical function 
+* a mathematical function 
 * probabilities of occurrence of different possible outcomes for an experiment
 
 [$\rightarrow$ https://en.wikipedia.org/wiki/Probability_distribution](https://en.wikipedia.org/wiki/Probability_distribution)
 
 <br>
 
-**Characteristics of a probability distribution**
+**Characteristics**
 
 1. a specific shape (distribution type, a mathematical formula)
 2. can be described by its parameters (e.g. mean $\mu$ and standard deviation $\sigma$).
 
 Probability distributions are one of the core concepts in statistics
-and many statistics courses start with coin tossing or dice rolls.
+and many statistics courses start with coin tossing[^coins] or dice rolls.
 We begin with a small classroom experiment.
 
-::: aside
-Researchers found out that coin flipping does not exactly result in a 50 : 50 chance.   [$\rightarrow$ youtube video](https://youtu.be/AYnJv68T3MM)
-:::
+
+[^coins]: We expect that the chances are 50:50. Researchers found out that there is a very small deviation, see [$\rightarrow$ youtube video](https://youtu.be/AYnJv68T3MM)
+
 
 ## What is your favorite number?
 
@@ -44,7 +44,7 @@ their favorite number from 1 to 9.
 
 ```{r, echo=FALSE}
 numbers <- 1:9
-obsfreq <- c(1, 2, 8, 1, 2, 2, 20, 2, 4)
+obsfreq <- c(0, 1, 5, 5, 6, 4, 12, 3, 3) # 2024
 kable(t(data.frame(number=numbers, freqency=obsfreq)))
 ```
 
@@ -61,21 +61,25 @@ The resulting distribution is:
 * **discrete:** only discrete numbers (1, 2, 3 ..., 9) possible, no fractions
 
 
-## Computer simulations with random numbers
+## Computer simulations
 
 <br>
 
-Instead of real-world experiments, we use often computer simulations.
+Instead of real-world experiments, we can also use simulated random numbers.
 
-* **disadvantage:** somewhat abstract
 * **advantage:** we can simulate data from distributions with known properties
+* **challenge:** somewhat abstract
 
 **Purpose**
 
-* get a feeling about randomness, how a sample from a given "theory" can look like
-* explore and test statistical methods and to train understanding
+* get a feeling about randomness, how a sample following a given "theory" can look like
+* explore and test statistical methods and train understanding
 * a tool for experimental design
 * testing application and power of an analysis beforehand
+
+<br>
+
+[$\rightarrow$ Simulation: important tool for statistical method development and understanding!]{.red}
 
 ## Continuos uniform distribution $\mathbf{U}(0, 1)$
 
@@ -270,6 +274,56 @@ $$
 
 ![C.F. Gauss, Gauss curve and formula on a German DM banknote from 1991--2001 ([Wikipedia](https://de.wikipedia.org/wiki/Bargeld_der_Deutschen_Mark), CC0)](../img/10_DM_Serie4_Vorderseite.jpg)
 
+## The central limit theorem (CLT)
+
+<br>
+
+> Sums of a large number $n$ of independent and identically distributed random
+> values are normally distributed, independently on the type of the
+> original distribution.
+
+<br>
+
+```{r clt-simulation2a, fig.align='center', fig.height=2.5}
+par(mfrow=c(1,2), mar=c(4,4,1,1), las=1)
+set.seed(890)
+x <- matrix(runif(100*100), nrow=100)
+plot(as.vector(x[,1]), main="", xlab="sample", ylab="value", pch=16, cex=0.5)
+hist(rowSums(x), xlab="distribution of sums", main="", col="wheat")
+```
+
+## A Simulation experiment
+
+<br>
+
+::: {.column width="59%"}
+
+1. generate a matrix with 100 rows and 25 columns of uniformly distributed random numbers
+2. compute the row sums
+
+```{r clt-simulation, eval=FALSE, echo=TRUE}
+par(mfrow=c(2, 1), las=1)
+set.seed(42)
+x  <- matrix(runif(25 * 100), ncol = 25)
+
+# View(x) # uncomment this to show the matrix
+
+x_sums <- rowSums(x)
+hist(x)
+hist(x_sums)
+```
+
+<br>[
+$\rightarrow$ row sums are approximately normal distributed]{.blue}
+:::
+
+
+::: {.column width="39%"}
+```{r clt-simulation, fig.width=4, fig.height=6, fig.aling='center'}
+```
+:::
+
+
 
 ## Random numbers and density function
 
@@ -290,7 +344,7 @@ lines(xnew, dnorm(xnew, mean(x), sd(x)), col="red", lwd=2)
 ```
 
 
-## Density and quantiles of the standard normal distribution
+## Density and quantiles of the standard normal
 
 ```{r normal-density95, echo=FALSE, fig.align='center'}
 par(mar=c(4.1, 5.1, 1.1, 1.1))
@@ -716,17 +770,19 @@ qqnorm(x3, main = "lognormal"); qqline(x3, col="red")
 * scaled in the unit of standard deviations
 * normal distribution if the points follow a straight line
 
+[Recommendation: Use graphical checks. Don't trust the Shapiro Wilks!]{.red}
+
 ## Transformation
 
 
-* allows to apply methods designed for normally distributed data for non-normal cases
+* allows to apply methods designed for normally distributed data to non-normal cases
 * very common in the in the past, still sometimes useful
-* modern methods can handle other distributions directly, such as binomial, gamma, or Poisson.
+* modern methods can handle certain distributions directly, such as binomial, gamma, or Poisson.
 
 **Transformations for right-skewed data**
 
-* $x'=\ln(x)
-* x'=\ln(x+a)$
+* $x'=\log(x)$
+* [$x'=\log(x + a)$]{.red}
 * $x'=(x+a)^c$ [($a$ between 0.5 and 1)]{.gray}
 * $x'=1/x$ [("very powerful", i.e. to extreme in most cases)]{.gray}
 * $x'=a - 1/\sqrt{x}$ [(to make scale more convenient)]{.gray}
@@ -739,9 +795,9 @@ qqnorm(x3, main = "lognormal"); qqline(x3, col="red")
 
 * $x'=\sqrt{3/8+x}$ [(counts: 1, 2, 3 $\rightarrow$ 0.61, 1.17, 1.54,  1.84, \dots)]{.gray}
 * $x'=\lg(x+3/8)$
-* $x'=\ln(\ln(x))$ [for giant numbers]{.gray}
+* $x'=\log(\log(x))$ [for giant numbers]{.gray}
 
-[$\rightarrow$ consider a GLM with family Poisson or quasipoisson instead]{.blue}
+[$\rightarrow$ consider a GLM with family Poisson or quasi-Poisson instead]{.blue}
 
 **Ratios and percentages**
 
@@ -840,7 +896,7 @@ plot(x, y, pch=16)
 :::
 
 
-## The central limit theorem (CLT)
+## Remember: The central limit theorem (CLT)
 
 > Sums of a large number $n$ of independent and identically distributed random
 > values are normally distributed, independently on the type of the
@@ -867,56 +923,6 @@ hist(rowSums(x), xlab="sums of each 100 uniform numbers", main="")
 
 
 
-
-## A Simulation experiment
-
-<br>
-
-::: {.column width="59%"}
-
-1. generate a matrix with 100 rows and 25 columns of uniformly distributed random numbers
-2. compute the row sums
-
-```{r clt-simulation, eval=FALSE, echo=TRUE}
-par(mfrow=c(2, 1), las=1)
-set.seed(42)
-x  <- matrix(runif(25 * 100), nrow = 25)
-
-# View(x) # uncomment this to show the matrix
-
-xs <- colSums(x)
-hist(x)
-hist(xs)
-```
-
-<br>[
-$\rightarrow$ row sums are approximately normal distributed]{.blue}
-:::
-
-
-::: {.column width="39%"}
-```{r clt-simulation, fig.width=4, fig.height=6, fig.aling='center'}
-```
-:::
-
-
-
-## Sample intervals and Confidence intervals
-
-<br>
-
-* **sample interval:** characterizes the distribution of the data from the parameters of the sample (e.g. mean, standard deviation)
-
-* standard deviation $s_x$ measures the variability of the original data
-* reconstruct the original distribution if its type is known (e.g. normal, lognormal)
-
-<br>
-
-* **confidence interval:** characterizes the precision of a statistical parameter, based on its standard error
-
-* Using $\bar{x}$ and $s_\bar{x}$, estimate the interval where we find $\mu$ with a certain probability
-* less dependent on the original distribution of the data due to the CLT
-
 ## Confidence intervals of the mean
 
 <br>
@@ -942,6 +948,23 @@ with $z_{1-\alpha/2} = z_{0.975} =$ [$1.96$]{.red}.
 ::: {.hugefont}
 [$\rightarrow$ $2\sigma$ rule ]{.red}
 :::
+
+## Difference between sample and confidence intervals
+
+<br>
+
+* **sample interval:** characterizes the distribution of the data from the parameters of the sample (e.g. mean, standard deviation)
+
+* standard deviation $s_x$ measures the variability of the original data
+* reconstruct the original distribution if its type is known (e.g. normal, lognormal)
+
+<br>
+
+* **confidence interval:** characterizes the precision of a statistical parameter, based on its standard error
+
+* Using $\bar{x}$ and $s_\bar{x}$, estimate the interval where we find $\mu$ with a certain probability
+* less dependent on the original distribution of the data due to the CLT
+
 
 ## Use the t-distribution for small samples
 
@@ -1058,3 +1081,4 @@ data source: Bundesanstalt für Gewässerkunde (BFG), see [terms and conditions]
 * **middle:** distribution is right-skewed
 * **right:** transformation (3-parametric lognormal) $\rightarrow$ symmetric distribution, no outliers!
 
+## More in the labs ...
