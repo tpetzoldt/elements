@@ -334,7 +334,7 @@
     "href": "slides/x1-r-basics.html#lists-1",
     "title": "x1-R Basics",
     "section": "Lists",
-    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL &lt;- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:11] -3 -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 ...\n $ counts  : int [1:10] 2 1 2 10 17 15 18 17 11 7\n $ density : num [1:10] 0.04 0.02 0.04 0.2 0.34 0.3 0.36 0.34 0.22 0.14\n $ mids    : num [1:10] -2.75 -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\"",
+    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL &lt;- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:12] -3 -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 ...\n $ counts  : int [1:11] 1 2 3 16 11 16 20 15 12 3 ...\n $ density : num [1:11] 0.02 0.04 0.06 0.32 0.22 0.32 0.4 0.3 0.24 0.06 ...\n $ mids    : num [1:11] -2.75 -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 ...\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\"",
     "crumbs": [
       "R Topics",
       "x1-R Basics"
@@ -2831,7 +2831,7 @@
     "href": "slides/01-introduction.html#which-data-structure-is-better",
     "title": "01-Introduction",
     "section": "Which data structure is better?",
-    "text": "Which data structure is better?\n\n\nWide format\n\n\n\n\n\n\nstation\n2021\n2022\n2023\n\n\n\n\nA\n10\n2\n8\n\n\nB\n11\n8\n3\n\n\nC\n1\n1\n14\n\n\nD\n15\n20\n10\n\n\nE\n6\n13\n19\n\n\n\n\n\n\nLong format\n\n\n\n\n\n\nyear\nstation\nvalue\n\n\n\n\n2021\nA\n10\n\n\n2021\nB\n11\n\n\n2021\nC\n1\n\n\n2021\nD\n15\n\n\n2021\nE\n6\n\n\n2022\nA\n2\n\n\n2022\nB\n8\n\n\n2022\nC\n1\n\n\n2022\nD\n20\n\n\n2022\nE\n13\n\n\n2023\nA\n8\n\n\n2023\nB\n3\n\n\n2023\nC\n14\n\n\n2023\nD\n10\n\n\n2023\nE\n19",
+    "text": "Which data structure is better?\n\n\nWide format\n\n\n\n\n\n\nstation\n2021\n2022\n2023\n\n\n\n\nA\n15\n19\n15\n\n\nB\n2\n2\n20\n\n\nC\n9\n3\n6\n\n\nD\n2\n6\n20\n\n\nE\n8\n19\n6\n\n\n\n\n\n\nLong format\n\n\n\n\n\n\nyear\nstation\nvalue\n\n\n\n\n2021\nA\n15\n\n\n2021\nB\n2\n\n\n2021\nC\n9\n\n\n2021\nD\n2\n\n\n2021\nE\n8\n\n\n2022\nA\n19\n\n\n2022\nB\n2\n\n\n2022\nC\n3\n\n\n2022\nD\n6\n\n\n2022\nE\n19\n\n\n2023\nA\n15\n\n\n2023\nB\n20\n\n\n2023\nC\n6\n\n\n2023\nD\n20\n\n\n2023\nE\n6",
     "crumbs": [
       "Basic Statistics",
       "01-Introduction"
@@ -3161,7 +3161,7 @@
     "href": "tutorials/s3-multivar-lakes.html#multivariate-analysis",
     "title": "Multivariate Lake Data Example",
     "section": "5 Multivariate Analysis",
-    "text": "5 Multivariate Analysis\n\n5.1 Principal Components: PCA\n\npc &lt;- prcomp(scale(dat))\nsummary(pc)\n\nImportance of components:\n                         PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.305 1.4737 1.1459 1.0686 0.84953 0.50024 0.24164\nProportion of Variance 0.483 0.1974 0.1194 0.1038 0.06561 0.02275 0.00531\nCumulative Proportion  0.483 0.6805 0.7998 0.9036 0.96925 0.99200 0.99731\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.12590 0.08400 0.07563 0.03077\nProportion of Variance 0.00144 0.00064 0.00052 0.00009\nCumulative Proportion  0.99875 0.99939 0.99991 1.00000\n\nplot(pc)\n\n\n\n\n\n\n\nbiplot(pc)\n\n\n\n\n\n\n\n\nAs the PCA with the untransformed data looks somewhat asymmetric, we repeat it with square transformed data. In addition, also the 3rd PC is plotted.\n\ndat2 &lt;- sqrt(dat)\npc2 &lt;- prcomp(scale(dat2))\nsummary(pc2)\n\nImportance of components:\n                          PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.1886 1.5906 1.2499 1.0634 0.79782 0.44854 0.28572\nProportion of Variance 0.4354 0.2300 0.1420 0.1028 0.05786 0.01829 0.00742\nCumulative Proportion  0.4354 0.6654 0.8075 0.9103 0.96812 0.98641 0.99383\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.17665 0.13833 0.12041 0.05528\nProportion of Variance 0.00284 0.00174 0.00132 0.00028\nCumulative Proportion  0.99666 0.99840 0.99972 1.00000\n\npar(mfrow=c(1,2))\npar(mar=c(5, 4, 4, 2) + 0.1)\nbiplot(pc2, cex=0.6)\nbiplot(pc2, cex=0.6, choices=c(3, 2))\n\n\n\n\n\n\n\n\nA PCA is also possible with the rda function of the vegan package. The syntax of the plot functions is somewhat different. Instead of biplot as above, we can directly use plot. Details are found in the vegan documentation.\n\npar(mfrow=c(1,1))\npc3 &lt;- rda(dat2, scale = TRUE)\npc3\n\nCall: rda(X = dat2, scale = TRUE)\n\n-- Model Summary --\n\n              Inertia Rank\nTotal              11     \nUnconstrained      11   11\n\nInertia is correlations\n\n-- Eigenvalues --\n\nEigenvalues for unconstrained axes:\n  PC1   PC2   PC3   PC4   PC5   PC6   PC7   PC8   PC9  PC10  PC11 \n4.790 2.530 1.562 1.131 0.637 0.201 0.082 0.031 0.019 0.014 0.003 \n\n#summary(pc3)\nplot(pc3)\n\n\n\n\n\n\n\n\n\n\n5.2 Nonmetric Multidimensional Scaling: NMDS\nLt’s now perform an NMDS for the data set. Function metaMDS runs a series of NMDS fits with different start values to avoid local minima. It has also some automatic transformations built in and works usually with the Bray-Curtis dissimilarity, that is used for plants and animal species abundance data. As we work with physical data here, we set the distance measure to “euclidean”.\n\nmd &lt;- metaMDS(dat2, scale = TRUE, distance = \"euclid\")\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1181117 \nRun 1 stress 0.1230331 \nRun 2 stress 0.1181116 \n... New best solution\n... Procrustes: rmse 0.0001328367  max resid 0.0003770693 \n... Similar to previous best\nRun 3 stress 0.1768603 \nRun 4 stress 0.1768603 \nRun 5 stress 0.1181117 \n... Procrustes: rmse 9.000178e-05  max resid 0.0002636712 \n... Similar to previous best\nRun 6 stress 0.1208976 \nRun 7 stress 0.1207023 \nRun 8 stress 0.1207018 \nRun 9 stress 0.1188523 \nRun 10 stress 0.2114736 \nRun 11 stress 0.1207019 \nRun 12 stress 0.1768603 \nRun 13 stress 0.1207019 \nRun 14 stress 0.1181116 \n... New best solution\n... Procrustes: rmse 2.428115e-05  max resid 7.116057e-05 \n... Similar to previous best\nRun 15 stress 0.1768603 \nRun 16 stress 0.221819 \nRun 17 stress 0.1181116 \n... Procrustes: rmse 1.773872e-05  max resid 5.475598e-05 \n... Similar to previous best\nRun 18 stress 0.1181118 \n... Procrustes: rmse 0.000237558  max resid 0.0006833067 \n... Similar to previous best\nRun 19 stress 0.1208976 \nRun 20 stress 0.1230331 \n*** Best solution repeated 3 times\n\nplot(md, type=\"text\")\nabline(h=0, col=\"grey\", lty=\"dotted\")\nabline(v=0, col=\"grey\", lty=\"dotted\")\n\n\n\n\n\n\n\n\n\n\n5.3 Cluster analysis\nHere we apply a hierarchical cluster analysis with square root transformed data and two different agglomeration schemes, “complete linkage” and “Ward’s method”.\n\npar(mfrow=c(2,1))\nhc &lt;- hclust(dist(scale(dat2)), method=\"complete\") # the default\nplot(hc)\n\nhc2 &lt;- hclust(dist(scale(dat2)), method=\"ward.D2\")\nplot(hc2)\n\n\n\n\n\n\n\n\nWe can also use the clusters to indicate groups in the NMDS plot. Function rect.hclust indicates a given number of clusters in the dendrogram, then we cut the tree with cutree and use the groups grp as color codes. R has 8 standard colors. If we need more, we can define an own palette.\n\nplot(hc, hang = -1)\nrect.hclust(hc, 5)\n\n\n\n\n\n\n\ngrp &lt;- cutree(hc, 5)\n# grp                  # can be used to show the groups\nplot(md, type = \"n\")\ntext(md$points, row.names(dat2), col = grp)\n\n\n\n\n\n\n\n\nInstead of hierarchical clustering, we can also use a non-hierarchical method, e.g. k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.\nDepending on the question, it may be a disadvantage, that the number of clusters needs to be specified beforehand (e.g. from hierarchical clustering) and that we do not get a tree diagramm.",
+    "text": "5 Multivariate Analysis\n\n5.1 Principal Components: PCA\n\npc &lt;- prcomp(scale(dat))\nsummary(pc)\n\nImportance of components:\n                         PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.305 1.4737 1.1459 1.0686 0.84953 0.50024 0.24164\nProportion of Variance 0.483 0.1974 0.1194 0.1038 0.06561 0.02275 0.00531\nCumulative Proportion  0.483 0.6805 0.7998 0.9036 0.96925 0.99200 0.99731\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.12590 0.08400 0.07563 0.03077\nProportion of Variance 0.00144 0.00064 0.00052 0.00009\nCumulative Proportion  0.99875 0.99939 0.99991 1.00000\n\nplot(pc)\n\n\n\n\n\n\n\nbiplot(pc)\n\n\n\n\n\n\n\n\nAs the PCA with the untransformed data looks somewhat asymmetric, we repeat it with square transformed data. In addition, also the 3rd PC is plotted.\n\ndat2 &lt;- sqrt(dat)\npc2 &lt;- prcomp(scale(dat2))\nsummary(pc2)\n\nImportance of components:\n                          PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.1886 1.5906 1.2499 1.0634 0.79782 0.44854 0.28572\nProportion of Variance 0.4354 0.2300 0.1420 0.1028 0.05786 0.01829 0.00742\nCumulative Proportion  0.4354 0.6654 0.8075 0.9103 0.96812 0.98641 0.99383\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.17665 0.13833 0.12041 0.05528\nProportion of Variance 0.00284 0.00174 0.00132 0.00028\nCumulative Proportion  0.99666 0.99840 0.99972 1.00000\n\npar(mfrow=c(1,2))\npar(mar=c(5, 4, 4, 2) + 0.1)\nbiplot(pc2, cex=0.6)\nbiplot(pc2, cex=0.6, choices=c(3, 2))\n\n\n\n\n\n\n\n\nA PCA is also possible with the rda function of the vegan package. The syntax of the plot functions is somewhat different. Instead of biplot as above, we can directly use plot. Details are found in the vegan documentation.\n\npar(mfrow=c(1,1))\npc3 &lt;- rda(dat2, scale = TRUE)\npc3\n\nCall: rda(X = dat2, scale = TRUE)\n\n-- Model Summary --\n\n              Inertia Rank\nTotal              11     \nUnconstrained      11   11\n\nInertia is correlations\n\n-- Eigenvalues --\n\nEigenvalues for unconstrained axes:\n  PC1   PC2   PC3   PC4   PC5   PC6   PC7   PC8   PC9  PC10  PC11 \n4.790 2.530 1.562 1.131 0.637 0.201 0.082 0.031 0.019 0.014 0.003 \n\n#summary(pc3)\nplot(pc3)\n\n\n\n\n\n\n\n\n\n\n5.2 Nonmetric Multidimensional Scaling: NMDS\nLt’s now perform an NMDS for the data set. Function metaMDS runs a series of NMDS fits with different start values to avoid local minima. It has also some automatic transformations built in and works usually with the Bray-Curtis dissimilarity, that is used for plants and animal species abundance data. As we work with physical data here, we set the distance measure to “euclidean”.\n\nmd &lt;- metaMDS(dat2, scale = TRUE, distance = \"euclid\")\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1181117 \nRun 1 stress 0.1181116 \n... New best solution\n... Procrustes: rmse 0.0001372123  max resid 0.0003876922 \n... Similar to previous best\nRun 2 stress 0.1188265 \nRun 3 stress 0.1230331 \nRun 4 stress 0.1230331 \nRun 5 stress 0.1230331 \nRun 6 stress 0.1188532 \nRun 7 stress 0.1208973 \nRun 8 stress 0.1208972 \nRun 9 stress 0.1181116 \n... Procrustes: rmse 7.190276e-05  max resid 0.0002036235 \n... Similar to previous best\nRun 10 stress 0.1208976 \nRun 11 stress 0.1188528 \nRun 12 stress 0.1230331 \nRun 13 stress 0.1230331 \nRun 14 stress 0.185611 \nRun 15 stress 0.1208973 \nRun 16 stress 0.1181116 \n... Procrustes: rmse 8.36187e-06  max resid 2.044492e-05 \n... Similar to previous best\nRun 17 stress 0.1207021 \nRun 18 stress 0.1207023 \nRun 19 stress 0.1181116 \n... Procrustes: rmse 5.880594e-05  max resid 0.0001670619 \n... Similar to previous best\nRun 20 stress 0.1208975 \n*** Best solution repeated 4 times\n\nplot(md, type=\"text\")\nabline(h=0, col=\"grey\", lty=\"dotted\")\nabline(v=0, col=\"grey\", lty=\"dotted\")\n\n\n\n\n\n\n\n\n\n\n5.3 Cluster analysis\nHere we apply a hierarchical cluster analysis with square root transformed data and two different agglomeration schemes, “complete linkage” and “Ward’s method”.\n\npar(mfrow=c(2,1))\nhc &lt;- hclust(dist(scale(dat2)), method=\"complete\") # the default\nplot(hc)\n\nhc2 &lt;- hclust(dist(scale(dat2)), method=\"ward.D2\")\nplot(hc2)\n\n\n\n\n\n\n\n\nWe can also use the clusters to indicate groups in the NMDS plot. Function rect.hclust indicates a given number of clusters in the dendrogram, then we cut the tree with cutree and use the groups grp as color codes. R has 8 standard colors. If we need more, we can define an own palette.\n\nplot(hc, hang = -1)\nrect.hclust(hc, 5)\n\n\n\n\n\n\n\ngrp &lt;- cutree(hc, 5)\n# grp                  # can be used to show the groups\nplot(md, type = \"n\")\ntext(md$points, row.names(dat2), col = grp)\n\n\n\n\n\n\n\n\nInstead of hierarchical clustering, we can also use a non-hierarchical method, e.g. k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.\nDepending on the question, it may be a disadvantage, that the number of clusters needs to be specified beforehand (e.g. from hierarchical clustering) and that we do not get a tree diagramm.",
     "crumbs": [
       "Tutorials",
       "Multivariate Lake Data Example"
@@ -3177,6 +3177,327 @@
       "Tutorials",
       "Multivariate Lake Data Example"
     ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#markdown-rmarkdown-and-quarto",
+    "href": "slides/x5-quarto-intro.html#markdown-rmarkdown-and-quarto",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Markdown, RMarkdown and Quarto",
+    "text": "Markdown, RMarkdown and Quarto\n\nMarkdown .md\n\n” … is a lightweight markup language for creating formatted text using a plain-text editor” (Wikipedia, 2022).\nCan be written with any text editor, less perfect than Latex, but much easier.\nMarkdown supported by many programs and services (e.g. Github, StackOverflow, Matrix, RStudio, …)\n\nRMarkdown .Rmd\n\nis an extension of markdown that can embed R code.\nsuperseeded by Quarto\n\nQuarto .qmd\n\nis an extension of Markdown that can embed R, Python, Julia and Observable code.\nimproved capabilities to create reports, slides, websites, papers, books.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#why-markdown-or-quarto",
+    "href": "slides/x5-quarto-intro.html#why-markdown-or-quarto",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Why Markdown or Quarto",
+    "text": "Why Markdown or Quarto\n\n\nQuick note taking (documentation of ideas, experiments, SOPs, …)\nDocumentation of statistical analyses (Quarto + R)\nClearly structured documents (outline clearly visible)\nEasy literature referencing\nMuch easier than LaTeX \nWidely used technology, useful for Stackoverflow, Github or Matrix",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#software",
+    "href": "slides/x5-quarto-intro.html#software",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Software",
+    "text": "Software\n\n\nYou can use any text editor, e.g. Notepad++, your mail client … or even Word\n\n\n\nBetter: use an editor with Markdown support\n\nRStudio\nPanWriter, a basic writing program with an almost empty screen \\(\\rightarrow\\) distraction free writing\nJoplin, a note taking program with cloud connectivity and encryption\nmany online services: Github, Gitlab, StackOverflow, Matrix\nand more",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#many-markdown-programs-available-e.g.-panwriter",
+    "href": "slides/x5-quarto-intro.html#many-markdown-programs-available-e.g.-panwriter",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Many Markdown Programs Available, e.g. Panwriter",
+    "text": "Many Markdown Programs Available, e.g. Panwriter\n\nPanwriter with live preview",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#lets-use-rstudio.-supports-markdown-and-quarto",
+    "href": "slides/x5-quarto-intro.html#lets-use-rstudio.-supports-markdown-and-quarto",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Let’s use RStudio. Supports Markdown and Quarto",
+    "text": "Let’s use RStudio. Supports Markdown and Quarto\n\nRStudio",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#example",
+    "href": "slides/x5-quarto-intro.html#example",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Example",
+    "text": "Example\n\nSection titles are introduced with one or several hash symbols #, ##, praragraphs with empty lines, italic and bold face are indicated with one or two starts before and after a phrase, bullet points with a leading dash - or a star *. Weblinks are automatically activated. Here an example:\n    # First level\n\n    Text can be written with any editor, that can be formatted, e.g. *slanted*, **boldface**,\n    `verbatim text` weblinks: https://tu-dresden.de or bullet points:\n\n    * point 1\n    * point 2\n\n    Section titles start with one or more hash tags\n    \n    \n    ## Second level\n    \n    ### Third level\nThere are of course more formatting options, found in the docs or explained later.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#yaml-header",
+    "href": "slides/x5-quarto-intro.html#yaml-header",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "YAML Header",
+    "text": "YAML Header\n\nQuarto and markdown documents can have a few special lines on top, enclosed within three dashes ---. This so called “YAML header” is used to set text settings and formatting options:\n    ---\n    title: \"Test\"\n    author: \"Who wrote this\"\n    date: '2024-11-12'\n    format: html\n    ---\n    \n    # First Section\n\n    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy\n    eirmod tempor invidunt ut labore et dolore magna aliquyam erat.\n    \n    At vero eos et accusam et justo duo dolores et ea rebum.\n    \n    # Second Section\n     \n    Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum \n    dolor sit amet. \nYAML: yet another markup language. A list format coming from the python world.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#layout-and-format-conversion",
+    "href": "slides/x5-quarto-intro.html#layout-and-format-conversion",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Layout and format conversion",
+    "text": "Layout and format conversion\n\nUser can concentrate on writing, formatting is done automatically.\nSeveral tools exist to convert markdown to other document formats.\nOne of the most popular is pandoc. It is built-in in Rstudio.\n\n\n\n\n\n\n\nRendering is done with the pandoc utility to convert Quarto or Markdown text to\nHTML for web pages, pdf for printing, or Word for further editing.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#what-is-pandoc",
+    "href": "slides/x5-quarto-intro.html#what-is-pandoc",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "What is Pandoc?",
+    "text": "What is Pandoc?\n\n\nPandoc is a universal text conversion tool\nIt is said to be the “swiss-army knife” to convert between formats\nOpen Source licensed: GPL 2.0 resp. MIT license\nAvailable from: https://pandoc.org/\n… or embedded in RStudio",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#exercise",
+    "href": "slides/x5-quarto-intro.html#exercise",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Exercise",
+    "text": "Exercise\n\n\nWrite your first Quarto document in RStudio.\nRender it to HTML and Word\n\nOptional without warranty\n\nCreate PDF output\nNeeds LaTeX type setting system installed\nCan be done with R’s tinytex package:\n\n::: {.cell}\n\n:::\n… or by installing tinytex from the Terminal of RStudio\nquarto install tinytex\nand then include format: pdf in the YAML header\ntitle: \"My document\"\nformat: pdf\nSee more at: https://quarto.org/docs/output-formats/pdf-basics.html",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#section-titles",
+    "href": "slides/x5-quarto-intro.html#section-titles",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Section Titles",
+    "text": "Section Titles\n\nSection titles can be formatted with hashtags or by underlining:\n# A Section\n\n## A subsection\nor:\nA Section\n=========\n\nA Subsection\n------------\nAutomatic numbering can optionally be enabled in the YAML header:\n---\ntitle: \"My document\"\nformat:\n  html:\n    toc: true\n    number-sections: true\n---",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#weblinks",
+    "href": "slides/x5-quarto-intro.html#weblinks",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Weblinks",
+    "text": "Weblinks\n\nFormatted weblinks\n[further reading](https://rmarkdown.rstudio.com)\nis then formatted as: further reading\nExample\nThe [*Markdown Wikipedia page*](https://de.wikipedia.org/wiki/Markdown) contains examples.\nThe Markdown Wikipedia page contains examples.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#images",
+    "href": "slides/x5-quarto-intro.html#images",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Images",
+    "text": "Images\nImages are similar to weblinks, but with a leading !\n![figure title](mushrooms.jpg)\n\nfigure title",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#verbatim-text",
+    "href": "slides/x5-quarto-intro.html#verbatim-text",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Verbatim Text",
+    "text": "Verbatim Text\nVerbatim text can be created with several methods:\n\nInline: enclose text within single backticks `verbatim text` \\(\\rightarrow\\) verbatim text\nIndentation by 4 spaces\nUse so-called fencing with ``` before and after a tect or code block.\n\n```\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy\neirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam\nvoluptua.\n```\nappears as:\nLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy\neirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam\nvoluptua.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#tables",
+    "href": "slides/x5-quarto-intro.html#tables",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Tables",
+    "text": "Tables\nSource code:\n| Right | Left | Default | Center |\n|------:|:-----|---------|:------:|\n|    12 | 34   |   56    |   78   |\n| this  | is   |   a     | table  |\nHTML Output:\n\n\n\nRight\nLeft\nDefault\nCenter\n\n\n\n\n12\n34\n56\n78\n\n\nthis\nis\na\ntable\n\n\n\nPDF output:\n\nStyle similar to a scientific paper.\n\nBigger or more complex tables: create the table in Excel or LibreOffice and add markdown formatting, or use R and kable to create the table from data.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#citations",
+    "href": "slides/x5-quarto-intro.html#citations",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Citations",
+    "text": "Citations\n\nCreate database file in .bib-format, e.g. references.bib\n\ncan be exported from Zotero\nput bibliography file to the document folder\n\nUse @bib_key-syntax\n\ntextual citation: American Psychological Association (2020b) \\(\\leftarrow\\) @APA2020b\nparenthetical citation: (American Psychological Association, 2020a) \\(\\leftarrow\\) [@APA2020a]\n\n\nDeclare bibliography in YAML header\nbibliography: references.bib\ncsl: apa\n\nand optionally a .csl-style e.g. apa.csl, that is copied to the folder of the document\ncsl styles can be found here: https://citationstyles.org/authors/",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#mathematical-formulae",
+    "href": "slides/x5-quarto-intro.html#mathematical-formulae",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Mathematical Formulae",
+    "text": "Mathematical Formulae\n\nMarkdown and Quarto support a subset of the LaTeX formula syntax\n\nInline formula\n$s_x = \\frac{\\sum_{i=1}^{N} (x_i - \\bar{x})^2}{N-1}$ \\(\\quad \\rightarrow \\qquad s_x = \\frac{\\sum_{i=1}^{N} (x_i - \\bar{x})^2}{N-1}\\)\n #### Display formula\n$$s_x = \\frac{\\sum_{i=1}^{N} (x_i - \\bar{x})^2}{N-1}$$\n\\[s_x = \\frac{\\sum_{i=1}^{N} (x_i - \\bar{x})^2}{N-1}\\]\nMathematical symbols\n\\(\\rightarrow, \\le, \\approx, \\mu, \\delta, \\int, \\infty, \\mathrm{m^3s^{-1}}\\)\n$\\rightarrow, \\le, \\approx, \\mu, \\delta, \\int, \\infty, \\mathrm{m^3s^{-1}}$",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#more-maths-and-chemistry",
+    "href": "slides/x5-quarto-intro.html#more-maths-and-chemistry",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "More maths and chemistry",
+    "text": "More maths and chemistry\n\n\\[\\begin{align}\n\\frac{dX_1}{dt} &=    k_1 \\cdot X_1 -  k_2 X_1 X_2 \\\\\n\\frac{dX_2}{dt} &=  - k_4 \\cdot X_2 + k_3 X_1 X_2 \\\\\n\\end{align}\\]\n\\begin{align}\n\\frac{dX_1}{dt} &=  k_1 \\cdot X_1 -  k_2 X_1 X_2 \\\\\n\\frac{dX_2}{dt} &=  k_3 X_1 X_2 - k_4 \\cdot X_2 \\\\\n\\end{align}\n\n\\[\\rm 6CO_2 + 6H_2O \\rightarrow C_6H_{12}O_6 + 6O_2\n\\quad \\Delta H^0 = +2870 kJ mol^{-1}\\]\n$$\\rm 6CO_2 + 6H_2O \\rightarrow C_6H_{12}O_6 + 6O_2 \\quad \\Delta H^0 = +2870 kJ mol^{-1}$$",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#embedding-of-r-in-quarto-documents",
+    "href": "slides/x5-quarto-intro.html#embedding-of-r-in-quarto-documents",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Embedding of R in Quarto Documents",
+    "text": "Embedding of R in Quarto Documents\n\nCreate a Quarto template from the File menu in RStudio. Then make your changes and click the Render button. Then, a document will be generated that includes both content as well as the output of any embedded R code chunks.\n\nThen embed your own R code chunks like this:\n```{r iris_summary}\nsummary(iris)\n```\n To show both, the code and the output\n\n\n  Sepal.Length    Sepal.Width     Petal.Length    Petal.Width   \n Min.   :4.300   Min.   :2.000   Min.   :1.000   Min.   :0.100  \n 1st Qu.:5.100   1st Qu.:2.800   1st Qu.:1.600   1st Qu.:0.300  \n Median :5.800   Median :3.000   Median :4.350   Median :1.300  \n Mean   :5.843   Mean   :3.057   Mean   :3.758   Mean   :1.199  \n 3rd Qu.:6.400   3rd Qu.:3.300   3rd Qu.:5.100   3rd Qu.:1.800  \n Max.   :7.900   Max.   :4.400   Max.   :6.900   Max.   :2.500  \n       Species  \n setosa    :50  \n versicolor:50  \n virginica :50",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#tables-from-r",
+    "href": "slides/x5-quarto-intro.html#tables-from-r",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Tables from R",
+    "text": "Tables from R\n\nIf you want to include real tables, you can create the table in R and then format it with knitr::kable\n\n```{r iris_table}\nknitr::kable(iris[1:4, ])\n```\n\n\n\n\n\nSepal.Length\nSepal.Width\nPetal.Length\nPetal.Width\nSpecies\n\n\n\n\n5.1\n3.5\n1.4\n0.2\nsetosa\n\n\n4.9\n3.0\n1.4\n0.2\nsetosa\n\n\n4.7\n3.2\n1.3\n0.2\nsetosa\n\n\n4.6\n3.1\n1.5\n0.2\nsetosa\n\n\n\n\n\nThe kable function has several functions for configuring table layout, see kable help page for details.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#include-plots",
+    "href": "slides/x5-quarto-intro.html#include-plots",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Include Plots",
+    "text": "Include Plots\nYou can also embed plots, for example:\n```{r iris_sepal}\nplot(Sepal.Width ~ Sepal.Length, data=iris, pch=16, col=Species)\n```",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#suppress-code",
+    "href": "slides/x5-quarto-intro.html#suppress-code",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Suppress Code",
+    "text": "Suppress Code\nThe code chunks can be modified with additional options. In the following example the figure size is adjusted and an option echo = FALSE was added to prevent printing of the R code that generated the plot.\n```{r iris_sepal3, fig.width=3, fig.height=3, echo=FALSE}\nplot(Sepal.Width ~ Sepal.Length, data=iris, pch=16, col=Species)\n```\nShows the plot without the code:",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#flowcharts-and-graphs",
+    "href": "slides/x5-quarto-intro.html#flowcharts-and-graphs",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Flowcharts and graphs",
+    "text": "Flowcharts and graphs\n\n… can be created with the DiagrammeR package that supports the graphviz language.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#r-code-of-the-flowchart",
+    "href": "slides/x5-quarto-intro.html#r-code-of-the-flowchart",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "R code of the flowchart",
+    "text": "R code of the flowchart\n\nlibrary(\"DiagrammeR\")\ngrViz(\"digraph pandoc {\n         graph [rankdir = LR]\n           node [shape = 'box']\n                Markdown HTML PDF Word\n           node [shape = cds]\n             pandoc\n           node [shape = oval]\n             figs bib\n           edge [penwidth=2]\n             Markdown -&gt; pandoc\n             {figs bib} -&gt; {pandoc}\n             pandoc -&gt; {HTML PDF Word}\n}\")\nMore at: https://graphviz.org/",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#further-reading",
+    "href": "slides/x5-quarto-intro.html#further-reading",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "Further reading",
+    "text": "Further reading\n\n\\(\\rightarrow\\) Quarto cheat sheetFor more details, see https://quarto.org and R Core Team (2024)“, RStudio Team (2021), Xie (2015) and The Quarto Dev Team (2024).\nThesis templates for Hydrobiology students at TU Dresden: https://github.com/tpetzoldt/hyb-tud-thesis-starterkit in Word, Latex and Quarto format. It may also be useful for you.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#references",
+    "href": "slides/x5-quarto-intro.html#references",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "References",
+    "text": "References\n\n\n\n 🏠 Home \n\n\n\n\nAmerican Psychological Association. (2020a). Concise guide to APA style: The official APA style guide for students (7th ed.).\n\n\nAmerican Psychological Association. (2020b). Publication manual of the American Psychological Association: The official guide to APA style. (7th ed.).\n\n\nR Core Team. (2024). R: A language and environment for statistical computing. R Foundation for Statistical Computing. https://www.R-project.org/\n\n\nRStudio Team. (2021). RStudio: Integrated development environment for R. RStudio, PBC. http://www.rstudio.com/\n\n\nThe Quarto Dev Team. (2024). Quarto. An open-source scientific and technical publishing system. https://quarto.org\n\n\nWikipedia. (2022). Markdown. Wikipedia. https://en.wikipedia.org/w/index.php?title=Markdown&oldid=1079645429\n\n\nXie, Y. (2015). Dynamic documents with R and knitr (2nd ed.). Chapman; Hall/CRC. https://yihui.org/knitr/",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "00-index.html",
+    "href": "00-index.html",
+    "title": "Elements of applied statistics – a practical course",
+    "section": "",
+    "text": "This website contains a collection of material for introductory statistics courses with R. The aim is to provide insight in fundamental principles and a broad overview and enable students to select and understand particular books and online material to dig in deeper in the diverse and fascinating field of statistics."
+  },
+  {
+    "objectID": "00-index.html#introduction",
+    "href": "00-index.html#introduction",
+    "title": "Elements of applied statistics – a practical course",
+    "section": "",
+    "text": "This website contains a collection of material for introductory statistics courses with R. The aim is to provide insight in fundamental principles and a broad overview and enable students to select and understand particular books and online material to dig in deeper in the diverse and fascinating field of statistics."
+  },
+  {
+    "objectID": "00-index.html#further-reading",
+    "href": "00-index.html#further-reading",
+    "title": "Elements of applied statistics – a practical course",
+    "section": "Further reading",
+    "text": "Further reading\n\nDalgaard, P, 2008: Introductory Statistics with R. Springer Verlag, New York, 2nd edition. https://link.springer.com/book/10.1007/b97671\nKleiber, C and Zeileis, A, 2008: Applied Econometrics with R. Springer Verlag, New York. https://link.springer.com/book/10.1007/978-0-387-77318-6\nVerzani, J, 2014: Using R for introductory statistics. CRC press. Publisher\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. https://r4ds.hadley.nz/"
+  },
+  {
+    "objectID": "00-index.html#status",
+    "href": "00-index.html#status",
+    "title": "Elements of applied statistics – a practical course",
+    "section": "Status",
+    "text": "Status\nThe selection of topics reflects what I think is useful as door-opener into various fields, useful in ecology and aquatic sciences. The material is based on former PDF slides and other course material, constructive comments and suggestions for improvement are welcome."
+  },
+  {
+    "objectID": "00-index.html#author",
+    "href": "00-index.html#author",
+    "title": "Elements of applied statistics – a practical course",
+    "section": "Author",
+    "text": "Author\nhttps://tu-dresden.de/Members/thomas.petzoldt\nhttps://github.com/tpetzoldt\n2024-11-05"
   },
   {
     "objectID": "slides/02-terminology.html#basic-principles-and-terminology",
@@ -3309,41 +3630,6 @@
       "Basic Statistics",
       "02-Basic Terminology"
     ]
-  },
-  {
-    "objectID": "00-index.html",
-    "href": "00-index.html",
-    "title": "Elements of applied statistics – a practical course",
-    "section": "",
-    "text": "This website contains a collection of material for introductory statistics courses with R. The aim is to provide insight in fundamental principles and a broad overview and enable students to select and understand particular books and online material to dig in deeper in the diverse and fascinating field of statistics."
-  },
-  {
-    "objectID": "00-index.html#introduction",
-    "href": "00-index.html#introduction",
-    "title": "Elements of applied statistics – a practical course",
-    "section": "",
-    "text": "This website contains a collection of material for introductory statistics courses with R. The aim is to provide insight in fundamental principles and a broad overview and enable students to select and understand particular books and online material to dig in deeper in the diverse and fascinating field of statistics."
-  },
-  {
-    "objectID": "00-index.html#further-reading",
-    "href": "00-index.html#further-reading",
-    "title": "Elements of applied statistics – a practical course",
-    "section": "Further reading",
-    "text": "Further reading\n\nDalgaard, P, 2008: Introductory Statistics with R. Springer Verlag, New York, 2nd edition. https://link.springer.com/book/10.1007/b97671\nKleiber, C and Zeileis, A, 2008: Applied Econometrics with R. Springer Verlag, New York. https://link.springer.com/book/10.1007/978-0-387-77318-6\nVerzani, J, 2014: Using R for introductory statistics. CRC press. Publisher\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. https://r4ds.hadley.nz/"
-  },
-  {
-    "objectID": "00-index.html#status",
-    "href": "00-index.html#status",
-    "title": "Elements of applied statistics – a practical course",
-    "section": "Status",
-    "text": "Status\nThe selection of topics reflects what I think is useful as door-opener into various fields, useful in ecology and aquatic sciences. The material is based on former PDF slides and other course material, constructive comments and suggestions for improvement are welcome."
-  },
-  {
-    "objectID": "00-index.html#author",
-    "href": "00-index.html#author",
-    "title": "Elements of applied statistics – a practical course",
-    "section": "Author",
-    "text": "Author\nhttps://tu-dresden.de/Members/thomas.petzoldt\nhttps://github.com/tpetzoldt\n2024-11-05"
   },
   {
     "objectID": "slides/03-statparams.html#statistical-parameters",
@@ -3735,7 +4021,7 @@
     "href": "tutorials/s2-multivar-3d.html#nonmetric-multi-dimensional-scaling-nmds",
     "title": "Ordination and Clustering",
     "section": "0.5 Nonmetric multi-dimensional scaling (NMDS)",
-    "text": "0.5 Nonmetric multi-dimensional scaling (NMDS)\nThe PCA is a very useful technique as it reduces dimensions without bias, but as we have seen, large proportions of information may still be found at higher dimensions.\nThis is, where the nonmetric dimensional scaling comes into play. Here, we can request a number of dimensions \\(k\\), typically \\(k=2\\) or \\(k=3\\) and then the computer tries hard to squeeze the information as much as possible into these dimensions. The aim is, that the distances between in all dimensions are represented in two or three dimensions only. Though it is done in an iterative way, it is clear, that this is not perfectly possible and will introduce considerable distortion, called stress.\n\nmds &lt;- metaMDS(A, distance=\"euclid\", scale=TRUE, autotransform = FALSE, k=2)\n\n'comm' has negative data: 'autotransform', 'noshare' and 'wascores' set to FALSE\n\n\nRun 0 stress 0.07782409 \nRun 1 stress 0.07782411 \n... Procrustes: rmse 1.090608e-05  max resid 9.904037e-05 \n... Similar to previous best\nRun 2 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 1.252642e-05  max resid 0.0001445464 \n... Similar to previous best\nRun 3 stress 0.0778241 \n... Procrustes: rmse 1.538249e-05  max resid 0.0001683084 \n... Similar to previous best\nRun 4 stress 0.07782409 \n... Procrustes: rmse 1.238711e-05  max resid 0.0001414181 \n... Similar to previous best\nRun 5 stress 0.07782409 \n... Procrustes: rmse 3.580877e-06  max resid 2.243609e-05 \n... Similar to previous best\nRun 6 stress 0.0778241 \n... Procrustes: rmse 1.754724e-05  max resid 0.000181609 \n... Similar to previous best\nRun 7 stress 0.07783593 \n... Procrustes: rmse 0.0003803193  max resid 0.003856653 \n... Similar to previous best\nRun 8 stress 0.0778241 \n... Procrustes: rmse 1.96444e-05  max resid 0.0002218597 \n... Similar to previous best\nRun 9 stress 0.07782409 \n... Procrustes: rmse 7.894236e-06  max resid 8.968356e-05 \n... Similar to previous best\nRun 10 stress 0.07783593 \n... Procrustes: rmse 0.0003780097  max resid 0.003835045 \n... Similar to previous best\nRun 11 stress 0.07783593 \n... Procrustes: rmse 0.0003793646  max resid 0.00384798 \n... Similar to previous best\nRun 12 stress 0.09722252 \nRun 13 stress 0.07782409 \n... Procrustes: rmse 3.887259e-06  max resid 2.502047e-05 \n... Similar to previous best\nRun 14 stress 0.07782409 \n... Procrustes: rmse 1.093441e-05  max resid 0.000122567 \n... Similar to previous best\nRun 15 stress 0.0778241 \n... Procrustes: rmse 1.053877e-05  max resid 6.843675e-05 \n... Similar to previous best\nRun 16 stress 0.09722252 \nRun 17 stress 0.0778241 \n... Procrustes: rmse 2.001734e-05  max resid 0.0002182791 \n... Similar to previous best\nRun 18 stress 0.07782409 \n... Procrustes: rmse 6.179358e-06  max resid 6.467237e-05 \n... Similar to previous best\nRun 19 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 2.125129e-06  max resid 1.075783e-05 \n... Similar to previous best\nRun 20 stress 0.09722866 \n*** Best solution repeated 1 times\n\n\nThe resulting stress and the representation of distances in two (or three) dimensions can then be shown in a so-called stressplot. Here, one should not overestimate the hich \\(r^2\\) values, that are always big, even in bad cases. The shape of the step-line does not matter much either. However, the value of stress is most important and the data points should be close to the red line.\n\nstressplot(mds)\n\n\n\n\n\n\n\n\nThe stress itself shuld be small. As a rule of thumb, a stress value of \\(&gt;0.2\\) means that the NMDS was not successful, stress \\(&lt; 0.1\\) is considered as sufficient, \\(&lt;0.05\\) as good, \\(&lt;0.025\\) as very good and \\(\\approx 0\\) as perfect.\n\nmds\n\n\nCall:\nmetaMDS(comm = A, distance = \"euclid\", k = 2, autotransform = FALSE,      scale = TRUE) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     A \nDistance: euclidean \n\nDimensions: 2 \nStress:     0.07782409 \nStress type 1, weak ties\nBest solution was repeated 1 time in 20 tries\nThe best solution was from try 19 (random start)\nScaling: centring, PC rotation \nSpecies: scores missing\n\n\n\nxyz &lt;- as.data.frame(scores(mds, display=\"sites\"))\nxyz$. &lt;- 0\nordirgl(xyz, type=\"p\", ax.col = \"black\", col=mycolors)\nview3d(theta = 0, phi = 0, fov=0, zoom=0.7)\naxes3d(labels=FALSE, expand=1.5)\n\n\n\n\n\nHere, stress is \\(&lt;0.1\\). This is o.k., so that we now can have a look at the 2D representation. The figure is again technically 3D, so use the mouse to see that the data are now at a plane.",
+    "text": "0.5 Nonmetric multi-dimensional scaling (NMDS)\nThe PCA is a very useful technique as it reduces dimensions without bias, but as we have seen, large proportions of information may still be found at higher dimensions.\nThis is, where the nonmetric dimensional scaling comes into play. Here, we can request a number of dimensions \\(k\\), typically \\(k=2\\) or \\(k=3\\) and then the computer tries hard to squeeze the information as much as possible into these dimensions. The aim is, that the distances between in all dimensions are represented in two or three dimensions only. Though it is done in an iterative way, it is clear, that this is not perfectly possible and will introduce considerable distortion, called stress.\n\nmds &lt;- metaMDS(A, distance=\"euclid\", scale=TRUE, autotransform = FALSE, k=2)\n\n'comm' has negative data: 'autotransform', 'noshare' and 'wascores' set to FALSE\n\n\nRun 0 stress 0.07782409 \nRun 1 stress 0.07783593 \n... Procrustes: rmse 0.0003821637  max resid 0.003870821 \n... Similar to previous best\nRun 2 stress 0.0778241 \n... Procrustes: rmse 4.64071e-06  max resid 4.535706e-05 \n... Similar to previous best\nRun 3 stress 0.07782409 \n... Procrustes: rmse 2.181815e-06  max resid 9.019305e-06 \n... Similar to previous best\nRun 4 stress 0.09722252 \nRun 5 stress 0.0778241 \n... Procrustes: rmse 3.604648e-06  max resid 2.355109e-05 \n... Similar to previous best\nRun 6 stress 0.09722861 \nRun 7 stress 0.0778241 \n... Procrustes: rmse 3.840285e-06  max resid 2.445072e-05 \n... Similar to previous best\nRun 8 stress 0.09722252 \nRun 9 stress 0.07783594 \n... Procrustes: rmse 0.0003840977  max resid 0.003888181 \n... Similar to previous best\nRun 10 stress 0.09722251 \nRun 11 stress 0.09722861 \nRun 12 stress 0.07783594 \n... Procrustes: rmse 0.0003832162  max resid 0.003882035 \n... Similar to previous best\nRun 13 stress 0.09722866 \nRun 14 stress 0.07783594 \n... Procrustes: rmse 0.000383385  max resid 0.003884123 \n... Similar to previous best\nRun 15 stress 0.0972286 \nRun 16 stress 0.09722253 \nRun 17 stress 0.07782409 \n... Procrustes: rmse 2.607479e-06  max resid 1.926497e-05 \n... Similar to previous best\nRun 18 stress 0.07783593 \n... Procrustes: rmse 0.0003827114  max resid 0.003876689 \n... Similar to previous best\nRun 19 stress 0.09722861 \nRun 20 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 1.405265e-05  max resid 0.000147272 \n... Similar to previous best\n*** Best solution repeated 1 times\n\n\nThe resulting stress and the representation of distances in two (or three) dimensions can then be shown in a so-called stressplot. Here, one should not overestimate the hich \\(r^2\\) values, that are always big, even in bad cases. The shape of the step-line does not matter much either. However, the value of stress is most important and the data points should be close to the red line.\n\nstressplot(mds)\n\n\n\n\n\n\n\n\nThe stress itself shuld be small. As a rule of thumb, a stress value of \\(&gt;0.2\\) means that the NMDS was not successful, stress \\(&lt; 0.1\\) is considered as sufficient, \\(&lt;0.05\\) as good, \\(&lt;0.025\\) as very good and \\(\\approx 0\\) as perfect.\n\nmds\n\n\nCall:\nmetaMDS(comm = A, distance = \"euclid\", k = 2, autotransform = FALSE,      scale = TRUE) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     A \nDistance: euclidean \n\nDimensions: 2 \nStress:     0.07782409 \nStress type 1, weak ties\nBest solution was repeated 1 time in 20 tries\nThe best solution was from try 20 (random start)\nScaling: centring, PC rotation \nSpecies: scores missing\n\n\n\nxyz &lt;- as.data.frame(scores(mds, display=\"sites\"))\nxyz$. &lt;- 0\nordirgl(xyz, type=\"p\", ax.col = \"black\", col=mycolors)\nview3d(theta = 0, phi = 0, fov=0, zoom=0.7)\naxes3d(labels=FALSE, expand=1.5)\n\n\n\n\n\nHere, stress is \\(&lt;0.1\\). This is o.k., so that we now can have a look at the 2D representation. The figure is again technically 3D, so use the mouse to see that the data are now at a plane.",
     "crumbs": [
       "Tutorials",
       "Ordination and Clustering"
@@ -4450,7 +4736,7 @@
     "href": "slides/12-multivariate-2.html#example",
     "title": "12-Multivariate methods II",
     "section": "Example",
-    "text": "Example\n\nbenthos &lt;- read.csv(\"../data/gauernitz.csv\")\nrow.names(benthos) &lt;- benthos$Site\nenv &lt;- benthos[c(\"Habitat\", \"Stream\", \"Flood\")] # required later\n\nbio &lt;- benthos[c(\"Mollusca\", \"Diptera\", \"Baetis\", \"Plecoptera\", \"Coleoptera\", \n         \"Turbellaria\", \"Heptageniidae\", \"Ephemeroptera\", \"Gammarus\", \n         \"Trichoptera\", \"Acari\", \"Nematoda\", \"Oligochaeta\")]\n\nord &lt;- metaMDS(bio)\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1102424 \nRun 1 stress 0.1102424 \n... Procrustes: rmse 2.771308e-06  max resid 6.486379e-06 \n... Similar to previous best\nRun 2 stress 0.1727865 \nRun 3 stress 0.2332634 \nRun 4 stress 0.1105543 \n... Procrustes: rmse 0.02422316  max resid 0.0719385 \nRun 5 stress 0.1105543 \n... Procrustes: rmse 0.02424675  max resid 0.07201721 \nRun 6 stress 0.1102424 \n... Procrustes: rmse 5.9631e-06  max resid 1.638667e-05 \n... Similar to previous best\nRun 7 stress 0.1102424 \n... Procrustes: rmse 4.273231e-06  max resid 1.16034e-05 \n... Similar to previous best\nRun 8 stress 0.1102424 \n... Procrustes: rmse 3.20235e-06  max resid 8.894875e-06 \n... Similar to previous best\nRun 9 stress 0.1105543 \n... Procrustes: rmse 0.02422596  max resid 0.0719482 \nRun 10 stress 0.2403446 \nRun 11 stress 0.1102424 \n... Procrustes: rmse 1.893959e-05  max resid 4.584891e-05 \n... Similar to previous best\nRun 12 stress 0.1105543 \n... Procrustes: rmse 0.02420534  max resid 0.07187842 \nRun 13 stress 0.1105543 \n... Procrustes: rmse 0.02421554  max resid 0.07191375 \nRun 14 stress 0.1102424 \n... Procrustes: rmse 1.325544e-06  max resid 2.878638e-06 \n... Similar to previous best\nRun 15 stress 0.1727865 \nRun 16 stress 0.1102424 \n... Procrustes: rmse 3.574433e-05  max resid 0.0001012774 \n... Similar to previous best\nRun 17 stress 0.225322 \nRun 18 stress 0.1102424 \n... Procrustes: rmse 2.914132e-06  max resid 7.259496e-06 \n... Similar to previous best\nRun 19 stress 0.1736875 \nRun 20 stress 0.1105543 \n... Procrustes: rmse 0.02429318  max resid 0.07217496 \n*** Best solution repeated 8 times",
+    "text": "Example\n\nbenthos &lt;- read.csv(\"../data/gauernitz.csv\")\nrow.names(benthos) &lt;- benthos$Site\nenv &lt;- benthos[c(\"Habitat\", \"Stream\", \"Flood\")] # required later\n\nbio &lt;- benthos[c(\"Mollusca\", \"Diptera\", \"Baetis\", \"Plecoptera\", \"Coleoptera\", \n         \"Turbellaria\", \"Heptageniidae\", \"Ephemeroptera\", \"Gammarus\", \n         \"Trichoptera\", \"Acari\", \"Nematoda\", \"Oligochaeta\")]\n\nord &lt;- metaMDS(bio)\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1102424 \nRun 1 stress 0.1727865 \nRun 2 stress 0.1105543 \n... Procrustes: rmse 0.02424446  max resid 0.07200984 \nRun 3 stress 0.1105543 \n... Procrustes: rmse 0.02422457  max resid 0.07194322 \nRun 4 stress 0.1727865 \nRun 5 stress 0.1102424 \n... Procrustes: rmse 5.820585e-06  max resid 1.597515e-05 \n... Similar to previous best\nRun 6 stress 0.1105543 \n... Procrustes: rmse 0.02425712  max resid 0.07205194 \nRun 7 stress 0.1105543 \n... Procrustes: rmse 0.02426137  max resid 0.07206613 \nRun 8 stress 0.1105543 \n... Procrustes: rmse 0.02429143  max resid 0.07216791 \nRun 9 stress 0.1727865 \nRun 10 stress 0.2299335 \nRun 11 stress 0.1102424 \n... Procrustes: rmse 1.001133e-05  max resid 2.78604e-05 \n... Similar to previous best\nRun 12 stress 0.1102424 \n... Procrustes: rmse 4.165304e-06  max resid 9.78523e-06 \n... Similar to previous best\nRun 13 stress 0.1102424 \n... New best solution\n... Procrustes: rmse 2.144515e-06  max resid 5.070151e-06 \n... Similar to previous best\nRun 14 stress 0.1105543 \n... Procrustes: rmse 0.02425512  max resid 0.072045 \nRun 15 stress 0.1858757 \nRun 16 stress 0.1102424 \n... Procrustes: rmse 6.127759e-06  max resid 1.388349e-05 \n... Similar to previous best\nRun 17 stress 0.1102424 \n... Procrustes: rmse 4.195544e-07  max resid 1.187644e-06 \n... Similar to previous best\nRun 18 stress 0.1102424 \n... Procrustes: rmse 4.432297e-06  max resid 1.269746e-05 \n... Similar to previous best\nRun 19 stress 0.1105543 \n... Procrustes: rmse 0.02422429  max resid 0.07194165 \nRun 20 stress 0.1102424 \n... Procrustes: rmse 3.104774e-06  max resid 6.74006e-06 \n... Similar to previous best\n*** Best solution repeated 5 times",
     "crumbs": [
       "Basic Statistics",
       "12-Multivariate methods II"
@@ -4461,7 +4747,7 @@
     "href": "slides/12-multivariate-2.html#results-of-the-nmds",
     "title": "12-Multivariate methods II",
     "section": "Results of the NMDS",
-    "text": "Results of the NMDS\n\nord\n\n\nCall:\nmetaMDS(comm = bio) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     wisconsin(sqrt(bio)) \nDistance: bray \n\nDimensions: 2 \nStress:     0.1102424 \nStress type 1, weak ties\nBest solution was repeated 8 times in 20 tries\nThe best solution was from try 0 (metric scaling or null solution)\nScaling: centring, PC rotation, halfchange scaling \nSpecies: expanded scores based on 'wisconsin(sqrt(bio))' \n\n\n\nmetaMDS runs a series of NMDS trials and outputs the best\nmakes automatic decisions about transformation, distance and scaling\n\nRecommendation\n\nspecify distance, scaling and transformation explicitly\nconsider to increase try and trymax for big and/or difficult data sets, e.g.:\n\n\nord &lt;- metaMDS(bio, distance=\"bray\", autotransform=FALSE, try=40)",
+    "text": "Results of the NMDS\n\nord\n\n\nCall:\nmetaMDS(comm = bio) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     wisconsin(sqrt(bio)) \nDistance: bray \n\nDimensions: 2 \nStress:     0.1102424 \nStress type 1, weak ties\nBest solution was repeated 5 times in 20 tries\nThe best solution was from try 13 (random start)\nScaling: centring, PC rotation, halfchange scaling \nSpecies: expanded scores based on 'wisconsin(sqrt(bio))' \n\n\n\nmetaMDS runs a series of NMDS trials and outputs the best\nmakes automatic decisions about transformation, distance and scaling\n\nRecommendation\n\nspecify distance, scaling and transformation explicitly\nconsider to increase try and trymax for big and/or difficult data sets, e.g.:\n\n\nord &lt;- metaMDS(bio, distance=\"bray\", autotransform=FALSE, try=40)",
     "crumbs": [
       "Basic Statistics",
       "12-Multivariate methods II"
@@ -5154,7 +5440,7 @@
     "href": "slides/04-distributions.html#continuos-uniform-distribution-mathbfu0-1",
     "title": "04-Distributions",
     "section": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)",
-    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.5104024 0.3053001 0.3888669 0.6422320 0.2372132 0.7978391 0.4161124\n [8] 0.9294047 0.9163995 0.2454612\n\n\n \n\nbinning: subdivide values into classes",
+    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.61560035 0.03947076 0.58407494 0.97450301 0.88617937 0.81054310\n [7] 0.37363626 0.12637781 0.48834446 0.10428752\n\n\n \n\nbinning: subdivide values into classes",
     "crumbs": [
       "Basic Statistics",
       "04-Distributions"

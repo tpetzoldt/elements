@@ -39,3 +39,4 @@ website:
           - slides/x2-r-graphics.qmd
           - slides/x3-r-functions.qmd
           - slides/x4-pipes-intro.qmd
+          - slides/x5-quarto-intro.qmd
