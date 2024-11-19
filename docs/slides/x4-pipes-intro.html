@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-11-14">
+  <meta name="dcterms.date" content="2024-11-19">
   <title>Elements of Data Analysis and Statistics – x4-Pipelines in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -419,7 +419,7 @@
 
   <style>
   #title-slide 
-    .title {color: #ee7f00;}
+    .title {color: #cef0ffff;}
     .subtitle {color: #ee7f00;}
     .quarto-title-author {color: #69af22;}
     .date {color: #69af22;}
@@ -429,7 +429,7 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" body-color="#069af22" data-background-image="../img/tud-title-bg-wide-2021.png" class="quarto-title-block center">
+<section id="title-slide" body-color="#ffffff" data-background-image="../img/titlepage-lecture-slides-empty.svg" data-background-size="contain" class="quarto-title-block center">
   <h1 class="title">x4-Pipelines in R</h1>
   <p class="subtitle">Applied Statistics – A Practical Course</p>
 
@@ -441,7 +441,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-11-14</p>
+  <p class="date">2024-11-19</p>
 </section>
 <section id="prerequisites" class="slide level2">
 <h2>Prerequisites</h2>
@@ -642,8 +642,8 @@ Thomas Petzoldt
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-6aad4fe269f0dba2d69b" style="width:432px;height:384px;"></div>
-<script type="application/json" data-for="htmlwidget-6aad4fe269f0dba2d69b">{"x":{"diagram":"digraph functional {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg1, arg2, ...)\"\n           edge [penwidth=1.5]\n              output -> \"function(arg1, arg2, ...)\"[dir=back]\n           edge [penwidth=0.7, tailport = \"e\", headport = \"n\", constraint = false, color=\"tomato\"]\n              \"input\" -> \"function(arg1, arg2, ...)\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-bbb86f53fc2a3c813e74" style="width:432px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-bbb86f53fc2a3c813e74">{"x":{"diagram":"digraph functional {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg1, arg2, ...)\"\n           edge [penwidth=1.5]\n              output -> \"function(arg1, arg2, ...)\"[dir=back]\n           edge [penwidth=0.7, tailport = \"e\", headport = \"n\", constraint = false, color=\"tomato\"]\n              \"input\" -> \"function(arg1, arg2, ...)\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div><div class="column" style="width:49%;">
@@ -653,8 +653,8 @@ Thomas Petzoldt
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-094fb67d62a19433b726" style="width:432px;height:384px;"></div>
-<script type="application/json" data-for="htmlwidget-094fb67d62a19433b726">{"x":{"diagram":"digraph pipes {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg2, ...)\"\n           node [shape=none]\n             \"|>\"\n           edge [penwidth=1.5]\n              input -> \"|>\" -> \"function(arg2, ...)\" -> output\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-4e737cd8798a668666b9" style="width:432px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-4e737cd8798a668666b9">{"x":{"diagram":"digraph pipes {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg2, ...)\"\n           node [shape=none]\n             \"|>\"\n           edge [penwidth=1.5]\n              input -> \"|>\" -> \"function(arg2, ...)\" -> output\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div></section>

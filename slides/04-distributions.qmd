@@ -362,7 +362,12 @@ x <- seq(-3,3, 0.1)
 lines(x, dnorm(x), lwd=2, col="red")
 ```
 * in theory, 50% of the values are below and 50% above the mean value
-* 95% are between $\pm 2 \sigma$ 
+* 95% are between $\pm 2 \sigma$
+
+
+## Density and quantiles of the standard normal
+
+![](../img/normal-density-quantiles.png)
 
 
 ## Cumulative distribution function -- Quantile function
@@ -711,9 +716,9 @@ distribution:
 * due to the CLT, the distribution of sums and mean values converges to normal 
 
 
-## Shapiro-Wilks-W-Test
+## Shapiro-Wilks-W-Test [?]{.red}
 
-$\rightarrow$ standard test for normality testing
+$\rightarrow$ Aim: tests if a sample conforms to a normal distribution
 
 ```{r, include=FALSE}
 set.seed(734)
@@ -736,9 +741,10 @@ Interpration of the Shapiro-Wilks-test needs to be done with care:
 
 * for small $n$, the tes is not sensitive enough
 * far large $n$ it is over-sensitive
+* [using Shapiro-Wilks to check normality for t-test and ANOVA is not anymore recommended]{.red}
 
 ::: aside
-The $\chi^2$ (Chi-squared) or Kolmogorov-Smirnov-tests are nowadays rarely used for this purpose, but still important for other test problems.
+Similarly, the $\chi^2$ (Chi-squared) or Kolmogorov-Smirnov-tests are not anymore recommended for normality testing, but still important for other test problems.
 :::
 
 ## Graphical examination of normality
