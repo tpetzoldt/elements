@@ -9,9 +9,11 @@ subtitle: "Applied Statistics -- A Practical Course"
 date-format: "YYYY-MM-DD"
 title-page-header: "../img/logo-header.svg"
 title-slide-attributes:
-  #data-background-image: "../img/tud-title-bg-wide-2021.png"
-  data-background-image: "../img/titlepage-lecture-slides-empty.svg"
-  data-background-size: contain
+  ## without logos
+  data-background-image: "../img/tud-title-bg-wide-2021.png"
+  ## with logos; needs to uncomment also "contain""
+  #data-background-image: "../img/titlepage-lecture-slides-empty.svg"
+  #data-background-size: contain
   body-color: "#ffffff"
 #  data-background-opacity: "0.5"
 include-in-header:
