@@ -542,8 +542,14 @@ dev.off()                               # close
 
 **More presentations**
 
-* [R Basics](r-basics.html)
-* [Functions everywhere](r-functions.html)
+* [R Basics](x1-r-basics.html)
+* [Functions everywhere](x3-r-functions.html)
+
+**Books**
+
+* Chang, W. (2024) [R Graphics Cookbook](https://r-graphics.org/). O'Reilly.
+* Wickham, H. Navarro, D. and Pedersen, T.L. (in press) [ggplot2: Elegant Graphics for Data Analysis](https://ggplot2-book.org/)
+
 
 **Manuals**
 

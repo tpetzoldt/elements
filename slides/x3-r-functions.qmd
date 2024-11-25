@@ -360,8 +360,8 @@ $b$      | exponent $>1$
 
 **More presentations**
 
-* [R Basics](r-basics.html)
-* [Graphics in R](r-graphics.html)
+* [R Basics](x1-r-basics.html)
+* [Graphics in R](x2-r-graphics.html)
 
 **Manuals**
 
