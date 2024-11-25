@@ -236,6 +236,7 @@ par(opar)
 * change font size, margins and axis label orientation
 * opar stores previuos parameter and allows resetting
 
+
 ## Saving and exporting figures
 
 
@@ -247,13 +248,30 @@ par(opar)
 |-------------|--------|-------------------------------|------------------------------------------------------|
 | PNG         | bitmap | general purpose               | fixed size, use at least 300 pixels per inch         |
 | JPEG        | bitmap | photographs                   | not good for R images                                |
-| TIFF        | bitmap | PNG is easier                 | outdated, required by some journals                            |
-| BMP         | bitmap | not recommended               | outdated, needs huge memory                                    |
+| TIFF        | bitmap | PNG is easier                 | outdated, required by some journals                  |
+| BMP         | bitmap | not recommended               | outdated, needs huge memory                          |
 | Metafile    | vector | Windows standard format       | easy to use, quality varies                          |
-| SVG         | vector | can be edited                 | allows editing graphics with Inkscape                |
+| SVG         | vector | can be edited                 | allows editing  with Inkscape                        |
 | EPS         | vector | PDF is easier                 | required by some journals                            |
 | PDF         | vector | best quality                  | perfect for LaTex, RMarkdown and Quarto, MS Office requires conversion     |
 
+
+## Vector vs. Bitmap Graphics
+
+**Bitmap formats**
+
+* jpg, png, tiff
+* fixed resolution, cannot be magnified without loss
+* retouching possible, but not editing
+* well suited for pictures or plots with huge number of data (color maps)
+* cannot be converted to vector without complications and quality loss
+
+**Vector formats**
+
+* svg, pdf, [wmf, emf]
+* can be up- and downscaled and edited
+* well suited drawings and diagrams (except if huge amount of data)
+* can always be converted to bitmap
 
 
 ## Writing figures directly to PDF
@@ -312,7 +330,8 @@ radiation$Date <- as.Date(radiation$date)
 plot(radiation$Date, radiation$rad)
 ```
 
-Note: The data set contains *derived* data from the German Weather Service (<http://www.dwd.de>), station Dresden. Missing data were interpolated.
+Note: The data set contains *derived* data from the German Weather Service 
+(<http://www.dwd.de>), station Dresden. Missing data were interpolated.
 
 
 # Some notes About Date and Time
@@ -495,45 +514,6 @@ read.csv("../data/radiation.csv") |>
   ggplot(aes(doy, rad)) + geom_line() + facet_wrap(. ~ year)
 
 ```
-
-
-## Save Images to Disk
-
-
-* Simple: use of RStudio's graphics export
-* Better:
-
-```{r, eval=FALSE}
-pdf(file="figure.pdf",width=8,height=6) # open
-plot(rnorm(100))                        # plotting
-dev.off()                               # close
-```
-
-* other graphics formats: `png()`, `svg()`, ...
-* pdf allows several plots in one file (until dev.off)
-* special formats possible,
-  e.g. `width=100, height=10` (useful for `hclust`)
-* in case of error: repeated `dev.off()` to close all files.
-
-
-
-## Vector vs. Bitmap Graphics
-
-
-**Bitmap formats**
-
-* jpg, png, tiff
-* fixed resolution, cannot be magnified without loss
-* retouching possible, but not editing
-* well suited for pictures or plots with huge number of data (color maps)
-* cannot be converted to vector without complications and quality loss
-
-**Vector formats**
-
-* svg, pdf, [wmf, emf]
-* can be up- and downscaled and edited
-* well suited drawings and diagrams (except if huge amount of data)
-* can always be converted to bitmap
 
 
 ## Further Reading
