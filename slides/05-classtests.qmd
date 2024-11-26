@@ -27,7 +27,7 @@ A statistical hypothesis test is a method of statistical inference.
 * Commonly, two samples are compared, or a sample is compared
   against properties from an idealized model.
 * A hypothesis $H_a$ for the statistical relationship between the two data
-  sets, is compared to an idealized null hypothesis H0 that proposes no
+  sets, is compared to an idealized null hypothesis $H_0$ that proposes no
   relationship between two data sets.
 * The comparison is considered statistically significant if the
   relationship between the data sets would be an unlikely realization of
