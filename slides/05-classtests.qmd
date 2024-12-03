@@ -682,6 +682,113 @@ wilcox.exact(A, B, paired=TRUE)
 
 Let $\xi_{obs}$ be $`r xx`$ in our example, then $\Rightarrow$ $p= `r round(qxx,2)`$.
 
+# Power Analysis
+
+## Determining the power of statistical tests
+
+<br>
+
+**How many replicates will I need?**
+
+* Depends on:
+    * the relative effect size $\frac{\mathrm{effect}}{\mathrm{standard ~ deviation}}$
+    
+    $$\delta=\frac{(\bar{x}_1-\bar{x}_2)}{s}$$
+    
+    * the sample size $n$
+    * and the pre-defined significance level $\alpha$
+    * and the applied method
+
+
+* The smaller $\alpha$, $n$ and $\delta$, the bigger the type II ($\beta$) error.
+* This is the probability to overlook effects despite of their existence.
+
+
+## Power analysis
+
+<br>
+
+Formula for minimum sample size in the one-sample case:
+
+
+$$
+n = \bigg(\frac{z_\alpha + z_{1-\beta}}{\delta}\bigg)^2
+$$
+
+* $z$: the quantiles (`qnorm`) of the standard normal
+distribution for $\alpha$ and for $1-\beta$ 
+* $\delta=\Delta / s$: relative effect size.
+
+**Example**
+
+Two-tailed test with $\alpha=0.025$ and $\beta=0.2$
+
+$\rightarrow$ $z_\alpha = 1.96$, $z_\beta=0.84$, then:
+
+
+$$
+n= (1.96 + 0.84)^2 \cdot 1/\delta^2 \approx 8 /\delta^2
+$$
+
+
+$\delta = 1.0\cdot \sigma$ $\qquad\Rightarrow$ [n > 8 ]{.red}
+
+$\delta = 0.5\cdot \sigma$ $\qquad\Rightarrow$ [n > 32]{.red}
+
+## Power of the t-test
+
+
+The power of a t-test, or the minimum sample size, can be calculated with:
+`power.t.test()`:
+
+```{r, echo=TRUE}
+power.t.test(n=5, delta=0.5, sig.level=0.05)
+```
+
+$\rightarrow$ power = 0.10
+
+* For $n=5$ an existing effect of $0.5\sigma$ is only detected in 1 out of 10 cases.
+* For a power of 80% at $n=5$ we need an effect size of at least $2\sigma$:
+
+```{r, echo=TRUE,eval=FALSE}
+power.t.test(n=5, power=0.8, sig.level=0.05)
+```
+
+For a weak effect of $0.5\sigma$ we need a sample size of $n\ge64$ in each group:
+
+```{r, echo=TRUE,eval=FALSE}
+power.t.test(delta=0.5,power=0.8,sig.level=0.05)
+```
+
+[$\Rightarrow$ we ned either a large sample size or a strong effect.]{.darkred}
+
+## Simulated power of a t-test 
+
+```{r, echo=TRUE, eval=FALSE}
+# population parameters
+n      <- 10
+xmean1 <- 50; xmean2 <- 55
+xsd1   <- xsd2 <- 10
+alpha  <- 0.05
+
+nn <- 1000   # number of test runs in the simulation
+a <- b <- 0  # initialize counters
+for (i in 1:nn) {
+  # create random numbers
+  x1 <- rnorm(n, xmean1, xsd1)
+  x2 <- rnorm(n, xmean2, xsd2)
+  # results of the t-test
+  p <- t.test(x1,x2,var.equal = TRUE)$p.value 
+  if (p < alpha) {
+     a <- a+1
+   } else {
+     b <- b+1
+  }
+}
+print(paste("a=", a, ", b=", b, ", a/n=", a/nn, ", b/n=", b/nn))
+```
+
+
 # Test for distributions
 
 
@@ -689,68 +796,65 @@ Let $\xi_{obs}$ be $`r xx`$ in our example, then $\Rightarrow$ $p= `r round(qxx,
 
 **Nominal variables**
 
-*  $\chi^2$-test
-*  Fisher's exact test
+* $\chi^2$-test
+* Fisher's exact test
 
 **Ordinal variables**
 
-*  Cramér-von-Mises-Test
+* Cramér-von-Mises-Test
 * $\rightarrow$ more powerful than $\chi^2$ or KS-test
 
 **Metric scales**
 
-*  Kolmogorov-Smirnov-Test (KS-test)
-*  Shapiro-Wilks-Test (for normal distribution)
+* Kolmogorov-Smirnov-Test (KS-test)
+* Shapiro-Wilks-Test (for normal distribution)
+* Graphical checks
 
 ## Contingency tables for nominal variables
-
 
 * used for nominal (i.e. categorical or qualitative) data
 * examples: eye and hair color, medical treatment and the number of cured/not cured
 * important: use **absolute mesurements** (true numbers!), not percentages
     or other calculated data (e.g. not something like biomass per area)
 
-**Data example**
+**Example:** Occurence of Daphnia (water flee) in a lake:
 
-* *Daphnia* (water flee)-clones and their preferred depth in a lake
-* food algae in the deep water zone, poor of oxygen
-* only adapted clones with high haemoglobin can dive into deep water
+| Clone | Upper layer  | Deep layer |
+|------:|:------------:|:----------:|
+A       |          50  |          87| 
+B       |          37  |          78|
+C       |          72  |          45|
 
-
-| Clone | Upper layer | Deep layer |
-|-----:|:------------:|:----------:|
-A      |          50  |          87| 
-B      |          37  |          78|
-C      |          72  |          45|
+* food algae in the deep water, that was poor of oxygen
+* genetically evolved clones with high haemoglobin can dive into deep water
 
 
 ## Calculation of the $\chi^2$-test 
 
 
-1. Observed frequencies $O_{ij}$ and sums of rows and columns:
+1. Observed frequencies $O_{ij}$
 
 
 |            | Clone A | Clone B | Clone C | Sum $s_i$|
 |------------|---------|---------|---------|----------|
-|Epilimnion  |   50    |    37   |   72    | 159      |
-|Hypolimnion |   87    |    78   |   45    | 210      |
+|Upper layer |   50    |    37   |   72    | 159      |
+|Lower layer |   87    |    78   |   45    | 210      |
 |Sum $s_j$   |  137    |   115   |  117    | $n=369$  |
 |            |         |         |         |          |
 
-2. Expected frequencies $E_{ij}$ under the $H_0$: ${\mathbf E = s_i \otimes s_j} / n$
+2. Expected frequencies $E_{ij} = s_i \cdot s_j / n$ [(balanced distribution = null hypothesis)]{.gray}
 
-|            | Clone A | Clone B   | Clone C |
-|------------|---------|-----------|---------|
-|Epilimnion  |   59.0  |    49.6   |   50.4  |
-|Hypolimnion |   78.0  |    65.4   |   66.6  |
-|            |         |           |         |
+|            | Clone A | Clone B   | Clone C | Sum $s_i$|
+|------------|---------|-----------|---------|----------|
+|Upper layer |   59.0  |    49.6   |   50.4  | 159      |
+|Lower layer |   78.0  |    65.4   |   66.6  | 210      |
+|Sum $s_j$   |  137    |   115     |  117    | $n=369$  |
+|            |         |           |         |          |
 
-3. Calculate $\hat{\chi}^2 = \sum_{i, j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$
-  with $(n_{row} - 1) \cdot (n_{col} - 1)$ degrees of freedom.
+3. Test statistic $\hat{\chi}^2 = \sum_{i, j} \frac{(O_{ij} - E_{ij})^2}{E_{ij}}$
+  
 
-* Compare with critical $\chi^2$ from table.
-* Note: The results are only reliable if all observed frequencies are $\geq 5$.
-* For smaller samples, use Fisher's exact test
+4. Compare with critical $\chi^2$ from table [with $(n_{row} - 1) \cdot (n_{col} - 1)$ df.]{.gray}
 
 
 ## The $\chi^2$-test in **R**
@@ -772,6 +876,10 @@ x
 chisq.test(x)
 ```
 :::
+
+* Note: The results are only reliable if all observed frequencies are $\geq 5$.
+* For smaller samples, use Fisher's exact test.
+
 
 ## Fisher's exact test
 
@@ -826,7 +934,7 @@ chisq.test(obsfreq, simulate.p.value=TRUE, B=1000)
 *  The simulation-based version of the test (with 1000 replicates) is slightly more precise than
 the standard $\chi^2$-test, but both ar not significant.
 
-## Cramér-von-Mises-Test
+## [Cramér-von-Mises-Test]{.gray}
 
 
 ```{r von-mises, fig=TRUE,echo=FALSE,width=6,height=4}
@@ -848,7 +956,7 @@ $$
 T = n \omega^2 = \frac{1}{12n} + \sum_{i=1}^n \left[ \frac{2i-1}{2n}-F(x_i) \right]^2
 $$
 
-## Cramér-von-Mises-Test in **R**
+## [Cramér-von-Mises-Test in **R**]{.gray}
 
 ```{r, echo=TRUE}
 library(dgof)
@@ -872,25 +980,283 @@ cvm.test(x, cdf)
 *  The Cramér-von-Mises-test works with the original, unbinned values
 *  Use of cumulative function [respects order of classes]{.blue} $\rightarrow$ more powerful, than $\chi^2$-test.
 
-## Test distribution type of metric variables
+# Testing for normal distribution
+
+## Testing or checking?
+
+<br>
+
+**Philosophical problem:** We want to [keep]{.red} the $H_0$!
+
+* Equality cannot be tested
+* Therefore: better to say "checking normality".
+
+**Think first**
+
+* Does normal distribution "makes sense" for the data?
+* Are the data metric?
+* What is the data generating process? $\rightarrow$ Contextual understanding!
+
+**Inherent non-normality**
+
+> Some types of data, such as count data (e.g., number of occurrences) and binary data (e.g., yes/no), are inherently non-normal.
+
+
+* Binary data: use methods for Binomial distribution with raw data instead of percentages
+* Count data: use methods designed for Poisson distribution
+
+## Shapiro-Wilks-W-Test [?]{.red}
+
+$\rightarrow$ Aim: tests if a sample conforms to a normal distribution
+
+```{r, include=FALSE}
+set.seed(734)
+```
+
+
+```{r echo=TRUE}
+x <- rnorm(100)
+shapiro.test(x)
+```
+
+<br>
+
+$\rightarrow$ the $p$-value is greater than 0.05, so we would keep $H_0$ 
+and conclude that nothing speaks against acceptance of the normal
+
+<br>
+
+Interpration of the Shapiro-Wilks-test needs to be done with care:
+
+* for small $n$, the tes is not sensitive enough
+* far large $n$, it is over-sensitive
+* [using Shapiro-Wilks to check normality for t-test and ANOVA is not anymore recommended]{.red}
+
+::: aside
+Similarly, the $\chi^2$ (Chi-squared) or Kolmogorov-Smirnov-tests are not anymore recommended for normality testing, but still important for other test problems.
+:::
+
+
+## Alternative: use graphical methods
 
 ```{r normality-graphical,fig.align='center'}
 set.seed(123)
 par(mfrow=c(1, 3))
 x <- rnorm(100, mean=50, sd=10)
-hist(x, probability=TRUE)
+hist(x, probability=TRUE, main="Histogram")
 lines(10:90, dnorm(10:90, mean(x), sd(x)), col="red", lwd=2)
 qqnorm(x); qqline(x, col="red")
-boxplot(x, col="wheat")
+boxplot(x, col="wheat", main="Boxplot")
 ```
 
 <br>
 
-* histogram, boxplot, quantile-quantile plot
-* Shapiro Wilk W-test
-* Box-Cox method
-* see section **Distributions**
+* histogram, boxplot, QQ-plot (=quantile-quantile plot)
+* see also: Box-Cox method
 
+
+
+## Graphical checks of normality
+
+<br>
+
+
+::: {.column width="49%"}
+```{r distrbox-examples, fig.width=6, fig.height=4}
+set.seed(4213)
+par(mar=c(4.1, 4.1, 1, 1), las=1)
+x1 <- rnorm(100, mean = 50, sd = 10)      # normal distribution
+x2 <- runif(100, min = 30, max = 70)      # uniform distribution
+x3 <- rlnorm(100, meanlog = 2, sdlog = 1) # lognormal distribution
+x4 <- 50 +10 * rt(100, df=3) # heavy tailed
+boxplot(x1, x2, x3, x4,
+  names=c("Normal", "Uniform", "Lognormal", "heavy tailed"), col="wheat")
+```
+:::
+
+::: {.column width="49%"}
+```{r qqnorm-examples, fig.width=6, fig.height=4}
+par(las=1)
+par(mar=c(4,4,3,.1))
+#par(mfrow=c(1,4))
+par(mfrow=c(2,2))
+qqnorm(x1, main = "normal"); qqline(x1, col="forestgreen")
+qqnorm(x2, main = "uniform"); qqline(x2, col="red")
+qqnorm(x3, main = "lognormal"); qqline(x3, col="red")
+qqnorm(x4, main = "heavy tailed"); qqline(x4, col="red")
+```
+:::
+
+* $x$: theoretical quantiles where a value should be found if the distribution is normal
+* $y$: normalized and ordered measured values ($z$-scores)
+* scaled in the unit of standard deviations
+* normal distribution if the points follow a straight line
+
+
+## Transformations
+
+* allows to apply methods designed for normally distributed data to non-normal cases
+* very common in the in the past, still sometimes useful
+* modern methods (e.g. generalized linear models, GLM) can handle certain distributions directly, such as the Binomial, Gamma, or Poisson distribution.
+
+**Transformations for right-skewed data**
+
+* $x'=\log(x)$
+* [$x'=\log(x + a)$]{.red}
+* $x'=(x+a)^c$ [($a$ between 0.5 and 1)]{.gray}
+* $x'=1/x$ [("very powerful", i.e. to extreme in most cases)]{.gray}
+* $x'=a - 1/\sqrt{x}$ [(to make scale more convenient)]{.gray}
+* $x'=1/\sqrt{x}$ [(compromise between $\ln$ and $1/x$)]{.gray}
+* $x'=a+bx^c$ [(very general, includes powers and roots)]{.gray}
+
+## Transformations II
+
+**Transformations for count data**
+
+* $x'=\sqrt{3/8+x}$ [(counts: 1, 2, 3 $\rightarrow$ 0.61, 1.17, 1.54,  1.84, \dots)]{.gray}
+<!-- * $x'=\lg(x+3/8)$ / -->
+* $x'=\log(\log(x))$ [for giant numbers]{.gray}
+
+[$\rightarrow$ consider a GLM with family Poisson or quasi-Poisson instead]{.blue}
+
+**Ratios and percentages** [values between (0, 1)]{.gray}
+
+* $x'=\arcsin \sqrt{x/n}$
+* $x'=\arcsin \sqrt{\frac{x+3/8}{n+3/4}}$
+
+[$\rightarrow$ consider a GLM with family binomial instead]{.blue}
+<!-----------------------------------------------------------------------------/ -->
+
+## How to find the best transformation?
+
+* Example: biovolumes of diatom algae cells [(species *Nitzschia acicularis*)]{.gray}.
+
+::: {.column width="42%"}
+<br>
+```{r prk_nit_data, echo=TRUE, eval=FALSE}
+dat <- read.csv("prk_nit.csv")
+
+Nit85 <- dat$biovol[dat$group == "nit85"]
+Nit90 <- dat$biovol[dat$group == "nit90"]
+
+hist(Nit85, xlab="Biovolume (mm^3)")
+hist(Nit90, xlab="Biovolume (mm^3)")
+```
+:::
+
+::: {.column width="4%"}
+:::
+
+::: {.column width="52%"}
+```{r prk_nit_fig, echo=FALSE, fig.width=6, fig.height=3}
+dat <- read.csv("../data/prk_nit.csv")
+Nit85 <- dat$biovol[dat$group == "nit85"]
+Nit90 <- dat$biovol[dat$group == "nit90"]
+
+par(mfrow=c(1,2))
+par(mar=c(4,4,1.5, 0.5))
+hist(Nit85, xlab="Biovolume (mm^3)")
+hist(Nit90, xlab="Biovolume (mm^3)")
+```
+:::
+
+
+* Right skewed distribution.
+* Biovolume calculations used for foodweb studies and algae bloom prediction.
+
+:::{.aside}
+
+More about **Nitzschia** in [Wikipedia](https://en.wikipedia.org/wiki/Nitzschia)
+
+Data set [`prk_nit.csv`]("https://github.com/tpetzoldt/datasets/blob/main/data/prk_nit.csv") and metadata [`prk_nit_info.txt`]("https://github.com/tpetzoldt/datasets/blob/main/data/prk_nit_info.txt") available from [https://github.com/tpetzoldt/datasets](https://github.com/tpetzoldt/datasets).
+:::
+
+
+## Box-Cox method
+
+$$
+y' = 
+\begin{cases}
+y^\lambda & | & \lambda \ne 0\\
+\log(y) & | & \lambda =0 
+\end{cases}
+$$
+* Estimate optimal transformation from the class of powers and logarithms
+
+<br>
+
+::: {.column width="42%"}
+<br>
+```{r boxcox_code, echo=TRUE, eval=FALSE}
+library(MASS)
+
+boxcox(Nit90 ~ 1)
+```
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="52%"}
+```{r boxcox, fig.width=4, fig.height=3}
+library(MASS)
+par(mar=c(4.,4,.5,.5))
+dat <- read.csv("../data/prk_nit.csv")
+Nit90 <- dat$biovol[dat$group == "nit90"]
+boxcox(Nit90 ~ 1)
+```
+:::
+
+
+* Argument of `boxcox` is a so-called "model formula" or the outcome of a linear model (`lm`)
+* Most basic form is the "null model" without explanation variables (`~ 1`).
+* More about model formulas, see the ANOVA chapter.
+
+
+## Box Cox-method: Results
+
+
+::: {.column width="47%"}
+
+<br>
+
+### Interpretation
+
+<br>
+
+* dotted vertical lines and horizontal 95%-line show the
+confidence limits for possible transformations.
+* Numbers are apporoximate $\rightarrow$ round it to one decimal.
+* Here we can use either a **log** transformation ($\lambda=0$) or a power of
+ $\approx 0.5$.
+:::
+
+::: {.column width="5%"}
+:::
+
+::: {.column width="47%"}
+Obtain the numerical value directly:
+
+```{r boxcox_interpretation, echo=TRUE, fig.width=6, fig.height=4}
+bc <- boxcox(Nit90 ~ 1)
+str(bc)
+bc$x[bc$y == max(bc$y)]
+```
+:::
+
+
+
+
+## Test of pooled samples with different mean
+
+
+```{r boxcox2, echo=TRUE, fig.align="center", fig.width=6, fig.height=4}
+boxcox(biovol ~ group, data = dat)
+```
+
+* To test for joint distribution of all groups at once, specify explanatory variables
+at the right hand side of the model formula: `biovol ~ group`
+* Optimal transformation for both samples together is **log**.
 
 # Dependency and correlation
 
@@ -1182,109 +1548,6 @@ plot(x, xlab="x", ylab="y", las=1, pch=16, cex=0.5, xlim=c(0,10), ylim=c(0,10))
 * apply multiple regression with care and use process knowledge.
 
 
-# Power Analysis
-
-## Determining the power of statistical tests
-
-<br>
-
-**How many replicates will I need?**
-
-* Depends on:
-    * the relative effect size $\frac{\mathrm{effect}}{\mathrm{standard ~ deviation}}$
-    
-    $$\delta=\frac{(\bar{x}_1-\bar{x}_2)}{s}$$
-    
-    * the sample size $n$
-    * and the pre-defined significance level $\alpha$
-    * and the applied method
-
-
-* The smaller $\alpha$, $n$ and $\delta$, the bigger the type II ($\beta$) error.
-* This is the probability to overlook effects despite of their existence.
-
-
-## Power analysis
-
-<br>
-
-Formula for minimum sample size in the one-sample case:
-
-
-$$
-n = \bigg(\frac{z_\alpha + z_{1-\beta}}{\delta}\bigg)^2
-$$
-
-* $z$: the quantiles (`qnorm`) of the standard normal
-distribution for $\alpha$ and for $1-\beta$ 
-* $\delta=\Delta / s$: relative effect size.
-
-**Example**
-
-Two-tailed test with $\alpha=0.025$ and $\beta=0.2$
-
-$\rightarrow$ $z_\alpha = 1.96$, $z_\beta=0.84$, then:
-
-
-$$
-n= (1.96 \pm 0.84)^2 \cdot 1/\delta^2 \approx 8 /\delta^2
-$$
-
-
-## Power of the t-test
-
-
-The power of a t-test, or the minimum sample size, can be calculated with:
-`power.t.test()`:
-
-```{r, echo=TRUE}
-power.t.test(n=5, delta=0.5, sig.level=0.05)
-```
-
-$\rightarrow$ power = 0.10
-
-* For $n=5$ an existing effect of $0.5\sigma$ is only detected in 1 out of 10 cases.
-* For a power of 80% at $n=5$ we need an effect size of at least $2\sigma$:
-
-```{r, echo=TRUE,eval=FALSE}
-power.t.test(n=5, power=0.8, sig.level=0.05)
-```
-
-For a weak effect of $0.5\sigma$ we need a sample size of $n\ge64$ in each group:
-
-```{r, echo=TRUE,eval=FALSE}
-power.t.test(delta=0.5,power=0.8,sig.level=0.05)
-```
-
-[$\Rightarrow$ we ned either a large sample size or a strong effect.]{.darkred}
-
-## Simulated power of a t-test 
-
-```{r, echo=TRUE, eval=FALSE}
-# population parameters
-n      <- 10
-xmean1 <- 50
-xmean2 <- 55
-xsd1   <- xsd2 <- 10
-alpha  <- 0.05
-
-# number of test runs in the simulation
-nn <- 1000
-a <- b <- 0
-for (i in 1:nn) {
-  # creating random numbers
-  x1 <- rnorm(n, xmean1, xsd1)
-  x2 <- rnorm(n, xmean2, xsd2)
-  # results of the t-test
-  p <- t.test(x1,x2,var.equal = TRUE)$p.value 
-  if (p < alpha) {
-     a <- a+1
-   } else {
-     b <- b+1
-  }
-}
-print(paste("a=", a, ", b=", b, ", a/n=", a/nn, ", b/n=", b/nn))
-```
-
 ## References
 
+<br>
