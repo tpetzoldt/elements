@@ -15,6 +15,8 @@ an overview to enable students to select and understand specialized books
 and online material to dig in deeper in the diverse and fascinating field of 
 statistical computing.
 
+The corresponding lab exercises are found at [https://tpetzoldt.github.io/element-labs/](https://tpetzoldt.github.io/element-labs/).
+
 ## Status
 
 The selection of topics reflects what I think is useful as door-opener into 
@@ -44,4 +46,4 @@ suggestions for improvement are welcome.
 
 [homepage](https://tu-dresden.de/Members/thomas.petzoldt) +++ [github](https://github.com/tpetzoldt)
 
-2024-11-20
+2024-12-03
