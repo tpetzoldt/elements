@@ -1,4 +1,4 @@
-# statistics-course
+# Elements of Applied Statistics: Lecture Slides
 
 This repository will contain teaching material for statistics courses. 
 
