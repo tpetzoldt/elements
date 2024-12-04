@@ -38,9 +38,10 @@ suggestions for improvement are welcome.
 
 ## Related Pages
 
-* [Source code of the slides](https://github.com/tpetzoldt/elements)
-* [Collection of lab exercises](../element-labs/)
 
+* [**Collection of lab exercises**](../element-labs/)
+* [**Datasets**](../datasets/)
+* [Source code of the slides](https://github.com/tpetzoldt/elements)
 
 ## Author
 
