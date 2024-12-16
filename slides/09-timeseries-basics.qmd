@@ -333,7 +333,7 @@ knitr::kable(t(data.frame("x_t" = c(x, NA, NA))))
 
 <br>
 
-**Shifting to the right
+**Shifting to the right**
 
 ```{r}
 options(knitr.kable.NA = '')

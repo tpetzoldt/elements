@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-11-25">
+  <meta name="dcterms.date" content="2024-12-16">
   <title>Elements of Data Analysis and Statistics – 07-One and two-way ANOVA</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -435,7 +435,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-11-25</p>
+  <p class="date">2024-12-16</p>
 </section>
 <section id="anova-analysis-of-variances" class="slide level2">
 <h2>ANOVA – Analysis of Variances</h2>
@@ -583,7 +583,7 @@ Table&nbsp;1: Growth from day 2 to day 6 (relative units)
 </div>
 <ul>
 <li><span class="red">NA</span> means “not available”, i.e.&nbsp;a missing value</li>
-<li>the crosstable structure is compact and esy to read, but not suitable for data analysis</li>
+<li>the crosstable structure is compact and easy to read, but not ideal for data analysis</li>
 <li><span class="math inline">\(\Rightarrow\)</span> convert it to long format</li>
 </ul>
 </section>
@@ -1036,15 +1036,15 @@ F = 115.09, num df = 6.0000, denom df = 4.6224, p-value = 6.57e-05</code></pre>
 <section id="two-way-anova" class="slide level2">
 <h2>Two-way ANOVA</h2>
 <ul>
-<li>Example from a statistics text book <span class="citation" data-cites="Crawley2002">(<a href="#/bibliography" role="doc-biblioref" onclick="">Crawley, 2002</a>)</span></li>
-<li>Effects of diet and coat color on growth of Hamsters in gramm per time</li>
+<li>Example from a statistics text book <span class="citation" data-cites="Crawley2002">(<a href="#/bibliography" role="doc-biblioref" onclick="">Crawley, 2002</a>)</span>, applied to a new context</li>
+<li>Effects of fertilizer and light regime on growth of plant height in cm per time</li>
 </ul>
 <table class="caption-top">
 <thead>
 <tr class="header">
-<th>diet</th>
-<th>dark coat</th>
-<th>light coat</th>
+<th>fertilizer</th>
+<th>high light</th>
+<th>low light</th>
 </tr>
 </thead>
 <tbody>
@@ -1099,12 +1099,12 @@ F = 115.09, num df = 6.0000, denom df = 4.6224, p-value = 6.57e-05</code></pre>
 <div class="column" style="width:59%;">
 <p><br><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>hams <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">No =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
-<span id="cb31-2"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">growth =</span> <span class="fu">c</span>(<span class="fl">6.6</span>, <span class="fl">7.2</span>, <span class="fl">6.9</span>, <span class="fl">8.3</span>, <span class="fl">7.9</span>, <span class="fl">9.2</span>,</span>
-<span id="cb31-3"><a aria-hidden="true" tabindex="-1"></a>                            <span class="fl">8.3</span>, <span class="fl">8.7</span>, <span class="fl">8.1</span>, <span class="fl">8.5</span>, <span class="fl">9.1</span>, <span class="fl">9.0</span>),</span>
-<span id="cb31-4"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">diet =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">each=</span><span class="dv">2</span>),</span>
-<span id="cb31-5"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">coat =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"light"</span>, <span class="st">"dark"</span>), <span class="at">each=</span><span class="dv">6</span>)</span>
-<span id="cb31-6"><a aria-hidden="true" tabindex="-1"></a>                   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>plants <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">No =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
+<span id="cb31-2"><a aria-hidden="true" tabindex="-1"></a>                    <span class="at">growth =</span> <span class="fu">c</span>(<span class="fl">6.6</span>, <span class="fl">7.2</span>, <span class="fl">6.9</span>, <span class="fl">8.3</span>, <span class="fl">7.9</span>, <span class="fl">9.2</span>,</span>
+<span id="cb31-3"><a aria-hidden="true" tabindex="-1"></a>                               <span class="fl">8.3</span>, <span class="fl">8.7</span>, <span class="fl">8.1</span>, <span class="fl">8.5</span>, <span class="fl">9.1</span>, <span class="fl">9.0</span>),</span>
+<span id="cb31-4"><a aria-hidden="true" tabindex="-1"></a>                    <span class="at">fert   =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">each=</span><span class="dv">2</span>),</span>
+<span id="cb31-5"><a aria-hidden="true" tabindex="-1"></a>                    <span class="at">light   =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"high"</span>), <span class="at">each=</span><span class="dv">6</span>)</span>
+<span id="cb31-6"><a aria-hidden="true" tabindex="-1"></a>          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div><div class="column" style="width:39%;">
 <div class="cell">
@@ -1114,8 +1114,8 @@ F = 115.09, num df = 6.0000, denom df = 4.6224, p-value = 6.57e-05</code></pre>
 <tr class="header">
 <th style="text-align: right;" data-quarto-table-cell-role="th">No</th>
 <th style="text-align: right;" data-quarto-table-cell-role="th">growth</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">diet</th>
-<th style="text-align: left;" data-quarto-table-cell-role="th">coat</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">fert</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">light</th>
 </tr>
 </thead>
 <tbody>
@@ -1123,73 +1123,73 @@ F = 115.09, num df = 6.0000, denom df = 4.6224, p-value = 6.57e-05</code></pre>
 <td style="text-align: right;">1</td>
 <td style="text-align: right;">6.6</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: left;">light</td>
+<td style="text-align: left;">low</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">2</td>
 <td style="text-align: right;">7.2</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: left;">light</td>
+<td style="text-align: left;">low</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">3</td>
 <td style="text-align: right;">6.9</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: left;">light</td>
+<td style="text-align: left;">low</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">4</td>
 <td style="text-align: right;">8.3</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: left;">light</td>
+<td style="text-align: left;">low</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">5</td>
 <td style="text-align: right;">7.9</td>
 <td style="text-align: left;">C</td>
-<td style="text-align: left;">light</td>
+<td style="text-align: left;">low</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">6</td>
 <td style="text-align: right;">9.2</td>
 <td style="text-align: left;">C</td>
-<td style="text-align: left;">light</td>
+<td style="text-align: left;">low</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">7</td>
 <td style="text-align: right;">8.3</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: left;">dark</td>
+<td style="text-align: left;">high</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">8</td>
 <td style="text-align: right;">8.7</td>
 <td style="text-align: left;">A</td>
-<td style="text-align: left;">dark</td>
+<td style="text-align: left;">high</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">9</td>
 <td style="text-align: right;">8.1</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: left;">dark</td>
+<td style="text-align: left;">high</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">10</td>
 <td style="text-align: right;">8.5</td>
 <td style="text-align: left;">B</td>
-<td style="text-align: left;">dark</td>
+<td style="text-align: left;">high</td>
 </tr>
 <tr class="odd">
 <td style="text-align: right;">11</td>
 <td style="text-align: right;">9.1</td>
 <td style="text-align: left;">C</td>
-<td style="text-align: left;">dark</td>
+<td style="text-align: left;">high</td>
 </tr>
 <tr class="even">
 <td style="text-align: right;">12</td>
 <td style="text-align: right;">9.0</td>
 <td style="text-align: left;">C</td>
-<td style="text-align: left;">dark</td>
+<td style="text-align: left;">high</td>
 </tr>
 </tbody>
 </table>
@@ -1274,19 +1274,19 @@ F = 115.09, num df = 6.0000, denom df = 4.6224, p-value = 6.57e-05</code></pre>
 <section id="linear-model-and-anova" class="slide level2">
 <h2>Linear model and ANOVA</h2>
 
-<img data-src="07-anova_files/figure-revealjs/hams-boxplot-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><p><strong>ANOVA</strong></p>
+<img data-src="07-anova_files/figure-revealjs/plants-boxplot-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><p><strong>ANOVA</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> coat <span class="sc">*</span> diet, <span class="at">data =</span> hams)</span>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light <span class="sc">*</span> fert, <span class="at">data =</span> plants)</span>
 <span id="cb32-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
 Response: growth
-          Df  Sum Sq Mean Sq F value  Pr(&gt;F)  
-coat       1 2.61333 2.61333  7.2258 0.03614 *
-diet       2 2.66000 1.33000  3.6774 0.09069 .
-coat:diet  2 0.68667 0.34333  0.9493 0.43833  
-Residuals  6 2.17000 0.36167                  
+           Df  Sum Sq Mean Sq F value  Pr(&gt;F)  
+light       1 2.61333 2.61333  7.2258 0.03614 *
+fert        2 2.66000 1.33000  3.6774 0.09069 .
+light:fert  2 0.68667 0.34333  0.9493 0.43833  
+Residuals   6 2.17000 0.36167                  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -1295,11 +1295,11 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="interaction-plot" class="slide level2">
 <h2>Interaction plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(hams, <span class="fu">interaction.plot</span>(diet, coat, growth, </span>
-<span id="cb34-2"><a aria-hidden="true" tabindex="-1"></a>                            <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"brown"</span>, <span class="st">"orange"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(plants, <span class="fu">interaction.plot</span>(fert, light, growth, </span>
+<span id="cb34-2"><a aria-hidden="true" tabindex="-1"></a>                            <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"brown"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="07-anova_files/figure-revealjs/hams-interaction-1.png" width="960" class="r-stretch"></section>
+<img data-src="07-anova_files/figure-revealjs/plants-interaction-1.png" width="960" class="r-stretch"></section>
 <section id="diagnostics" class="slide level2">
 <h2>Diagnostics</h2>
 <p><strong>Assumptions</strong></p>
@@ -1308,7 +1308,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Variance homogeneity of residuals</li>
 <li>Normal distribution of residuals</li>
 </ol>
-<p><br> <span class="red">Test of assumptions needs residuals of the fitted model.</span> <span class="math inline">\(\Rightarrow\)</span> Fit the ANOVA model first, then check if it was correct!</p>
+<p><br> <span class="red">Test of assumptions needs residuals of the fitted model.</span> <br><br> <span class="math inline">\(\Rightarrow\)</span> Fit the ANOVA model first, then check if it was correct!</p>
 <p><br></p>
 <p><strong>Diagnostic tools</strong></p>
 <ul>
@@ -1330,13 +1330,13 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb35-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="07-anova_files/figure-revealjs/hams-diagnostics-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">fligner.test</span>(growth <span class="sc">~</span> <span class="fu">interaction</span>(coat, diet), <span class="at">data=</span>hams)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<img data-src="07-anova_files/figure-revealjs/plants-diagnostics-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">fligner.test</span>(growth <span class="sc">~</span> <span class="fu">interaction</span>(light, fert), <span class="at">data=</span>plants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Fligner-Killeen test of homogeneity of variances
 
-data:  growth by interaction(coat, diet)
+data:  growth by interaction(light, fert)
 Fligner-Killeen:med chi-squared = 10.788, df = 5, p-value = 0.05575</code></pre>
 </div>
 </div>
@@ -1472,6 +1472,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <img data-src="07-anova_files/figure-revealjs/dobson-lines-1.png" width="960" class="r-stretch"></section>
 <section id="the-birthweight-data-set" class="slide level2">
 <h2>The birthweight data set</h2>
+<p><br></p>
 <p>The data set is found at different places on the internet and in different versions.</p>
 <p>Here the version that is found in an R demo: <code>demo(lm.glm)</code></p>
 <div class="cell">
@@ -1482,9 +1483,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb48-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">weight =</span> <span class="fu">c</span>(<span class="dv">2968</span>, <span class="dv">2795</span>, <span class="dv">3163</span>, <span class="dv">2925</span>, <span class="dv">2625</span>, <span class="dv">2847</span>, <span class="dv">3292</span>, <span class="dv">3473</span>, <span class="dv">2628</span>, <span class="dv">3176</span>,</span>
 <span id="cb48-6"><a aria-hidden="true" tabindex="-1"></a>        <span class="dv">3421</span>, <span class="dv">2975</span>, <span class="dv">3317</span>, <span class="dv">2729</span>, <span class="dv">2935</span>, <span class="dv">2754</span>, <span class="dv">3210</span>, <span class="dv">2817</span>, <span class="dv">3126</span>, <span class="dv">2539</span>,</span>
 <span id="cb48-7"><a aria-hidden="true" tabindex="-1"></a>        <span class="dv">2412</span>, <span class="dv">2991</span>, <span class="dv">2875</span>, <span class="dv">3231</span>),</span>
-<span id="cb48-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">sex =</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"F"</span>))</span>
+<span id="cb48-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"F"</span>))</span>
 <span id="cb48-9"><a aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Note: it is a toy data set, not the reality.</p>
 <!------------------------------------------------------------------------------
 ## Linear regression, ANOVA and ANCOVA
 
@@ -1504,14 +1506,14 @@ linear models (GLM).
 <h2>Anette Dobson’s birthweight data</h2>
 <p>Why not just using a t-test?</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(weight <span class="sc">~</span> sex,<span class="at">data=</span>dobson, <span class="at">ylab=</span><span class="st">"weight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(weight <span class="sc">~</span> gender,<span class="at">data =</span> dobson, <span class="at">ylab =</span> <span class="st">"weight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> sex, <span class="at">data=</span>dobson, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> gender, <span class="at">data =</span> dobson, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
 
-data:  weight by sex
+data:  weight by gender
 t = 0.97747, df = 22, p-value = 0.339
 alternative hypothesis: true difference in means between group M and group F is not equal to 0
 95 percent confidence interval:
@@ -1526,17 +1528,17 @@ mean in group M mean in group F
 <section id="ancova-makes-use-of-covariates" class="slide level2">
 <h2>ANCOVA makes use of covariates</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> week <span class="sc">*</span> sex, <span class="at">data =</span> dobson)</span>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> week <span class="sc">*</span> gender, <span class="at">data =</span> dobson)</span>
 <span id="cb52-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
 Response: weight
-          Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
-week       1 1013799 1013799 31.0779 1.862e-05 ***
-sex        1  157304  157304  4.8221   0.04006 *  
-week:sex   1    6346    6346  0.1945   0.66389    
-Residuals 20  652425   32621                      
+            Df  Sum Sq Mean Sq F value    Pr(&gt;F)    
+week         1 1013799 1013799 31.0779 1.862e-05 ***
+gender       1  157304  157304  4.8221   0.04006 *  
+week:gender  1    6346    6346  0.1945   0.66389    
+Residuals   20  652425   32621                      
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -1551,7 +1553,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 ::: {.cell}
 
 ```{.r .cell-code}
-plot(weight ~ week, data=dobson, col=c("blue","red")[as.numeric(sex)], pch=16)
+plot(weight ~ week, data=dobson, col=c("blue","red")[as.numeric(gender)], pch=16)
 
 #summary(m)
 p <- coef(m)
@@ -1561,8 +1563,8 @@ abline(a=p[1],      b=p[2],      col="red")
 abline(a=p[1]+p[3], b=p[2]+p[4], col="blue")
 
 ## the result is the same as when we would fit separate linear models
-fem <- lm(weight ~ week, data=dobson, subset = sex=="F")
-mal <- lm(weight ~ week, data=dobson, subset = sex=="M")
+fem <- lm(weight ~ week, data=dobson, subset = gender=="F")
+mal <- lm(weight ~ week, data=dobson, subset = gender=="M")
 abline(fem, col="black", lty="dashed")
 abline(mal, col="black", lty="dashed")
 ```
@@ -1605,19 +1607,19 @@ abline(mal, col="black", lty="dashed")
 <section id="type-ii-anova-example" class="slide level2">
 <h2>Type II ANOVA: Example</h2>
 
-<img data-src="07-anova_files/figure-revealjs/hams-boxplot-ancova-1.png" width="960" class="r-stretch"><div class="cell">
+<img data-src="07-anova_files/figure-revealjs/plants-boxplot-ancova-1.png" width="960" class="r-stretch"><div class="cell">
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"car"</span>)</span>
-<span id="cb54-2"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> coat <span class="sc">*</span> diet, <span class="at">data =</span> hams)</span>
+<span id="cb54-2"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light <span class="sc">*</span> fert, <span class="at">data =</span> plants)</span>
 <span id="cb54-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(m, <span class="at">type=</span><span class="st">"II"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Anova Table (Type II tests)
 
 Response: growth
-           Sum Sq Df F value  Pr(&gt;F)  
-coat      2.61333  1  7.2258 0.03614 *
-diet      2.66000  2  3.6774 0.09069 .
-coat:diet 0.68667  2  0.9493 0.43833  
-Residuals 2.17000  6                  
+            Sum Sq Df F value  Pr(&gt;F)  
+light      2.61333  1  7.2258 0.03614 *
+fert       2.66000  2  3.6774 0.09069 .
+light:fert 0.68667  2  0.9493 0.43833  
+Residuals  2.17000  6                  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
@@ -1671,22 +1673,22 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ol>
 <p><strong>Data and example</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-hidden="true" tabindex="-1"></a>hams <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">No=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-hidden="true" tabindex="-1"></a>plants <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">No=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
 <span id="cb56-2"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">growth=</span><span class="fu">c</span>(<span class="fl">6.6</span>, <span class="fl">7.2</span>, <span class="fl">6.9</span>, <span class="fl">8.3</span>, <span class="fl">7.9</span>, <span class="fl">9.2</span>,</span>
 <span id="cb56-3"><a aria-hidden="true" tabindex="-1"></a>                            <span class="fl">8.3</span>, <span class="fl">8.7</span>, <span class="fl">8.1</span>, <span class="fl">8.5</span>, <span class="fl">9.1</span>, <span class="fl">9.0</span>),</span>
-<span id="cb56-4"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">diet=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">each=</span><span class="dv">2</span>),</span>
-<span id="cb56-5"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">coat=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"light"</span>, <span class="st">"dark"</span>), <span class="at">each=</span><span class="dv">6</span>)</span>
+<span id="cb56-4"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">fert=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">each=</span><span class="dv">2</span>),</span>
+<span id="cb56-5"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">light=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"high"</span>), <span class="at">each=</span><span class="dv">6</span>)</span>
 <span id="cb56-6"><a aria-hidden="true" tabindex="-1"></a>                   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> diet <span class="sc">*</span> coat, <span class="at">data=</span>hams)</span>
-<span id="cb57-2"><a aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> diet <span class="sc">+</span> coat, <span class="at">data=</span>hams)</span>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">*</span> light, <span class="at">data=</span>plants)</span>
+<span id="cb57-2"><a aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">+</span> light, <span class="at">data=</span>plants)</span>
 <span id="cb57-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m1, m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
-Model 1: growth ~ diet * coat
-Model 2: growth ~ diet + coat
+Model 1: growth ~ fert * light
+Model 2: growth ~ fert + light
   Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)
 1      6 2.1700                           
 2      8 2.8567 -2  -0.68667 0.9493 0.4383</code></pre>
@@ -1722,23 +1724,23 @@ m2  5 26.83151</code></pre>
 </ul>
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> diet <span class="sc">*</span> coat, <span class="at">data=</span>hams)</span>
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">*</span> light, <span class="at">data=</span>plants)</span>
 <span id="cb61-2"><a aria-hidden="true" tabindex="-1"></a>opt <span class="ot">&lt;-</span> <span class="fu">step</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Start:  AIC=-8.52
-growth ~ diet * coat
+growth ~ fert * light
 
-            Df Sum of Sq    RSS     AIC
-- diet:coat  2   0.68667 2.8567 -9.2230
-&lt;none&gt;                   2.1700 -8.5222
+             Df Sum of Sq    RSS     AIC
+- fert:light  2   0.68667 2.8567 -9.2230
+&lt;none&gt;                    2.1700 -8.5222
 
 Step:  AIC=-9.22
-growth ~ diet + coat
+growth ~ fert + light
 
-       Df Sum of Sq    RSS     AIC
-&lt;none&gt;              2.8567 -9.2230
-- diet  2    2.6600 5.5167 -5.3256
-- coat  1    2.6133 5.4700 -3.4275</code></pre>
+        Df Sum of Sq    RSS     AIC
+&lt;none&gt;               2.8567 -9.2230
+- fert   2    2.6600 5.5167 -5.3256
+- light  1    2.6133 5.4700 -3.4275</code></pre>
 </div>
 </div>
 </div><div class="column" style="width:49%;">
@@ -1747,7 +1749,7 @@ growth ~ diet + coat
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
-lm(formula = growth ~ diet + coat, data = hams)
+lm(formula = growth ~ fert + light, data = plants)
 
 Residuals:
     Min      1Q  Median      3Q     Max 
@@ -1756,9 +1758,9 @@ Residuals:
 Coefficients:
             Estimate Std. Error t value Pr(&gt;|t|)    
 (Intercept)   8.1667     0.3450  23.671 1.08e-08 ***
-dietB         0.2500     0.4225   0.592   0.5704    
-dietC         1.1000     0.4225   2.603   0.0315 *  
-coatlight    -0.9333     0.3450  -2.705   0.0269 *  
+fertB         0.2500     0.4225   0.592   0.5704    
+fertC         1.1000     0.4225   2.603   0.0315 *  
+lightlow     -0.9333     0.3450  -2.705   0.0269 *  
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
 

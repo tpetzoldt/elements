@@ -134,7 +134,7 @@ xalgae |>
 ```
 
 * [NA]{.red} means "not available", i.e. a missing value
-* the crosstable structure is compact and esy to read, but not suitable for data analysis
+* the crosstable structure is compact and easy to read, but not ideal for data analysis
 * $\Rightarrow$ convert it to long format
 
 
@@ -477,27 +477,27 @@ oneway.test(growth ~ treat, data = algae)
 
 
 ```{r}
-hams <- data.frame(No=1:12,
-  growth =c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,
-           8.3, 8.7, 8.1, 8.5, 9.1, 9.0),
-  diet = rep(c("A", "B", "C"), each=2),
-  coat = rep(c("light", "dark"), each=6)
+plants <- data.frame(No=1:12,
+  growth     =c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,
+                8.3, 8.7, 8.1, 8.5, 9.1, 9.0),
+  fertilizer = rep(c("A", "B", "C"), each=2),
+  light      = rep(c("low", "high"), each=6)
 )
 ```
 
 
-* Example from a statistics text book [@Crawley2002]
-* Effects of diet and coat color on growth of Hamsters in gramm per time
+* Example from a statistics text book [@Crawley2002], applied to a new context
+* Effects of fertilizer and light regime on growth of plant height in cm per time
 
-| diet | dark coat   | light coat   |
-|------|-------------|-------------|
-| A    | 8.3         | 6.6         |
-| A    | 8.7         | 7.2         |
-| B    | 8.1         | 6.9         |
-| B    | 8.5         | 8.3         |
-| C    | 9.1         | 7.9         |
-| C    | 9.0         | 9.2         |
-|      |             |             |
+| fertilizer | high light  | low light   |
+|------------|-------------|-------------|
+| A          | 8.3         | 6.6         |
+| A          | 8.7         | 7.2         |
+| B          | 8.1         | 6.9         |
+| B          | 8.5         | 8.3         |
+| C          | 9.1         | 7.9         |
+| C          | 9.0         | 9.2         |
+|            |             |             |
 
 
 * factorial experiment (**with replicates**): each factor combination has more than one observation.
@@ -512,19 +512,19 @@ hams <- data.frame(No=1:12,
 <br><br>
 
 ```{r, echo=TRUE}
-hams <- data.frame(No = 1:12,
-                   growth = c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,
-                            8.3, 8.7, 8.1, 8.5, 9.1, 9.0),
-                   diet = rep(c("A", "B", "C"), each=2),
-                   coat = rep(c("light", "dark"), each=6)
-                   )
+plants <- data.frame(No = 1:12,
+                    growth = c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,
+                               8.3, 8.7, 8.1, 8.5, 9.1, 9.0),
+                    fert   = rep(c("A", "B", "C"), each=2),
+                    light   = rep(c("low", "high"), each=6)
+          )
 ```
 :::
 
 ::: {.column width="39%"}
 
 ```{r}
-hams %>% 
+plants %>% 
   kable('html') %>% 
   kable_styling(bootstrap_options = c("striped"), full_width = FALSE)
 ```
@@ -545,7 +545,7 @@ hams %>%
 | One way ANOVA                           | `y ~ f`                                             |
 | ANOVA with interaction                  | `y ~ f1 * f2`                                       |
 | ANCOVA with Interaction                 | `y ~ x * f`                                         |
-| Nested ANOVA                            | `y ~ x + (1 | a / b)`            |
+| Nested ANOVA                            | `y ~ x + (1 | a / b)`                               |
 | GAM with smoother `s`                   | `y ~ s(x) + f`                                      |
 |                                         |                                                     |
 
@@ -556,24 +556,24 @@ hams %>%
 
 ## Linear model and ANOVA
 
-```{r hams-boxplot, fig.align='center'}
+```{r plants-boxplot, fig.align='center'}
 par(mfrow=c(1, 2))
-boxplot(growth ~ diet, data = hams, col = "wheat")
-boxplot(growth ~ coat, data = hams, col = "wheat")
+boxplot(growth ~ fert,  data = plants, col = "wheat")
+boxplot(growth ~ light, data = plants, col = "wheat")
 ```
 
 **ANOVA**
 
 ```{r, echo=TRUE}
-m <- lm(growth ~ coat * diet, data = hams)
+m <- lm(growth ~ light * fert, data = plants)
 anova(m)
 ```
 
 ## Interaction plot
 
-```{r hams-interaction, echo=TRUE}
-with(hams, interaction.plot(diet, coat, growth, 
-                            col = c("brown", "orange"), lty = 1, lwd = 2))
+```{r plants-interaction, echo=TRUE}
+with(plants, interaction.plot(fert, light, growth, 
+                            col = c("orange", "brown"), lty = 1, lwd = 2))
 ```
 
 ## Diagnostics
@@ -586,7 +586,7 @@ with(hams, interaction.plot(diet, coat, growth,
 3. Normal distribution of residuals
 
 <br>
-[Test of assumptions needs residuals of the fitted model.]{.red}
+[Test of assumptions needs residuals of the fitted model.]{.red} <br></br>
 $\Rightarrow$ Fit the ANOVA model first, then check if it was correct!
 
 <br>
@@ -600,7 +600,7 @@ $\Rightarrow$ Fit the ANOVA model first, then check if it was correct!
 
 ## Diagnostics II
 
-```{r hams-diagnostics, echo=TRUE, fig.align='center'}
+```{r plants-diagnostics, echo=TRUE, fig.align='center'}
 par(mfrow=c(1, 2))
 par(cex=1.2, las=1)
 qqnorm(residuals(m))
@@ -611,7 +611,7 @@ abline(h=0)
 ```  
 
 ```{r, echo=TRUE}  
-fligner.test(growth ~ interaction(coat, diet), data=hams)
+fligner.test(growth ~ interaction(light, fert), data=plants)
 ```
 
 Residuals: look ok and p-value of the Fligner test $> 0.05$, $\rightarrow$ looks fine. 
@@ -761,16 +761,18 @@ dobson <- data.frame(
   weight = c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,
 	    3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,
 	    2412, 2991, 2875, 3231),
-  sex = gl(2, 12, labels=c("M","F"))
+  gender = gl(2, 12, labels=c("M","F"))
 )
-plot(weight ~ week, data=dobson, col=c("blue", "red")[as.numeric(sex)], pch=16)
-fem <- lm(weight ~ week, data=dobson, subset = sex=="F")
-mal <- lm(weight ~ week, data=dobson, subset = sex=="M")
+plot(weight ~ week, data = dobson, col=c("blue", "red")[as.numeric(gender)], pch=16)
+fem <- lm(weight ~ week, data = dobson, subset = gender=="F")
+mal <- lm(weight ~ week, data = dobson, subset = gender=="M")
 abline(fem, col = "red")
 abline(mal, col = "blue")
 ```
 
 ## The birthweight data set
+
+<br>
 
 The data set is found at different places on the internet and in different versions.
 
@@ -784,9 +786,13 @@ dobson <- data.frame(
   weight = c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,
 	    3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,
 	    2412, 2991, 2875, 3231),
-  sex = gl(2, 12, labels=c("M", "F"))
+  gender = gl(2, 12, labels=c("M", "F"))
 )
 ```
+
+<br>
+
+Note: This is an artificial data set, not the reality.
 
 <!------------------------------------------------------------------------------
 ## Linear regression, ANOVA and ANCOVA
@@ -808,8 +814,8 @@ linear models (GLM).
 Why not just using a t-test?
 
 ```{r dobson-boxplot, fig.align='center', echo=TRUE}
-boxplot(weight ~ sex,data=dobson, ylab="weight")
-t.test(weight ~ sex, data=dobson, var.equal=TRUE)
+boxplot(weight ~ gender,data = dobson, ylab = "weight")
+t.test(weight ~ gender, data = dobson, var.equal = TRUE)
 ```
 
 The box plot shows much overlap and the difference is not significant, because
@@ -820,18 +826,18 @@ the t-test ignores important information: the pregnancy week.
 
 
 ```{r, echo=TRUE}
-m <- lm(weight ~ week * sex, data = dobson)
+m <- lm(weight ~ week * gender, data = dobson)
 anova(m)
 ```
 
 ```{r dobson-ancova, echo=FALSE, fig.align='center'}
-plot(weight ~ week, data=dobson, col=c("blue","red")[as.numeric(sex)], pch=16)
+plot(weight ~ week, data=dobson, col=c("blue","red")[as.numeric(gender)], pch=16)
 p <- coef(m)
 abline(a=p[1], b=p[2], col="red")
 abline(a=p[1]+p[3], b=p[2]+p[4], col="blue")
 
-fem <- lm(weight ~ week, data=dobson, subset = sex=="F")
-mal <- lm(weight ~ week, data=dobson, subset = sex=="M")
+fem <- lm(weight ~ week, data=dobson, subset = gender=="F")
+mal <- lm(weight ~ week, data=dobson, subset = gender=="M")
 abline(fem, col="black", lty="dashed")
 abline(mal, col="black", lty="dashed")
 ```
@@ -840,7 +846,7 @@ abline(mal, col="black", lty="dashed")
 ## How this works
 
 ```{r, echo=TRUE, eval=FALSE}
-plot(weight ~ week, data=dobson, col=c("blue","red")[as.numeric(sex)], pch=16)
+plot(weight ~ week, data=dobson, col=c("blue","red")[as.numeric(gender)], pch=16)
 
 #summary(m)
 p <- coef(m)
@@ -850,8 +856,8 @@ abline(a=p[1],      b=p[2],      col="red")
 abline(a=p[1]+p[3], b=p[2]+p[4], col="blue")
 
 ## the result is the same as when we would fit separate linear models
-fem <- lm(weight ~ week, data=dobson, subset = sex=="F")
-mal <- lm(weight ~ week, data=dobson, subset = sex=="M")
+fem <- lm(weight ~ week, data=dobson, subset = gender=="F")
+mal <- lm(weight ~ week, data=dobson, subset = gender=="M")
 abline(fem, col="black", lty="dashed")
 abline(mal, col="black", lty="dashed")
 ```
@@ -890,18 +896,18 @@ interactions.
 ## Type II ANOVA: Example
 
 
-```{r hams-boxplot-ancova, echo=FALSE, fig.height=3}
+```{r plants-boxplot-ancova, echo=FALSE, fig.height=3}
 par(mar=c(4.1, 5.1, 1.1, 1.1))
 par(cex=1.2, las=1)
 par(mfrow=c(1,2))
-boxplot(growth~diet, data=hams, col="wheat", xlab="diet", ylab="growth")
-boxplot(growth~coat, data=hams, col="wheat", xlab="coat")
+boxplot(growth~fert, data=plants, col="wheat", xlab="fert", ylab="growth")
+boxplot(growth~light, data=plants, col="wheat", xlab="light")
 ```
 
 
 ```{r, echo=TRUE}
 library("car")
-m <- lm(growth ~ coat * diet, data = hams)
+m <- lm(growth ~ light * fert, data = plants)
 Anova(m, type="II")
 ```
 
@@ -967,17 +973,17 @@ to gain more understanding of the model selection paradigm.
 **Data and example**
 
 ```{r, echo=TRUE}
-hams <- data.frame(No=1:12,
+plants <- data.frame(No=1:12,
                    growth=c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,
                             8.3, 8.7, 8.1, 8.5, 9.1, 9.0),
-                   diet= rep(c("A", "B", "C"), each=2),
-                   coat= rep(c("light", "dark"), each=6)
+                   fert= rep(c("A", "B", "C"), each=2),
+                   light= rep(c("low", "high"), each=6)
                    )
 ```
 
 ```{r, echo=TRUE}
-m1 <- lm(growth ~ diet * coat, data=hams)
-m2 <- lm(growth ~ diet + coat, data=hams)
+m1 <- lm(growth ~ fert * light, data=plants)
+m2 <- lm(growth ~ fert + light, data=plants)
 anova(m1, m2)
 ```
 
@@ -1013,7 +1019,7 @@ AIC(m1, m2)
 
 ::: {.column width="49%"}
 ```{r, echo=TRUE}
-m1 <- lm(growth ~ diet * coat, data=hams)
+m1 <- lm(growth ~ fert * light, data=plants)
 opt <- step(m1)
 ```
 :::

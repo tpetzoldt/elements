@@ -983,7 +983,7 @@
     "href": "slides/07-anova.html#the-data-set",
     "title": "07-One and two-way ANOVA",
     "section": "The data set",
-    "text": "The data set\n\n\n\n\n\nTable 1: Growth from day 2 to day 6 (relative units)\n\n\n\n\n\n\ntreat\nreplicate 1\nreplicate 2\nreplicate 3\n\n\n\n\nFertilizer\n0.020\n-0.217\n-0.273\n\n\nF. open\n0.940\n0.780\n0.555\n\n\nF.+sugar\n0.188\n-0.100\n0.020\n\n\nF.+CaCO3\n0.245\n0.236\n0.456\n\n\nBas.med.\n0.699\n0.727\n0.656\n\n\nA.dest\n-0.010\n0.000\n-0.010\n\n\nTap water\n0.030\n-0.070\nNA\n\n\n\n\n\n\n\n\n\n\n\nNA means “not available”, i.e. a missing value\nthe crosstable structure is compact and esy to read, but not suitable for data analysis\n\\(\\Rightarrow\\) convert it to long format",
+    "text": "The data set\n\n\n\n\n\nTable 1: Growth from day 2 to day 6 (relative units)\n\n\n\n\n\n\ntreat\nreplicate 1\nreplicate 2\nreplicate 3\n\n\n\n\nFertilizer\n0.020\n-0.217\n-0.273\n\n\nF. open\n0.940\n0.780\n0.555\n\n\nF.+sugar\n0.188\n-0.100\n0.020\n\n\nF.+CaCO3\n0.245\n0.236\n0.456\n\n\nBas.med.\n0.699\n0.727\n0.656\n\n\nA.dest\n-0.010\n0.000\n-0.010\n\n\nTap water\n0.030\n-0.070\nNA\n\n\n\n\n\n\n\n\n\n\n\nNA means “not available”, i.e. a missing value\nthe crosstable structure is compact and easy to read, but not ideal for data analysis\n\\(\\Rightarrow\\) convert it to long format",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1181,7 +1181,7 @@
     "href": "slides/07-anova.html#two-way-anova",
     "title": "07-One and two-way ANOVA",
     "section": "Two-way ANOVA",
-    "text": "Two-way ANOVA\n\nExample from a statistics text book (Crawley, 2002)\nEffects of diet and coat color on growth of Hamsters in gramm per time\n\n\n\n\ndiet\ndark coat\nlight coat\n\n\n\n\nA\n8.3\n6.6\n\n\nA\n8.7\n7.2\n\n\nB\n8.1\n6.9\n\n\nB\n8.5\n8.3\n\n\nC\n9.1\n7.9\n\n\nC\n9.0\n9.2\n\n\n\n\n\n\n\n\n\nfactorial experiment (with replicates): each factor combination has more than one observation.\nwithout replication:\n\nno replicates per factor combination\nthis is possible, but does not allow identification of interactions",
+    "text": "Two-way ANOVA\n\nExample from a statistics text book (Crawley, 2002), applied to a new context\nEffects of fertilizer and light regime on growth of plant height in cm per time\n\n\n\n\nfertilizer\nhigh light\nlow light\n\n\n\n\nA\n8.3\n6.6\n\n\nA\n8.7\n7.2\n\n\nB\n8.1\n6.9\n\n\nB\n8.5\n8.3\n\n\nC\n9.1\n7.9\n\n\nC\n9.0\n9.2\n\n\n\n\n\n\n\n\n\nfactorial experiment (with replicates): each factor combination has more than one observation.\nwithout replication:\n\nno replicates per factor combination\nthis is possible, but does not allow identification of interactions",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1192,7 +1192,7 @@
     "href": "slides/07-anova.html#enter-data-in-long-format",
     "title": "07-One and two-way ANOVA",
     "section": "Enter data in long format",
-    "text": "Enter data in long format\n\n\n\nhams &lt;- data.frame(No = 1:12,\n                   growth = c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,\n                            8.3, 8.7, 8.1, 8.5, 9.1, 9.0),\n                   diet = rep(c(\"A\", \"B\", \"C\"), each=2),\n                   coat = rep(c(\"light\", \"dark\"), each=6)\n                   )\n\n\n\n\n\n\n\nNo\ngrowth\ndiet\ncoat\n\n\n\n\n1\n6.6\nA\nlight\n\n\n2\n7.2\nA\nlight\n\n\n3\n6.9\nB\nlight\n\n\n4\n8.3\nB\nlight\n\n\n5\n7.9\nC\nlight\n\n\n6\n9.2\nC\nlight\n\n\n7\n8.3\nA\ndark\n\n\n8\n8.7\nA\ndark\n\n\n9\n8.1\nB\ndark\n\n\n10\n8.5\nB\ndark\n\n\n11\n9.1\nC\ndark\n\n\n12\n9.0\nC\ndark",
+    "text": "Enter data in long format\n\n\n\nplants &lt;- data.frame(No = 1:12,\n                    growth = c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,\n                               8.3, 8.7, 8.1, 8.5, 9.1, 9.0),\n                    fert   = rep(c(\"A\", \"B\", \"C\"), each=2),\n                    light   = rep(c(\"low\", \"high\"), each=6)\n          )\n\n\n\n\n\n\n\nNo\ngrowth\nfert\nlight\n\n\n\n\n1\n6.6\nA\nlow\n\n\n2\n7.2\nA\nlow\n\n\n3\n6.9\nB\nlow\n\n\n4\n8.3\nB\nlow\n\n\n5\n7.9\nC\nlow\n\n\n6\n9.2\nC\nlow\n\n\n7\n8.3\nA\nhigh\n\n\n8\n8.7\nA\nhigh\n\n\n9\n8.1\nB\nhigh\n\n\n10\n8.5\nB\nhigh\n\n\n11\n9.1\nC\nhigh\n\n\n12\n9.0\nC\nhigh",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1214,7 +1214,7 @@
     "href": "slides/07-anova.html#linear-model-and-anova",
     "title": "07-One and two-way ANOVA",
     "section": "Linear model and ANOVA",
-    "text": "Linear model and ANOVA\n\nANOVA\n\nm &lt;- lm(growth ~ coat * diet, data = hams)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: growth\n          Df  Sum Sq Mean Sq F value  Pr(&gt;F)  \ncoat       1 2.61333 2.61333  7.2258 0.03614 *\ndiet       2 2.66000 1.33000  3.6774 0.09069 .\ncoat:diet  2 0.68667 0.34333  0.9493 0.43833  \nResiduals  6 2.17000 0.36167                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
+    "text": "Linear model and ANOVA\n\nANOVA\n\nm &lt;- lm(growth ~ light * fert, data = plants)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: growth\n           Df  Sum Sq Mean Sq F value  Pr(&gt;F)  \nlight       1 2.61333 2.61333  7.2258 0.03614 *\nfert        2 2.66000 1.33000  3.6774 0.09069 .\nlight:fert  2 0.68667 0.34333  0.9493 0.43833  \nResiduals   6 2.17000 0.36167                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1225,7 +1225,7 @@
     "href": "slides/07-anova.html#interaction-plot",
     "title": "07-One and two-way ANOVA",
     "section": "Interaction plot",
-    "text": "Interaction plot\n\nwith(hams, interaction.plot(diet, coat, growth, \n                            col = c(\"brown\", \"orange\"), lty = 1, lwd = 2))",
+    "text": "Interaction plot\n\nwith(plants, interaction.plot(fert, light, growth, \n                            col = c(\"orange\", \"brown\"), lty = 1, lwd = 2))",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1236,7 +1236,7 @@
     "href": "slides/07-anova.html#diagnostics",
     "title": "07-One and two-way ANOVA",
     "section": "Diagnostics",
-    "text": "Diagnostics\nAssumptions\n\nIndependence of measurements (within samples)\nVariance homogeneity of residuals\nNormal distribution of residuals\n\n Test of assumptions needs residuals of the fitted model. \\(\\Rightarrow\\) Fit the ANOVA model first, then check if it was correct!\n\nDiagnostic tools\n\nBox plot\nPlot of residuals vs. mean values\nQ-Q-plot of residuals\nFligner-Killeen test (alternative: some people recommend the Levene-Test)",
+    "text": "Diagnostics\nAssumptions\n\nIndependence of measurements (within samples)\nVariance homogeneity of residuals\nNormal distribution of residuals\n\n Test of assumptions needs residuals of the fitted model.  \\(\\Rightarrow\\) Fit the ANOVA model first, then check if it was correct!\n\nDiagnostic tools\n\nBox plot\nPlot of residuals vs. mean values\nQ-Q-plot of residuals\nFligner-Killeen test (alternative: some people recommend the Levene-Test)",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1247,7 +1247,7 @@
     "href": "slides/07-anova.html#diagnostics-ii",
     "title": "07-One and two-way ANOVA",
     "section": "Diagnostics II",
-    "text": "Diagnostics II\n\npar(mfrow=c(1, 2))\npar(cex=1.2, las=1)\nqqnorm(residuals(m))\nqqline(residuals(m))\n\nplot(residuals(m)~fitted(m))\nabline(h=0)\n\n\n\nfligner.test(growth ~ interaction(coat, diet), data=hams)\n\n\n    Fligner-Killeen test of homogeneity of variances\n\ndata:  growth by interaction(coat, diet)\nFligner-Killeen:med chi-squared = 10.788, df = 5, p-value = 0.05575\n\n\nResiduals: look ok and p-value of the Fligner test \\(&gt; 0.05\\), \\(\\rightarrow\\) looks fine.",
+    "text": "Diagnostics II\n\npar(mfrow=c(1, 2))\npar(cex=1.2, las=1)\nqqnorm(residuals(m))\nqqline(residuals(m))\n\nplot(residuals(m)~fitted(m))\nabline(h=0)\n\n\n\nfligner.test(growth ~ interaction(light, fert), data=plants)\n\n\n    Fligner-Killeen test of homogeneity of variances\n\ndata:  growth by interaction(light, fert)\nFligner-Killeen:med chi-squared = 10.788, df = 5, p-value = 0.05575\n\n\nResiduals: look ok and p-value of the Fligner test \\(&gt; 0.05\\), \\(\\rightarrow\\) looks fine.",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1335,7 +1335,7 @@
     "href": "slides/07-anova.html#the-birthweight-data-set",
     "title": "07-One and two-way ANOVA",
     "section": "The birthweight data set",
-    "text": "The birthweight data set\nThe data set is found at different places on the internet and in different versions.\nHere the version that is found in an R demo: demo(lm.glm)\n\n## Birth Weight Data see stats/demo/lm.glm.R\ndobson &lt;- data.frame(\n  week = c(40, 38, 40, 35, 36, 37, 41, 40, 37, 38, 40, 38,\n     40, 36, 40, 38, 42, 39, 40, 37, 36, 38, 39, 40),\n  weight = c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,\n        3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,\n        2412, 2991, 2875, 3231),\n  sex = gl(2, 12, labels=c(\"M\", \"F\"))\n)",
+    "text": "The birthweight data set\n\nThe data set is found at different places on the internet and in different versions.\nHere the version that is found in an R demo: demo(lm.glm)\n\n## Birth Weight Data see stats/demo/lm.glm.R\ndobson &lt;- data.frame(\n  week = c(40, 38, 40, 35, 36, 37, 41, 40, 37, 38, 40, 38,\n     40, 36, 40, 38, 42, 39, 40, 37, 36, 38, 39, 40),\n  weight = c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,\n        3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,\n        2412, 2991, 2875, 3231),\n  gender = gl(2, 12, labels=c(\"M\", \"F\"))\n)\n\nNote: it is a toy data set, not the reality.",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1346,7 +1346,7 @@
     "href": "slides/07-anova.html#anette-dobsons-birthweight-data",
     "title": "07-One and two-way ANOVA",
     "section": "Anette Dobson’s birthweight data",
-    "text": "Anette Dobson’s birthweight data\nWhy not just using a t-test?\n\nboxplot(weight ~ sex,data=dobson, ylab=\"weight\")\n\nt.test(weight ~ sex, data=dobson, var.equal=TRUE)\n\n\n    Two Sample t-test\n\ndata:  weight by sex\nt = 0.97747, df = 22, p-value = 0.339\nalternative hypothesis: true difference in means between group M and group F is not equal to 0\n95 percent confidence interval:\n -126.3753  351.7086\nsample estimates:\nmean in group M mean in group F \n       3024.000        2911.333 \n\n\nThe box plot shows much overlap and the difference is not significant, because the t-test ignores important information: the pregnancy week.",
+    "text": "Anette Dobson’s birthweight data\nWhy not just using a t-test?\n\nboxplot(weight ~ gender,data = dobson, ylab = \"weight\")\n\nt.test(weight ~ gender, data = dobson, var.equal = TRUE)\n\n\n    Two Sample t-test\n\ndata:  weight by gender\nt = 0.97747, df = 22, p-value = 0.339\nalternative hypothesis: true difference in means between group M and group F is not equal to 0\n95 percent confidence interval:\n -126.3753  351.7086\nsample estimates:\nmean in group M mean in group F \n       3024.000        2911.333 \n\n\nThe box plot shows much overlap and the difference is not significant, because the t-test ignores important information: the pregnancy week.",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1357,7 +1357,7 @@
     "href": "slides/07-anova.html#ancova-makes-use-of-covariates",
     "title": "07-One and two-way ANOVA",
     "section": "ANCOVA makes use of covariates",
-    "text": "ANCOVA makes use of covariates\n\nm &lt;- lm(weight ~ week * sex, data = dobson)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: weight\n          Df  Sum Sq Mean Sq F value    Pr(&gt;F)    \nweek       1 1013799 1013799 31.0779 1.862e-05 ***\nsex        1  157304  157304  4.8221   0.04006 *  \nweek:sex   1    6346    6346  0.1945   0.66389    \nResiduals 20  652425   32621                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
+    "text": "ANCOVA makes use of covariates\n\nm &lt;- lm(weight ~ week * gender, data = dobson)\nanova(m)\n\nAnalysis of Variance Table\n\nResponse: weight\n            Df  Sum Sq Mean Sq F value    Pr(&gt;F)    \nweek         1 1013799 1013799 31.0779 1.862e-05 ***\ngender       1  157304  157304  4.8221   0.04006 *  \nweek:gender  1    6346    6346  0.1945   0.66389    \nResiduals   20  652425   32621                      \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1390,7 +1390,7 @@
     "href": "slides/07-anova.html#type-ii-anova-example",
     "title": "07-One and two-way ANOVA",
     "section": "Type II ANOVA: Example",
-    "text": "Type II ANOVA: Example\n\n\nlibrary(\"car\")\nm &lt;- lm(growth ~ coat * diet, data = hams)\nAnova(m, type=\"II\")\n\nAnova Table (Type II tests)\n\nResponse: growth\n           Sum Sq Df F value  Pr(&gt;F)  \ncoat      2.61333  1  7.2258 0.03614 *\ndiet      2.66000  2  3.6774 0.09069 .\ncoat:diet 0.68667  2  0.9493 0.43833  \nResiduals 2.17000  6                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
+    "text": "Type II ANOVA: Example\n\n\nlibrary(\"car\")\nm &lt;- lm(growth ~ light * fert, data = plants)\nAnova(m, type=\"II\")\n\nAnova Table (Type II tests)\n\nResponse: growth\n            Sum Sq Df F value  Pr(&gt;F)  \nlight      2.61333  1  7.2258 0.03614 *\nfert       2.66000  2  3.6774 0.09069 .\nlight:fert 0.68667  2  0.9493 0.43833  \nResiduals  2.17000  6                  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1423,7 +1423,7 @@
     "href": "slides/07-anova.html#model-selection-and-likelihood-ratio-tests",
     "title": "07-One and two-way ANOVA",
     "section": "Model Selection and Likelihood Ratio Tests",
-    "text": "Model Selection and Likelihood Ratio Tests\nApproach\n\nFit several models individually\nCompare the models pairwise with ANOVA (likelihood ratio test)\n\nData and example\n\nhams &lt;- data.frame(No=1:12,\n                   growth=c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,\n                            8.3, 8.7, 8.1, 8.5, 9.1, 9.0),\n                   diet= rep(c(\"A\", \"B\", \"C\"), each=2),\n                   coat= rep(c(\"light\", \"dark\"), each=6)\n                   )\n\n\nm1 &lt;- lm(growth ~ diet * coat, data=hams)\nm2 &lt;- lm(growth ~ diet + coat, data=hams)\nanova(m1, m2)\n\nAnalysis of Variance Table\n\nModel 1: growth ~ diet * coat\nModel 2: growth ~ diet + coat\n  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)\n1      6 2.1700                           \n2      8 2.8567 -2  -0.68667 0.9493 0.4383\n\n\n\nLikelihood ratio test compares two models (anova with &gt; 1 model)\nModel with interaction (m1) not significantly better than model without interaction (m2).",
+    "text": "Model Selection and Likelihood Ratio Tests\nApproach\n\nFit several models individually\nCompare the models pairwise with ANOVA (likelihood ratio test)\n\nData and example\n\nplants &lt;- data.frame(No=1:12,\n                   growth=c(6.6, 7.2, 6.9, 8.3, 7.9, 9.2,\n                            8.3, 8.7, 8.1, 8.5, 9.1, 9.0),\n                   fert= rep(c(\"A\", \"B\", \"C\"), each=2),\n                   light= rep(c(\"low\", \"high\"), each=6)\n                   )\n\n\nm1 &lt;- lm(growth ~ fert * light, data=plants)\nm2 &lt;- lm(growth ~ fert + light, data=plants)\nanova(m1, m2)\n\nAnalysis of Variance Table\n\nModel 1: growth ~ fert * light\nModel 2: growth ~ fert + light\n  Res.Df    RSS Df Sum of Sq      F Pr(&gt;F)\n1      6 2.1700                           \n2      8 2.8567 -2  -0.68667 0.9493 0.4383\n\n\n\nLikelihood ratio test compares two models (anova with &gt; 1 model)\nModel with interaction (m1) not significantly better than model without interaction (m2).",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -1445,7 +1445,7 @@
     "href": "slides/07-anova.html#automatic-model-selection",
     "title": "07-One and two-way ANOVA",
     "section": "Automatic Model Selection",
-    "text": "Automatic Model Selection\n\nThe full model is supplied to the step function.\nThe model with the smallest AIC ist the optimal model:\n\n\n\nm1 &lt;- lm(growth ~ diet * coat, data=hams)\nopt &lt;- step(m1)\n\nStart:  AIC=-8.52\ngrowth ~ diet * coat\n\n            Df Sum of Sq    RSS     AIC\n- diet:coat  2   0.68667 2.8567 -9.2230\n&lt;none&gt;                   2.1700 -8.5222\n\nStep:  AIC=-9.22\ngrowth ~ diet + coat\n\n       Df Sum of Sq    RSS     AIC\n&lt;none&gt;              2.8567 -9.2230\n- diet  2    2.6600 5.5167 -5.3256\n- coat  1    2.6133 5.4700 -3.4275\n\n\n\n\nsummary(opt)\n\n\nCall:\nlm(formula = growth ~ diet + coat, data = hams)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-0.6333 -0.3458 -0.1000  0.2333  0.8667 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   8.1667     0.3450  23.671 1.08e-08 ***\ndietB         0.2500     0.4225   0.592   0.5704    \ndietC         1.1000     0.4225   2.603   0.0315 *  \ncoatlight    -0.9333     0.3450  -2.705   0.0269 *  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.5976 on 8 degrees of freedom\nMultiple R-squared:  0.6486,    Adjusted R-squared:  0.5169 \nF-statistic: 4.923 on 3 and 8 DF,  p-value: 0.03178",
+    "text": "Automatic Model Selection\n\nThe full model is supplied to the step function.\nThe model with the smallest AIC ist the optimal model:\n\n\n\nm1 &lt;- lm(growth ~ fert * light, data=plants)\nopt &lt;- step(m1)\n\nStart:  AIC=-8.52\ngrowth ~ fert * light\n\n             Df Sum of Sq    RSS     AIC\n- fert:light  2   0.68667 2.8567 -9.2230\n&lt;none&gt;                    2.1700 -8.5222\n\nStep:  AIC=-9.22\ngrowth ~ fert + light\n\n        Df Sum of Sq    RSS     AIC\n&lt;none&gt;               2.8567 -9.2230\n- fert   2    2.6600 5.5167 -5.3256\n- light  1    2.6133 5.4700 -3.4275\n\n\n\n\nsummary(opt)\n\n\nCall:\nlm(formula = growth ~ fert + light, data = plants)\n\nResiduals:\n    Min      1Q  Median      3Q     Max \n-0.6333 -0.3458 -0.1000  0.2333  0.8667 \n\nCoefficients:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept)   8.1667     0.3450  23.671 1.08e-08 ***\nfertB         0.2500     0.4225   0.592   0.5704    \nfertC         1.1000     0.4225   2.603   0.0315 *  \nlightlow     -0.9333     0.3450  -2.705   0.0269 *  \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 0.5976 on 8 degrees of freedom\nMultiple R-squared:  0.6486,    Adjusted R-squared:  0.5169 \nF-statistic: 4.923 on 3 and 8 DF,  p-value: 0.03178",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -6324,6 +6324,17 @@
     "crumbs": [
       "Basic Statistics",
       "05-Classical Tests"
+    ]
+  },
+  {
+    "objectID": "slides/07-anova.html#annette-dobsons-birthweight-data-set",
+    "href": "slides/07-anova.html#annette-dobsons-birthweight-data-set",
+    "title": "07-One and two-way ANOVA",
+    "section": "Annette Dobson’s birthweight data set",
+    "text": "Annette Dobson’s birthweight data set\n\nThe data set is found at different places on the internet and in different versions.\nHere the version that is found in an R demo: demo(lm.glm)\n\n## Birth Weight Data see stats/demo/lm.glm.R\ndobson &lt;- data.frame(\n  week = c(40, 38, 40, 35, 36, 37, 41, 40, 37, 38, 40, 38,\n     40, 36, 40, 38, 42, 39, 40, 37, 36, 38, 39, 40),\n  weight = c(2968, 2795, 3163, 2925, 2625, 2847, 3292, 3473, 2628, 3176,\n        3421, 2975, 3317, 2729, 2935, 2754, 3210, 2817, 3126, 2539,\n        2412, 2991, 2875, 3231),\n  gender = gl(2, 12, labels=c(\"M\", \"F\"))\n)",
+    "crumbs": [
+      "Basic Statistics",
+      "07-One and two-way ANOVA"
     ]
   }
 ]
