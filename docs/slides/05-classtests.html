@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-12-03">
+  <meta name="dcterms.date" content="2024-12-16">
   <title>Elements of Data Analysis and Statistics – 05-Classical Tests</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -431,7 +431,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-12-03</p>
+  <p class="date">2024-12-16</p>
 </section>
 <section>
 <section id="hypotheses-errors-and-the-p-value" class="title-slide slide level1 center">
@@ -1018,7 +1018,7 @@ mean of x mean of y
 <ol type="1">
 <li>Don’t use pre-tests!</li>
 <li>Use always the Welch test: <code>t.test(x, y)</code></li>
-<li>Check approximate normal distribution by using box-plots. Not necessary if <span class="math inline">\(n\)</span> is large.</li>
+<li>Check approximate normal distribution by using box-plots. Less important if <span class="math inline">\(n\)</span> is large.</li>
 </ol>
 <p>see <span class="citation" data-cites="zimmerman_note_2004">Zimmerman (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span> or <a href="https://en.wikipedia.org/wiki/Welch%27s_t-test">Wikipedia</a>.</p>
 </section>
@@ -1135,7 +1135,7 @@ alternative hypothesis: true location shift is not equal to 0</code></pre>
 <p><br></p>
 <p><strong>Mann-Whitney - Wilcoxon-test with tie correction</strong></p>
 <ul>
-<li>applied if the rank differences contain doubled values</li>
+<li>applied if the rank differences contain duplicated values</li>
 </ul>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a>A <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">7</span>)</span>
@@ -1185,7 +1185,8 @@ alternative hypothesis: true mu is not equal to 0</code></pre>
 <li>and the applied method</li>
 </ul></li>
 <li><p>The smaller <span class="math inline">\(\alpha\)</span>, <span class="math inline">\(n\)</span> and <span class="math inline">\(\delta\)</span>, the bigger the type II (<span class="math inline">\(\beta\)</span>) error.</p></li>
-<li><p>This is the probability to overlook effects despite of their existence.</p></li>
+<li><p>The <span class="math inline">\(\beta\)</span>-error is the probability to overlook effects despite of their existence.</p></li>
+<li><p>Power (<span class="math inline">\(1-\beta\)</span>) is the probability that a test is significant if an effect exists.</p></li>
 </ul>
 </section>
 <section id="power-analysis-1" class="slide level2">
@@ -1239,7 +1240,7 @@ NOTE: n is number in *each* group</code></pre>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">power.t.test</span>(<span class="at">delta=</span><span class="fl">0.5</span>,<span class="at">power=</span><span class="fl">0.8</span>,<span class="at">sig.level=</span><span class="fl">0.05</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><span class="darkred"><span class="math inline">\(\Rightarrow\)</span> we ned either a large sample size or a strong effect.</span></p>
+<p><span class="darkred"><span class="math inline">\(\Rightarrow\)</span> we need either a large sample size or a strong effect.</span></p>
 </section>
 <section id="simulated-power-of-a-t-test" class="slide level2">
 <h2>Simulated power of a t-test</h2>
@@ -1298,7 +1299,7 @@ NOTE: n is number in *each* group</code></pre>
 <li>examples: eye and hair color, medical treatment and the number of cured/not cured</li>
 <li>important: use <strong>absolute mesurements</strong> (true numbers!), not percentages or other calculated data (e.g.&nbsp;not something like biomass per area)</li>
 </ul>
-<p><strong>Example:</strong> Occurence of Daphnia (water flee) in a lake:</p>
+<p><strong>Example:</strong> Occurence of Daphnia (water flea) in a lake:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -1327,7 +1328,7 @@ NOTE: n is number in *each* group</code></pre>
 </table>
 <ul>
 <li>food algae in the deep water, that was poor of oxygen</li>
-<li>genetically evolved clones with high haemoglobin can dive into deep water</li>
+<li>genetically evolved clones with higher haemoglobin content can dive into deep water</li>
 </ul>
 </section>
 <section id="calculation-of-the-chi2-test" class="slide level2">
@@ -1485,10 +1486,7 @@ alternative hypothesis: two.sided</code></pre>
 </div>
 </div>
 <p><br></p>
-<p><span class="math inline">\(\rightarrow\)</span> significant correlation between the clones and their location.</p>
-<ul>
-<li>dependency between clones and vertical distribution in the lake</li>
-</ul>
+<p><span class="math inline">\(\rightarrow\)</span> significant correlation between the clones and vertical distribution in the lake.</p>
 </section>
 <section id="favorite-numbers-of-hse-students" class="slide level2">
 <h2>Favorite numbers of HSE students</h2>
@@ -1527,7 +1525,7 @@ X-squared = 13.647, df = NA, p-value = 0.0969</code></pre>
 <p><br></p>
 <ul>
 <li><strong>one-sample</strong> <span class="math inline">\(\chi^2\)</span>-test. It tests for equality of frequency in all classes.</li>
-<li>The simulation-based version of the test (with 1000 replicates) is slightly more precise than the standard <span class="math inline">\(\chi^2\)</span>-test, but both ar not significant.</li>
+<li>The simulation-based version of the test (with 1000 replicates) is slightly more precise than the standard <span class="math inline">\(\chi^2\)</span>-test, but both are not significant.</li>
 </ul>
 </section>
 <section id="cramér-von-mises-test" class="slide level2">
@@ -1569,7 +1567,7 @@ alternative hypothesis: Two.sided</code></pre>
 </div>
 <ul>
 <li>The Cramér-von-Mises-test works with the original, unbinned values</li>
-<li>Use of cumulative function <span class="blue">respects order of classes</span> <span class="math inline">\(\rightarrow\)</span> more powerful, than <span class="math inline">\(\chi^2\)</span>-test.</li>
+<li>Use of cumulative distribution function <span class="blue">respects order of classes</span> <span class="math inline">\(\rightarrow\)</span> more powerful, than <span class="math inline">\(\chi^2\)</span>-test.</li>
 </ul>
 </section></section>
 <section>
