@@ -658,11 +658,15 @@ It is always a good idea to discuss results with colleagues and supervisors.
 
 ## Example
 
+<br>
+
 Growth rate per day ($d^{-1}$) of blue-green algae cultures (*Pseudanabaena*) after adding
 toxic peptides from another blue-green algae (*Microcystis*).
 
 The original hypothesis was that Microcystin LR (MCYST) or a derivative of it 
 (Substance A) inhibits growth.
+
+<br>
 
 ```{r, echo=TRUE}
 mcyst <-  data.frame(treat = factor(c(rep("Control", 5),
@@ -684,7 +688,7 @@ anova(m)
 plot(TukeyHSD(aov(m)))
 ```
 
-## Approach 2: multiple t-Tests with sequential Bonferroni correction
+## Approach 2: multiple t-tests with sequential Bonferroni correction
 
 We separate the data set in single subsets:
 
@@ -708,7 +712,7 @@ The following shows the raw p-values without correction:
 c(p1, p2, p3)
 ```
 
-and with Holm correction:
+... and with Holm correction:
 
 ```{r, echo=TRUE}
 p.adjust(c(p1, p2, p3))
@@ -891,9 +895,8 @@ abline(mal, col="black", lty="dashed")
 > the term’s higher-order relatives; so-called type-III tests violate
 > marginality, testing each term in the model after all of the others."
 
-* Conclusion:<br>
-use Type II and don’t try to interpret single terms in case of significant 
-interactions.
+* Conclusion: Use type II and not type III. 
+* Don’t try to interpret single terms in case of significant interactions.
 
 ## Type II ANOVA: Example
 
@@ -912,7 +915,7 @@ library("car")
 m <- lm(growth ~ light * fert, data = plants)
 Anova(m, type="II")
 ```
-# Model selection – a paradigm change
+# Model selection – <br> a paradigm change
 
 ## Selection of an optimal model from a set of candidates
 
@@ -920,7 +923,7 @@ Anova(m, type="II")
 
 **Problem:**
 
-* In complicated models, p-values depend on number (and sometimes
+* In complex ANOVA models, p-values depend on number (and sometimes
   of order) of included factors and interactions.
 * The $H_0$-based approach becomes confusing, e.g. because of
   contradictory p-values.
@@ -929,12 +932,12 @@ Anova(m, type="II")
 
 * Employs the principle of parsimony
 
-Comparison of different model candidates instead of p-value based testing.
+Instead of p-value based testing, comparison of different model candidates:
 
-* Model with all potentiall effects → <span style="color:blue">full model</span>,
-* Omit single factors → <span style="color:blue">reduced models</span> (several!),
-* No influence factors (ony mean value) → <span style="color:blue">null model</span>.
-* Which model is the best → <span style="color:blue">minimal adequate model</span>?
+* Model with all potentiall effects → [full model]{.blue}
+* Omit single factors → [reduced models]{.blue} (several!)
+* No influence factors (ony mean value) → [null model]{.blue}
+* Which model is the best → [minimal adequate model]{.blue}?
 
 ## How can we measure which model is the best?
 
@@ -956,7 +959,7 @@ into account ($n$):
 $$BIC = −2 \ln(L) + k · \ln(n)$$
 
 The model with the smallest AIC (or BIC) is the
-<span style="color:blue">minimal adequate</span> (i.e. optimal) model.
+[minimal adequate]{.blue} (i.e. optimal) model.
 
 
 
@@ -1010,7 +1013,7 @@ AIC(m0, m1a, m1b, m2, m3)
 * AIC values are [defined up to an additive constant]{.blue}
 * $\rightarrow$ absolute values differ sometimes, depending on the applied method
 * $\Rightarrow$ look at range of AIC and differences, don't care of absolute values
-* rule of thumb: the "AIC unit" is 2, so differences around 2.0 are attributed to minor differences between models
+* rule of thumb: the "AIC unit" is 2, differences $\approx 2.0\rightarrow$ minor importance
 
 ## Stepwise model selection (automatic)
 
@@ -1030,7 +1033,7 @@ opt <- step(m1)
 anova(opt)
 ```
 
-<br><br><br>
+<br><br>
 
 * p < 0.05 <br> $\rightarrow$ significant
 :::
@@ -1039,8 +1042,8 @@ anova(opt)
 **Results of the example:** 
 
 * optimal model (`m2`, `opt`), includes both factors `fert` and `light` but no interaction.
-* Model selection identified `fert` and `light` as necessary explanatory variables,<br>
-in contrast to the classical ANOVA table where only `fert` was significant.
+* $\Rightarrow$ Model selection identified `fert` and `light` as necessary explanatory variables,<br>
+in contrast to the classical ANOVA table where only `light` is significant.
 
 
 ## Significance tests?
@@ -1058,20 +1061,20 @@ anova(m2, m1b) # light
 * In any case: focus on practical implications and don't forget to report the effect sizes!
 
 
-## Summary
+## Summary of the ANOVA chapter
 
 * Linear models form the basis of many statistical methods
     * Linear regression
     * ANOVA, ANCOVA, GLM, GAM, GLMM, . . .
     * ANOVA/ANCOVA instead of multiple testing
-* ANOVA is more powerful than multiple tests: 
-    * one big experiment needs less n than many small experiments together
+* ANOVA is more powerful than multiple tests:
+    * avoids $\alpha$-error inflation
+    * one big experiment needs less n than many small experiments
     * identification of interaction effects
     * elimination of co-variates
 * Model selection vs. p-value based testing
     * paradigm shift in statistics: AIC instead of p-value
     * more reliable, especially for imbalanced or complex designs
-    * applicable for balanced and unbalanced cases
     * extensible to generalized, additive, and mixed models (GLM, GAM, LME, GLMM, ...)
     * but: p-value based tests are sometimes easier to understand
 
@@ -1083,7 +1086,7 @@ anova(m2, m1b) # light
 
 The high-ranked journal "... Nature asked influential statisticians to
 recommend one change to improve science. The common theme? The
-problem is not our maths, but ourselves." [Leek et al. (2017)](https://doi.org/10.1038/d41586-017-07522-z):
+problem is not our maths, but ourselves." [(Leek et al. (2017))](https://doi.org/10.1038/d41586-017-07522-z):
 
 
 **Five ways to fix statistics. Comment on Nature**
@@ -1095,8 +1098,9 @@ problem is not our maths, but ourselves." [Leek et al. (2017)](https://doi.org/1
 4. Michèle B. Nuijten: Share analysis plans and results
 5. Steven N. Goodman: Change norms from within
 
-
+<!--
 See also: [http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1](http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1)
+-->
 
 **Self study**
 

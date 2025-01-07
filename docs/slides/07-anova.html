@@ -1380,8 +1380,10 @@ Fligner-Killeen:med chi-squared = 10.788, df = 5, p-value = 0.05575</code></pre>
 </section>
 <section id="example-1" class="slide level2">
 <h2>Example</h2>
+<p><br></p>
 <p>Growth rate per day (<span class="math inline">\(d^{-1}\)</span>) of blue-green algae cultures (<em>Pseudanabaena</em>) after adding toxic peptides from another blue-green algae (<em>Microcystis</em>).</p>
 <p>The original hypothesis was that Microcystin LR (MCYST) or a derivative of it (Substance A) inhibits growth.</p>
+<p><br></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-hidden="true" tabindex="-1"></a>mcyst <span class="ot">&lt;-</span>  <span class="fu">data.frame</span>(<span class="at">treat =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Control"</span>, <span class="dv">5</span>),</span>
 <span id="cb38-2"><a aria-hidden="true" tabindex="-1"></a>                                       <span class="fu">rep</span>(<span class="st">"MCYST"</span>, <span class="dv">5</span>),</span>
@@ -1414,7 +1416,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <img data-src="07-anova_files/figure-revealjs/mcyst-tukey-1.png" width="960" class="r-stretch"></section>
 <section id="approach-2-multiple-t-tests-with-sequential-bonferroni-correction" class="slide level2">
-<h2>Approach 2: multiple t-Tests with sequential Bonferroni correction</h2>
+<h2>Approach 2: multiple t-tests with sequential Bonferroni correction</h2>
 <p>We separate the data set in single subsets:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a>Control <span class="ot">&lt;-</span> mcyst<span class="sc">$</span>mu[mcyst<span class="sc">$</span>treat <span class="sc">==</span> <span class="st">"Control"</span>]</span>
@@ -1434,7 +1436,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <pre><code>[1] 0.576275261 0.027378832 0.001190592</code></pre>
 </div>
 </div>
-<p>and with Holm correction:</p>
+<p>… and with Holm correction:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">p.adjust</span>(<span class="fu">c</span>(p1, p2, p3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1607,7 +1609,8 @@ abline(mal, col="black", lty="dashed")
 <p>“Type-II tests are calculated according to the principle of marginality, testing each term after all others, except ignoring the term’s higher-order relatives; so-called type-III tests violate marginality, testing each term in the model after all of the others.”</p>
 </blockquote>
 <ul>
-<li>Conclusion:<br> use Type II and don’t try to interpret single terms in case of significant interactions.</li>
+<li>Conclusion: Use type II and not type III.</li>
+<li>Don’t try to interpret single terms in case of significant interactions.</li>
 </ul>
 </section>
 <section id="type-ii-anova-example" class="slide level2">
@@ -1633,7 +1636,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section></section>
 <section>
 <section id="model-selection-a-paradigm-change" class="title-slide slide level1 center">
-<h1>Model selection – a paradigm change</h1>
+<h1>Model selection – <br> a paradigm change</h1>
 
 </section>
 <section id="selection-of-an-optimal-model-from-a-set-of-candidates" class="slide level2">
@@ -1641,19 +1644,19 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><br></p>
 <p><strong>Problem:</strong></p>
 <ul>
-<li>In complicated models, p-values depend on number (and sometimes of order) of included factors and interactions.</li>
+<li>In complex ANOVA models, p-values depend on number (and sometimes of order) of included factors and interactions.</li>
 <li>The <span class="math inline">\(H_0\)</span>-based approach becomes confusing, e.g.&nbsp;because of contradictory p-values.</li>
 </ul>
 <p><strong>Alternative approach:</strong></p>
 <ul>
 <li>Employs the principle of parsimony</li>
 </ul>
-<p>Comparison of different model candidates instead of p-value based testing.</p>
+<p>Instead of p-value based testing, comparison of different model candidates:</p>
 <ul>
-<li>Model with all potentiall effects → <span style="color:blue">full model</span>,</li>
-<li>Omit single factors → <span style="color:blue">reduced models</span> (several!),</li>
-<li>No influence factors (ony mean value) → <span style="color:blue">null model</span>.</li>
-<li>Which model is the best → <span style="color:blue">minimal adequate model</span>?</li>
+<li>Model with all potentiall effects → <span class="blue">full model</span></li>
+<li>Omit single factors → <span class="blue">reduced models</span> (several!)</li>
+<li>No influence factors (ony mean value) → <span class="blue">null model</span></li>
+<li>Which model is the best → <span class="blue">minimal adequate model</span>?</li>
 </ul>
 </section>
 <section id="how-can-we-measure-which-model-is-the-best" class="slide level2">
@@ -1670,7 +1673,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>BIC (Bayesian Information Criterion), takes sample size into account (<span class="math inline">\(n\)</span>):</li>
 </ul>
 <p><span class="math display">\[BIC = −2 \ln(L) + k · \ln(n)\]</span></p>
-<p>The model with the smallest AIC (or BIC) is the <span style="color:blue">minimal adequate</span> (i.e.&nbsp;optimal) model.</p>
+<p>The model with the smallest AIC (or BIC) is the <span class="blue">minimal adequate</span> (i.e.&nbsp;optimal) model.</p>
 </section>
 <section id="model-selection-and-likelihood-ratio-tests" class="slide level2">
 <h2>Model Selection and Likelihood Ratio Tests</h2>
@@ -1736,7 +1739,7 @@ m3   7 27.53237</code></pre>
 <li>AIC values are <span class="blue">defined up to an additive constant</span></li>
 <li><span class="math inline">\(\rightarrow\)</span> absolute values differ sometimes, depending on the applied method</li>
 <li><span class="math inline">\(\Rightarrow\)</span> look at range of AIC and differences, don’t care of absolute values</li>
-<li>rule of thumb: the “AIC unit” is 2, so differences around 2.0 are attributed to minor differences between models</li>
+<li>rule of thumb: the “AIC unit” is 2, differences <span class="math inline">\(\approx 2.0\rightarrow\)</span> minor importance</li>
 </ul>
 </section>
 <section id="stepwise-model-selection-automatic" class="slide level2">
@@ -1783,14 +1786,14 @@ Residuals  8 2.8567 0.35708
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-<p><br><br><br></p>
+<p><br><br></p>
 <ul>
 <li>p &lt; 0.05 <br> <span class="math inline">\(\rightarrow\)</span> significant</li>
 </ul>
 </div><p><strong>Results of the example:</strong></p>
 <ul>
 <li>optimal model (<code>m2</code>, <code>opt</code>), includes both factors <code>fert</code> and <code>light</code> but no interaction.</li>
-<li>Model selection identified <code>fert</code> and <code>light</code> as necessary explanatory variables,<br> in contrast to the classical ANOVA table where only <code>fert</code> was significant.</li>
+<li><span class="math inline">\(\Rightarrow\)</span> Model selection identified <code>fert</code> and <code>light</code> as necessary explanatory variables,<br> in contrast to the classical ANOVA table where only <code>light</code> is significant.</li>
 </ul>
 </section>
 <section id="significance-tests" class="slide level2">
@@ -1809,8 +1812,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>In any case: focus on practical implications and don’t forget to report the effect sizes!</li>
 </ul>
 </section>
-<section id="summary" class="slide level2">
-<h2>Summary</h2>
+<section id="summary-of-the-anova-chapter" class="slide level2">
+<h2>Summary of the ANOVA chapter</h2>
 <ul>
 <li>Linear models form the basis of many statistical methods
 <ul>
@@ -1820,7 +1823,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ul></li>
 <li>ANOVA is more powerful than multiple tests:
 <ul>
-<li>one big experiment needs less n than many small experiments together</li>
+<li>avoids <span class="math inline">\(\alpha\)</span>-error inflation</li>
+<li>one big experiment needs less n than many small experiments</li>
 <li>identification of interaction effects</li>
 <li>elimination of co-variates</li>
 </ul></li>
@@ -1828,7 +1832,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <ul>
 <li>paradigm shift in statistics: AIC instead of p-value</li>
 <li>more reliable, especially for imbalanced or complex designs</li>
-<li>applicable for balanced and unbalanced cases</li>
 <li>extensible to generalized, additive, and mixed models (GLM, GAM, LME, GLMM, …)</li>
 <li>but: p-value based tests are sometimes easier to understand</li>
 </ul></li>
@@ -1837,7 +1840,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="avoid-p-value-hacking" class="slide level2">
 <h2>Avoid p-value hacking</h2>
 <p><strong>Do NOT repeat experiments until a significant p-value is found.</strong></p>
-<p>The high-ranked journal “… Nature asked influential statisticians to recommend one change to improve science. The common theme? The problem is not our maths, but ourselves.” <a href="https://doi.org/10.1038/d41586-017-07522-z">Leek et al.&nbsp;(2017)</a>:</p>
+<p>The high-ranked journal “… Nature asked influential statisticians to recommend one change to improve science. The common theme? The problem is not our maths, but ourselves.” <a href="https://doi.org/10.1038/d41586-017-07522-z">(Leek et al.&nbsp;(2017))</a>:</p>
 <p><strong>Five ways to fix statistics. Comment on Nature</strong></p>
 <ol type="1">
 <li>Jeff Leek: Adjust for human cognition</li>
@@ -1846,7 +1849,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Michèle B. Nuijten: Share analysis plans and results</li>
 <li>Steven N. Goodman: Change norms from within</li>
 </ol>
-<p>See also: <a href="http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1">http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1</a></p>
+<!--
+See also: [http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1](http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1)
+-->
 <p><strong>Self study</strong></p>
 <p>Read the paper of <span class="citation" data-cites="JohnsonOmland2004">Johnson &amp; Omland (<a href="#/bibliography" role="doc-biblioref" onclick="">2004</a>)</span> to gain more understanding of the model selection paradigm.</p>
 </section>
