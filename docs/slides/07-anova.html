@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-12-16">
+  <meta name="dcterms.date" content="2025-01-07">
   <title>Elements of Data Analysis and Statistics – 07-One and two-way ANOVA</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -435,7 +435,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-12-16</p>
+  <p class="date">2025-01-07</p>
 </section>
 <section id="anova-analysis-of-variances" class="slide level2">
 <h2>ANOVA – Analysis of Variances</h2>
@@ -1574,7 +1574,12 @@ abline(mal, col="black", lty="dashed")
 
 
 --------------------------->
-<img data-src="07-anova_files/figure-revealjs/dobson-ancova-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<img data-src="07-anova_files/figure-revealjs/dobson-ancova-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section></section>
+<section>
+<section id="pitfalls-of-anovaancova" class="title-slide slide level1 center">
+<h1>Pitfalls of ANOVA/ANCOVA</h1>
+
+</section>
 <section id="pitfalls-of-anova-and-ancova-described-so-far" class="slide level2">
 <h2>Pitfalls of ANOVA and ANCOVA described so far</h2>
 <p><br></p>
@@ -1625,9 +1630,14 @@ Residuals  2.17000  6
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
+</section></section>
+<section>
+<section id="model-selection-a-paradigm-change" class="title-slide slide level1 center">
+<h1>Model selection – a paradigm change</h1>
+
 </section>
-<section id="model-selection-a-paradigm-change" class="slide level2">
-<h2>Model selection – a paradigm change</h2>
+<section id="selection-of-an-optimal-model-from-a-set-of-candidates" class="slide level2">
+<h2>Selection of an optimal model from a set of candidates</h2>
 <p><br></p>
 <p><strong>Problem:</strong></p>
 <ul>
@@ -1635,6 +1645,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>The <span class="math inline">\(H_0\)</span>-based approach becomes confusing, e.g.&nbsp;because of contradictory p-values.</li>
 </ul>
 <p><strong>Alternative approach:</strong></p>
+<ul>
+<li>Employs the principle of parsimony</li>
+</ul>
 <p>Comparison of different model candidates instead of p-value based testing.</p>
 <ul>
 <li>Model with all potentiall effects → <span style="color:blue">full model</span>,</li>
@@ -1658,12 +1671,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ul>
 <p><span class="math display">\[BIC = −2 \ln(L) + k · \ln(n)\]</span></p>
 <p>The model with the smallest AIC (or BIC) is the <span style="color:blue">minimal adequate</span> (i.e.&nbsp;optimal) model.</p>
-</section></section>
-<section>
-<section id="self-study" class="title-slide slide level1 center">
-<h1>Self study</h1>
-<p>Read the paper of <span class="citation" data-cites="JohnsonOmland2004">Johnson &amp; Omland (<a href="#/bibliography" role="doc-biblioref" onclick="">2004</a>)</span> to gain more understanding of the model selection paradigm.</p>
-<p><a href="https://doi.org/10.1016/j.tree.2003.10.013">https://doi.org/10.1016/j.tree.2003.10.013</a></p>
 </section>
 <section id="model-selection-and-likelihood-ratio-tests" class="slide level2">
 <h2>Model Selection and Likelihood Ratio Tests</h2>
@@ -1682,9 +1689,9 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb56-6"><a aria-hidden="true" tabindex="-1"></a>                   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">*</span> light, <span class="at">data=</span>plants)</span>
-<span id="cb57-2"><a aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">+</span> light, <span class="at">data=</span>plants)</span>
-<span id="cb57-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m1, m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">*</span> light, <span class="at">data=</span>plants)  <span class="co"># f1 + f2 + f1:f2</span></span>
+<span id="cb57-2"><a aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">+</span> light, <span class="at">data=</span>plants)  <span class="co"># f1 + f2</span></span>
+<span id="cb57-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m3, m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -1697,31 +1704,45 @@ Model 2: growth ~ fert + light
 </div>
 <ul>
 <li>Likelihood ratio test compares two models (<code>anova</code> with &gt; 1 model)</li>
-<li>Model with interaction (<code>m1</code>) not significantly better than model without interaction (<code>m2</code>).</li>
+<li>Model with interaction (<code>m3</code>) not significantly better than model without interaction (<code>m2</code>).</li>
 </ul>
 </section>
 <section id="aic-based-model-selection" class="slide level2">
 <h2>AIC-based model selection</h2>
-<p><br></p>
-<p>Pairwise model comparison is cumbersome, especially for large number of models.</p>
-<p><strong>Solution</strong></p>
-<p>Use Akaike Information Criterion and select the optimal (or: <span class="blue">minimal adequate</span>) model.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m1, m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>   df      AIC
-m1  7 27.53237
-m2  5 26.83151</code></pre>
-</div>
-</div>
-<p><strong>Conclusion:</strong> take the simpler model (<code>m2</code>)</p>
-<p><strong>Exercise:</strong> Generate all possible models and select the model with minimum AIC.</p>
-</section>
-<section id="automatic-model-selection" class="slide level2">
-<h2>Automatic Model Selection</h2>
 <ul>
-<li>The full model is supplied to the <code>step</code> function.</li>
-<li>The model with the smallest AIC ist the optimal model:</li>
+<li>pairwise model comparison is cumbersome, especially for large number of models.</li>
+<li><strong>Solution:</strong> Create set of candidate models</li>
+<li>use <span class="blue">smallest AIC</span> to select the <span class="blue">minimal adequate</span> model.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-hidden="true" tabindex="-1"></a>m3  <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light <span class="sc">*</span> fert, <span class="at">data =</span> plants) <span class="co"># full model</span></span>
+<span id="cb59-2"><a aria-hidden="true" tabindex="-1"></a>m2  <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light <span class="sc">+</span> fert, <span class="at">data =</span> plants)</span>
+<span id="cb59-3"><a aria-hidden="true" tabindex="-1"></a>m1a <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert, <span class="at">data =</span> plants)</span>
+<span id="cb59-4"><a aria-hidden="true" tabindex="-1"></a>m1b <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light, <span class="at">data =</span> plants)</span>
+<span id="cb59-5"><a aria-hidden="true" tabindex="-1"></a>m0  <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> plants)            <span class="co"># null model</span></span>
+<span id="cb59-6"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m0, m1a, m1b, m2, m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>    df      AIC
+m0   2 33.38238
+m1a  4 32.62699
+m1b  3 30.72893
+m2   5 26.83151
+m3   7 27.53237</code></pre>
+</div>
+</div>
+<p><strong>Note</strong></p>
+<ul>
+<li>AIC values are <span class="blue">defined up to an additive constant</span></li>
+<li><span class="math inline">\(\rightarrow\)</span> absolute values differ sometimes, depending on the applied method</li>
+<li><span class="math inline">\(\Rightarrow\)</span> look at range of AIC and differences, don’t care of absolute values</li>
+<li>rule of thumb: the “AIC unit” is 2, so differences around 2.0 are attributed to minor differences between models</li>
+</ul>
+</section>
+<section id="stepwise-model-selection-automatic" class="slide level2">
+<h2>Stepwise model selection (automatic)</h2>
+<ul>
+<li>The full model is supplied to the <code>step</code> function:</li>
 </ul>
 <div class="column" style="width:49%;">
 <div class="cell">
@@ -1744,33 +1765,50 @@ growth ~ fert + light
 - light  1    2.6133 5.4700 -3.4275</code></pre>
 </div>
 </div>
+<ul>
+<li>Model with the smallest AIC<br> <span class="math inline">\(\rightarrow\)</span> optimal model.</li>
+</ul>
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(opt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(opt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>
-Call:
-lm(formula = growth ~ fert + light, data = plants)
+<pre><code>Analysis of Variance Table
 
-Residuals:
-    Min      1Q  Median      3Q     Max 
--0.6333 -0.3458 -0.1000  0.2333  0.8667 
-
-Coefficients:
-            Estimate Std. Error t value Pr(&gt;|t|)    
-(Intercept)   8.1667     0.3450  23.671 1.08e-08 ***
-fertB         0.2500     0.4225   0.592   0.5704    
-fertC         1.1000     0.4225   2.603   0.0315 *  
-lightlow     -0.9333     0.3450  -2.705   0.0269 *  
+Response: growth
+          Df Sum Sq Mean Sq F value  Pr(&gt;F)  
+fert       2 2.6600 1.33000  3.7246 0.07190 .
+light      1 2.6133 2.61333  7.3186 0.02685 *
+Residuals  8 2.8567 0.35708                  
 ---
-Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-
-Residual standard error: 0.5976 on 8 degrees of freedom
-Multiple R-squared:  0.6486,    Adjusted R-squared:  0.5169 
-F-statistic: 4.923 on 3 and 8 DF,  p-value: 0.03178</code></pre>
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 </div>
-</div></section>
+<p><br><br><br></p>
+<ul>
+<li>p &lt; 0.05 <br> <span class="math inline">\(\rightarrow\)</span> significant</li>
+</ul>
+</div><p><strong>Results of the example:</strong></p>
+<ul>
+<li>optimal model (<code>m2</code>, <code>opt</code>), includes both factors <code>fert</code> and <code>light</code> but no interaction.</li>
+<li>Model selection identified <code>fert</code> and <code>light</code> as necessary explanatory variables,<br> in contrast to the classical ANOVA table where only <code>fert</code> was significant.</li>
+</ul>
+</section>
+<section id="significance-tests" class="slide level2">
+<h2>Significance tests?</h2>
+<p><br></p>
+<ul>
+<li>The concept of model selection supercedes p-value-based statistics.</li>
+<li>Some authors generally discourage to use p-values in this context, others recommend a compromize.</li>
+<li>If you want to get a p-value, compare the optimal model with further reduced models, but still interpret the p-values with care:</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2, m1a) <span class="co"># fert</span></span>
+<span id="cb65-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2, m1b) <span class="co"># light</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>In any case: focus on practical implications and don’t forget to report the effect sizes!</li>
+</ul>
+</section>
 <section id="summary" class="slide level2">
 <h2>Summary</h2>
 <ul>
@@ -1790,20 +1828,17 @@ F-statistic: 4.923 on 3 and 8 DF,  p-value: 0.03178</code></pre>
 <ul>
 <li>paradigm shift in statistics: AIC instead of p-value</li>
 <li>more reliable, especially for imbalanced or complex designs</li>
+<li>applicable for balanced and unbalanced cases</li>
+<li>extensible to generalized, additive, and mixed models (GLM, GAM, LME, GLMM, …)</li>
 <li>but: p-value based tests are sometimes easier to understand</li>
 </ul></li>
 </ul>
-</section></section>
-<section>
-<section id="avoid-p-value-hacking" class="title-slide slide level1 center">
-<h1>Avoid p-value hacking</h1>
-<p><strong>Do NOT repeat experiments until a significant p-value is found.</strong></p>
-<p>“As debate rumbles on about how and how much poor statistics is to blame for poor reproducibility, Nature asked influential statisticians to recommend one change to improve science. The common theme? The problem is not our maths, but ourselves.” Leek et al.&nbsp;(2017)</p>
 </section>
-<section id="five-ways-to-fix-statistics.-comment-on-nature" class="slide level2">
-<h2>Five ways to fix statistics. Comment on Nature</h2>
-<p><br></p>
-<p>Leek et al.&nbsp;(2017) <a href="https://doi.org/10.1038/d41586-017-07522-z">https://doi.org/10.1038/d41586-017-07522-z</a></p>
+<section id="avoid-p-value-hacking" class="slide level2">
+<h2>Avoid p-value hacking</h2>
+<p><strong>Do NOT repeat experiments until a significant p-value is found.</strong></p>
+<p>The high-ranked journal “… Nature asked influential statisticians to recommend one change to improve science. The common theme? The problem is not our maths, but ourselves.” <a href="https://doi.org/10.1038/d41586-017-07522-z">Leek et al.&nbsp;(2017)</a>:</p>
+<p><strong>Five ways to fix statistics. Comment on Nature</strong></p>
 <ol type="1">
 <li>Jeff Leek: Adjust for human cognition</li>
 <li>Blakeley B. McShane &amp; Andrew Gelman: Abandon statistical significance</li>
@@ -1811,10 +1846,9 @@ F-statistic: 4.923 on 3 and 8 DF,  p-value: 0.03178</code></pre>
 <li>Michèle B. Nuijten: Share analysis plans and results</li>
 <li>Steven N. Goodman: Change norms from within</li>
 </ol>
-<p>Another blog post that aims to improve understanding: http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1</p>
-<hr>
-
-<p><strong>My conclusion:</strong> The p-value is still useful but apply it with great care.</p>
+<p>See also: <a href="http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1">http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1</a></p>
+<p><strong>Self study</strong></p>
+<p>Read the paper of <span class="citation" data-cites="JohnsonOmland2004">Johnson &amp; Omland (<a href="#/bibliography" role="doc-biblioref" onclick="">2004</a>)</span> to gain more understanding of the model selection paradigm.</p>
 </section>
 <section id="bibliography" class="slide level2 smaller scrollable">
 <h2>Bibliography</h2>

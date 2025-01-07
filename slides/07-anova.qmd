@@ -863,6 +863,8 @@ abline(mal, col="black", lty="dashed")
 ```
 --------------------------->
 
+# Pitfalls of ANOVA/ANCOVA 
+
 ## Pitfalls of ANOVA and ANCOVA described so far
 
 <br>
@@ -910,9 +912,9 @@ library("car")
 m <- lm(growth ~ light * fert, data = plants)
 Anova(m, type="II")
 ```
+# Model selection – a paradigm change
 
-
-## Model selection -- a paradigm change
+## Selection of an optimal model from a set of candidates
 
 <br>
 
@@ -924,6 +926,8 @@ Anova(m, type="II")
   contradictory p-values.
 
 **Alternative approach:**
+
+* Employs the principle of parsimony
 
 Comparison of different model candidates instead of p-value based testing.
 
@@ -954,12 +958,6 @@ $$BIC = −2 \ln(L) + k · \ln(n)$$
 The model with the smallest AIC (or BIC) is the
 <span style="color:blue">minimal adequate</span> (i.e. optimal) model.
 
-# Self study
-
-Read the paper of @JohnsonOmland2004 
-to gain more understanding of the model selection paradigm. 
-
-[https://doi.org/10.1016/j.tree.2003.10.013](https://doi.org/10.1016/j.tree.2003.10.013)
 
 
 ## Model Selection and Likelihood Ratio Tests
@@ -982,53 +980,83 @@ plants <- data.frame(No=1:12,
 ```
 
 ```{r, echo=TRUE}
-m1 <- lm(growth ~ fert * light, data=plants)
-m2 <- lm(growth ~ fert + light, data=plants)
-anova(m1, m2)
+m3 <- lm(growth ~ fert * light, data=plants)  # f1 + f2 + f1:f2
+m2 <- lm(growth ~ fert + light, data=plants)  # f1 + f2
+anova(m3, m2)
 ```
 
 * Likelihood ratio test compares two models (`anova` with > 1 model)
-* Model with interaction (`m1`) not significantly better than model without
+* Model with interaction (`m3`) not significantly better than model without
 interaction (`m2`).
 
 ## AIC-based model selection
 
-<br>
 
-Pairwise model comparison is cumbersome, especially for large number of models.
-
-**Solution**
-
-Use Akaike Information Criterion and select the optimal (or: [minimal adequate]{.blue}) model.
+* pairwise model comparison is cumbersome, especially for large number of models.
+* **Solution:** Create set of candidate models
+* use [smallest AIC]{.blue} to select the [minimal adequate]{.blue} model.
 
 ```{r, echo=TRUE}
-AIC(m1, m2)
+m3  <- lm(growth ~ light * fert, data = plants) # full model
+m2  <- lm(growth ~ light + fert, data = plants)
+m1a <- lm(growth ~ fert, data = plants)
+m1b <- lm(growth ~ light, data = plants)
+m0  <- lm(growth ~ 1, data = plants)            # null model
+
+AIC(m0, m1a, m1b, m2, m3)
 ```
+**Note**
+
+* AIC values are [defined up to an additive constant]{.blue}
+* $\rightarrow$ absolute values differ sometimes, depending on the applied method
+* $\Rightarrow$ look at range of AIC and differences, don't care of absolute values
+* rule of thumb: the "AIC unit" is 2, so differences around 2.0 are attributed to minor differences between models
+
+## Stepwise model selection (automatic)
 
 
-**Conclusion:** take the simpler model (`m2`)
-
-**Exercise:** Generate all possible models and select the model with minimum AIC.
-
-
-## Automatic Model Selection
-
-
-* The full model is supplied to the `step` function.
-* The model with the smallest AIC ist the optimal model:
+* The full model is supplied to the `step` function:
 
 ::: {.column width="49%"}
 ```{r, echo=TRUE}
 m1 <- lm(growth ~ fert * light, data=plants)
 opt <- step(m1)
 ```
+* Model with the smallest AIC<br> $\rightarrow$ optimal model.
 :::
 
 ::: {.column width="49%"}
 ```{r, echo=TRUE}
-summary(opt)
+anova(opt)
 ```
+
+<br><br><br>
+
+* p < 0.05 <br> $\rightarrow$ significant
 :::
+
+
+**Results of the example:** 
+
+* optimal model (`m2`, `opt`), includes both factors `fert` and `light` but no interaction.
+* Model selection identified `fert` and `light` as necessary explanatory variables,<br>
+in contrast to the classical ANOVA table where only `fert` was significant.
+
+
+## Significance tests?
+
+<br>
+
+* The concept of model selection supercedes p-value-based statistics.
+* Some authors generally discourage to use p-values in this context, others recommend a compromize.
+* If you want to get a p-value, compare the optimal model with further reduced models, but still interpret the p-values with care:
+
+```{r, eval = FALSE, echo=TRUE}
+anova(m2, m1a) # fert
+anova(m2, m1b) # light
+```
+* In any case: focus on practical implications and don't forget to report the effect sizes!
+
 
 ## Summary
 
@@ -1043,25 +1071,23 @@ summary(opt)
 * Model selection vs. p-value based testing
     * paradigm shift in statistics: AIC instead of p-value
     * more reliable, especially for imbalanced or complex designs
+    * applicable for balanced and unbalanced cases
+    * extensible to generalized, additive, and mixed models (GLM, GAM, LME, GLMM, ...)
     * but: p-value based tests are sometimes easier to understand
 
 
-# Avoid p-value hacking
+## Avoid p-value hacking
 
 
 **Do NOT repeat experiments until a significant p-value is found.**
 
-"As debate rumbles on about how and how much poor statistics is to
-blame for poor reproducibility, Nature asked influential statisticians to
+The high-ranked journal "... Nature asked influential statisticians to
 recommend one change to improve science. The common theme? The
-problem is not our maths, but ourselves." Leek et al. (2017)
+problem is not our maths, but ourselves." [Leek et al. (2017)](https://doi.org/10.1038/d41586-017-07522-z):
 
 
-## Five ways to fix statistics. Comment on Nature
+**Five ways to fix statistics. Comment on Nature**
 
-<br>
-
-Leek et al. (2017) [https://doi.org/10.1038/d41586-017-07522-z](https://doi.org/10.1038/d41586-017-07522-z)
 
 1. Jeff Leek: Adjust for human cognition
 2. Blakeley B. McShane & Andrew Gelman: Abandon statistical significance
@@ -1070,11 +1096,12 @@ Leek et al. (2017) [https://doi.org/10.1038/d41586-017-07522-z](https://doi.org/
 5. Steven N. Goodman: Change norms from within
 
 
-Another blog post that aims to improve understanding:
-http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1
+See also: [http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1](http://daniellakens.blogspot.de/2017/12/understanding-common-misconceptions.html?m=1)
 
-<hr></hr>
+**Self study**
 
-**My conclusion:** The p-value is still useful but apply it with great care.
+Read the paper of @JohnsonOmland2004 
+to gain more understanding of the model selection paradigm. 
+
 
 ## Bibliography
