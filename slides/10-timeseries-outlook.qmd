@@ -18,7 +18,8 @@ library(lubridate)
 
 <br>
 
-**Traditional approach**
+**Traditional component model**
+
 
 Decomposition of time series into:
 
@@ -26,59 +27,62 @@ Decomposition of time series into:
 2. seasonal or periodic component and
 3. stochastic component.
 
-Many of the decomposition methods require normal distribution of the residuals.
-If this is not the case or, even worse, the variance of a time series changes proportionally with
-a trend, a transformation might be required. 
+**Assumptions**
 
-For hydrological or biomass data, which frequently
-show positive skewness, a logarithmic transformation is often helpful.
+* additivity of components
+* approximate normal distribution of residuals
+* homogeneous variance (of residuals)
+
+If distribution is skewed, effects are "multiplicative", or variance changes proportionally with
+trend $\rightarrow$, consider transformation.
+
+For hydrological or biomass data with right-skewed distribution, log-transformation can be helpful.
 
 ## Smoothing methods
 
 
-* use regression vs. time (linear or nonlinear regression)
-* or use smoothers (moving averages)
-* then subtract the trend line
+* alternative to parametric linear or non-linear regression vs. time
+* smoothers are based on moving averages
 
+**Example:** Annual precipitation 1900-1986, Great Lakes
 ```{r filter1,fig=TRUE, echo=TRUE, fig.align='center'}
 library(Kendall)
 data(PrecipGL)
-tsp(PrecipGL)
-plot(PrecipGL)
-kernel <- rep(1, 10)  # a rectangular kernel, vary bandwith
+plot(PrecipGL, ylab="Precipitation (inches)")
+# moving average with rectangular kernel
+kernel <- rep(1, 10)  # change second value to play with bandwidth
 lines(stats::filter(PrecipGL, kernel/sum(kernel)), lwd = 2, col = "blue")
 ```
 
 ## Trend corrected series
 
-Now, the trend corrected series can be obtained by subtracting the trend, e.g.:
 
 ```{r filter2, echo=TRUE, fig.align='center'}
 smooth <- stats::filter(PrecipGL, kernel/sum(kernel))
-res <- PrecipGL - smooth
-plot(res)
+residuals <- PrecipGL - smooth
+plot(residuals)
 ```
 
-Note: use `stats::filter` to avoid potential conflict with `dplyr::filter`.
+* Trend corrected series can be obtained by subtracting the trend.
+* **Note:** use `stats::filter` to avoid potential conflict with `dplyr::filter`.
 
-## Trend corrected series
+## Smoothing of data with 12monthly seasonality
 
-For a seasonal time series with monthly values @kleiber_applied_2008 recommend
+* For a seasonal time series with monthly values @kleiber_applied_2008 recommend
 a filter with 13 coefficients.
-
-Example: water level of Rio Negro 18 km upstream from its confluence with
-the Amazon River. The data set is contained in the package **boot**
-[@canty_boot_2022]:
+* Example: water level of Rio Negro 18 km upstream from its confluence with
+the Amazon River. 
+* The data set is contained in the package **boot** [@canty_boot_2022]:
 
 ```{r filter3,fig=TRUE, echo=TRUE, fig.align='center'}
 library(boot)
 data(manaus)
-tsp(manaus)
+tsp(manaus) # shows time series properties
 plot(manaus)
 lines(stats::filter(manaus, c(0.5, rep(1, 11), 0.5)/12), lwd=2, col="blue")
 ```
 
-## Practical smoothing with the LOWESS filter
+## Very popular method: The LOWESS filter
 
 ```{r lowess, echo=TRUE, fig.align='center'}
 #| code-fold: true
@@ -90,9 +94,8 @@ lines(lowess(time(PrecipGL), PrecipGL, f = 0.1), lwd = 3, col = "red")
 ```
 
 * locally weighted polynomial regression [@cleveland_robust_1979]
-* different functions available in **R**: `lowess` and `loess`
 * allows to adjust smoothness (smoother span `f`)
-
+* [different functions available in **R**: `lowess` and `loess`]{.gray}
 
 
 ## Identification of seasonal components
@@ -122,12 +125,12 @@ $x_t$: equidistant time series, $t$: time step, $N$: number of data, $a_p, b_p$:
 $a_0 = \bar{x}$, $p$: order of the periodic component
 
 
-## Formulation with a single cosine term
+## Formulation with single cosine term and shift $\Phi$
 
 <br>
 
-The equation with sine and cosine terms can be transformed in an equation with cosine terms only,
-using the trigonometric addition formulas:
+* equation with sine and cosine terms can be transformed in an equation with cosine terms only
+* use of trigonometric addition formulas:
 
 <br>
 
@@ -143,12 +146,12 @@ with:
 <br>
 see:  [https://en.wikipedia.org/wiki/List_of_trigonometric_identities](https://en.wikipedia.org/wiki/List_of_trigonometric_identities)
 
-## Identification of seasonal parameters
+## Different methods to identify seasonal parameters
 
 
-1. linear regression with the `lm` function, example for the simple case with a single periodic component<br> `m <- lm(x ~ sin(2 * pi * t / N) + cos(2 * pi * t / N))`
+1. linear regression with the `lm` function, e.g. for a single periodic component:<br> `m <- lm(x ~ sin(2 * pi * t / N) + cos(2 * pi * t / N))`
 2. nonlinear regression with `nls` [(allows to identify the period as nonlinear parameter)]{.gray}
-3. Classical Fourier analysis:
+3. classical Fourier analysis:
 
 \begin{align}
      a_0 &= \bar{x}\\
@@ -157,7 +160,7 @@ see:  [https://en.wikipedia.org/wiki/List_of_trigonometric_identities](https://e
  b_p     &= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 \end{align} 
 
-4. Fast Fourer transform (FFT) using complex numbers
+4. Fast Fourer transform (FFT) using complex numbers<br>
   [used in signal processing (CD and MP3 players, mobile phones, ...]{.gray}
 
 ## Fast Fourier transform
@@ -192,29 +195,28 @@ lines(t, 2 * Re(x_sim)/n - Re(p[1])/n, col = "red", lwd = 1)
 
 ## Automatic time series decomposition
 
-Function `decompose` implements the classical approach with simple symmetric moving average
-filters.
+Function `decompose` implements the classical approach with symmetric moving average.
 
 ```{r decompose,echo=TRUE,fig=TRUE,width=10, height=10, fig.align='center'}
 manaus_dec <- decompose(manaus)
 plot(manaus_dec)
 ```
 
-In this data set the seasonal component possesses an additive character,
-but a multiplicative component would be possible too (`type="multiplicative"`).
+* In this data set the seasonal component possesses an additive character.
+* In case of a multiplicative components, use `type = "multiplicative"`.
 
 
 ## Automatic time series decomposition II
 
-The function `stl`, seasonal time series decomposition
-[@cleveland_stl_1990] uses a LOESS filter:
+* function `stl` (seasonal time series decomposition) [@cleveland_stl_1990]
+* uses a LOESS filter
 
 ```{r stl,fig=TRUE, echo=TRUE,width=10, height=8, fig.align='center'}
 manaus_stl <- stl(manaus, s.window=13)
 plot(manaus_stl)
 ```
 
-# Outlook: ARMA and ARIMA models
+# ARMA, ARIMA and SARIMA models
 
 <br>
 
@@ -223,7 +225,7 @@ plot(manaus_stl)
 * seasonal ARIMA models (SARIMA) consider seasonal dependency,<br>
   e.g. differencing with a lag of 12 months
 * very important techniques for analyzing time series and for forecasting
-* for the interested: self-study by reading @kleiber_applied_2008 or @shumway_time_2019.
+* for the interested: self-study, see @kleiber_applied_2008 or @shumway_time_2019.
 
 ## Example: SARIMA model for CO2 in the atmosphere
 
@@ -238,7 +240,7 @@ plot(manaus_stl)
 co2 <- read_csv("../data/co2_mm_mlo.csv", skip=40, show_col_types = FALSE)
 
 ## year 1958 is incomplete, so let's start with 1959
-co2 <- filter(co2, year > 1958) 
+co2 <- dplyr::filter(co2, year > 1958) 
 
 co2 |> 
   mutate(date=as_date(paste(year, month, 15, sep="."))) |>
@@ -321,12 +323,12 @@ plot(Nile)
 ```
 
 
-## Test for structural break at known time
+## Test for existence of structural break
 
 * Are there are periods with different flow?
-* Use of OLS-CUSUM (ordinary least squares, cumulative sum)
- or MOSUM tests (moving average sum) can be applied to various types of problems).
-* `efp` = empirical fluctuation model,`sctest` = structural change test
+* use of OLS-CUSUM (ordinary least squares, cumulative sum)
+ or MOSUM tests (moving average sum)
+* `efp` = empirical fluctuation process,`sctest` = structural change test
 
 
 ```{r ocus, fig=TRUE, echo=TRUE, fig.align='center'}
@@ -342,15 +344,14 @@ sctest(ocus)
 
 **Purpose**
 
-* identify if there are structural breaks with respect to a
-  specified linear model
+* find structural breaks with respect to a specified linear model
 * identify their number and location
 * very general approach, allows different linear models, covariates, ...
-* we deal only with the most simplest case here
+* we show the most simplest case here
 
 **Method**
 
-* uses a BIC-based model selection technique
+* employs a BIC-based model selection technique
 * Which model is the best?
 
 **See also**
@@ -363,31 +364,28 @@ sctest(ocus)
 
 <br>
 
-* Model Selection is a modern alternative to $p$-value based testing.
+* *model selection* is a modern alternative to $p$-value based testing
 * Based on the principle of parsimony:
-    * Models with many parameters fit better, but may contain unnecessary factors.
-    * We need is an **optimal compromize** between model fit and complexity.
+    * Models with more parameters fit better, but may contain unnecessary factors.
+    * $\rightarrow$ Find an **optimal compromize** between model fit and complexity.
     * Keep it as simple as possible, but not simpler.
 
-* Compare different models for the same phenomenon:
+* Multiple model candidates for the same phenomenon:
     * [Full model]{.blue}: includes all potential factors.
     * Several [reduced models]{.blue}, derived from the full model.
     * [Null model]{.blue} without explanatory factors.
 
 * Select [minimal adequate model]{.blue}  (= "optimal", "most parsimonious").
-* $\Rightarrow$ Compromize between simplicity and goodness of fit.
 
 More, see @JohnsonOmland2004
 
 
 
-## Model comparison with AIC and BIC
+## Model selection with AIC and BIC
 
 <br>
 
-Models with many parameters fit better. We want an
-**optimal compromize** between fit and model complexity
-(number of parameters, $k$).
+Models with more parameters fit better $\leftrightarrow$ but more parameters ($k$) are "more complex".
 
 
 * Goodness of fit can be measured with likelihood $L$<br>

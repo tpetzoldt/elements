@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2024-12-16">
+  <meta name="dcterms.date" content="2025-01-14">
   <title>Elements of Data Analysis and Statistics – 10-Time Series Outlook</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -431,7 +431,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2024-12-16</p>
+  <p class="date">2025-01-14</p>
 </section>
 <section>
 <section id="time-series-decomposition" class="title-slide slide level1 center">
@@ -441,79 +441,87 @@ Thomas Petzoldt
 <section id="time-series-decomposition-1" class="slide level2">
 <h2>Time series decomposition</h2>
 <p><br></p>
-<p><strong>Traditional approach</strong></p>
+<p><strong>Traditional component model</strong></p>
 <p>Decomposition of time series into:</p>
 <ol type="1">
 <li>trend component,</li>
 <li>seasonal or periodic component and</li>
 <li>stochastic component.</li>
 </ol>
-<p>Many of the decomposition methods require normal distribution of the residuals. If this is not the case or, even worse, the variance of a time series changes proportionally with a trend, a transformation might be required.</p>
-<p>For hydrological or biomass data, which frequently show positive skewness, a logarithmic transformation is often helpful.</p>
+<p><strong>Assumptions</strong></p>
+<ul>
+<li>additivity of components</li>
+<li>approximate normal distribution of residuals</li>
+<li>homogeneous variance (of residuals)</li>
+</ul>
+<p>If distribution is skewed, effects are “multiplicative”, or variance changes proportionally with trend <span class="math inline">\(\rightarrow\)</span>, consider transformation.</p>
+<p>For hydrological or biomass data with right-skewed distribution, log-transformation can be helpful.</p>
 </section>
 <section id="smoothing-methods" class="slide level2">
 <h2>Smoothing methods</h2>
 <ul>
-<li>use regression vs.&nbsp;time (linear or nonlinear regression)</li>
-<li>or use smoothers (moving averages)</li>
-<li>then subtract the trend line</li>
+<li>alternative to parametric linear or non-linear regression vs.&nbsp;time</li>
+<li>smoothers are based on moving averages</li>
 </ul>
+<p><strong>Example:</strong> Annual precipitation 1900-1986, Great Lakes</p>
 <div class="cell" data-layout-align="center" data-fig="true">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Kendall)</span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(PrecipGL)</span>
-<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tsp</span>(PrecipGL)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code>[1] 1900 1986    1</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PrecipGL)</span>
-<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a>kernel <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>)  <span class="co"># a rectangular kernel, vary bandwith</span></span>
-<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(stats<span class="sc">::</span><span class="fu">filter</span>(PrecipGL, kernel<span class="sc">/</span><span class="fu">sum</span>(kernel)), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PrecipGL, <span class="at">ylab=</span><span class="st">"Precipitation (inches)"</span>)</span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># moving average with rectangular kernel</span></span>
+<span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>kernel <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>)  <span class="co"># change second value to play with bandwidth</span></span>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(stats<span class="sc">::</span><span class="fu">filter</span>(PrecipGL, kernel<span class="sc">/</span><span class="fu">sum</span>(kernel)), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/filter1-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="trend-corrected-series" class="slide level2">
 <h2>Trend corrected series</h2>
-<p>Now, the trend corrected series can be obtained by subtracting the trend, e.g.:</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>smooth <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(PrecipGL, kernel<span class="sc">/</span><span class="fu">sum</span>(kernel))</span>
-<span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> PrecipGL <span class="sc">-</span> smooth</span>
-<span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(res)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a>smooth <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(PrecipGL, kernel<span class="sc">/</span><span class="fu">sum</span>(kernel))</span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> PrecipGL <span class="sc">-</span> smooth</span>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-outlook_files/figure-revealjs/filter2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><p>Note: use <code>stats::filter</code> to avoid potential conflict with <code>dplyr::filter</code>.</p>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/filter2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<li>Trend corrected series can be obtained by subtracting the trend.</li>
+<li><strong>Note:</strong> use <code>stats::filter</code> to avoid potential conflict with <code>dplyr::filter</code>.</li>
+</ul>
 </section>
-<section id="trend-corrected-series-1" class="slide level2">
-<h2>Trend corrected series</h2>
-<p>For a seasonal time series with monthly values <span class="citation" data-cites="kleiber_applied_2008">Kleiber &amp; Zeileis (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span> recommend a filter with 13 coefficients.</p>
-<p>Example: water level of Rio Negro 18 km upstream from its confluence with the Amazon River. The data set is contained in the package <strong>boot</strong> <span class="citation" data-cites="canty_boot_2022">(<a href="#/references" role="doc-biblioref" onclick="">Canty &amp; Ripley, 2022</a>)</span>:</p>
+<section id="smoothing-of-data-with-12monthly-seasonality" class="slide level2">
+<h2>Smoothing of data with 12monthly seasonality</h2>
+<ul>
+<li>For a seasonal time series with monthly values <span class="citation" data-cites="kleiber_applied_2008">Kleiber &amp; Zeileis (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span> recommend a filter with 13 coefficients.</li>
+<li>Example: water level of Rio Negro 18 km upstream from its confluence with the Amazon River.</li>
+<li>The data set is contained in the package <strong>boot</strong> <span class="citation" data-cites="canty_boot_2022">(<a href="#/references" role="doc-biblioref" onclick="">Canty &amp; Ripley, 2022</a>)</span>:</li>
+</ul>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(manaus)</span>
-<span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tsp</span>(manaus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(manaus)</span>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tsp</span>(manaus) <span class="co"># shows time series properties</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1903.000 1992.917   12.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus)</span>
-<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(stats<span class="sc">::</span><span class="fu">filter</span>(manaus, <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">11</span>), <span class="fl">0.5</span>)<span class="sc">/</span><span class="dv">12</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus)</span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(stats<span class="sc">::</span><span class="fu">filter</span>(manaus, <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">11</span>), <span class="fl">0.5</span>)<span class="sc">/</span><span class="dv">12</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/filter3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="practical-smoothing-with-the-lowess-filter" class="slide level2">
-<h2>Practical smoothing with the LOWESS filter</h2>
+<section id="very-popular-method-the-lowess-filter" class="slide level2">
+<h2>Very popular method: The LOWESS filter</h2>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PrecipGL)</span>
-<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL, <span class="at">f =</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
-<span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL, <span class="at">f =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"forestgreen"</span>)</span>
-<span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL, <span class="at">f =</span> <span class="fl">0.1</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PrecipGL)</span>
+<span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL, <span class="at">f =</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL, <span class="at">f =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"forestgreen"</span>)</span>
+<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL, <span class="at">f =</span> <span class="fl">0.1</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/lowess-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
 <li>locally weighted polynomial regression <span class="citation" data-cites="cleveland_robust_1979">(<a href="#/references" role="doc-biblioref" onclick="">W. S. Cleveland, 1979</a>)</span></li>
-<li>different functions available in <strong>R</strong>: <code>lowess</code> and <code>loess</code></li>
 <li>allows to adjust smoothness (smoother span <code>f</code>)</li>
+<li><span class="gray">different functions available in <strong>R</strong>: <code>lowess</code> and <code>loess</code></span></li>
 </ul>
 </section>
 <section id="identification-of-seasonal-components" class="slide level2">
@@ -537,10 +545,13 @@ x_t = a_0 + \sum_{p=1}^{N/2-1} \big(a_p \cos(2 \pi p t/N)
 <p><strong>with</strong></p>
 <p><span class="math inline">\(x_t\)</span>: equidistant time series, <span class="math inline">\(t\)</span>: time step, <span class="math inline">\(N\)</span>: number of data, <span class="math inline">\(a_p, b_p\)</span>: Fourier coefficients,<br> <span class="math inline">\(a_0 = \bar{x}\)</span>, <span class="math inline">\(p\)</span>: order of the periodic component</p>
 </section>
-<section id="formulation-with-a-single-cosine-term" class="slide level2">
-<h2>Formulation with a single cosine term</h2>
+<section id="formulation-with-single-cosine-term-and-shift-phi" class="slide level2">
+<h2>Formulation with single cosine term and shift <span class="math inline">\(\Phi\)</span></h2>
 <p><br></p>
-<p>The equation with sine and cosine terms can be transformed in an equation with cosine terms only, using the trigonometric addition formulas:</p>
+<ul>
+<li>equation with sine and cosine terms can be transformed in an equation with cosine terms only</li>
+<li>use of trigonometric addition formulas:</li>
+</ul>
 <p><br></p>
 <p><span class="math display">\[
 x_t = a_0 + \sum(R_p \cdot \cos(2 \pi p t / N + \Phi_p)
@@ -552,12 +563,12 @@ x_t = a_0 + \sum(R_p \cdot \cos(2 \pi p t / N + \Phi_p)
 </ul>
 <p><br> see: <a href="https://en.wikipedia.org/wiki/List_of_trigonometric_identities">https://en.wikipedia.org/wiki/List_of_trigonometric_identities</a></p>
 </section>
-<section id="identification-of-seasonal-parameters" class="slide level2">
-<h2>Identification of seasonal parameters</h2>
+<section id="different-methods-to-identify-seasonal-parameters" class="slide level2">
+<h2>Different methods to identify seasonal parameters</h2>
 <ol type="1">
-<li>linear regression with the <code>lm</code> function, example for the simple case with a single periodic component<br> <code>m &lt;- lm(x ~ sin(2 * pi * t / N) + cos(2 * pi * t / N))</code></li>
+<li>linear regression with the <code>lm</code> function, e.g.&nbsp;for a single periodic component:<br> <code>m &lt;- lm(x ~ sin(2 * pi * t / N) + cos(2 * pi * t / N))</code></li>
 <li>nonlinear regression with <code>nls</code> <span class="gray">(allows to identify the period as nonlinear parameter)</span></li>
-<li>Classical Fourier analysis:</li>
+<li>classical Fourier analysis:</li>
 </ol>
 <p><span class="math display">\[\begin{align}
      a_0 &amp;= \bar{x}\\
@@ -566,7 +577,7 @@ a_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \cos(2 \pi p t/N)}{N}\\
 b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 \end{align}\]</span></p>
 <ol start="4" type="1">
-<li>Fast Fourer transform (FFT) using complex numbers <span class="gray">used in signal processing (CD and MP3 players, mobile phones, …</span></li>
+<li>Fast Fourer transform (FFT) using complex numbers<br> <span class="gray">used in signal processing (CD and MP3 players, mobile phones, …</span></li>
 </ol>
 </section>
 <section id="fast-fourier-transform" class="slide level2">
@@ -574,60 +585,66 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># create an arbitrary time series</span></span>
-<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
-<span id="cb9-3"><a aria-hidden="true" tabindex="-1"></a>n   <span class="ot">&lt;-</span> <span class="dv">360</span></span>
-<span id="cb9-4"><a aria-hidden="true" tabindex="-1"></a>t   <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>(n<span class="dv">-1</span>)</span>
-<span id="cb9-5"><a aria-hidden="true" tabindex="-1"></a>x   <span class="ot">&lt;-</span> <span class="fu">sin</span>(t<span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>pi<span class="sc">/</span>n) <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.2</span>)</span>
-<span id="cb9-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t, x, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">370</span>))</span>
-<span id="cb9-7"><a aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb9-8"><a aria-hidden="true" tabindex="-1"></a><span class="co"># perform the FFT</span></span>
-<span id="cb9-9"><a aria-hidden="true" tabindex="-1"></a>p       <span class="ot">&lt;-</span> <span class="fu">fft</span>(x)</span>
-<span id="cb9-10"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a aria-hidden="true" tabindex="-1"></a><span class="co"># invert the FFT for the main period only (keep parameters 1..3)</span></span>
-<span id="cb9-12"><a aria-hidden="true" tabindex="-1"></a>p[<span class="dv">4</span><span class="sc">:</span>n]  <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># set higher order parameters to zero</span></span>
-<span id="cb9-13"><a aria-hidden="true" tabindex="-1"></a>x_sim      <span class="ot">&lt;-</span> <span class="fu">fft</span>(p, <span class="at">inverse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-14"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="dv">2</span> <span class="sc">*</span> <span class="fu">Re</span>(x_sim)<span class="sc">/</span>n <span class="sc">-</span> <span class="fu">Re</span>(p[<span class="dv">1</span>])<span class="sc">/</span>n, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">4</span>)</span>
-<span id="cb9-15"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-16"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-17"><a aria-hidden="true" tabindex="-1"></a><span class="do">## perform FFT and invert it for all periods</span></span>
-<span id="cb9-18"><a aria-hidden="true" tabindex="-1"></a>p       <span class="ot">&lt;-</span> <span class="fu">fft</span>(x)</span>
-<span id="cb9-19"><a aria-hidden="true" tabindex="-1"></a>p[(n<span class="sc">/</span><span class="dv">2</span>)<span class="sc">:</span>n] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># set only the "redundant frequencies" to zero</span></span>
-<span id="cb9-20"><a aria-hidden="true" tabindex="-1"></a>x_sim         <span class="ot">&lt;-</span> <span class="fu">fft</span>(p, <span class="at">inverse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb9-21"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="dv">2</span> <span class="sc">*</span> <span class="fu">Re</span>(x_sim)<span class="sc">/</span>n <span class="sc">-</span> <span class="fu">Re</span>(p[<span class="dv">1</span>])<span class="sc">/</span>n, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># create an arbitrary time series</span></span>
+<span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>n   <span class="ot">&lt;-</span> <span class="dv">360</span></span>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>t   <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>(n<span class="dv">-1</span>)</span>
+<span id="cb7-5"><a aria-hidden="true" tabindex="-1"></a>x   <span class="ot">&lt;-</span> <span class="fu">sin</span>(t<span class="sc">*</span><span class="dv">2</span><span class="sc">*</span>pi<span class="sc">/</span>n) <span class="sc">+</span> <span class="fu">rnorm</span>(n, <span class="at">sd =</span> <span class="fl">0.2</span>)</span>
+<span id="cb7-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(t, x, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="dv">370</span>))</span>
+<span id="cb7-7"><a aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-8"><a aria-hidden="true" tabindex="-1"></a><span class="co"># perform the FFT</span></span>
+<span id="cb7-9"><a aria-hidden="true" tabindex="-1"></a>p       <span class="ot">&lt;-</span> <span class="fu">fft</span>(x)</span>
+<span id="cb7-10"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a aria-hidden="true" tabindex="-1"></a><span class="co"># invert the FFT for the main period only (keep parameters 1..3)</span></span>
+<span id="cb7-12"><a aria-hidden="true" tabindex="-1"></a>p[<span class="dv">4</span><span class="sc">:</span>n]  <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># set higher order parameters to zero</span></span>
+<span id="cb7-13"><a aria-hidden="true" tabindex="-1"></a>x_sim      <span class="ot">&lt;-</span> <span class="fu">fft</span>(p, <span class="at">inverse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-14"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="dv">2</span> <span class="sc">*</span> <span class="fu">Re</span>(x_sim)<span class="sc">/</span>n <span class="sc">-</span> <span class="fu">Re</span>(p[<span class="dv">1</span>])<span class="sc">/</span>n, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">4</span>)</span>
+<span id="cb7-15"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-16"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-17"><a aria-hidden="true" tabindex="-1"></a><span class="do">## perform FFT and invert it for all periods</span></span>
+<span id="cb7-18"><a aria-hidden="true" tabindex="-1"></a>p       <span class="ot">&lt;-</span> <span class="fu">fft</span>(x)</span>
+<span id="cb7-19"><a aria-hidden="true" tabindex="-1"></a>p[(n<span class="sc">/</span><span class="dv">2</span>)<span class="sc">:</span>n] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># set only the "redundant frequencies" to zero</span></span>
+<span id="cb7-20"><a aria-hidden="true" tabindex="-1"></a>x_sim         <span class="ot">&lt;-</span> <span class="fu">fft</span>(p, <span class="at">inverse =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-21"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="dv">2</span> <span class="sc">*</span> <span class="fu">Re</span>(x_sim)<span class="sc">/</span>n <span class="sc">-</span> <span class="fu">Re</span>(p[<span class="dv">1</span>])<span class="sc">/</span>n, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/fft-demo-1.png" width="960" class="r-stretch"></section>
 <section id="automatic-time-series-decomposition" class="slide level2">
 <h2>Automatic time series decomposition</h2>
-<p>Function <code>decompose</code> implements the classical approach with simple symmetric moving average filters.</p>
+<p>Function <code>decompose</code> implements the classical approach with symmetric moving average.</p>
 <div class="cell" data-layout-align="center" data-fig="true" width="10" height="10">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a>manaus_dec <span class="ot">&lt;-</span> <span class="fu">decompose</span>(manaus)</span>
-<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus_dec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>manaus_dec <span class="ot">&lt;-</span> <span class="fu">decompose</span>(manaus)</span>
+<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus_dec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
-<img data-src="10-timeseries-outlook_files/figure-revealjs/decompose-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><p>In this data set the seasonal component possesses an additive character, but a multiplicative component would be possible too (<code>type="multiplicative"</code>).</p>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/decompose-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
+<li>In this data set the seasonal component possesses an additive character.</li>
+<li>In case of a multiplicative components, use <code>type = "multiplicative"</code>.</li>
+</ul>
 </section>
 <section id="automatic-time-series-decomposition-ii" class="slide level2">
 <h2>Automatic time series decomposition II</h2>
-<p>The function <code>stl</code>, seasonal time series decomposition <span class="citation" data-cites="cleveland_stl_1990">(<a href="#/references" role="doc-biblioref" onclick="">R. B. Cleveland et al., 1990</a>)</span> uses a LOESS filter:</p>
+<ul>
+<li>function <code>stl</code> (seasonal time series decomposition) <span class="citation" data-cites="cleveland_stl_1990">(<a href="#/references" role="doc-biblioref" onclick="">R. B. Cleveland et al., 1990</a>)</span></li>
+<li>uses a LOESS filter</li>
+</ul>
 <div class="cell" data-layout-align="center" data-fig="true" width="10" height="8">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>manaus_stl <span class="ot">&lt;-</span> <span class="fu">stl</span>(manaus, <span class="at">s.window=</span><span class="dv">13</span>)</span>
-<span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus_stl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>manaus_stl <span class="ot">&lt;-</span> <span class="fu">stl</span>(manaus, <span class="at">s.window=</span><span class="dv">13</span>)</span>
+<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus_stl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/stl-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section></section>
 <section>
-<section id="outlook-arma-and-arima-models" class="title-slide slide level1 center">
-<h1>Outlook: ARMA and ARIMA models</h1>
+<section id="arma-arima-and-sarima-models" class="title-slide slide level1 center">
+<h1>ARMA, ARIMA and SARIMA models</h1>
 <p><br></p>
 <ul>
 <li>based on autoregressive (AR) and moving average (AR) terms</li>
 <li>the “I” in ARIMA stands for differencing</li>
 <li>seasonal ARIMA models (SARIMA) consider seasonal dependency,<br> e.g.&nbsp;differencing with a lag of 12 months</li>
 <li>very important techniques for analyzing time series and for forecasting</li>
-<li>for the interested: self-study by reading <span class="citation" data-cites="kleiber_applied_2008">Kleiber &amp; Zeileis (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span> or <span class="citation" data-cites="shumway_time_2019">Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>.</li>
+<li>for the interested: self-study, see <span class="citation" data-cites="kleiber_applied_2008">Kleiber &amp; Zeileis (<a href="#/references" role="doc-biblioref" onclick="">2008</a>)</span> or <span class="citation" data-cites="shumway_time_2019">Shumway &amp; Stoffer (<a href="#/references" role="doc-biblioref" onclick="">2019</a>)</span>.</li>
 </ul>
 </section>
 <section id="example-sarima-model-for-co2-in-the-atmosphere" class="slide level2">
@@ -635,22 +652,22 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## read data directly from NOAA</span></span>
-<span id="cb12-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">#co2 &lt;- read_csv("https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv", </span></span>
-<span id="cb12-3"><a aria-hidden="true" tabindex="-1"></a><span class="co">#                skip = 40, show_col_types = FALSE)</span></span>
-<span id="cb12-4"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-5"><a aria-hidden="true" tabindex="-1"></a><span class="do">## local version</span></span>
-<span id="cb12-6"><a aria-hidden="true" tabindex="-1"></a>co2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/co2_mm_mlo.csv"</span>, <span class="at">skip=</span><span class="dv">40</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb12-7"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a aria-hidden="true" tabindex="-1"></a><span class="do">## year 1958 is incomplete, so let's start with 1959</span></span>
-<span id="cb12-9"><a aria-hidden="true" tabindex="-1"></a>co2 <span class="ot">&lt;-</span> <span class="fu">filter</span>(co2, year <span class="sc">&gt;</span> <span class="dv">1958</span>) </span>
-<span id="cb12-10"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-11"><a aria-hidden="true" tabindex="-1"></a>co2 <span class="sc">|&gt;</span> </span>
-<span id="cb12-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date=</span><span class="fu">as_date</span>(<span class="fu">paste</span>(year, month, <span class="dv">15</span>, <span class="at">sep=</span><span class="st">"."</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb12-13"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, average)) <span class="sc">+</span> </span>
-<span id="cb12-14"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="fu">expression</span>(CO[<span class="dv">2</span>]<span class="sc">~</span><span class="st">"in the atmosphere (ppm)"</span>)) <span class="sc">+</span> </span>
-<span id="cb12-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Mauna Loa Observatory, Hawaii, Monthly Averages"</span>) <span class="sc">+</span></span>
-<span id="cb12-16"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## read data directly from NOAA</span></span>
+<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">#co2 &lt;- read_csv("https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv", </span></span>
+<span id="cb10-3"><a aria-hidden="true" tabindex="-1"></a><span class="co">#                skip = 40, show_col_types = FALSE)</span></span>
+<span id="cb10-4"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-5"><a aria-hidden="true" tabindex="-1"></a><span class="do">## local version</span></span>
+<span id="cb10-6"><a aria-hidden="true" tabindex="-1"></a>co2 <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"../data/co2_mm_mlo.csv"</span>, <span class="at">skip=</span><span class="dv">40</span>, <span class="at">show_col_types =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb10-7"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a aria-hidden="true" tabindex="-1"></a><span class="do">## year 1958 is incomplete, so let's start with 1959</span></span>
+<span id="cb10-9"><a aria-hidden="true" tabindex="-1"></a>co2 <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">filter</span>(co2, year <span class="sc">&gt;</span> <span class="dv">1958</span>) </span>
+<span id="cb10-10"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-11"><a aria-hidden="true" tabindex="-1"></a>co2 <span class="sc">|&gt;</span> </span>
+<span id="cb10-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">date=</span><span class="fu">as_date</span>(<span class="fu">paste</span>(year, month, <span class="dv">15</span>, <span class="at">sep=</span><span class="st">"."</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb10-13"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, average)) <span class="sc">+</span> </span>
+<span id="cb10-14"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="fu">expression</span>(CO[<span class="dv">2</span>]<span class="sc">~</span><span class="st">"in the atmosphere (ppm)"</span>)) <span class="sc">+</span> </span>
+<span id="cb10-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Mauna Loa Observatory, Hawaii, Monthly Averages"</span>) <span class="sc">+</span></span>
+<span id="cb10-16"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -660,13 +677,13 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(astsa)</span>
-<span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-3"><a aria-hidden="true" tabindex="-1"></a><span class="do">## convert to a time series object</span></span>
-<span id="cb13-4"><a aria-hidden="true" tabindex="-1"></a>co2ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(co2<span class="sc">$</span>average, <span class="at">start=</span><span class="dv">1959</span>, <span class="at">frequency =</span> <span class="dv">12</span>)</span>
-<span id="cb13-5"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a aria-hidden="true" tabindex="-1"></a><span class="do">## fit a SARIMA model and show the results</span></span>
-<span id="cb13-7"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">sarima</span>(co2ts, <span class="at">p =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">q =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">Q =</span> <span class="dv">1</span>, <span class="at">S =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(astsa)</span>
+<span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a><span class="do">## convert to a time series object</span></span>
+<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a>co2ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(co2<span class="sc">$</span>average, <span class="at">start=</span><span class="dv">1959</span>, <span class="at">frequency =</span> <span class="dv">12</span>)</span>
+<span id="cb11-5"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-6"><a aria-hidden="true" tabindex="-1"></a><span class="do">## fit a SARIMA model and show the results</span></span>
+<span id="cb11-7"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">sarima</span>(co2ts, <span class="at">p =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">q =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">Q =</span> <span class="dv">1</span>, <span class="at">S =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -677,9 +694,9 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">sarima.for</span>(co2ts, <span class="at">n.ahead =</span> <span class="dv">12</span> <span class="sc">*</span> <span class="dv">27</span>, </span>
-<span id="cb14-2"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">p =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">q =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">Q =</span> <span class="dv">1</span>, <span class="at">S =</span> <span class="dv">12</span>, </span>
-<span id="cb14-3"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">plot.all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">sarima.for</span>(co2ts, <span class="at">n.ahead =</span> <span class="dv">12</span> <span class="sc">*</span> <span class="dv">27</span>, </span>
+<span id="cb12-2"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">p =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">q =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">Q =</span> <span class="dv">1</span>, <span class="at">S =</span> <span class="dv">12</span>, </span>
+<span id="cb12-3"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">plot.all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 
 </div>
@@ -703,24 +720,24 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <h2>The Nile data set</h2>
 <p>The Nile data set contains measurements of annual discharge of the Nile at Aswan from 1871 to 1970 <span class="gray">(see help page ?Nile for data source):</span></p>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(strucchange)</span>
-<span id="cb15-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Nile"</span>)</span>
-<span id="cb15-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(strucchange)</span>
+<span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Nile"</span>)</span>
+<span id="cb13-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/nile-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
-<section id="test-for-structural-break-at-known-time" class="slide level2">
-<h2>Test for structural break at known time</h2>
+<section id="test-for-existence-of-structural-break" class="slide level2">
+<h2>Test for existence of structural break</h2>
 <ul>
 <li>Are there are periods with different flow?</li>
-<li>Use of OLS-CUSUM (ordinary least squares, cumulative sum) or MOSUM tests (moving average sum) can be applied to various types of problems).</li>
-<li><code>efp</code> = empirical fluctuation model,<code>sctest</code> = structural change test</li>
+<li>use of OLS-CUSUM (ordinary least squares, cumulative sum) or MOSUM tests (moving average sum)</li>
+<li><code>efp</code> = empirical fluctuation process,<code>sctest</code> = structural change test</li>
 </ul>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a>ocus <span class="ot">&lt;-</span> <span class="fu">efp</span>(Nile <span class="sc">~</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"OLS-CUSUM"</span>)</span>
-<span id="cb16-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ocus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>ocus <span class="ot">&lt;-</span> <span class="fu">efp</span>(Nile <span class="sc">~</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"OLS-CUSUM"</span>)</span>
+<span id="cb14-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ocus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sctest</span>(ocus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sctest</span>(ocus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     OLS-based CUSUM test
@@ -735,14 +752,14 @@ S0 = 2.9518, p-value = 5.409e-08</code></pre>
 <p><br></p>
 <p><strong>Purpose</strong></p>
 <ul>
-<li>identify if there are structural breaks with respect to a specified linear model</li>
+<li>find structural breaks with respect to a specified linear model</li>
 <li>identify their number and location</li>
 <li>very general approach, allows different linear models, covariates, …</li>
-<li>we deal only with the most simplest case here</li>
+<li>we show the most simplest case here</li>
 </ul>
 <p><strong>Method</strong></p>
 <ul>
-<li>uses a BIC-based model selection technique</li>
+<li>employs a BIC-based model selection technique</li>
 <li>Which model is the best?</li>
 </ul>
 <p><strong>See also</strong></p>
@@ -754,28 +771,27 @@ S0 = 2.9518, p-value = 5.409e-08</code></pre>
 <h2>Remember: model selection techniques</h2>
 <p><br></p>
 <ul>
-<li>Model Selection is a modern alternative to <span class="math inline">\(p\)</span>-value based testing.</li>
+<li><em>model selection</em> is a modern alternative to <span class="math inline">\(p\)</span>-value based testing</li>
 <li>Based on the principle of parsimony:
 <ul>
-<li>Models with many parameters fit better, but may contain unnecessary factors.</li>
-<li>We need is an <strong>optimal compromize</strong> between model fit and complexity.</li>
+<li>Models with more parameters fit better, but may contain unnecessary factors.</li>
+<li><span class="math inline">\(\rightarrow\)</span> Find an <strong>optimal compromize</strong> between model fit and complexity.</li>
 <li>Keep it as simple as possible, but not simpler.</li>
 </ul></li>
-<li>Compare different models for the same phenomenon:
+<li>Multiple model candidates for the same phenomenon:
 <ul>
 <li><span class="blue">Full model</span>: includes all potential factors.</li>
 <li>Several <span class="blue">reduced models</span>, derived from the full model.</li>
 <li><span class="blue">Null model</span> without explanatory factors.</li>
 </ul></li>
 <li>Select <span class="blue">minimal adequate model</span> (= “optimal”, “most parsimonious”).</li>
-<li><span class="math inline">\(\Rightarrow\)</span> Compromize between simplicity and goodness of fit.</li>
 </ul>
 <p>More, see <span class="citation" data-cites="JohnsonOmland2004">Johnson &amp; Omland (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span></p>
 </section>
-<section id="model-comparison-with-aic-and-bic" class="slide level2">
-<h2>Model comparison with AIC and BIC</h2>
+<section id="model-selection-with-aic-and-bic" class="slide level2">
+<h2>Model selection with AIC and BIC</h2>
 <p><br></p>
-<p>Models with many parameters fit better. We want an <strong>optimal compromize</strong> between fit and model complexity (number of parameters, <span class="math inline">\(k\)</span>).</p>
+<p>Models with more parameters fit better <span class="math inline">\(\leftrightarrow\)</span> but more parameters (<span class="math inline">\(k\)</span>) are “more complex”.</p>
 <ul>
 <li>Goodness of fit can be measured with likelihood <span class="math inline">\(L\)</span><br> <span class="gray">(how likely are the data given a specific model).</span></li>
 <li>Log likelihood: makes the problem additive.</li>
@@ -797,8 +813,8 @@ BIC = - 2 \ln(L) + k \cdot \ln(n)
 <h2>Breakpoint analysis</h2>
 <p><br></p>
 <div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb19-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb17-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Optimal (m+1)-segment partition: 
@@ -838,8 +854,8 @@ BIC    1318    1270    1276    1285    1292    1311</code></pre>
 <section id="likelihood-profile-rightarrow-optimal-number-of-breaks" class="slide level2">
 <h2>Likelihood profile: <span class="math inline">\(\rightarrow\)</span> optimal number of breaks?</h2>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb21-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb19-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/bp-nile-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
@@ -851,18 +867,18 @@ BIC    1318    1270    1276    1285    1292    1311</code></pre>
 <section id="plot-breakpoints-and-confidence-interval" class="slide level2">
 <h2>Plot breakpoints and confidence interval</h2>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## fit null hypothesis model and model with 1 breakpoint</span></span>
-<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a>fm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb22-3"><a aria-hidden="true" tabindex="-1"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Nile <span class="sc">~</span> <span class="fu">breakfactor</span>(bp.nile,  <span class="at">breaks =</span> <span class="dv">1</span>))</span>
-<span id="cb22-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span>
-<span id="cb22-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ts</span>(<span class="fu">fitted</span>(fm0),  <span class="at">start =</span> <span class="dv">1871</span>),  <span class="at">col =</span> <span class="dv">3</span>)</span>
-<span id="cb22-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ts</span>(<span class="fu">fitted</span>(fm1),  <span class="at">start =</span> <span class="dv">1871</span>),  <span class="at">col =</span> <span class="dv">4</span>)</span>
-<span id="cb22-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(bp.nile)</span>
-<span id="cb22-8"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb22-9"><a aria-hidden="true" tabindex="-1"></a><span class="do">## confidence interval</span></span>
-<span id="cb22-10"><a aria-hidden="true" tabindex="-1"></a>ci.nile <span class="ot">&lt;-</span> <span class="fu">confint</span>(bp.nile)</span>
-<span id="cb22-11"><a aria-hidden="true" tabindex="-1"></a><span class="co">#ci.nile  # output numerical results</span></span>
-<span id="cb22-12"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ci.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## fit null hypothesis model and model with 1 breakpoint</span></span>
+<span id="cb20-2"><a aria-hidden="true" tabindex="-1"></a>fm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb20-3"><a aria-hidden="true" tabindex="-1"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Nile <span class="sc">~</span> <span class="fu">breakfactor</span>(bp.nile,  <span class="at">breaks =</span> <span class="dv">1</span>))</span>
+<span id="cb20-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span>
+<span id="cb20-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ts</span>(<span class="fu">fitted</span>(fm0),  <span class="at">start =</span> <span class="dv">1871</span>),  <span class="at">col =</span> <span class="dv">3</span>)</span>
+<span id="cb20-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">ts</span>(<span class="fu">fitted</span>(fm1),  <span class="at">start =</span> <span class="dv">1871</span>),  <span class="at">col =</span> <span class="dv">4</span>)</span>
+<span id="cb20-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(bp.nile)</span>
+<span id="cb20-8"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-9"><a aria-hidden="true" tabindex="-1"></a><span class="do">## confidence interval</span></span>
+<span id="cb20-10"><a aria-hidden="true" tabindex="-1"></a>ci.nile <span class="ot">&lt;-</span> <span class="fu">confint</span>(bp.nile)</span>
+<span id="cb20-11"><a aria-hidden="true" tabindex="-1"></a><span class="co">#ci.nile  # output numerical results</span></span>
+<span id="cb20-12"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ci.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/ci-nile-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
@@ -871,7 +887,7 @@ BIC    1318    1270    1276    1285    1292    1311</code></pre>
 <p><br></p>
 <p><strong>Likelihood ratio test</strong></p>
 <div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -886,7 +902,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p><strong>BIC based comparison</strong></p>
 <div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    df      BIC
 fm0  2 1318.242
@@ -895,7 +911,7 @@ fm1  3 1265.479</code></pre>
 </div>
 <p><strong>AIC based comparison</strong></p>
 <div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    df      AIC
 fm0  2 1313.031
@@ -908,11 +924,11 @@ fm1  3 1257.663</code></pre>
 <h2>Diagnostics</h2>
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb29-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(fm0))     <span class="co"># model without breaks</span></span>
-<span id="cb29-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(fm1))     <span class="co"># model with 1 breakpoint</span></span>
-<span id="cb29-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm0))</span>
-<span id="cb29-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb27-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(fm0))     <span class="co"># model without breaks</span></span>
+<span id="cb27-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(fm1))     <span class="co"># model with 1 breakpoint</span></span>
+<span id="cb27-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm0))</span>
+<span id="cb27-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 
 </div>
 <!--
@@ -949,7 +965,7 @@ Johnson, G., Jerald, &amp; Omland, K. S. (2004). Model <span>Selection</span> in
 Kleiber, C., &amp; Zeileis, A. (2008). <em>Applied econometrics with <span>R</span></em>. Springer.
 </div>
 <div id="ref-shumway_time_2019" class="csl-entry" role="listitem">
-Shumway, R., &amp; Stoffer, D. (2019). <em>Time series: A data analysis approach using r</em>. CRC Press.
+Shumway, R. H., &amp; Stoffer, D. S. (2019). <em>Time series: A data analysis approach using r</em>. CRC Press.
 </div>
 <div id="ref-Zeileis2003" class="csl-entry" role="listitem">
 Zeileis, A., Kleiber, C., Krämer, W., &amp; Hornik, K. (2003). Testing and dating of structural changes in practice. <em>Computational Statistics and Data Analysis</em>, <em>44</em>(1–2), 109–123.

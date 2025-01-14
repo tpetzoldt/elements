@@ -94,7 +94,15 @@ Data downloaded from [https://rekis.hydro.tu-dresden.de](https://rekis.hydro.tu-
 ```{r airtemp-annual, echo=TRUE}
 #| code-fold: true
 #| code-summary: "Show the code"
-read_csv("../data/airtemp_dresden_daily.csv") |>
+library("dplyr")
+library("ggplot2")
+library("lubridate")
+library("readr")
+## adapt the following line if data were downloaded:
+file <- "../data/airtemp_dresden_daily.csv"
+## or, uncomment to access data directly from the internet:
+#file <- "https://tpetzoldt.github.io/datasets/data/airtemp_dresden_daily.csv"
+read_csv(file, show_col_types = FALSE) |>
   select(ZEIT, TM) |>
   rename(date = ZEIT) |>
   mutate(year = year(date)) |>
@@ -107,8 +115,8 @@ read_csv("../data/airtemp_dresden_daily.csv") |>
   ggtitle("Annual average air temperature in Dresden")
 ```
 
-Data downloaded from [https://rekis.hydro.tu-dresden.de](https://rekis.hydro.tu-dresden.de) 
-[@kronenberg_rekis_2021], original source Deutscher Wetterdienst, https://www.dwd.de, data modified and averaged.
+[Data downloaded from [https://rekis.hydro.tu-dresden.de](https://rekis.hydro.tu-dresden.de) 
+[@kronenberg_rekis_2021], original source Deutscher Wetterdienst, https://www.dwd.de, data modified and averaged.]{.small}
 
 ## Characteristics of the examples
 
@@ -258,7 +266,7 @@ plot(ts(DSP), col = "red", main = "DSP")
 
 :::
 
-## 
+## Simulated data
 
 ```{r gen-LTDsp-show, echo=TRUE}
 #| code-fold: true
@@ -282,12 +290,15 @@ plot(ts(TSP), main="TSP", col = "red")
 plot(ts(DSP), main="DSP", col = "red")
 ```
 
+[The introductory examples showed additional types of time series, e.g. with seasonality.]{.small}
 
 ## Why is this important?
 
 <br>
 
-Simple linear models require "independent data", or,<br> more precisely: **independence of residuals**.
+Simple linear models require "independence", or, more precisely: **independence of residuals**.
+
+<br>
 
 **But**
 
@@ -295,14 +306,12 @@ Simple linear models require "independent data", or,<br> more precisely: **indep
 * dependent data have "less value" [(contain less information than independent data)]{.gray}
 * important for calculation of degrees of freedom for the sigificance tests
 
-<br>
-
 **Approaches**
 
 1. measure serial dependency (autocorrelation)
 2. if yes, handle autocorrelation
-    a) remove it, [or]{.gray}
-    b) model it
+    * remove autocorrelation, [or]{.gray}
+    * model autocorrelation
 
 # Autocorrelation
 
@@ -360,7 +369,7 @@ so results differ, especially for small samples.]{.gray}
 
 ![](../img/time-series.png){fig-align="center"}
 
-## Autocorrelation function (ACF): correlogram
+## Autocorrelation function (ACF): autocorrelogram
 
 * ... correlation between time series and its time-shifted (= lagged) versions
 
@@ -501,7 +510,7 @@ acf(residuals(lm(DSP ~ time(DSP))), lwd=4)
 
 ::: {.column width="34%"}
 * ACF plots of TSP and DSP
-* strong autocorrelation
+* strong autocorrelation<br> $\rightarrow$ non-stationary
 :::
 
 ::: {.column width="34%"}
@@ -517,6 +526,8 @@ acf(residuals(lm(DSP ~ time(DSP))), lwd=4)
 # Statistical tests
 
 ## Test of stationarity
+
+<br>
 
 * Kwiatkowski-Phillips-Schmidt-Shin test (KPSS test)
 * has built-in trend removal (option `null = "trend"`)
@@ -553,7 +564,7 @@ $\rightarrow$ stationary after trend removal
 :::
 
 
-## KPSS test for a difference stationary process (DSP)
+## KPSS test with a difference stationary process (DSP)
 
 <br>
 
@@ -582,7 +593,7 @@ $\rightarrow$ non-stationary
 kpss.test(DSP, null = "Trend")
 ```
 
-$\rightarrow$ trend removal<br> does not cure non-stationarity
+$\rightarrow$ trend removal does not cure non-stationarity
 
 :::
 
@@ -597,7 +608,7 @@ $\rightarrow$ trend removal<br> does not cure non-stationarity
 
 * nonparametric test
 * popular in environmental sciences
-* strictly suitable only for trend-stationary time series, robust in case of weak autocorrelation
+* robust in case of weak autocorrelation
 
 **Linear regression analysis**
 
@@ -611,13 +622,13 @@ $\rightarrow$ trend removal<br> does not cure non-stationarity
 
 **In general**
 
-* trend tests are not adequate for "pure" difference-stationary time series, because residuals are autocorrelated
-* [$\Rightarrow$ test stationarity (or autocorrelation) before or after trend testing !!!]{.red}
+* Trend tests are not adequate for if residuals are autocorrelated.
+* [$\Rightarrow$ check stationarity (or autocorrelation) of residuals after trend removal !!!]{.red}
 
 
 ## Mann-Kendall-Trend-Test
 
-<br>
+<br><br>
 
 ```{r, echo=TRUE}
 library("Kendall")
@@ -635,9 +646,6 @@ MannKendall(DSP)
 
 $\rightarrow$ indicates significant trend, but as process is DSP, interpretation is wrong.
 
-<br>
-
-* check assumptions with correlogram and/or KPSS-test
 
 
 ## Application: trend of air temperature
@@ -645,7 +653,7 @@ $\rightarrow$ indicates significant trend, but as process is DSP, interpretation
 <br>
 
 ```{r temp-april, fig.align="center", fig.width=9, fig.height=3, echo=TRUE}
-temp <- read.csv("https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/airtemp_april.csv")
+temp <- read.csv("https://tpetzoldt.github.io/datasets/data/airtemp_april.csv")
 temp <- ts(temp$T, start=temp$Year[1])
 plot(temp)
 ```
@@ -654,7 +662,7 @@ plot(temp)
 [Data: Air temperature in April, station Dresden-Klotsche (Germany), data source: Deutscher Wetterdienst (https://www.dwd.de), data aggregated and modified.]{.gray}
 
 
-## Stationarity and trend test
+## Check of stationarity of residuals and trend test
 
 <br>
 
@@ -678,7 +686,7 @@ MannKendall(temp)
 * KPSS test does not reject H0 of trend stationarity
 * Mann-Kendall is significant $\rightarrow$ monotonous trend
 
-## Linear trend
+## Estimate slope of linear trend
 
 
 ```{r temp-trend, fig.align="center", fig.width=12, fig.height=4, echo=TRUE}
@@ -698,7 +706,6 @@ summary(m)
 <br>
 
 * @kleiber_applied_2008: a very practical book about econometrics with well understandable time series chapters
-
 
 * @shumway_time_2019: a book with a time series good introduction and good balance between mathematics and R programming
 
@@ -788,11 +795,12 @@ count.signif(N=Nruns, time=time, FUN=genDSP, c=0) / Nruns
 
 <br>
 
-* Check whether a time series is of type "DSP".
+* another method for stationarity testing
+* checks whether a time series is of type "DSP".
 * ADF-test (augmented Dickey-Fuller test), contained in R-package **tseries**.
-* Remember: A "TSP" can be made stationary by subtracting a trend.<br>
-$\rightarrow$ This is done automatically by the test.
-* **Important:** stationarity is the **alternative** hypothesis!
+* remember: a "TSP" can be made stationary by subtracting a trend.
+* $\rightarrow$ This is done automatically by the test.
+* **Important:** in the ADF test, stationarity is the **alternative** hypothesis!
 
 <br>
 
@@ -803,7 +811,7 @@ adf.test(DSP)
 ```
 
 
-## DSP: presence of a "unit root"
+## DSP: Presence of a "unit root"
 
 <br>
 
