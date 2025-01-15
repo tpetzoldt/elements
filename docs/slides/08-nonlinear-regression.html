@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-01-14">
+  <meta name="dcterms.date" content="2025-01-15">
   <title>Elements of Data Analysis and Statistics – 08-Nonlinear Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -431,7 +431,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-01-14</p>
+  <p class="date">2025-01-15</p>
 </section>
 <section id="nonlinear-regression" class="slide level2">
 <h2>Nonlinear regression</h2>
@@ -669,7 +669,7 @@ Achieved convergence tolerance: 5.956e-08</code></pre>
 <li>t- and p-values: no over-interpretation!</li>
 <li>in the non-linear world, “non-significant” parameters can be structurally necessary.</li>
 </ul>
-<p><strong>Coefficient of determination <span class="math inline">\(r^2 = 1-\frac{s_\varepsilon}{s_y}\)</span></strong></p>
+<p><strong>Coefficient of determination <span class="math inline">\(r^2 = 1-\frac{s^2_\varepsilon}{s^2_y}\)</span></strong></p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>(Rsquared <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">var</span>(<span class="fu">residuals</span>(fit))<span class="sc">/</span><span class="fu">var</span>(y))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

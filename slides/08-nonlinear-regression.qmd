@@ -281,7 +281,7 @@ summary(fit)
 * in the non-linear world, "non-significant" parameters can be structurally necessary.
 
 
-**Coefficient of determination $r^2 = 1-\frac{s_\varepsilon}{s_y}$**
+**Coefficient of determination $r^2 = 1-\frac{s^2_\varepsilon}{s^2_y}$**
 
 ```{r echo=TRUE}
 (Rsquared <- 1 - var(residuals(fit))/var(y))
