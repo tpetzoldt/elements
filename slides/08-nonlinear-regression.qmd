@@ -59,10 +59,10 @@ $$\ln(y) = \ln(a) + b \cdot \ln(x)$$
 
 <br>
 
-**Goodness of fit:** Sum of least squares $SQ$:
+**Goodness of fit:** Residual sum of squared differences $RSS$:
 
 $$
-SQ = \sum_{i=1}^n\left(y_i- f(\mathbf x_i, \mathbf p)\right)^2 = \min !
+RSS = \sum_{i=1}^n\left(y_i- f(\mathbf x_i, \mathbf p)\right)^2 = \min !
 $$
 
 with $y$: dependent var, $\mathbf x$: matrix of independent vars,$\mathbf p$: parameter vector, $n$: sample size
@@ -85,12 +85,12 @@ $$
 
 <br>
 
-The minimum of the squared residuals (SQ) is searched by [iteration]{.blue}:
+The minimum of the squared residuals (RSS) is searched by [iteration]{.blue}:
 
 <br>
 
 1. Start from an initial guess for the parameter set.
-2. Try to find a parameter set with lower SQ.
+2. Try to find a parameter set with lower RSS.
 3. Is the new parameter set better?
     * No: Reject the new parameters and goto 2
     * Yes: Accept the new parameters and goto 4
@@ -112,7 +112,7 @@ The minimum of the squared residuals (SQ) is searched by [iteration]{.blue}:
 
 **Newton's Method**
 
-* quadratic approximation of the SQ function
+* quadratic approximation of the RSS function
 * try to estimate the minimum
 * $\rightarrow$ takes curvature into account
 * $\rightarrow$ faster for "well behaving" problems

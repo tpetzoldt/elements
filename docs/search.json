@@ -2567,7 +2567,7 @@
     "href": "slides/10-timeseries-outlook.html#remember-model-selection-techniques",
     "title": "10-Time Series Outlook",
     "section": "Remember: model selection techniques",
-    "text": "Remember: model selection techniques\n\n\nmodel selection is a modern alternative to \\(p\\)-value based testing\nBased on the principle of parsimony:\n\nModels with more parameters fit better, but may contain unnecessary factors.\n\\(\\rightarrow\\) Find an optimal compromize between model fit and complexity.\nKeep it as simple as possible, but not simpler.\n\nMultiple model candidates for the same phenomenon:\n\nFull model: includes all potential factors.\nSeveral reduced models, derived from the full model.\nNull model without explanatory factors.\n\nSelect minimal adequate model (= “optimal”, “most parsimonious”).\n\nMore, see Johnson & Omland (2004)",
+    "text": "Remember: model selection techniques\n\n\nmodel selection is a modern alternative to \\(p\\)-value based testing\nBased on the principle of parsimony:\n\nModels with more parameters fit better, but may contain unnecessary factors.\n\\(\\rightarrow\\) Find an optimal compromise between model fit and complexity.\nKeep it as simple as possible, but not simpler.\n\nMultiple model candidates for the same phenomenon:\n\nFull model: includes all potential factors.\nSeveral reduced models, derived from the full model.\nNull model without explanatory factors.\n\nSelect minimal adequate model (= “optimal”, “most parsimonious”).\n\nMore, see Johnson & Omland (2004)",
     "crumbs": [
       "Basic Statistics",
       "10-Time Series Outlook"
@@ -2930,7 +2930,7 @@
     "href": "slides/08-nonlinear-regression.html#how-to-find-the-global-minimum",
     "title": "08-Nonlinear Regression",
     "section": "How to find the global minimum?",
-    "text": "How to find the global minimum?\n\nGoodness of fit: Sum of least squares \\(SQ\\):\n\\[\nSQ = \\sum_{i=1}^n\\left(y_i- f(\\mathbf x_i, \\mathbf p)\\right)^2 = \\min !\n\\]\nwith \\(y\\): dependent var, \\(\\mathbf x\\): matrix of independent vars,\\(\\mathbf p\\): parameter vector, \\(n\\): sample size\nUse of an iterative solver \\(\\rightarrow\\) see next slides\nNonlinear coefficient of determination \\(R^2\\)\n\nnot related to the (linear) correlation coefficient\ncan be calculated from the residual and total variances\n\n\\[\nR^2 = 1 - \\frac{\\text{variance of the residuals}}{\\text{variance of the y-data}} = 1- \\frac{s^2_\\varepsilon}{s^2_y}\n\\]\n\nnonlinear \\(r^2\\) measures the fraction of the explained variance\n… other indices can be used in addition, e.g. MSE, RMSE, NSE, …",
+    "text": "How to find the global minimum?\n\nGoodness of fit: Residual sum of squared differences \\(RSS\\):\n\\[\nRSS = \\sum_{i=1}^n\\left(y_i- f(\\mathbf x_i, \\mathbf p)\\right)^2 = \\min !\n\\]\nwith \\(y\\): dependent var, \\(\\mathbf x\\): matrix of independent vars,\\(\\mathbf p\\): parameter vector, \\(n\\): sample size\nUse of an iterative solver \\(\\rightarrow\\) see next slides\nNonlinear coefficient of determination \\(R^2\\)\n\nnot related to the (linear) correlation coefficient\ncan be calculated from the residual and total variances\n\n\\[\nR^2 = 1 - \\frac{\\text{variance of the residuals}}{\\text{variance of the y-data}} = 1- \\frac{s^2_\\varepsilon}{s^2_y}\n\\]\n\nnonlinear \\(r^2\\) measures the fraction of the explained variance\n… other indices can be used in addition, e.g. MSE, RMSE, NSE, …",
     "crumbs": [
       "Basic Statistics",
       "08-Nonlinear Regression"
@@ -2941,7 +2941,7 @@
     "href": "slides/08-nonlinear-regression.html#general-principle-of-optimization-algorithms",
     "title": "08-Nonlinear Regression",
     "section": "General principle of optimization algorithms",
-    "text": "General principle of optimization algorithms\n\nThe minimum of the squared residuals (SQ) is searched by iteration:\n\n\nStart from an initial guess for the parameter set.\nTry to find a parameter set with lower SQ.\nIs the new parameter set better?\n\nNo: Reject the new parameters and goto 2\nYes: Accept the new parameters and goto 4\n\nIs the new parameter set good enough?\n\nNo: goto 2\nYes: goto 5\n\nParameter set found.",
+    "text": "General principle of optimization algorithms\n\nThe minimum of the squared residuals (RSS) is searched by iteration:\n\n\nStart from an initial guess for the parameter set.\nTry to find a parameter set with lower RSS.\nIs the new parameter set better?\n\nNo: Reject the new parameters and goto 2\nYes: Accept the new parameters and goto 4\n\nIs the new parameter set good enough?\n\nNo: goto 2\nYes: goto 5\n\nParameter set found.",
     "crumbs": [
       "Basic Statistics",
       "08-Nonlinear Regression"
@@ -2952,7 +2952,7 @@
     "href": "slides/08-nonlinear-regression.html#deterministic-methods",
     "title": "08-Nonlinear Regression",
     "section": "Deterministic Methods",
-    "text": "Deterministic Methods\n\n\nGradient Descent\n\ngo one step into the direction of steepest descent\n\\(\\rightarrow\\) relatively simple\n\\(\\rightarrow\\) relatively robust for “more complicated’’ problems\n\nNewton’s Method\n\nquadratic approximation of the SQ function\ntry to estimate the minimum\n\\(\\rightarrow\\) takes curvature into account\n\\(\\rightarrow\\) faster for “well behaving” problems\nseveral versions: quasi-Newton, Gauss-Newton, L-BFGS, …\n\nLevenberg-Marquardt\n\ninterpolates between Gauss-Newton and gradient descent.\n\n\n  Newton method (red) uses curvature information to converge faster than gradient descent (green). Source: Wikipedia.",
+    "text": "Deterministic Methods\n\n\nGradient Descent\n\ngo one step into the direction of steepest descent\n\\(\\rightarrow\\) relatively simple\n\\(\\rightarrow\\) relatively robust for “more complicated’’ problems\n\nNewton’s Method\n\nquadratic approximation of the RSS function\ntry to estimate the minimum\n\\(\\rightarrow\\) takes curvature into account\n\\(\\rightarrow\\) faster for “well behaving” problems\nseveral versions: quasi-Newton, Gauss-Newton, L-BFGS, …\n\nLevenberg-Marquardt\n\ninterpolates between Gauss-Newton and gradient descent.\n\n\n  Newton method (red) uses curvature information to converge faster than gradient descent (green). Source: Wikipedia.",
     "crumbs": [
       "Basic Statistics",
       "08-Nonlinear Regression"

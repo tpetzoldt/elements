@@ -220,7 +220,7 @@ plot(manaus_stl)
 
 <br>
 
-* based on autoregressive (AR) and moving average (AR) terms
+* based on autoregressive (AR) and moving average (MA) terms
 * the "I" in ARIMA stands for differencing
 * seasonal ARIMA models (SARIMA) consider seasonal dependency,<br>
   e.g. differencing with a lag of 12 months
@@ -367,7 +367,7 @@ sctest(ocus)
 * *model selection* is a modern alternative to $p$-value based testing
 * Based on the principle of parsimony:
     * Models with more parameters fit better, but may contain unnecessary factors.
-    * $\rightarrow$ Find an **optimal compromize** between model fit and complexity.
+    * $\rightarrow$ Find an **optimal compromise** between model fit and complexity.
     * Keep it as simple as possible, but not simpler.
 
 * Multiple model candidates for the same phenomenon:

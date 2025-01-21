@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-01-15">
+  <meta name="dcterms.date" content="2025-01-21">
   <title>Elements of Data Analysis and Statistics – 08-Nonlinear Regression</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -431,7 +431,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-01-15</p>
+  <p class="date">2025-01-21</p>
 </section>
 <section id="nonlinear-regression" class="slide level2">
 <h2>Nonlinear regression</h2>
@@ -478,9 +478,9 @@ Thomas Petzoldt
 <section id="how-to-find-the-global-minimum" class="slide level2">
 <h2>How to find the global minimum?</h2>
 <p><br></p>
-<p><strong>Goodness of fit:</strong> Sum of least squares <span class="math inline">\(SQ\)</span>:</p>
+<p><strong>Goodness of fit:</strong> Residual sum of squared differences <span class="math inline">\(RSS\)</span>:</p>
 <p><span class="math display">\[
-SQ = \sum_{i=1}^n\left(y_i- f(\mathbf x_i, \mathbf p)\right)^2 = \min !
+RSS = \sum_{i=1}^n\left(y_i- f(\mathbf x_i, \mathbf p)\right)^2 = \min !
 \]</span></p>
 <p>with <span class="math inline">\(y\)</span>: dependent var, <span class="math inline">\(\mathbf x\)</span>: matrix of independent vars,<span class="math inline">\(\mathbf p\)</span>: parameter vector, <span class="math inline">\(n\)</span>: sample size</p>
 <p><strong>Use of an iterative solver</strong> <span class="math inline">\(\rightarrow\)</span> see next slides</p>
@@ -500,11 +500,11 @@ R^2 = 1 - \frac{\text{variance of the residuals}}{\text{variance of the y-data}}
 <section id="general-principle-of-optimization-algorithms" class="slide level2">
 <h2>General principle of optimization algorithms</h2>
 <p><br></p>
-<p>The minimum of the squared residuals (SQ) is searched by <span class="blue">iteration</span>:</p>
+<p>The minimum of the squared residuals (RSS) is searched by <span class="blue">iteration</span>:</p>
 <p><br></p>
 <ol type="1">
 <li>Start from an initial guess for the parameter set.</li>
-<li>Try to find a parameter set with lower SQ.</li>
+<li>Try to find a parameter set with lower RSS.</li>
 <li>Is the new parameter set better?
 <ul>
 <li>No: Reject the new parameters and goto 2</li>
@@ -530,7 +530,7 @@ R^2 = 1 - \frac{\text{variance of the residuals}}{\text{variance of the y-data}}
 </ul>
 <p><strong>Newton’s Method</strong></p>
 <ul>
-<li>quadratic approximation of the SQ function</li>
+<li>quadratic approximation of the RSS function</li>
 <li>try to estimate the minimum</li>
 <li><span class="math inline">\(\rightarrow\)</span> takes curvature into account</li>
 <li><span class="math inline">\(\rightarrow\)</span> faster for “well behaving” problems</li>
