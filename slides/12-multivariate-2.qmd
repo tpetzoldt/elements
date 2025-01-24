@@ -68,7 +68,7 @@ ggplot(benthos_long, aes(x=Site, y=Abundance, fill=Taxon)) + geom_col()
 library("ggplot2")
 library("tidyr")
 
-benthos <- read.csv("https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/gauernitz.csv")
+benthos <- read.csv("https://tpetzoldt.github.io/datasets/data/gauernitz.csv")
 
 benthos_long <-
   benthos |>

@@ -3,14 +3,16 @@ File: lakes-combined.csv
 Data derived from:
 
 kenndaten-seen-npchl.csv
+
 3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx
 
 Source: Umweltbundesamt
+https://www.umweltbundesamt.de/sites/default/files/medien/384/bilder/dateien/de-en_indikator_aqua-02_oekolog-zustand-seen_2018-06-08.xlsx
 
 lakename-abbreviations.csv
 Source: 
 - names from 3_tab_kenndaten-ausgew-seen-d_2021-04-08.xlsx
-- abbreviations: inofficial own codes for plotting
+- abbreviations: own codes for easier data management and plotting
 
 -------------------------------------------------------------------------
 
@@ -18,7 +20,7 @@ Auszug aus den Nutzungsbedingungen:
 
 https://www.umweltbundesamt.de/datenschutz-haftung#c-urheber-und-kennzeichenrecht
 
-abgerufen am: 2023-11-18
+abgerufen/retrieved: 2023-11-18
 
 ----------- Zitat Anfang ------------------------------------------------ 
 

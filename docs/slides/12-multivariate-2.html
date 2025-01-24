@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-01-14">
+  <meta name="dcterms.date" content="2025-01-24">
   <title>Elements of Data Analysis and Statistics – 12-Multivariate methods II</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -431,7 +431,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-01-14</p>
+  <p class="date">2025-01-24</p>
 </section>
 <section id="data-sets-and-terms-of-use" class="slide level2">
 <h2>Data sets and terms of use</h2>
@@ -757,7 +757,7 @@ Thomas Petzoldt
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyr"</span>)</span>
 <span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>benthos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/gauernitz.csv"</span>)</span>
+<span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>benthos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://tpetzoldt.github.io/datasets/data/gauernitz.csv"</span>)</span>
 <span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a>benthos_long <span class="ot">&lt;-</span></span>
 <span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>  benthos <span class="sc">|&gt;</span></span>
@@ -1396,40 +1396,43 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <pre><code>Square root transformation
 Wisconsin double standardization
 Run 0 stress 0.1102424 
-Run 1 stress 0.1855539 
-Run 2 stress 0.1102424 
-... Procrustes: rmse 9.797804e-06  max resid 1.859152e-05 
-... Similar to previous best
+Run 1 stress 0.1105543 
+... Procrustes: rmse 0.02424975  max resid 0.07202754 
+Run 2 stress 0.1736874 
 Run 3 stress 0.1102424 
-... Procrustes: rmse 2.635428e-05  max resid 7.537601e-05 
+... Procrustes: rmse 8.975051e-06  max resid 2.075552e-05 
 ... Similar to previous best
-Run 4 stress 0.1727865 
-Run 5 stress 0.2541152 
-Run 6 stress 0.1105543 
-... Procrustes: rmse 0.02421237  max resid 0.07189939 
-Run 7 stress 0.2261402 
-Run 8 stress 0.1105543 
-... Procrustes: rmse 0.0242398  max resid 0.07199414 
-Run 9 stress 0.2297475 
-Run 10 stress 0.2340419 
-Run 11 stress 0.1102424 
+Run 4 stress 0.1102424 
 ... New best solution
-... Procrustes: rmse 2.129234e-06  max resid 5.116879e-06 
+... Procrustes: rmse 9.121181e-07  max resid 2.123773e-06 
 ... Similar to previous best
-Run 12 stress 0.1736875 
-Run 13 stress 0.213607 
-Run 14 stress 0.1105543 
-... Procrustes: rmse 0.02425558  max resid 0.0720459 
-Run 15 stress 0.2053266 
-Run 16 stress 0.2443652 
-Run 17 stress 0.1727865 
-Run 18 stress 0.1102424 
-... Procrustes: rmse 2.633691e-06  max resid 6.513359e-06 
+Run 5 stress 0.1727865 
+Run 6 stress 0.1727865 
+Run 7 stress 0.2316099 
+Run 8 stress 0.305258 
+Run 9 stress 0.1102424 
+... Procrustes: rmse 2.966702e-06  max resid 4.855028e-06 
 ... Similar to previous best
-Run 19 stress 0.1105543 
-... Procrustes: rmse 0.02419106  max resid 0.07182957 
-Run 20 stress 0.1855539 
-*** Best solution repeated 2 times</code></pre>
+Run 10 stress 0.1727865 
+Run 11 stress 0.1105543 
+... Procrustes: rmse 0.02428156  max resid 0.07213648 
+Run 12 stress 0.2316099 
+Run 13 stress 0.2261403 
+Run 14 stress 0.2562176 
+Run 15 stress 0.1102424 
+... Procrustes: rmse 1.133201e-05  max resid 3.262988e-05 
+... Similar to previous best
+Run 16 stress 0.1105543 
+... Procrustes: rmse 0.02424987  max resid 0.07202728 
+Run 17 stress 0.1105543 
+... Procrustes: rmse 0.02421746  max resid 0.07191843 
+Run 18 stress 0.1858757 
+Run 19 stress 0.1102424 
+... Procrustes: rmse 6.271385e-06  max resid 1.630575e-05 
+... Similar to previous best
+Run 20 stress 0.1105543 
+... Procrustes: rmse 0.02413086  max resid 0.07162898 
+*** Best solution repeated 4 times</code></pre>
 </div>
 </div>
 </section>
@@ -1450,8 +1453,8 @@ Distance: bray
 Dimensions: 2 
 Stress:     0.1102424 
 Stress type 1, weak ties
-Best solution was repeated 2 times in 20 tries
-The best solution was from try 11 (random start)
+Best solution was repeated 4 times in 20 tries
+The best solution was from try 4 (random start)
 Scaling: centring, PC rotation, halfchange scaling 
 Species: expanded scores based on 'wisconsin(sqrt(bio))' </code></pre>
 </div>

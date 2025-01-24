@@ -232,7 +232,7 @@ Terms of use: [https://www.umweltbundesamt.de/datenschutz-haftung-urheberrecht](
 ## Code to read the data
 
 ```{r, eval=FALSE}
-lakes <- read.csv("https://raw.githubusercontent.com/tpetzoldt/elements/main/data/uba/lakes-combined-data.csv")
+lakes <- read.csv("https://tpetzoldt.github.io/datasets/data/lakes-combined-data.csv")
 valid_columns <- c("name", "shortname", "z_mean", "z_max",  "t_ret", "volume", 
   "area", "p_tot", "n_no3", "chl", "wfd_type")
 lakes <- lakes[valid_columns] |> na.omit()
@@ -631,7 +631,7 @@ More about this in the next chapter.
 ## The code
 
 ```{r, eval=FALSE}
-lakes <- read.csv("https://raw.githubusercontent.com/tpetzoldt/elements/main/data/uba/lakes-combined-data.csv")
+lakes <- read.csv("https://tpetzoldt.github.io/datasets/data/lakes-combined-data.csv")
 valid_columns <- c("name", "shortname", "z_mean", "z_max",  "t_ret", "volume", 
   "area", "p_tot", "n_no3", "chl", "wfd_type")
 
