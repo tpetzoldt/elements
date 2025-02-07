@@ -3537,7 +3537,7 @@
     "href": "slides/02-terminology.html#scales-of-variables",
     "title": "02-Basic Terminology",
     "section": "Scales of variables",
-    "text": "Scales of variables\n\nBinary (boolean variable): exactly two states: true/false, 1/0, present or absent.\nNominal: named entities, no order, {red, yellow, green}, list of species.\nOrdinal variables (ranks, ordered factors): values or terms with an order {1., 2., 3., …}; {oligotrophic, mesotrophic, eutrophic, polytrophic, hypertrophic}, but not “dystrophic”\nMetric: continuous (ideally without steps). Two sub-types:\n\nInterval scale: allows comparison and differences, but ratios make no sense. (20°C is 10 degrees warmer than als 10°C, but not double)\nRatio scale: data with an absolute zero, ratios make sense.\nA tree with 2m has double the hight of a tree with 1m.\n\n\nThe “level” of variables increases from binary to ratio scale. It is always possible to convert a higher to a lower level. This results in a certain amount of information loss but sometimes helps to do proper analysis.\n\nmetric \\(\\rightarrow\\) ordinal: ranking\nmetric or ordinal \\(\\rightarrow\\) binary: threshold\nnominal \\(\\rightarrow\\) binary: assign to two groups",
+    "text": "Scales of variables\n\n\nBinary (boolean variable): exactly two states: true/false, 1/0, present or absent.\nNominal: named entities, no order, {red, yellow, green}, list of species.\nOrdinal variables (ranks, ordered factors): values or terms with an order {1., 2., 3., …}; {oligotrophic, mesotrophic, eutrophic, polytrophic, hypertrophic}, but not “dystrophic”\nMetric: continuous (ideally without steps). Two sub-types:\n\nInterval scale: allows comparison and differences, but ratios make no sense. (20°C is 10 degrees warmer than als 10°C, but not double)\nRatio scale: data with an absolute zero, ratios make sense.\nA tree with 2m has double the hight of a tree with 1m.\n\n\nThe “level” of variables increases from binary to ratio scale. It is always possible to convert a higher to a lower level.",
     "crumbs": [
       "Basic Statistics",
       "02-Basic Terminology"
@@ -3548,7 +3548,7 @@
     "href": "slides/02-terminology.html#probability",
     "title": "02-Basic Terminology",
     "section": "Probability",
-    "text": "Probability\nClassical definition\n\nprobability \\(p\\) is the chance of a specific event:\n\n\\[\np = \\frac{\\text{number of selected cases}}{\\text{number of all possible cases}}\n\\]\n\n1 or 6 on a dice \\(p=2/6\\)\nproblem if denominator becomes infinite\n\nAxiomatic definition\n\nAxiom I: \\(0 \\le p \\le 1\\)\nAxiom II: impossible events have \\(p=0\\), safe events have \\(p=1\\)\nAxiom III: for mutually exlusive events \\(A\\) and \\(B\\), i.e. in set theory \\(A \\bigcap B = \\emptyset\\) holds: \\(p(A \\bigcup B)= p(A) + p(B)\\)",
+    "text": "Probability\n\nClassical definition\n\nprobability \\(p\\) is the chance of a specific event:\n\n\\[\np = \\frac{\\text{number of selected cases}}{\\text{number of all possible cases}}\n\\]\n\n1 or 6 on a dice \\(p=2/6\\)\nproblem if denominator becomes infinite\n\nAxiomatic definition\n\nAxiom I: \\(0 \\le p \\le 1\\)\nAxiom II: impossible events have \\(p=0\\), safe events have \\(p=1\\)\nAxiom III: for mutually exlusive events \\(A\\) and \\(B\\), i.e. in set theory \\(A \\bigcap B = \\emptyset\\) holds: \\(p(A \\bigcup B)= p(A) + p(B)\\)",
     "crumbs": [
       "Basic Statistics",
       "02-Basic Terminology"
@@ -6225,6 +6225,17 @@
     "crumbs": [
       "Tutorials",
       "An Introductory R Session"
+    ]
+  },
+  {
+    "objectID": "slides/02-terminology.html#transformation-of-scales",
+    "href": "slides/02-terminology.html#transformation-of-scales",
+    "title": "02-Basic Terminology",
+    "section": "Transformation of scales",
+    "text": "Transformation of scales\n\nThe “level” of variables increases from binary to ratio scale. It is always possible to convert a higher to a lower level scale:\n\nmetric \\(\\rightarrow\\) ordinal: ranking\nmetric or ordinal \\(\\rightarrow\\) binary: threshold\nnominal \\(\\rightarrow\\) binary: assign to two groups\n\nTransformation to a lower scale results in a certain amount of information loss, but allows to use additional methods from the lower-level scale.\nExplanation: If we apply rank correlation to metric data, we essentially apply a method for the ordinal scale to metric data. In this case, we loose information about the differences between the values, but also decrease influence of extreme values and outliers.\nTransformation from metric to binary can be useful, if the metric data are not precise enough. So for example, counting animals (e.g. wolves) in a certain area may depend on too many factors (structure of the landscape, experience of people, season etc.) so that the exact numbers (abundances) are questionable. In such cases, transformation to a binary scale (present/absent) and using a respective test (e.g. logistic regression or Fisher’s exact test) will be more reliable.\nOther examples are the comparison of floods between different rivers, e.g. a large and a small ones, or occurrences of genes in a molecular biological analysis.",
+    "crumbs": [
+      "Basic Statistics",
+      "02-Basic Terminology"
     ]
   }
 ]

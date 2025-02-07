@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-01-14">
+  <meta name="dcterms.date" content="2025-02-07">
   <title>Elements of Data Analysis and Statistics – 02-Basic Terminology</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -346,7 +346,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-01-14</p>
+  <p class="date">2025-02-07</p>
 </section>
 <section id="basic-principles-and-terminology" class="slide level2">
 <h2>Basic Principles and Terminology</h2>
@@ -457,6 +457,7 @@ Thomas Petzoldt
 </section>
 <section id="scales-of-variables" class="slide level2">
 <h2>Scales of variables</h2>
+<p><br></p>
 <ul>
 <li><strong>Binary</strong> (boolean variable): exactly two states: true/false, 1/0, present or absent.</li>
 <li><strong>Nominal:</strong> named entities, no order, {red, yellow, green}, list of species.</li>
@@ -468,15 +469,25 @@ Thomas Petzoldt
 A tree with 2m has double the hight of a tree with 1m.</li>
 </ul></li>
 </ul>
-<p>The “level” of variables increases from binary to ratio scale. It is always possible to convert a higher to a lower level. This results in a certain amount of information loss but sometimes helps to do proper analysis.</p>
+<p>The “level” of variables increases from binary to ratio scale. It is always possible to convert a higher to a lower level.</p>
+</section>
+<section id="transformation-of-scales" class="slide level2">
+<h2>Transformation of scales</h2>
+<p><br></p>
+<p>The “level” of variables increases from binary to ratio scale. It is always possible to convert a higher to a lower level scale:</p>
 <ul>
 <li>metric <span class="math inline">\(\rightarrow\)</span> ordinal: ranking</li>
 <li>metric or ordinal <span class="math inline">\(\rightarrow\)</span> binary: threshold</li>
 <li>nominal <span class="math inline">\(\rightarrow\)</span> binary: assign to two groups</li>
 </ul>
+<p>Transformation to a lower scale results in a certain amount of information loss, but allows to use additional methods from the lower-level scale.</p>
+<p><span class="smallfont"><strong>Explanation</strong>: If we apply rank correlation to metric data, we essentially apply a method for the ordinal scale to metric data. In this case, we loose information about the differences between the values, but also decrease influence of extreme values and outliers.</span></p>
+<p><span class="smallfont">Transformation from metric to binary can be useful, if the metric data are not precise enough. So for example, counting animals (e.g.&nbsp;wolves) in a certain area may depend on too many factors (structure of the landscape, experience of people, season etc.) so that the exact numbers (abundances) are questionable. In such cases, transformation to a binary scale (present/absent) and using a respective test (e.g.&nbsp;logistic regression or Fisher’s exact test) will be more reliable.</span></p>
+<p><span class="smallfont">Other examples are the comparison of floods between different rivers, e.g.&nbsp;a large and a small ones, or occurrences of genes in a molecular biological analysis.</span></p>
 </section>
 <section id="probability" class="slide level2">
 <h2>Probability</h2>
+<p><br></p>
 <p><strong>Classical definition</strong></p>
 <ul>
 <li>probability <span class="math inline">\(p\)</span> is the chance of a specific event:</li>

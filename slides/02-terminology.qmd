@@ -114,9 +114,9 @@ deviation, slope of a linear model.
 
 ## Scales of variables
 
+<br>
 
-
-*  **Binary** (boolean variable): exactly two states: true/false, 1/0, present or absent.
+* **Binary** (boolean variable): exactly two states: true/false, 1/0, present or absent.
 * **Nominal:** named entities, no order, \{red, yellow, green\}, list of species.
 * **Ordinal** variables (ranks, ordered factors): values or terms with an order {1., 2., 3., ...}; \{oligotrophic, mesotrophic, eutrophic, polytrophic, hypertrophic\}, but not "dystrophic"
 * **Metric:** continuous (ideally without steps). Two sub-types:
@@ -124,18 +124,44 @@ deviation, slope of a linear model.
       sense. (20°C is 10 degrees warmer than als 10°C, but not double)
     * **Ratio scale:** data with an absolute zero, ratios make sense.  
     A tree with 2m has double the hight of a tree with 1m.
-    
+
+
 The "level" of variables increases from binary to ratio scale. It is
-always possible to convert a higher to a lower level. This results in a
-certain amount of information loss but sometimes helps to do proper
-analysis.
+always possible to convert a higher to a lower level. 
+
+## Transformation of scales
+
+<br>
+
+The "level" of variables increases from binary to ratio scale. It is
+always possible to convert a higher to a lower level scale: 
 
 * metric $\rightarrow$ ordinal: ranking
 * metric or ordinal $\rightarrow$ binary: threshold
 * nominal $\rightarrow$ binary: assign to two groups
 
+Transformation to a lower scale results in a certain amount of information loss, 
+but allows to use additional methods from the lower-level scale.
+
+[**Explanation**: If we apply rank correlation to metric data, we essentially apply a method for
+the ordinal scale to metric data. In this case, we loose information about the 
+differences between the values, but also decrease influence of extreme values 
+and outliers.]{.smallfont}
+
+[Transformation from metric to binary can be useful, if the metric data are not 
+precise enough. So for example, counting animals (e.g. wolves) in a certain area 
+may depend on too many factors (structure of the landscape, experience of people, 
+season etc.) so that the exact numbers (abundances) are questionable. In such 
+cases, transformation to a binary scale (present/absent) and using a respective 
+test (e.g. logistic regression or Fisher's exact test) will be more reliable.]{.smallfont}
+
+[Other examples are the comparison of floods between different rivers, e.g. a 
+large and a small ones, or occurrences of genes in a molecular biological 
+analysis.]{.smallfont}
 
 ## Probability
+
+<br>
 
 **Classical definition**
 
