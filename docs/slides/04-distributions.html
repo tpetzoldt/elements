@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-01-14">
+  <meta name="dcterms.date" content="2025-02-08">
   <title>Elements of Data Analysis and Statistics – 04-Distributions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -411,7 +411,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-01-14</p>
+  <p class="date">2025-02-08</p>
 </section>
 <section id="probability-distributions" class="slide level2">
 <h2>Probability Distributions</h2>
@@ -501,8 +501,8 @@ Thomas Petzoldt
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.1418354 0.6687560 0.1862641 0.3118094 0.1147516 0.6459263 0.5339897
- [8] 0.8715223 0.6407184 0.1819745</code></pre>
+<pre><code> [1] 0.1837743 0.7762776 0.9259514 0.5591948 0.8453889 0.8957892 0.8922160
+ [8] 0.7984244 0.6205132 0.7905258</code></pre>
 </div>
 </div>
 <p><br> <br></p>
@@ -1363,7 +1363,7 @@ CI_{95\%} = \bigg(\bar{x} - t_{0.975, n-1} \cdot \frac{s}{\sqrt{n}},
 <h2>Example</h2>
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
-<span id="cb19-2"><a aria-hidden="true" tabindex="-1"></a>elbe <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/elbe.csv"</span>)</span>
+<span id="cb19-2"><a aria-hidden="true" tabindex="-1"></a>elbe <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://tpetzoldt.github.io/datasets/data/elbe.csv"</span>)</span>
 <span id="cb19-3"><a aria-hidden="true" tabindex="-1"></a>discharge <span class="ot">&lt;-</span> elbe<span class="sc">$</span>discharge</span>
 <span id="cb19-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(discharge, <span class="at">main=</span><span class="st">"Boxplot of discharge"</span>)</span>
 <span id="cb19-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(discharge)</span>
@@ -1379,6 +1379,8 @@ CI_{95\%} = \bigg(\bar{x} - t_{0.975, n-1} \cdot \frac{s}{\sqrt{n}},
 </section>
 <section id="more-in-the-labs" class="slide level2">
 <h2>More in the labs …</h2>
+<p><br></p>
+<p><a href="../element-labs">https://tpetzoldt.github.io/element-labs/</a></p>
 
 <div class="quarto-auto-generated-content">
 <div class="footer footer-default">

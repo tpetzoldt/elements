@@ -153,14 +153,16 @@ Psychological Research, Theory Psychology 14(3),
 
 <br>
 
-Significance is not the only important. 
-It is often more important to focus on effect size and relevance.
+Significance is not the only important. Focus also on effect size and relevance!
 
-When evaluating significant effects, it is always necessary to look also at the 
-effect size. While significance means that the null hypothesis $H_0$ is unlikely 
-in a statistical sense, relevance means that the effect size is large enough to 
-play a role in practice. This means that whether an effect can be relevant or not
-depends on its effect size and the field of application.
+* Statistical **significance** means that the null hypothesis $H_0$ is unlikely 
+in a statistical sense.
+
+* Practical **relevance** (sometimes called "practical significance") 
+means that the effect size is large enough to play a role in practice. 
+
+This means that whether an effect can be relevant or not
+depends on its **effect size** and the field of application.
 
 Let's for example consider a vaccination. If a vaccine
 had a significant effect in a clinical test, but protected only 10 out of 1000 
@@ -174,18 +176,27 @@ study with a large number of people. But as it is highly relevant, it is worth t
 
 ## Take home messages
 
-<br>
-
 * A p-value measures the probability that a purely random effect
-  would be equally or more extreme than an observed effect.
-* "Significant" means that an observed result is unlikely to have occurred by chance alone.
-* **"Not significant" means either "no effect" or "sample size too small".**
+  would be equally or more extreme than an observed effect **if the null hypothesis is true**.
+
+* **Significant** means the results are unlikely if there were no real effect.
+
+* **Not significant** doesn't mean "no effect".
+
+* Non-significant results suggest the need for further research, e.g.:
+    - increase sample size
+    - increase experimental effect
+    - reduce experimental error
+    - consider a more powerful statistical procedure
+
 * Don't focus on p-values alone. Never forget to report also sample size, **effect 
   size** and relevance of your results.
-* With large data sets, the p-value loses importance. It is then easy to find 
-  significant effects, but it is often very small and not relevant in practice.
-* The p-value is an important tool in classical statistics, but its abuse
-  can lead to mis-interpretation.
+
+* With large datasets:
+    - statistically significant results can easily be obtained even for very small and practically irrelevant effects.
+    - $\rightarrow$ effect size and relevance become more important than p-values.
+
+The p-value remains an important tool in statistics, but misuse can lead to misinterpretation.
 
 
 # Differences between mean values
@@ -550,10 +561,10 @@ t.test(x1, x2, var.equal = TRUE) # classical t-test
 
 <br>
 
-**More modern recommendation:**
+**Modern recommendation (preferred):**
 
 1. Don't use pre-tests!
-2. Use always the Welch test: `t.test(x, y)`
+2. Always use the Welch test: `t.test(x, y)`
 3. Check approximate normal distribution by using box-plots. Less important if $n$ is large.
 
 see @zimmerman_note_2004 or [Wikipedia](https://en.wikipedia.org/wiki/Welch%27s_t-test).
@@ -563,12 +574,12 @@ see @zimmerman_note_2004 or [Wikipedia](https://en.wikipedia.org/wiki/Welch%27s_
 ## Paired t-Test
 
 * sometimes also called "t-test of dependent samples" 
-  - the term "dependent" can be misleading, better "pairwise"
+  - the term "dependent" can be misleading, "paired" is clearer
   - values within samples must still be independent
 * examples: left arm / right arm; before / after  
 
 * is essentially a one-sample t-test of pairwise differences against $\mu=0$  
-* advantage: eliminates "covariate"
+* reduces the influence of individual differences ("covariates") by focusing on the change within each pair
 
 ::: {.column width="49%"}
 
@@ -600,8 +611,8 @@ power in this case.
 * Non-parametric tests:
     * No assumptions about shape and parameters of distribution, but
     * distributions should be similar, otherwise test may be misleading.
-* Mann-Whitney U-test and Wilcoxon-test are very similar.
-* In a strict sense, "Wilcoxon" is the version for paired data
+* Based on Ranks:  Tests compare the ranks of the data.
+* Use Mann-Whitney for independent samples, Wilcoxon for paired samples.
 
 <br> 
 **Basic principle:** Count of so-called "inversions" of ranks, where samples overlap
@@ -992,7 +1003,7 @@ cvm.test(x, cdf)
 **Think first**
 
 * Does normal distribution "makes sense" for the data?
-* Are the data metric?
+* Are the data metric (continuous)?
 * What is the data generating process? $\rightarrow$ Contextual understanding!
 
 **Inherent non-normality**
@@ -1026,7 +1037,7 @@ and conclude that nothing speaks against acceptance of the normal
 
 Interpration of the Shapiro-Wilks-test needs to be done with care:
 
-* for small $n$, the tes is not sensitive enough
+* for small $n$, the test is not sensitive enough
 * far large $n$, it is over-sensitive
 * [using Shapiro-Wilks to check normality for t-test and ANOVA is not anymore recommended]{.red}
 

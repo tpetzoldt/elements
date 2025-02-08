@@ -261,7 +261,7 @@ animals.
 * statisticians say "estimation" instead of "calculation"
 * parameters can themselves be treated as a random variable
 
-## Expectation value
+## Expected value
 
 <br>
 

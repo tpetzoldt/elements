@@ -681,7 +681,7 @@ moments (fig-prknit1):
 ```{r}
 #| label: fig-prknit1
 #| fig-cap: "Histogram of the Nitzschia data set and its estimated gamma distribution."
-dat <- read.csv("https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/prk_nit.csv")
+dat <- read.csv("https://tpetzoldt.github.io/datasets/data/prk_nit.csv")
 Nit90 <- dat$biovol[dat$group == "nit90"]
 rate <- mean(Nit90) / var(Nit90)
 shape <- rate * mean(Nit90)
@@ -831,7 +831,7 @@ the ANOVA chapter.
 
 ```{r boxcox}
 library(MASS)
-dat <- read.csv("https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/prk_nit.csv")
+dat <- read.csv("https://tpetzoldt.github.io/datasets/data/prk_nit.csv")
 Nit90 <- dat$biovol[dat$group == "nit90"]
 boxcox(Nit90 ~ 1)
 ```
@@ -859,7 +859,7 @@ the model formula:
 ```{r boxcox2}
 #| label: fig-boxcox2
 #| fig-cap: "Log-Likelihood profile of a Box-Cox-transformation for the pooled data sets Nit85 and Nit90."
-dat <- read.csv("https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/prk_nit.csv")
+dat <- read.csv("https://tpetzoldt.github.io/datasets/data/prk_nit.csv")
 boxcox(biovol ~ group, data=dat)
 ```
 
@@ -1073,7 +1073,7 @@ boxplot(x1, x2, x3,
 
 ```{r elbe-boxplot, echo=TRUE, fig.height=3, fig.width=9, fig.align='center'}
 par(mfrow=c(1, 3), las=1)
-elbe <- read.csv("https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/elbe.csv")
+elbe <- read.csv("https://tpetzoldt.github.io/datasets/data/elbe.csv")
 discharge <- elbe$discharge
 boxplot(discharge, main="Boxplot of discharge")
 hist(discharge)
@@ -1088,3 +1088,7 @@ data source: Bundesanstalt für Gewässerkunde (BFG), see [terms and conditions]
 * **right:** transformation (3-parametric lognormal) $\rightarrow$ symmetric distribution, no outliers!
 
 ## More in the labs ...
+
+<br>
+
+[https://tpetzoldt.github.io/element-labs/](../element-labs)

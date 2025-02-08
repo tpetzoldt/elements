@@ -11,7 +11,7 @@
   <meta name="generator" content="quarto-1.5.57">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-01-14">
+  <meta name="dcterms.date" content="2025-02-08">
   <title>Elements of Data Analysis and Statistics – 05-Classical Tests</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -431,7 +431,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-01-14</p>
+  <p class="date">2025-02-08</p>
 </section>
 <section>
 <section id="hypotheses-errors-and-the-p-value" class="title-slide slide level1 center">
@@ -587,22 +587,36 @@ under the assumption that the null hypothesis is to be true.
 <section id="significance-and-relevance" class="slide level2">
 <h2>Significance and relevance</h2>
 <p><br></p>
-<p>Significance is not the only important. It is often more important to focus on effect size and relevance.</p>
-<p>When evaluating significant effects, it is always necessary to look also at the effect size. While significance means that the null hypothesis <span class="math inline">\(H_0\)</span> is unlikely in a statistical sense, relevance means that the effect size is large enough to play a role in practice. This means that whether an effect can be relevant or not depends on its effect size and the field of application.</p>
+<p>Significance is not the only important. Focus also on effect size and relevance!</p>
+<ul>
+<li><p>Statistical <strong>significance</strong> means that the null hypothesis <span class="math inline">\(H_0\)</span> is unlikely in a statistical sense.</p></li>
+<li><p>Practical <strong>relevance</strong> (sometimes called “practical significance”) means that the effect size is large enough to play a role in practice.</p></li>
+</ul>
+<p>This means that whether an effect can be relevant or not depends on its <strong>effect size</strong> and the field of application.</p>
 <p>Let’s for example consider a vaccination. If a vaccine had a significant effect in a clinical test, but protected only 10 out of 1000 people, one would not consider this effect as relevant and not produce this vaccine.</p>
 <p>On the other hand, even small effects can be relevant. So if a toxic substance would have an effect on 1 out of 1000 people to produce cancer, we would consider this as relevant. To detect this as a significant effect would need an epidemiological study with a large number of people. But as it is highly relevant, it is worth the effort.</p>
 </section>
 <section id="take-home-messages" class="slide level2">
 <h2>Take home messages</h2>
-<p><br></p>
 <ul>
-<li>A p-value measures the probability that a purely random effect would be equally or more extreme than an observed effect.</li>
-<li>“Significant” means that an observed result is unlikely to have occurred by chance alone.</li>
-<li><strong>“Not significant” means either “no effect” or “sample size too small”.</strong></li>
-<li>Don’t focus on p-values alone. Never forget to report also sample size, <strong>effect size</strong> and relevance of your results.</li>
-<li>With large data sets, the p-value loses importance. It is then easy to find significant effects, but it is often very small and not relevant in practice.</li>
-<li>The p-value is an important tool in classical statistics, but its abuse can lead to mis-interpretation.</li>
+<li><p>A p-value measures the probability that a purely random effect would be equally or more extreme than an observed effect <strong>if the null hypothesis is true</strong>.</p></li>
+<li><p><strong>Significant</strong> means the results are unlikely if there were no real effect.</p></li>
+<li><p><strong>Not significant</strong> doesn’t mean “no effect”.</p></li>
+<li><p>Non-significant results suggest the need for further research, e.g.:</p>
+<ul>
+<li>increase sample size</li>
+<li>increase experimental effect</li>
+<li>reduce experimental error</li>
+<li>consider a more powerful statistical procedure</li>
+</ul></li>
+<li><p>Don’t focus on p-values alone. Never forget to report also sample size, <strong>effect size</strong> and relevance of your results.</p></li>
+<li><p>With large datasets:</p>
+<ul>
+<li>statistically significant results can easily be obtained even for very small and practically irrelevant effects.</li>
+<li><span class="math inline">\(\rightarrow\)</span> effect size and relevance become more important than p-values.</li>
+</ul></li>
 </ul>
+<p>The p-value remains an important tool in statistics, but misuse can lead to misinterpretation.</p>
 </section></section>
 <section>
 <section id="differences-between-mean-values" class="title-slide slide level1 center">
@@ -1014,10 +1028,10 @@ mean of x mean of y
 <li>Check if both samples follow a normal distribution.</li>
 </ol>
 <p><br></p>
-<p><strong>More modern recommendation:</strong></p>
+<p><strong>Modern recommendation (preferred):</strong></p>
 <ol type="1">
 <li>Don’t use pre-tests!</li>
-<li>Use always the Welch test: <code>t.test(x, y)</code></li>
+<li>Always use the Welch test: <code>t.test(x, y)</code></li>
 <li>Check approximate normal distribution by using box-plots. Less important if <span class="math inline">\(n\)</span> is large.</li>
 </ol>
 <p>see <span class="citation" data-cites="zimmerman_note_2004">Zimmerman (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span> or <a href="https://en.wikipedia.org/wiki/Welch%27s_t-test">Wikipedia</a>.</p>
@@ -1027,13 +1041,13 @@ mean of x mean of y
 <ul>
 <li><p>sometimes also called “t-test of dependent samples”</p>
 <ul>
-<li>the term “dependent” can be misleading, better “pairwise”</li>
+<li>the term “dependent” can be misleading, “paired” is clearer</li>
 <li>values within samples must still be independent</li>
 </ul></li>
 <li><p>examples: left arm / right arm; before / after</p></li>
 <li><p>is essentially a one-sample t-test of pairwise differences against <span class="math inline">\(\mu=0\)</span><br>
 </p></li>
-<li><p>advantage: eliminates “covariate”</p></li>
+<li><p>reduces the influence of individual differences (“covariates”) by focusing on the change within each pair</p></li>
 </ul>
 <div class="column" style="width:49%;">
 <div class="cell">
@@ -1086,8 +1100,8 @@ mean difference
 <li>No assumptions about shape and parameters of distribution, but</li>
 <li>distributions should be similar, otherwise test may be misleading.</li>
 </ul></li>
-<li>Mann-Whitney U-test and Wilcoxon-test are very similar.</li>
-<li>In a strict sense, “Wilcoxon” is the version for paired data</li>
+<li>Based on Ranks: Tests compare the ranks of the data.</li>
+<li>Use Mann-Whitney for independent samples, Wilcoxon for paired samples.</li>
 </ul>
 <p><br> <strong>Basic principle:</strong> Count of so-called “inversions” of ranks, where samples overlap</p>
 <ul>
@@ -1586,7 +1600,7 @@ alternative hypothesis: Two.sided</code></pre>
 <p><strong>Think first</strong></p>
 <ul>
 <li>Does normal distribution “makes sense” for the data?</li>
-<li>Are the data metric?</li>
+<li>Are the data metric (continuous)?</li>
 <li>What is the data generating process? <span class="math inline">\(\rightarrow\)</span> Contextual understanding!</li>
 </ul>
 <p><strong>Inherent non-normality</strong></p>
@@ -1617,7 +1631,7 @@ W = 0.99064, p-value = 0.7165</code></pre>
 <p><br></p>
 <p>Interpration of the Shapiro-Wilks-test needs to be done with care:</p>
 <ul>
-<li>for small <span class="math inline">\(n\)</span>, the tes is not sensitive enough</li>
+<li>for small <span class="math inline">\(n\)</span>, the test is not sensitive enough</li>
 <li>far large <span class="math inline">\(n\)</span>, it is over-sensitive</li>
 <li><span class="red">using Shapiro-Wilks to check normality for t-test and ANOVA is not anymore recommended</span></li>
 </ul>

@@ -270,6 +270,8 @@ one with $cv=0.8$. We see that the 2nd has more extreme variation.
 
 ## Range
 
+<br>
+
 The **range** measures the difference between maximum and
 minimum of a sample:
 
@@ -278,6 +280,9 @@ $$
   r_x = x_{max}-x_{min}
 $$
 :::
+
+<br>
+
 **Disadvantage:** very sensitive against outliers. 
 
 ## Interquartile range
