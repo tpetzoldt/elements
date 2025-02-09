@@ -565,7 +565,7 @@ t.test(x1, x2, var.equal = TRUE) # classical t-test
 
 1. Don't use pre-tests!
 2. Always use the Welch test: `t.test(x, y)`
-3. Check approximate normal distribution by using box-plots. Less important if $n$ is large.
+3. Check approximate normal distribution with box- or QQ-plots. Less important if $n$ is large.
 
 see @zimmerman_note_2004 or [Wikipedia](https://en.wikipedia.org/wiki/Welch%27s_t-test).
 

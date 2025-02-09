@@ -664,7 +664,7 @@
     "href": "slides/05-classtests.html#recommendation-for-two-sample-t-tests",
     "title": "05-Classical Tests",
     "section": "Recommendation for two sample t-tests",
-    "text": "Recommendation for two sample t-tests\n\nTraditional procedure:\n\nTest for equal variances using the F-test: var.test(x, y)\nIf variances are equal: t.test(x, y, var.equal=TRUE)\notherwise, use t.test(x, y) (= Welch test)\nCheck if both samples follow a normal distribution.\n\n\nModern recommendation (preferred):\n\nDon’t use pre-tests!\nAlways use the Welch test: t.test(x, y)\nCheck approximate normal distribution by using box-plots. Less important if \\(n\\) is large.\n\nsee Zimmerman (2004) or Wikipedia.",
+    "text": "Recommendation for two sample t-tests\n\nTraditional procedure:\n\nTest for equal variances using the F-test: var.test(x, y)\nIf variances are equal: t.test(x, y, var.equal=TRUE)\notherwise, use t.test(x, y) (= Welch test)\nCheck if both samples follow a normal distribution.\n\n\nModern recommendation (preferred):\n\nDon’t use pre-tests!\nAlways use the Welch test: t.test(x, y)\nCheck approximate normal distribution with box- or QQ-plots. Less important if \\(n\\) is large.\n\nsee Zimmerman (2004) or Wikipedia.",
     "crumbs": [
       "Basic Statistics",
       "05-Classical Tests"
