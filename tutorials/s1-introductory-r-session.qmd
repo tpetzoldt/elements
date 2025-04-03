@@ -743,7 +743,7 @@ lakes <- read.csv("../data/lakes.csv")
 kable(lakes)
 ```
 
-The data can be downloaded from [https://github.com/tpetzoldt/datasets/tree/main/data](https://github.com/tpetzoldt/datasets/tree/main/data)
+The data can be downloaded from [https://tpetzoldt.github.io/datasets/data/lakes.csv](https://tpetzoldt.github.io/datasets/data/lakes.csv).
 
 
 ### Set working directory
@@ -796,7 +796,7 @@ If the data are available on an internet server, it can be read
 directly from there:
 
 ```{r eval=FALSE, fig=FALSE, echo=TRUE, keep.source=TRUE}
-lakes <- read.csv("https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/lakes.csv")
+lakes <- read.csv("https://tpetzoldt.github.io/datasets/data/lakes.csv")
 ```
 
 Now, as the data are saved in the data frame `lakes` it is possible to access them as usual:
@@ -921,7 +921,7 @@ with(lakes, plot(z, t))
 In the following, we use another data set that we read directly from the internet:
 
 ```{r eval=TRUE}
-fruits <- read.csv("https://raw.githubusercontent.com/tpetzoldt/datasets/main/data/clementines.csv")
+fruits <- read.csv("https://tpetzoldt.github.io/datasets/data/clementines.csv")
 ```
 
 It contains weight, width and height measurements of two brands of Clementine fruits.
