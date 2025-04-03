@@ -743,7 +743,7 @@ lakes <- read.csv("../data/lakes.csv")
 kable(lakes)
 ```
 
-The data can be downloaded from [https://github.com/tpetzoldt/datasets/tree/main/data](https://github.com/tpetzoldt/datasets/tree/main/data)
+The data can be downloaded from [https://tpetzoldt.github.io/datasets/data/lakes.csv](https://tpetzoldt.github.io/datasets/data/lakes.csv).
 
 
 ### Set working directory
