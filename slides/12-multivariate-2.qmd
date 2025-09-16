@@ -587,7 +587,7 @@ mtext(paste("Stress =", round(ord$stress,2)), side=3)
 **Poor**
 ```{r stressplot3, echo=FALSE, fig.width=4, fig.height=4}
 set.seed(123)
-rdat <- matrix(runif(100), nrow=20)
+rdat <- data.frame(matrix(runif(100), nrow=20))
 ord2  <- metaMDS(rdat, distance = "euclid", autotransform=FALSE, trace=FALSE)
 stressplot(ord2, pch=16)
 mtext(paste("Stress =", round(ord2$stress,2)), side=3)

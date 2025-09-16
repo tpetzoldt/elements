@@ -4,7 +4,7 @@
 #format: html
 ---
 
-![Elements of applied statistics](img/titlepage-lecture-slides.svg){width=100%}
+![Elements of applied statistics](img/titlepage-lecture-slides.svg){width=100% fig-alt="title slide, Elements of applied statistics - a practical course, lecture slides, Thomas Petzoldt, contains a photo of a landscape with mountainns symbolising the shape of statistical distributions"}
 <!--
 ## Introduction
 -->
@@ -39,12 +39,13 @@ suggestions for improvement are welcome.
 ## Related Pages
 
 
+* [**German translation of the slides**](../elements-de/)
 * [**Collection of lab exercises**](../element-labs/)
-* [**Datasets**](../datasets/)
+* [**Datasets**](https://github.com/tpetzoldt/datasets/)
 * [Source code of the slides](https://github.com/tpetzoldt/elements)
 
 ## Author
 
 [homepage](https://tu-dresden.de/Members/thomas.petzoldt) +++ [github](https://github.com/tpetzoldt)
 
-2024-12-03
+2025-09-16
