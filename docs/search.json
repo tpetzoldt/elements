@@ -6134,7 +6134,7 @@
     "href": "00-index.html#further-reading",
     "title": "Elements of Data Analysis and Statistics",
     "section": "Further reading",
-    "text": "Further reading\n\nDalgaard, P, 2008: Introductory Statistics with R. Springer Verlag, New York, 2nd edition. https://link.springer.com/book/10.1007/b97671\nKleiber, C and Zeileis, A, 2008: Applied Econometrics with R. Springer Verlag, New York. https://link.springer.com/book/10.1007/978-0-387-77318-6\nVerzani, J, 2014: Using R for introductory statistics. CRC press. Publisher\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. https://r4ds.hadley.nz/"
+    "text": "Further reading\n\nDalgaard, P, 2008: Introductory Statistics with R. Springer Verlag, New York, 2nd edition. https://link.springer.com/book/10.1007/b97671\nKleiber, C and Zeileis, A, 2008: Applied Econometrics with R. Springer Verlag, New York. https://link.springer.com/book/10.1007/978-0-387-77318-6\nVerzani, J, 2014: Using R for introductory statistics. CRC press. https://www.routledge.com/Using-R-for-Introductory-Statistics/Verzani/p/book/9781466590731\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. https://r4ds.hadley.nz/"
   },
   {
     "objectID": "00-index.html#related-pages",
