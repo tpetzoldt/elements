@@ -142,6 +142,33 @@ $\rightarrow$ trimmed mean: $\bar{x}_{t, 0.1}=`r mean(x, trim = 0.1)`$
 * median and trimmed mean are less influenced by outliers and skewnes $\rightarrow$ [more robust]{.blue}
 * but somewhat less efficient
 
+## Pseudomedian (Hodges-Lehmann estimator)
+
+<br>
+
+The pseudomedian ($\tilde{x}^*$) is a robust and efficient estimator for the location parameter.
+It is calculated as the median of all possible means of two observations each, where the pairs include the self-pairs ($i=j$).
+
+$$\tilde{x}^* = \text{median}\left(M_{ij}\right) \text{ mit } M_{ij} = \frac{x_i + x_j}{2} \text{ für } 1 \le i \le j \le n$$
+
+**Example**
+
+```{r eval=TRUE, echo=TRUE, message=FALSE, warning=FALSE}
+library(Hmisc) 
+
+# Using the same sample as for the median
+set.seed(123)
+x <- round(runif(7, max = 10), 1)
+
+# Sorting for better readability of the example (not part of the pMedian calculation)
+sort(x) 
+
+# arithmetic mean, median, pseudomedian
+c(mean(x), median(x), pMedian(x))
+```
+[Note: Strictly speaking, the population parameter is referred to as the ‘pseudomedian’ and the sample parameter as the ‘Hodges-Lehmann estimator’.]{.smallfont}
+
+
 
 ## Mode (modal value)
 

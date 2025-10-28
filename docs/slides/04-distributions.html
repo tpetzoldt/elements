@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.42">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-09-16">
+  <meta name="dcterms.date" content="2025-10-28">
   <title>Elements of Data Analysis and Statistics – 04-Distributions</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -212,7 +212,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-09-16</p>
+  <p class="date">2025-10-28</p>
 </section>
 <section id="probability-distributions" class="slide level2">
 <h2>Probability Distributions</h2>
@@ -302,8 +302,8 @@ Thomas Petzoldt
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">runif</span>(<span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 0.1134328 0.5626773 0.5967718 0.6539964 0.9805977 0.1334710 0.9474710
- [8] 0.8635867 0.7851835 0.3819017</code></pre>
+<pre><code> [1] 0.08564581 0.89661983 0.01098217 0.24572609 0.70503034 0.23259236
+ [7] 0.87371445 0.79292488 0.89504827 0.34306209</code></pre>
 </div>
 </div>
 <p><br> <br></p>
@@ -668,7 +668,7 @@ f(x) = \frac{1}{\sqrt{2\pi}} \, \mathrm{e}^{-\frac{1}{2}x^2}
 
 <img data-src="04-distributions_files/figure-revealjs/poisson-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1152"><ul>
 <li>distribution of rare events, a discrete distribution</li>
-<li>mean and variance are equal (<span class="math inline">\(\mu = \sigma^2\)</span>), resulting parameter “lamda” (<span class="math inline">\(\lambda\)</span>)</li>
+<li>mean and variance are equal (<span class="math inline">\(\mu = \sigma^2\)</span>), resulting parameter “lambda” (<span class="math inline">\(\lambda\)</span>)</li>
 <li><strong>Examples:</strong> bacteria counting on a grid, waiting queues, failure models</li>
 </ul>
 <p><strong>Quasi-poisson if <span class="math inline">\(\mu \neq \sigma^2\)</span></strong></p>
@@ -1053,7 +1053,6 @@ s_{\bar{x}} = \frac{s}{\sqrt{n}}
 \]</span></p>
 <ul>
 <li>variability of the mean is half, if we increase the sample size four times (<span class="math inline">\(2^2\)</span>)</li>
-<li>interval in which the true mean is found with 95% probability</li>
 </ul>
 <p>Estimation of the 95% confidence interval:</p>
 <p><span class="math display">\[
@@ -1064,6 +1063,9 @@ CI_{95\%} = \bigg(\bar{x} - z_{0.975} \cdot \frac{s}{\sqrt{n}},
 <div class="hugefont">
 <p><span class="red"><span class="math inline">\(\rightarrow\)</span> <span class="math inline">\(2\sigma\)</span> rule</span></p>
 </div>
+<ul>
+<li>interval in which the true mean is found with 95% probability</li>
+</ul>
 </section>
 <section id="difference-between-sample-and-confidence-intervals" class="slide level2">
 <h2>Difference between sample and confidence intervals</h2>

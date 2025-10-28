@@ -594,7 +594,7 @@ legend(15,0.25,c(expression(lambda==2),
 ```
 
 * distribution of rare events,  a discrete distribution
-* mean and variance are equal ($\mu = \sigma^2$), resulting parameter "lamda" ($\lambda$) 
+* mean and variance are equal ($\mu = \sigma^2$), resulting parameter "lambda" ($\lambda$) 
 * **Examples:** bacteria counting on a grid, waiting queues, failure models
 
 **Quasi-poisson if $\mu \neq \sigma^2$**
@@ -940,7 +940,7 @@ s_{\bar{x}} = \frac{s}{\sqrt{n}}
 $$
 
 * variability of the mean is half, if we increase the sample size four times ($2^2$)
-* interval in which the true mean is found with 95% probability
+
 
 Estimation of the 95% confidence interval:
 
@@ -954,6 +954,8 @@ with $z_{1-\alpha/2} = z_{0.975} =$ [$1.96$]{.red}.
 ::: {.hugefont}
 [$\rightarrow$ $2\sigma$ rule ]{.red}
 :::
+
+* interval in which the true mean is found with 95% probability
 
 ## Difference between sample and confidence intervals
 
