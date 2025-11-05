@@ -214,7 +214,7 @@ box()
 
 ```{r uniform-cdf, fig.width=4, fig.height=4}
 ```
-[Cumulative density function]{.blue}
+[Cumulative distribution function]{.blue}
 :::
 
 ::: {.column width="49%"}
@@ -979,7 +979,7 @@ with $z_{1-\alpha/2} = z_{0.975} =$ [$1.96$]{.red}.
 
 <br>
 
-* **sample interval:** characterizes the distribution of the data from the parameters of the sample (e.g. mean, standard deviation)
+* **prediction interval:** characterizes the distribution of the data from the parameters of the sample (e.g. mean, standard deviation). It estimates the range where a single, future observation will likely fall.
 
 * standard deviation $s_x$ measures the variability of the original data
 * reconstruct the original distribution if its type is known (e.g. normal, lognormal)
