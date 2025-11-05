@@ -778,6 +778,24 @@ qqnorm(x3, main = "lognormal"); qqline(x3, col="red")
 
 [Recommendation: Use graphical checks. Don't trust the Shapiro Wilks!]{.red}
 
+
+## Checking distributions for descriptive purposes
+
+In some disciplines, such as hydrology, it is occasionally necessary to know which distribution type best describes a dataset. This is especially critical for Extreme Value Analysis (e.g., the 100-year flood), as the Central Limit Theorem (CLT) does not apply here.
+
+**Procedure**
+
+1. Visual Inspection (Focus on the Tails)
+    * Histogram (first impression)
+    * Q-Q Plots (detailed goodness-of-fit)
+2. Formal Tests (exclusion principle)
+    * Tests: Kolmogorov-Smirnov, Cramér-von Mises, Anderson-Darling
+    * Reject the distribution type if the p-value is significant (p<0.05).
+3. Model Selection (Choosing the best model)
+    * Choose the model that provides the best fit while also demonstrating Parsimony 
+    * Criteria like AIC/BIC will be covered later
+    * Consider the physical plausibility of the parameters.
+
 ## Transformation
 
 
