@@ -851,7 +851,7 @@
     "href": "slides/x1-r-basics.html#objects-constants-variables",
     "title": "x1-R Basics",
     "section": "Objects, constants, variables",
-    "text": "Objects, constants, variables\n\nEverything stored in R’s memory is an object:\n\ncan be simple or complex\ncan be constants or variables\nconstants: 1, 123, 5.6, 5e7, “hello”\nvariables: can change their value, are referenced by variable names\n\n\n\nx &lt;- 2.0 # x is a variable, 2.0 is a constant\n\nA syntactically valid variable name consists of:\n\nletters, numbers, underline (_), dot (.)\nstarts with a letter or the dot\nif starting with the dot, not followed by a number\n\nSpecial characters, except _ and . (underscore and dot) are not allowed.\nInternational characters (e.g German umlauts ä, ö, ü, …) are possible, but not recommended.",
+    "text": "Objects, constants, variables\n\nEverything stored in R’s memory is an object:\n\ncan be simple or complex\ncan be constants or variables\nconstants: 1, 123, 5.6, 5e7, “hello”\nvariables: can change their value, are referenced by variable names\n\n\n\n\nx &lt;- 2.0 # x is a variable, 2.0 is a constant\n\n\nA syntactically valid variable name consists of:\n\nletters, numbers, underline (_), dot (.)\nstarts with a letter or the dot\nif starting with the dot, not followed by a number\n\nSpecial characters, except _ and . (underscore and dot) are not allowed.\nInternational characters (e.g German umlauts ä, ö, ü, …) are possible, but not recommended.",
     "crumbs": [
       "R Topics",
       "x1-R Basics"
@@ -862,7 +862,7 @@
     "href": "slides/x1-r-basics.html#allowed-and-disallowed-identifiers",
     "title": "x1-R Basics",
     "section": "Allowed and disallowed identifiers",
-    "text": "Allowed and disallowed identifiers\n\ncorrect:\n\nx, y, X, x1, i, j, k\nvalue, test, myVariableName, do_something\n`.hidden, .x1``\n\nforbidden:\n\n1x, .1x (starts with a number)\n!, @, \\$, #, space, comma, semicolon and other special characters\n\nreserved words cannot be used as variable names:\n\nif, else, repeat, while, function, for, in, next, break\nTRUE, FALSE, NULL, Inf, NaN, NA, NA_integer_, NA_real_, NA_complex_, NA_character\\_\n..., ..1, ..2\n\nNote: R is case sensitive, x and X, value and Value are different.",
+    "text": "Allowed and disallowed identifiers\n\ncorrect:\n\nx, y, X, x1, i, j, k\nx1, value, test, myVariableName, do_something\n.hidden, .x1\n\nforbidden:\n\n1x, .1x (starts with a number)\n!, @, \\$, #, space, comma, semicolon and other special characters\n\nreserved words cannot be used as variable names:\n\nif, else, repeat, while, function, for, in, next, break\nTRUE, FALSE, NULL, Inf, NaN, NA, NA_integer_, NA_real_, NA_complex_, NA_character\\_\n..., ..1, ..2\n\nNote: R is case sensitive, x and X, value and Value are different.",
     "crumbs": [
       "R Topics",
       "x1-R Basics"
@@ -1038,7 +1038,7 @@
     "href": "slides/x1-r-basics.html#the-most-versatile-read.table",
     "title": "x1-R Basics",
     "section": "The most versatile: read.table()",
-    "text": "The most versatile: read.table()\n\nread.table(file, header = FALSE, sep = \"\", quote = \"\\\"'\",\n           dec = \".\", numerals = c(\"allow.loss\", \"warn.loss\", \"no.loss\"),\n           row.names, col.names, as.is = !stringsAsFactors, tryLogical = TRUE,\n           na.strings = \"NA\", colClasses = NA, nrows = -1,\n           skip = 0, check.names = TRUE, fill = !blank.lines.skip,\n           strip.white = FALSE, blank.lines.skip = TRUE,\n           comment.char = \"#\",\n           allowEscapes = FALSE, flush = FALSE,\n           stringsAsFactors = FALSE,\n           fileEncoding = \"\", encoding = \"unknown\", text, skipNul = FALSE)\n\nExamples\n\nread.table(\"cities.csv\", sep = \",\",  dec = \".\")  # same as read.csv\nread.table(\"cities.txt\", sep = \"\\t\", dec = \".\")  # tab delimited\nread.table(\"cities.csv\", sep = \";\",  dec = \",\")  # German csv\n\nread.table(\"cities.csv\", sep = \",\", dec = \".\", skip = 5) # skip first 5 lines",
+    "text": "The most versatile: read.table()\n\n\nread.table(file, header = FALSE, sep = \"\", quote = \"\\\"'\",\n           dec = \".\", numerals = c(\"allow.loss\", \"warn.loss\", \"no.loss\"),\n           row.names, col.names, as.is = !stringsAsFactors, tryLogical = TRUE,\n           na.strings = \"NA\", colClasses = NA, nrows = -1,\n           skip = 0, check.names = TRUE, fill = !blank.lines.skip,\n           strip.white = FALSE, blank.lines.skip = TRUE,\n           comment.char = \"#\",\n           allowEscapes = FALSE, flush = FALSE,\n           stringsAsFactors = FALSE,\n           fileEncoding = \"\", encoding = \"unknown\", text, skipNul = FALSE)\n\n\nExamples\n\n\nread.table(\"cities.csv\", sep = \",\",  dec = \".\")  # same as read.csv\nread.table(\"cities.txt\", sep = \"\\t\", dec = \".\")  # tab delimited\nread.table(\"cities.csv\", sep = \";\",  dec = \",\")  # German csv\n\nread.table(\"cities.csv\", sep = \",\", dec = \".\", skip = 5) # skip first 5 lines",
     "crumbs": [
       "R Topics",
       "x1-R Basics"
@@ -1137,7 +1137,7 @@
     "href": "slides/x1-r-basics.html#lists-1",
     "title": "x1-R Basics",
     "section": "Lists",
-    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL &lt;- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:12] -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 ...\n $ counts  : int [1:11] 2 5 12 16 19 17 12 7 5 4 ...\n $ density : num [1:11] 0.04 0.1 0.24 0.32 0.38 0.34 0.24 0.14 0.1 0.08 ...\n $ mids    : num [1:11] -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25 ...\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\"",
+    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL &lt;- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:10] -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 2.5\n $ counts  : int [1:9] 5 6 15 18 24 17 9 4 2\n $ density : num [1:9] 0.1 0.12 0.3 0.36 0.48 0.34 0.18 0.08 0.04\n $ mids    : num [1:9] -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\"",
     "crumbs": [
       "R Topics",
       "x1-R Basics"

@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.42">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-10-28">
+  <meta name="dcterms.date" content="2025-11-11">
   <title>Elements of Data Analysis and Statistics – x1-R Basics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -212,7 +212,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-10-28</p>
+  <p class="date">2025-11-11</p>
 </section>
 <section id="prerequisites" class="title-slide slide level1 center">
 <h1>Prerequisites</h1>
@@ -332,8 +332,10 @@ Thomas Petzoldt
 <li><strong>variables</strong>: can change their value, are referenced by variable names</li>
 </ul></li>
 </ul>
+<div class="bigfont">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fl">2.0</span> <span class="co"># x is a variable, 2.0 is a constant</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 <p><strong>A syntactically valid variable name consists of:</strong></p>
 <ul>
@@ -350,8 +352,8 @@ Thomas Petzoldt
 <p><strong>correct:</strong></p>
 <ul>
 <li><code>x, y, X, x1, i, j, k</code></li>
-<li><code>value, test, myVariableName, do_something</code></li>
-<li>`.hidden, .x1``</li>
+<li><code>x1, value, test, myVariableName, do_something</code></li>
+<li><code>.hidden, .x1</code></li>
 </ul>
 <p><strong>forbidden:</strong></p>
 <ul>
@@ -996,6 +998,7 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 </section>
 <section id="the-most-versatile-read.table" class="slide level2">
 <h2>The most versatile: <code>read.table()</code></h2>
+<div class="bigfont">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(file, <span class="at">header =</span> <span class="cn">FALSE</span>, <span class="at">sep =</span> <span class="st">""</span>, <span class="at">quote =</span> <span class="st">"</span><span class="sc">\"</span><span class="st">'"</span>,</span>
 <span id="cb72-2"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">dec =</span> <span class="st">"."</span>, <span class="at">numerals =</span> <span class="fu">c</span>(<span class="st">"allow.loss"</span>, <span class="st">"warn.loss"</span>, <span class="st">"no.loss"</span>),</span>
@@ -1008,13 +1011,16 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 <span id="cb72-9"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">stringsAsFactors =</span> <span class="cn">FALSE</span>,</span>
 <span id="cb72-10"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">fileEncoding =</span> <span class="st">""</span>, <span class="at">encoding =</span> <span class="st">"unknown"</span>, text, <span class="at">skipNul =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+</div>
 <p><strong>Examples</strong></p>
+<div class="bigfont">
 <div class="cell">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(<span class="st">"cities.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>,  <span class="at">dec =</span> <span class="st">"."</span>)  <span class="co"># same as read.csv</span></span>
 <span id="cb73-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(<span class="st">"cities.txt"</span>, <span class="at">sep =</span> <span class="st">"</span><span class="sc">\t</span><span class="st">"</span>, <span class="at">dec =</span> <span class="st">"."</span>)  <span class="co"># tab delimited</span></span>
 <span id="cb73-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(<span class="st">"cities.csv"</span>, <span class="at">sep =</span> <span class="st">";"</span>,  <span class="at">dec =</span> <span class="st">","</span>)  <span class="co"># German csv</span></span>
 <span id="cb73-4"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb73-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">read.table</span>(<span class="st">"cities.csv"</span>, <span class="at">sep =</span> <span class="st">","</span>, <span class="at">dec =</span> <span class="st">"."</span>, <span class="at">skip =</span> <span class="dv">5</span>) <span class="co"># skip first 5 lines</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </div>
 </section>
 <section id="recommendation" class="slide level2">
@@ -1278,10 +1284,10 @@ Hyderabad,India,9482000,17.4,78.48</code></pre>
 <span id="cb109-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(L)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>List of 6
- $ breaks  : num [1:12] -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 ...
- $ counts  : int [1:11] 2 5 12 16 19 17 12 7 5 4 ...
- $ density : num [1:11] 0.04 0.1 0.24 0.32 0.38 0.34 0.24 0.14 0.1 0.08 ...
- $ mids    : num [1:11] -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25 ...
+ $ breaks  : num [1:10] -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 2.5
+ $ counts  : int [1:9] 5 6 15 18 24 17 9 4 2
+ $ density : num [1:9] 0.1 0.12 0.3 0.36 0.48 0.34 0.18 0.08 0.04
+ $ mids    : num [1:9] -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25
  $ xname   : chr "rnorm(100)"
  $ equidist: logi TRUE
  - attr(*, "class")= chr "histogram"</code></pre>
