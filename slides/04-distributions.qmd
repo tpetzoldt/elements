@@ -915,6 +915,8 @@ plot(x, y, pch=16)
 ```
 :::
 
+# Confidence Intervals
+
 
 ## Remember: The central limit theorem (CLT)
 
@@ -1107,4 +1109,4 @@ data source: Bundesanstalt für Gewässerkunde (BFG), see [terms and conditions]
 
 <br>
 
-[https://tpetzoldt.github.io/element-labs/](../element-labs)
+[https://tpetzoldt.github.io/element-labs/](https://tpetzoldt.github.io/element-labs/)

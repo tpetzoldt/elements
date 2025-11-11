@@ -3744,7 +3744,7 @@
     "href": "slides/04-distributions.html#continuos-uniform-distribution-mathbfu0-1",
     "title": "04-Distributions",
     "section": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)",
-    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.6137343 0.9968773 0.5303320 0.6513370 0.4254479 0.5703197 0.8048602\n [8] 0.8416307 0.5515718 0.5295669\n\n\n \n\nbinning: subdivide values into classes",
+    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.7543490 0.3742862 0.7793269 0.5062845 0.7014560 0.9209131 0.3238158\n [8] 0.5593060 0.1426554 0.5665669\n\n\n \n\nbinning: subdivide values into classes",
     "crumbs": [
       "Basic Statistics",
       "04-Distributions"
