@@ -776,7 +776,7 @@ qqnorm(x3, main = "lognormal"); qqline(x3, col="red")
 * scaled in the unit of standard deviations
 * normal distribution if the points follow a straight line
 
-[Recommendation: Use graphical checks. Don't trust the Shapiro Wilks!]{.red}
+Recommendation: [Use graphical checks.]{.red} Don't trust the Shapiro Wilks!
 
 
 ## Checking distributions for descriptive purposes
@@ -799,9 +799,8 @@ In some disciplines, such as hydrology, it is occasionally necessary to know whi
 ## Transformation
 
 
-* allows to apply methods designed for normally distributed data to non-normal cases
-* very common in the in the past, still sometimes useful
-* modern methods can handle certain distributions directly, such as binomial, gamma, or Poisson.
+* allows to apply methods designed for normally distributed data
+* modern methods can handle specific distributions directly, such as binomial, gamma, or Poisson
 
 **Transformations for right-skewed data**
 
@@ -829,7 +828,7 @@ In some disciplines, such as hydrology, it is occasionally necessary to know whi
 * $x'=\arcsin \sqrt{\frac{x+3/8}{n+3/4}}$
 
 [$\rightarrow$ consider a GLM with family binomial instead]{.blue}
-<!------------------------------------------------------------------------------
+
 
 ## Box-Cox transformation
 
@@ -839,20 +838,16 @@ $$
 y' = y^\lambda
 $$
 
-* $\lambda=0$ means that a logarithmic transformation would be
-appropriate.  Function `boxcox` requires a so-called "model
-formula" or the outcome of a linear model (`lm`) as the
-argument. For testing a single sample, we can use the model formula of a "null
-model" to test the full data set without explanation variables
-(`~ 1`). More about model formulas can be found later, in
-the ANOVA chapter.
+* $\lambda=0$: use logarithmic transformation
+* `boxcox` requires a "model formula" or the outcome of a linear model (`lm`)
 
-```{r boxcox}
+```{r boxcox, echo = TRUE, fig.width=5, fig.align='center'}
 library(MASS)
 dat <- read.csv("https://tpetzoldt.github.io/datasets/data/prk_nit.csv")
 Nit90 <- dat$biovol[dat$group == "nit90"]
 boxcox(Nit90 ~ 1)
 ```
+## Box-Cox transformation II
 
 The dotted vertical lines and the horizontal 95\,\%-line show the
 confidence limits for possible transformations. Here we see that
@@ -861,27 +856,28 @@ approximately 0.5 are suitable.
 
 It is also possible to obtain the numerical value directly:
 
-```{r fig=FALSE}
+```{r boxcox2, echo=TRUE, fig=FALSE}
 bc <- boxcox(Nit90 ~ 1, plotit = FALSE)
 str(bc)
 bc$x[bc$y == max(bc$y)]
 ```
 
-We should keep in mind that these are approximate numbers so that
+Note: these are approximate numbers so that
 it makes not much sense to use more than one decimal.
+
+## Box-Cox transformation III
 
 It is also possible to test for joint distribution of all groups at once by
 using explanatory variables (here `group`) on the right hand side of
 the model formula:
 
-```{r boxcox2}
+```{r boxcox3, echo=TRUE, fig.width=5, fig.align='center'}
 #| label: fig-boxcox2
 #| fig-cap: "Log-Likelihood profile of a Box-Cox-transformation for the pooled data sets Nit85 and Nit90."
 dat <- read.csv("https://tpetzoldt.github.io/datasets/data/prk_nit.csv")
 boxcox(biovol ~ group, data=dat)
 ```
 
-------------------------------------------------------------------------------->
 
 ## Rank transformation
 

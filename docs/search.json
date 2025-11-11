@@ -3744,7 +3744,7 @@
     "href": "slides/04-distributions.html#continuos-uniform-distribution-mathbfu0-1",
     "title": "04-Distributions",
     "section": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)",
-    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.08564581 0.89661983 0.01098217 0.24572609 0.70503034 0.23259236\n [7] 0.87371445 0.79292488 0.89504827 0.34306209\n\n\n \n\nbinning: subdivide values into classes",
+    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.6137343 0.9968773 0.5303320 0.6513370 0.4254479 0.5703197 0.8048602\n [8] 0.8416307 0.5515718 0.5295669\n\n\n \n\nbinning: subdivide values into classes",
     "crumbs": [
       "Basic Statistics",
       "04-Distributions"
@@ -3777,7 +3777,7 @@
     "href": "slides/04-distributions.html#quantile-function",
     "title": "04-Distributions",
     "section": "Quantile function",
-    "text": "Quantile function\n\n… the inverse of the cumulative distribution function.\n\n\n\n\n\n\n\n\n\n\nCumulative density function\n\n\n\n\n\n\n\n\n\n\nQuantile function\nExample: In which range can we find 95% of a uniform distribution \\(\\mathbf{U}(40,60)\\)?",
+    "text": "Quantile function\n\n… the inverse of the cumulative distribution function.\n\n\n\n\n\n\n\n\n\n\nCumulative distribution function\n\n\n\n\n\n\n\n\n\n\nQuantile function\nExample: In which range can we find 95% of a uniform distribution \\(\\mathbf{U}(40,60)\\)?",
     "crumbs": [
       "Basic Statistics",
       "04-Distributions"
@@ -4008,7 +4008,7 @@
     "href": "slides/04-distributions.html#transformation",
     "title": "04-Distributions",
     "section": "Transformation",
-    "text": "Transformation\n\nallows to apply methods designed for normally distributed data to non-normal cases\nvery common in the in the past, still sometimes useful\nmodern methods can handle certain distributions directly, such as binomial, gamma, or Poisson.\n\nTransformations for right-skewed data\n\n\\(x'=\\log(x)\\)\n\\(x'=\\log(x + a)\\)\n\\(x'=(x+a)^c\\) (\\(a\\) between 0.5 and 1)\n\\(x'=1/x\\) (“very powerful”, i.e. to extreme in most cases)\n\\(x'=a - 1/\\sqrt{x}\\) (to make scale more convenient)\n\\(x'=1/\\sqrt{x}\\) (compromise between \\(\\ln\\) and \\(1/x\\))\n\\(x'=a+bx^c\\) (very general, includes powers and roots)",
+    "text": "Transformation\n\nallows to apply methods designed for normally distributed data\nmodern methods can handle specific distributions directly, such as binomial, gamma, or Poisson\n\nTransformations for right-skewed data\n\n\\(x'=\\log(x)\\)\n\\(x'=\\log(x + a)\\)\n\\(x'=(x+a)^c\\) (\\(a\\) between 0.5 and 1)\n\\(x'=1/x\\) (“very powerful”, i.e. to extreme in most cases)\n\\(x'=a - 1/\\sqrt{x}\\) (to make scale more convenient)\n\\(x'=1/\\sqrt{x}\\) (compromise between \\(\\ln\\) and \\(1/x\\))\n\\(x'=a+bx^c\\) (very general, includes powers and roots)",
     "crumbs": [
       "Basic Statistics",
       "04-Distributions"
@@ -4063,7 +4063,7 @@
     "href": "slides/04-distributions.html#difference-between-sample-and-confidence-intervals",
     "title": "04-Distributions",
     "section": "Difference between sample and confidence intervals",
-    "text": "Difference between sample and confidence intervals\n\n\nsample interval: characterizes the distribution of the data from the parameters of the sample (e.g. mean, standard deviation)\nstandard deviation \\(s_x\\) measures the variability of the original data\nreconstruct the original distribution if its type is known (e.g. normal, lognormal)\n\n\n\nconfidence interval: characterizes the precision of a statistical parameter, based on its standard error\nUsing \\(\\bar{x}\\) and \\(s_\\bar{x}\\), estimate the interval where we find \\(\\mu\\) with a certain probability\nless dependent on the original distribution of the data due to the CLT",
+    "text": "Difference between sample and confidence intervals\n\n\nprediction interval: characterizes the distribution of the data from the parameters of the sample (e.g. mean, standard deviation). It estimates the range where a single, future observation will likely fall.\nstandard deviation \\(s_x\\) measures the variability of the original data\nreconstruct the original distribution if its type is known (e.g. normal, lognormal)\n\n\n\nconfidence interval: characterizes the precision of a statistical parameter, based on its standard error\nUsing \\(\\bar{x}\\) and \\(s_\\bar{x}\\), estimate the interval where we find \\(\\mu\\) with a certain probability\nless dependent on the original distribution of the data due to the CLT",
     "crumbs": [
       "Basic Statistics",
       "04-Distributions"
@@ -6247,6 +6247,50 @@
     "crumbs": [
       "Tutorials",
       "Ordination and Clustering"
+    ]
+  },
+  {
+    "objectID": "slides/04-distributions.html#checking-distributions-for-descriptive-purposes",
+    "href": "slides/04-distributions.html#checking-distributions-for-descriptive-purposes",
+    "title": "04-Distributions",
+    "section": "Checking distributions for descriptive purposes",
+    "text": "Checking distributions for descriptive purposes\nIn some disciplines, such as hydrology, it is occasionally necessary to know which distribution type best describes a dataset. This is especially critical for Extreme Value Analysis (e.g., the 100-year flood), as the Central Limit Theorem (CLT) does not apply here.\nProcedure\n\nVisual Inspection (Focus on the Tails)\n\nHistogram (first impression)\nQ-Q Plots (detailed goodness-of-fit)\n\nFormal Tests (exclusion principle)\n\nTests: Kolmogorov-Smirnov, Cramér-von Mises, Anderson-Darling\nReject the distribution type if the p-value is significant (p&lt;0.05).\n\nModel Selection (Choosing the best model)\n\nChoose the model that provides the best fit while also demonstrating Parsimony\nCriteria like AIC/BIC will be covered later\nConsider the physical plausibility of the parameters.",
+    "crumbs": [
+      "Basic Statistics",
+      "04-Distributions"
+    ]
+  },
+  {
+    "objectID": "slides/04-distributions.html#box-cox-transformation",
+    "href": "slides/04-distributions.html#box-cox-transformation",
+    "title": "04-Distributions",
+    "section": "Box-Cox transformation",
+    "text": "Box-Cox transformation\nEstimate optimal transformation from the class of powers and logarithms\n\\[\ny' = y^\\lambda\n\\]\n\n\\(\\lambda=0\\): use logarithmic transformation\nboxcox requires a “model formula” or the outcome of a linear model (lm)\n\n\nlibrary(MASS)\ndat &lt;- read.csv(\"https://tpetzoldt.github.io/datasets/data/prk_nit.csv\")\nNit90 &lt;- dat$biovol[dat$group == \"nit90\"]\nboxcox(Nit90 ~ 1)",
+    "crumbs": [
+      "Basic Statistics",
+      "04-Distributions"
+    ]
+  },
+  {
+    "objectID": "slides/04-distributions.html#box-cox-transformation-ii",
+    "href": "slides/04-distributions.html#box-cox-transformation-ii",
+    "title": "04-Distributions",
+    "section": "Box-Cox transformation II",
+    "text": "Box-Cox transformation II\nThe dotted vertical lines and the horizontal 95,%-line show the confidence limits for possible transformations. Here we see that either a logarithmic transformation (\\(\\lambda=0\\)) or a power of approximately 0.5 are suitable.\nIt is also possible to obtain the numerical value directly:\n\nbc &lt;- boxcox(Nit90 ~ 1, plotit = FALSE)\nstr(bc)\n\nList of 2\n $ x: num [1:41] -2 -1.9 -1.8 -1.7 -1.6 -1.5 -1.4 -1.3 -1.2 -1.1 ...\n $ y: num [1:41] -237 -228 -220 -212 -204 ...\n\nbc$x[bc$y == max(bc$y)]\n\n[1] 0.2\n\n\nNote: these are approximate numbers so that it makes not much sense to use more than one decimal.",
+    "crumbs": [
+      "Basic Statistics",
+      "04-Distributions"
+    ]
+  },
+  {
+    "objectID": "slides/04-distributions.html#box-cox-transformation-iii",
+    "href": "slides/04-distributions.html#box-cox-transformation-iii",
+    "title": "04-Distributions",
+    "section": "Box-Cox transformation III",
+    "text": "Box-Cox transformation III\nIt is also possible to test for joint distribution of all groups at once by using explanatory variables (here group) on the right hand side of the model formula:\n\ndat &lt;- read.csv(\"https://tpetzoldt.github.io/datasets/data/prk_nit.csv\")\nboxcox(biovol ~ group, data=dat)\n\n\n\nFigure 1: Log-Likelihood profile of a Box-Cox-transformation for the pooled data sets Nit85 and Nit90.",
+    "crumbs": [
+      "Basic Statistics",
+      "04-Distributions"
     ]
   }
 ]
