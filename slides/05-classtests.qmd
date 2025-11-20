@@ -571,7 +571,7 @@ see @zimmerman_note_2004 or [Wikipedia](https://en.wikipedia.org/wiki/Welch%27s_
 
 
 
-## Paired t-Test
+## Paired t-test
 
 * sometimes also called "t-test of dependent samples" 
   - the term "dependent" can be misleading, "paired" is clearer
@@ -671,27 +671,93 @@ library("exactRankTests")
 wilcox.exact(A, B, paired=TRUE)
 ```
 
+## Comparing two groups directly: A permutation test
 
-## Permutation methods
 
-* Basic principle: Estimation of a test statistic $\xi_{obs}$ from sample,
-* Resampling: Simulate many $\xi_{i, sim}$ from randomly permuted data set ($n = 999$ or more)
-* Where does $\xi_{est}$ appear within the ordered series of simulated values $\xi_{i, sim}$?
+- Group 1: 10 observations from `Gamma(2.3, 1)`
+- Group 2: 10 observations from `Gamma(1.0, 1)`
+
+```{r boxplot-permutation-intro, fig.align='center'}
+set.seed(123)
+group1 <- rgamma(10, 2.3, 1)
+group2 <- rgamma(10, 1.0, 1)
+
+# Combine for plotting
+dat <- data.frame(
+  value = c(group1, group2),
+  group = factor(rep(c("Group 1", "Group 2"), each = 10))
+)
+
+# Boxplot with raw data
+boxplot(value ~ group, data = dat, 
+        main = "Raw Data: Two Groups", 
+        xlab = "Group", ylab = "Value",
+        col = c("lightblue", "lightcoral"), 
+        las = 1)
+
+# Add raw points
+points(rep(1, length(group1)), group1, pch = 16, col = "blue", cex = 0.8)
+points(rep(2, length(group2)), group2, pch = 16, col = "red", cex = 0.8)
+```
+## Permutation test: the algoritm
+
+<br>
+
+**Key Idea**
+
+- Calculate a statistical parameter, e.g. difference of means $\Delta$.
+- Simulate the null hypothesis: **no group effect**
+    * randomly permute the group labels
+    * null distribution of mean differences.
+<br>
+
+**The algorithm** (by example of a mean difference)
+
+1. Compute observed mean difference ($\Delta_{obs} = \bar{x}_1 - \bar{x}_2$).
+2. Randomly shuffle all 20 values and reassign to two groups of 10.
+3. Compute new mean difference $\Delta_{sim}$.
+4. Repeat 999 times (or more) → get 999 permuted differences.
+5. Compare observed difference to the distribution of permuted differences.
+6. Estimate p-value as proportion of permuted differences ≥ observed.
+
+$\rightarrow$ Can be used to arbitrary statistical parameters and experimental designs.
+
+## Permutation test in practice
+
+* Where does $\Delta_{obs}$ appear within the ordered series of simulated values $\Delta_{i, sim}$?
 
 ```{r permutation-test, fig.align='center'}
-  par(mar=c(4.1, 5.1, 1.1, 1.1))
-  set.seed(123)
-  x <- rgamma(100, 2, 1)
-  plot(seq(0,1, length=100), sort(x), xlab="p", ylab=expression(xi[i]),
-  pch=16, cex=0.5, las=1, col="blue")
-  xx <- 4.5
-  qxx <- approx(sort(x), seq(0,1, length=100), xx)$y
-  arrows(0, xx, qxx, xx, col="red")
-  arrows(qxx, xx, qxx, 0, col="red")
-  points(qxx, xx, pch=16, col="red")
+#| code-fold: true
+#| code-summary: "Show the code"
+par(mar=c(4.1, 5.1, 1.1, 1.1))
+set.seed(123)
+
+group1 <- rgamma(10, 2.3, 1)
+group2 <- rgamma(10, 1.0, 1)
+observed_diff <- mean(group1) - mean(group2)
+
+# Combine and permute
+combined <- c(group1, group2)
+n_perm <- 999
+permuted_diffs <- replicate(n_perm, {
+  shuffled <- sample(combined)
+  mean(shuffled[1:10]) - mean(shuffled[11:20])
+})
+
+# Plot
+plot(sort(permuted_diffs), type = "l", xlab = "Rank", ylab = expression(Delta),
+     main = "Permutation Distribution", col = "blue", lwd = 1)
+
+q_observed <- approx(sort(permuted_diffs), seq(0, 1000, length=n_perm), observed_diff)$y
+  arrows(0, round(observed_diff, 1), q_observed, observed_diff, col="red")
+  arrows(q_observed, observed_diff, q_observed, -2, col="red")
+  points(q_observed, observed_diff, pch=16, col="red")
+  
+text(20, observed_diff, paste("Delta obs =", round(observed_diff, 1)), col="red", adj=c(0, 0))
+
 ```
 
-Let $\xi_{obs}$ be $`r xx`$ in our example, then $\Rightarrow$ $p= `r round(qxx,2)`$.
+Let $\Delta_{obs}$ be $`r round(observed_diff, 1)`$ in our example, then $\Rightarrow$ $p= `r 1- round(q_observed/1000,2)`$.
 
 # Power Analysis
 
@@ -991,6 +1057,29 @@ cvm.test(x, cdf)
 
 # Testing for normal distribution
 
+## Why do we want this?
+
+<br>
+
+Sometimes we want to know whether a data set belongs to a specific
+type of distribution. Though this sounds easy, it appears
+quite difficult for theoretical reasons:
+
+* statistical tests check for deviations from the null hypothesis
+* but here we want to test the opposite, if $H_0$ is true
+
+This is in fact impossible, because "not significant" means only
+that a potential effect is either not existent or just too small to be
+detected. On the opposite, "significantly different" includes a certain 
+probability of false positives.
+
+However, most statistical tests do not require perfect agreement with a certain 
+distribution:
+
+* t-test and ANOVA assume normality of residuals
+* due to the CLT, the distribution of sums and mean values converges to normal 
+
+
 ## Testing or checking?
 
 <br>
@@ -1024,7 +1113,7 @@ set.seed(734)
 
 
 ```{r echo=TRUE}
-x <- rnorm(100)
+x <- runif(20)
 shapiro.test(x)
 ```
 
@@ -1102,7 +1191,26 @@ qqnorm(x4, main = "heavy tailed"); qqline(x4, col="red")
 * normal distribution if the points follow a straight line
 
 
+## Checking distributions for descriptive purposes
+
+In some disciplines, such as hydrology, it is occasionally necessary to know which distribution type best describes a dataset. This is especially critical for Extreme Value Analysis (e.g., the 100-year flood), as the Central Limit Theorem (CLT) does not apply here.
+
+**Procedure**
+
+1. Visual Inspection (Focus on the Tails)
+    * Histogram (first impression)
+    * Q-Q Plots (detailed goodness-of-fit)
+2. Formal Tests (exclusion principle)
+    * Tests: Kolmogorov-Smirnov, Cramér-von Mises, Anderson-Darling
+    * Reject the distribution type if the p-value is significant (p<0.05).
+3. Model Selection (Choosing the best model)
+    * Choose the model that provides the best fit while also demonstrating Parsimony 
+    * Criteria like AIC/BIC will be covered later
+    * Consider the physical plausibility of the parameters.
+
 ## Transformations
+
+<br>
 
 * allows to apply methods designed for normally distributed data to non-normal cases
 * very common in the in the past, still sometimes useful
@@ -1119,6 +1227,8 @@ qqnorm(x4, main = "heavy tailed"); qqline(x4, col="red")
 * $x'=a+bx^c$ [(very general, includes powers and roots)]{.gray}
 
 ## Transformations II
+
+<br>
 
 **Transformations for count data**
 
@@ -1137,6 +1247,8 @@ qqnorm(x4, main = "heavy tailed"); qqline(x4, col="red")
 <!-----------------------------------------------------------------------------/ -->
 
 ## How to find the best transformation?
+
+<br>
 
 * Example: biovolumes of diatom algae cells [(species *Nitzschia acicularis*)]{.gray}.
 
@@ -1183,14 +1295,17 @@ Data set [`prk_nit.csv`]("https://github.com/tpetzoldt/datasets/blob/main/data/p
 
 ## Box-Cox method
 
+
+* Estimate optimal transformation from the class of powers and logarithms
+
 $$
 y' = 
 \begin{cases}
-y^\lambda & | & \lambda \ne 0\\
+\frac{y^\lambda -1}{\lambda} & | & \lambda \ne 0\\
 \log(y) & | & \lambda =0 
 \end{cases}
 $$
-* Estimate optimal transformation from the class of powers and logarithms
+In some practical cases, one can simply use $y^\lambda$ instead of $\frac{y^\lambda -1}{\lambda}$.
 
 <br>
 
@@ -1217,7 +1332,7 @@ boxcox(Nit90 ~ 1)
 :::
 
 
-* Argument of `boxcox` is a so-called "model formula" or the outcome of a linear model (`lm`)
+* Argument of `boxcox` is a "model formula" or the outcome of a linear model (`lm`)
 * Most basic form is the "null model" without explanation variables (`~ 1`).
 * More about model formulas, see the ANOVA chapter.
 

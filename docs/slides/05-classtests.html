@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.42">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-10-28">
+  <meta name="dcterms.date" content="2025-11-20">
   <title>Elements of Data Analysis and Statistics – 05-Classical Tests</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -232,7 +232,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-10-28</p>
+  <p class="date">2025-11-20</p>
 </section>
 <section>
 <section id="hypotheses-errors-and-the-p-value" class="title-slide slide level1 center">
@@ -838,7 +838,7 @@ mean of x mean of y
 <p>see <span class="citation" data-cites="zimmerman_note_2004">Zimmerman (<a href="#/references" role="doc-biblioref" onclick="">2004</a>)</span> or <a href="https://en.wikipedia.org/wiki/Welch%27s_t-test">Wikipedia</a>.</p>
 </section>
 <section id="paired-t-test" class="slide level2">
-<h2>Paired t-Test</h2>
+<h2>Paired t-test</h2>
 <ul>
 <li><p>sometimes also called “t-test of dependent samples”</p>
 <ul>
@@ -969,15 +969,44 @@ alternative hypothesis: true mu is not equal to 0</code></pre>
 </div>
 </div>
 </section>
-<section id="permutation-methods" class="slide level2">
-<h2>Permutation methods</h2>
+<section id="comparing-two-groups-directly-a-permutation-test" class="slide level2">
+<h2>Comparing two groups directly: A permutation test</h2>
 <ul>
-<li>Basic principle: Estimation of a test statistic <span class="math inline">\(\xi_{obs}\)</span> from sample,</li>
-<li>Resampling: Simulate many <span class="math inline">\(\xi_{i, sim}\)</span> from randomly permuted data set (<span class="math inline">\(n = 999\)</span> or more)</li>
-<li>Where does <span class="math inline">\(\xi_{est}\)</span> appear within the ordered series of simulated values <span class="math inline">\(\xi_{i, sim}\)</span>?</li>
+<li>Group 1: 10 observations from <code>Gamma(2.3, 1)</code></li>
+<li>Group 2: 10 observations from <code>Gamma(1.0, 1)</code></li>
 </ul>
 
-<img data-src="05-classtests_files/figure-revealjs/permutation-test-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><p>Let <span class="math inline">\(\xi_{obs}\)</span> be <span class="math inline">\(4.5\)</span> in our example, then <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(p= 0.97\)</span>.</p>
+<img data-src="05-classtests_files/figure-revealjs/boxplot-permutation-intro-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="permutation-test-the-algoritm" class="slide level2">
+<h2>Permutation test: the algoritm</h2>
+<p><br></p>
+<p><strong>Key Idea</strong></p>
+<ul>
+<li>Calculate a statistical parameter, e.g.&nbsp;difference of means <span class="math inline">\(\Delta\)</span>.</li>
+<li>Simulate the null hypothesis: <strong>no group effect</strong>
+<ul>
+<li>randomly permute the group labels</li>
+<li>null distribution of mean differences. <br></li>
+</ul></li>
+</ul>
+<p><strong>The algorithm</strong> (by example of a mean difference)</p>
+<ol type="1">
+<li>Compute observed mean difference (<span class="math inline">\(\Delta_{obs} = \bar{x}_1 - \bar{x}_2\)</span>).</li>
+<li>Randomly shuffle all 20 values and reassign to two groups of 10.</li>
+<li>Compute new mean difference <span class="math inline">\(\Delta_{sim}\)</span>.</li>
+<li>Repeat 999 times (or more) → get 999 permuted differences.</li>
+<li>Compare observed difference to the distribution of permuted differences.</li>
+<li>Estimate p-value as proportion of permuted differences ≥ observed.</li>
+</ol>
+<p><span class="math inline">\(\rightarrow\)</span> Can be used to arbitrary statistical parameters and experimental designs.</p>
+</section>
+<section id="permutation-test-in-practice" class="slide level2">
+<h2>Permutation test in practice</h2>
+<ul>
+<li>Where does <span class="math inline">\(\Delta_{obs}\)</span> appear within the ordered series of simulated values <span class="math inline">\(\Delta_{i, sim}\)</span>?</li>
+</ul>
+
+<img data-src="05-classtests_files/figure-revealjs/permutation-test-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><p>Let <span class="math inline">\(\Delta_{obs}\)</span> be <span class="math inline">\(1.5\)</span> in our example, then <span class="math inline">\(\Rightarrow\)</span> <span class="math inline">\(p= 0.01\)</span>.</p>
 </section></section>
 <section>
 <section id="power-analysis" class="title-slide slide level1 center">
@@ -1333,7 +1362,7 @@ X-squared = 13.647, df = 8, p-value = 0.09144</code></pre>
     on 1000 replicates)
 
 data:  obsfreq
-X-squared = 13.647, df = NA, p-value = 0.0969</code></pre>
+X-squared = 13.647, df = NA, p-value = 0.0959</code></pre>
 </div>
 </div>
 </div>
@@ -1390,6 +1419,21 @@ alternative hypothesis: Two.sided</code></pre>
 <h1>Testing for normal distribution</h1>
 
 </section>
+<section id="why-do-we-want-this" class="slide level2">
+<h2>Why do we want this?</h2>
+<p><br></p>
+<p>Sometimes we want to know whether a data set belongs to a specific type of distribution. Though this sounds easy, it appears quite difficult for theoretical reasons:</p>
+<ul>
+<li>statistical tests check for deviations from the null hypothesis</li>
+<li>but here we want to test the opposite, if <span class="math inline">\(H_0\)</span> is true</li>
+</ul>
+<p>This is in fact impossible, because “not significant” means only that a potential effect is either not existent or just too small to be detected. On the opposite, “significantly different” includes a certain probability of false positives.</p>
+<p>However, most statistical tests do not require perfect agreement with a certain distribution:</p>
+<ul>
+<li>t-test and ANOVA assume normality of residuals</li>
+<li>due to the CLT, the distribution of sums and mean values converges to normal</li>
+</ul>
+</section>
 <section id="testing-or-checking" class="slide level2">
 <h2>Testing or checking?</h2>
 <p><br></p>
@@ -1417,14 +1461,14 @@ alternative hypothesis: Two.sided</code></pre>
 <h2>Shapiro-Wilks-W-Test <span class="red">?</span></h2>
 <p><span class="math inline">\(\rightarrow\)</span> Aim: tests if a sample conforms to a normal distribution</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>)</span>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">20</span>)</span>
 <span id="cb47-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">shapiro.test</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Shapiro-Wilk normality test
 
 data:  x
-W = 0.99064, p-value = 0.7165</code></pre>
+W = 0.93541, p-value = 0.1961</code></pre>
 </div>
 </div>
 <p><br></p>
@@ -1479,8 +1523,32 @@ W = 0.99064, p-value = 0.7165</code></pre>
 <li>normal distribution if the points follow a straight line</li>
 </ul>
 </section>
+<section id="checking-distributions-for-descriptive-purposes" class="slide level2">
+<h2>Checking distributions for descriptive purposes</h2>
+<p>In some disciplines, such as hydrology, it is occasionally necessary to know which distribution type best describes a dataset. This is especially critical for Extreme Value Analysis (e.g., the 100-year flood), as the Central Limit Theorem (CLT) does not apply here.</p>
+<p><strong>Procedure</strong></p>
+<ol type="1">
+<li>Visual Inspection (Focus on the Tails)
+<ul>
+<li>Histogram (first impression)</li>
+<li>Q-Q Plots (detailed goodness-of-fit)</li>
+</ul></li>
+<li>Formal Tests (exclusion principle)
+<ul>
+<li>Tests: Kolmogorov-Smirnov, Cramér-von Mises, Anderson-Darling</li>
+<li>Reject the distribution type if the p-value is significant (p&lt;0.05).</li>
+</ul></li>
+<li>Model Selection (Choosing the best model)
+<ul>
+<li>Choose the model that provides the best fit while also demonstrating Parsimony</li>
+<li>Criteria like AIC/BIC will be covered later</li>
+<li>Consider the physical plausibility of the parameters.</li>
+</ul></li>
+</ol>
+</section>
 <section id="transformations" class="slide level2">
 <h2>Transformations</h2>
+<p><br></p>
 <ul>
 <li>allows to apply methods designed for normally distributed data to non-normal cases</li>
 <li>very common in the in the past, still sometimes useful</li>
@@ -1499,6 +1567,7 @@ W = 0.99064, p-value = 0.7165</code></pre>
 </section>
 <section id="transformations-ii" class="slide level2">
 <h2>Transformations II</h2>
+<p><br></p>
 <p><strong>Transformations for count data</strong></p>
 <ul>
 <li><span class="math inline">\(x'=\sqrt{3/8+x}\)</span> <span class="gray">(counts: 1, 2, 3 <span class="math inline">\(\rightarrow\)</span> 0.61, 1.17, 1.54, 1.84, )</span> <!-- * $x'=\lg(x+3/8)$ / --></li>
@@ -1514,6 +1583,7 @@ W = 0.99064, p-value = 0.7165</code></pre>
 </section>
 <section id="how-to-find-the-best-transformation" class="slide level2">
 <h2>How to find the best transformation?</h2>
+<p><br></p>
 <ul>
 <li>Example: biovolumes of diatom algae cells <span class="gray">(species <em>Nitzschia acicularis</em>)</span>.</li>
 </ul>
@@ -1551,13 +1621,16 @@ W = 0.99064, p-value = 0.7165</code></pre>
 </div></aside></section>
 <section id="box-cox-method" class="slide level2">
 <h2>Box-Cox method</h2>
+<ul>
+<li>Estimate optimal transformation from the class of powers and logarithms</li>
+</ul>
 <p><span class="math display">\[
 y' =
 \begin{cases}
-y^\lambda &amp; | &amp; \lambda \ne 0\\
+\frac{y^\lambda -1}{\lambda} &amp; | &amp; \lambda \ne 0\\
 \log(y) &amp; | &amp; \lambda =0
 \end{cases}
-\]</span> * Estimate optimal transformation from the class of powers and logarithms</p>
+\]</span> In some practical cases, one can simply use <span class="math inline">\(y^\lambda\)</span> instead of <span class="math inline">\(\frac{y^\lambda -1}{\lambda}\)</span>.</p>
 <p><br></p>
 <div class="column" style="width:42%;">
 <p><br></p>
@@ -1579,7 +1652,7 @@ y^\lambda &amp; | &amp; \lambda \ne 0\\
 </div>
 </div>
 </div><ul>
-<li>Argument of <code>boxcox</code> is a so-called “model formula” or the outcome of a linear model (<code>lm</code>)</li>
+<li>Argument of <code>boxcox</code> is a “model formula” or the outcome of a linear model (<code>lm</code>)</li>
 <li>Most basic form is the “null model” without explanation variables (<code>~ 1</code>).</li>
 <li>More about model formulas, see the ANOVA chapter.</li>
 </ul>

@@ -59,7 +59,7 @@
     "href": "tutorials/s3-multivar-lakes.html#multivariate-analysis",
     "title": "Multivariate Lake Data Example",
     "section": "5 Multivariate Analysis",
-    "text": "5 Multivariate Analysis\n\n5.1 Principal Components: PCA\n\npc &lt;- prcomp(scale(dat))\nsummary(pc)\n\nImportance of components:\n                         PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.305 1.4737 1.1459 1.0686 0.84953 0.50024 0.24164\nProportion of Variance 0.483 0.1974 0.1194 0.1038 0.06561 0.02275 0.00531\nCumulative Proportion  0.483 0.6805 0.7998 0.9036 0.96925 0.99200 0.99731\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.12590 0.08400 0.07563 0.03077\nProportion of Variance 0.00144 0.00064 0.00052 0.00009\nCumulative Proportion  0.99875 0.99939 0.99991 1.00000\n\nplot(pc)\n\n\n\n\n\n\n\nbiplot(pc)\n\n\n\n\n\n\n\n\nAs the PCA with the untransformed data looks somewhat asymmetric, we repeat it with square transformed data. In addition, also the 3rd PC is plotted.\n\ndat2 &lt;- sqrt(dat)\npc2 &lt;- prcomp(scale(dat2))\nsummary(pc2)\n\nImportance of components:\n                          PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.1886 1.5906 1.2499 1.0634 0.79782 0.44854 0.28572\nProportion of Variance 0.4354 0.2300 0.1420 0.1028 0.05786 0.01829 0.00742\nCumulative Proportion  0.4354 0.6654 0.8075 0.9103 0.96812 0.98641 0.99383\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.17665 0.13833 0.12041 0.05528\nProportion of Variance 0.00284 0.00174 0.00132 0.00028\nCumulative Proportion  0.99666 0.99840 0.99972 1.00000\n\npar(mfrow=c(1,2))\npar(mar=c(5, 4, 4, 2) + 0.1)\nbiplot(pc2, cex=0.6)\nbiplot(pc2, cex=0.6, choices=c(3, 2))\n\n\n\n\n\n\n\n\nA PCA is also possible with the rda function of the vegan package. The syntax of the plot functions is somewhat different. Instead of biplot as above, we can directly use plot. Details are found in the vegan documentation.\n\npar(mfrow=c(1,1))\npc3 &lt;- rda(dat2, scale = TRUE)\npc3\n\n\nCall: rda(X = dat2, scale = TRUE)\n\n              Inertia Rank\nTotal              11     \nUnconstrained      11   11\n\nInertia is correlations\n\nEigenvalues for unconstrained axes:\n  PC1   PC2   PC3   PC4   PC5   PC6   PC7   PC8   PC9  PC10  PC11 \n4.790 2.530 1.562 1.131 0.637 0.201 0.082 0.031 0.019 0.014 0.003 \n\n#summary(pc3)\nplot(pc3)\n\n\n\n\n\n\n\n\n\n\n5.2 Nonmetric Multidimensional Scaling: NMDS\nLt’s now perform an NMDS for the data set. Function metaMDS runs a series of NMDS fits with different start values to avoid local minima. It has also some automatic transformations built in and works usually with the Bray-Curtis dissimilarity, that is used for plants and animal species abundance data. As we work with physical data here, we set the distance measure to “euclidean”.\n\nmd &lt;- metaMDS(dat2, scale = TRUE, distance = \"euclid\")\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1181117 \nRun 1 stress 0.1230331 \nRun 2 stress 0.1230331 \nRun 3 stress 0.185611 \nRun 4 stress 0.203306 \nRun 5 stress 0.1207018 \nRun 6 stress 0.1230331 \nRun 7 stress 0.1207021 \nRun 8 stress 0.1181117 \n... Procrustes: rmse 4.697944e-05  max resid 0.0001383349 \n... Similar to previous best\nRun 9 stress 0.1181116 \n... New best solution\n... Procrustes: rmse 9.57108e-05  max resid 0.0002791979 \n... Similar to previous best\nRun 10 stress 0.1230331 \nRun 11 stress 0.1230331 \nRun 12 stress 0.1230331 \nRun 13 stress 0.1207019 \nRun 14 stress 0.2014735 \nRun 15 stress 0.1207021 \nRun 16 stress 0.1999403 \nRun 17 stress 0.1207019 \nRun 18 stress 0.1230331 \nRun 19 stress 0.1230331 \nRun 20 stress 0.1230331 \n*** Best solution repeated 1 times\n\nplot(md, type=\"text\")\nabline(h=0, col=\"grey\", lty=\"dotted\")\nabline(v=0, col=\"grey\", lty=\"dotted\")\n\n\n\n\n\n\n\n\n\n\n5.3 Cluster analysis\nHere we apply a hierarchical cluster analysis with square root transformed data and two different agglomeration schemes, “complete linkage” and “Ward’s method”.\n\npar(mfrow=c(2,1))\nhc &lt;- hclust(dist(scale(dat2)), method=\"complete\") # the default\nplot(hc)\n\nhc2 &lt;- hclust(dist(scale(dat2)), method=\"ward.D2\")\nplot(hc2)\n\n\n\n\n\n\n\n\nWe can also use the clusters to indicate groups in the NMDS plot. Function rect.hclust indicates a given number of clusters in the dendrogram, then we cut the tree with cutree and use the groups grp as color codes. R has 8 standard colors. If we need more, we can define an own palette.\n\nplot(hc, hang = -1)\nrect.hclust(hc, 5)\n\n\n\n\n\n\n\ngrp &lt;- cutree(hc, 5)\n# grp                  # can be used to show the groups\nplot(md, type = \"n\")\ntext(md$points, row.names(dat2), col = grp)\n\n\n\n\n\n\n\n\nInstead of hierarchical clustering, we can also use a non-hierarchical method, e.g. k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.\nDepending on the question, it may be a disadvantage, that the number of clusters needs to be specified beforehand (e.g. from hierarchical clustering) and that we do not get a tree diagramm.",
+    "text": "5 Multivariate Analysis\n\n5.1 Principal Components: PCA\n\npc &lt;- prcomp(scale(dat))\nsummary(pc)\n\nImportance of components:\n                         PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.305 1.4737 1.1459 1.0686 0.84953 0.50024 0.24164\nProportion of Variance 0.483 0.1974 0.1194 0.1038 0.06561 0.02275 0.00531\nCumulative Proportion  0.483 0.6805 0.7998 0.9036 0.96925 0.99200 0.99731\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.12590 0.08400 0.07563 0.03077\nProportion of Variance 0.00144 0.00064 0.00052 0.00009\nCumulative Proportion  0.99875 0.99939 0.99991 1.00000\n\nplot(pc)\n\n\n\n\n\n\n\nbiplot(pc)\n\n\n\n\n\n\n\n\nAs the PCA with the untransformed data looks somewhat asymmetric, we repeat it with square transformed data. In addition, also the 3rd PC is plotted.\n\ndat2 &lt;- sqrt(dat)\npc2 &lt;- prcomp(scale(dat2))\nsummary(pc2)\n\nImportance of components:\n                          PC1    PC2    PC3    PC4     PC5     PC6     PC7\nStandard deviation     2.1886 1.5906 1.2499 1.0634 0.79782 0.44854 0.28572\nProportion of Variance 0.4354 0.2300 0.1420 0.1028 0.05786 0.01829 0.00742\nCumulative Proportion  0.4354 0.6654 0.8075 0.9103 0.96812 0.98641 0.99383\n                           PC8     PC9    PC10    PC11\nStandard deviation     0.17665 0.13833 0.12041 0.05528\nProportion of Variance 0.00284 0.00174 0.00132 0.00028\nCumulative Proportion  0.99666 0.99840 0.99972 1.00000\n\npar(mfrow=c(1,2))\npar(mar=c(5, 4, 4, 2) + 0.1)\nbiplot(pc2, cex=0.6)\nbiplot(pc2, cex=0.6, choices=c(3, 2))\n\n\n\n\n\n\n\n\nA PCA is also possible with the rda function of the vegan package. The syntax of the plot functions is somewhat different. Instead of biplot as above, we can directly use plot. Details are found in the vegan documentation.\n\npar(mfrow=c(1,1))\npc3 &lt;- rda(dat2, scale = TRUE)\npc3\n\n\nCall: rda(X = dat2, scale = TRUE)\n\n              Inertia Rank\nTotal              11     \nUnconstrained      11   11\n\nInertia is correlations\n\nEigenvalues for unconstrained axes:\n  PC1   PC2   PC3   PC4   PC5   PC6   PC7   PC8   PC9  PC10  PC11 \n4.790 2.530 1.562 1.131 0.637 0.201 0.082 0.031 0.019 0.014 0.003 \n\n#summary(pc3)\nplot(pc3)\n\n\n\n\n\n\n\n\n\n\n5.2 Nonmetric Multidimensional Scaling: NMDS\nLt’s now perform an NMDS for the data set. Function metaMDS runs a series of NMDS fits with different start values to avoid local minima. It has also some automatic transformations built in and works usually with the Bray-Curtis dissimilarity, that is used for plants and animal species abundance data. As we work with physical data here, we set the distance measure to “euclidean”.\n\nmd &lt;- metaMDS(dat2, scale = TRUE, distance = \"euclid\")\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1181117 \nRun 1 stress 0.1207019 \nRun 2 stress 0.1181117 \n... New best solution\n... Procrustes: rmse 7.976703e-05  max resid 0.0002725768 \n... Similar to previous best\nRun 3 stress 0.1230331 \nRun 4 stress 0.1230331 \nRun 5 stress 0.1207018 \nRun 6 stress 0.2034994 \nRun 7 stress 0.120702 \nRun 8 stress 0.1208973 \nRun 9 stress 0.1768603 \nRun 10 stress 0.1181117 \n... New best solution\n... Procrustes: rmse 0.0001056147  max resid 0.0003117889 \n... Similar to previous best\nRun 11 stress 0.1768603 \nRun 12 stress 0.1181117 \n... Procrustes: rmse 7.093277e-05  max resid 0.0002039183 \n... Similar to previous best\nRun 13 stress 0.1230331 \nRun 14 stress 0.1181116 \n... New best solution\n... Procrustes: rmse 5.072222e-05  max resid 0.000151072 \n... Similar to previous best\nRun 15 stress 0.1181117 \n... Procrustes: rmse 7.370228e-05  max resid 0.0002239024 \n... Similar to previous best\nRun 16 stress 0.1181116 \n... Procrustes: rmse 2.295774e-05  max resid 7.128094e-05 \n... Similar to previous best\nRun 17 stress 0.2014768 \nRun 18 stress 0.1230331 \nRun 19 stress 0.1181117 \n... Procrustes: rmse 6.581187e-05  max resid 0.0001801791 \n... Similar to previous best\nRun 20 stress 0.1207021 \n*** Best solution repeated 4 times\n\nplot(md, type=\"text\")\nabline(h=0, col=\"grey\", lty=\"dotted\")\nabline(v=0, col=\"grey\", lty=\"dotted\")\n\n\n\n\n\n\n\n\n\n\n5.3 Cluster analysis\nHere we apply a hierarchical cluster analysis with square root transformed data and two different agglomeration schemes, “complete linkage” and “Ward’s method”.\n\npar(mfrow=c(2,1))\nhc &lt;- hclust(dist(scale(dat2)), method=\"complete\") # the default\nplot(hc)\n\nhc2 &lt;- hclust(dist(scale(dat2)), method=\"ward.D2\")\nplot(hc2)\n\n\n\n\n\n\n\n\nWe can also use the clusters to indicate groups in the NMDS plot. Function rect.hclust indicates a given number of clusters in the dendrogram, then we cut the tree with cutree and use the groups grp as color codes. R has 8 standard colors. If we need more, we can define an own palette.\n\nplot(hc, hang = -1)\nrect.hclust(hc, 5)\n\n\n\n\n\n\n\ngrp &lt;- cutree(hc, 5)\n# grp                  # can be used to show the groups\nplot(md, type = \"n\")\ntext(md$points, row.names(dat2), col = grp)\n\n\n\n\n\n\n\n\nInstead of hierarchical clustering, we can also use a non-hierarchical method, e.g. k-means clustering. This is an iterative method, and avoids the problem that cluster assignment depends on the order of clustering and the agglomeration method.\nDepending on the question, it may be a disadvantage, that the number of clusters needs to be specified beforehand (e.g. from hierarchical clustering) and that we do not get a tree diagramm.",
     "crumbs": [
       "Tutorials",
       "Multivariate Lake Data Example"
@@ -1137,7 +1137,7 @@
     "href": "slides/x1-r-basics.html#lists-1",
     "title": "x1-R Basics",
     "section": "Lists",
-    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL &lt;- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:10] -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 2.5\n $ counts  : int [1:9] 5 6 15 18 24 17 9 4 2\n $ density : num [1:9] 0.1 0.12 0.3 0.36 0.48 0.34 0.18 0.08 0.04\n $ mids    : num [1:9] -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\"",
+    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL &lt;- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:11] -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 ...\n $ counts  : int [1:10] 1 3 10 13 19 19 16 13 3 3\n $ density : num [1:10] 0.02 0.06 0.2 0.26 0.38 0.38 0.32 0.26 0.06 0.06\n $ mids    : num [1:10] -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\"",
     "crumbs": [
       "R Topics",
       "x1-R Basics"
@@ -2709,8 +2709,8 @@
     "objectID": "slides/05-classtests.html#paired-t-test",
     "href": "slides/05-classtests.html#paired-t-test",
     "title": "05-Classical Tests",
-    "section": "Paired t-Test",
-    "text": "Paired t-Test\n\nsometimes also called “t-test of dependent samples”\n\nthe term “dependent” can be misleading, “paired” is clearer\nvalues within samples must still be independent\n\nexamples: left arm / right arm; before / after\nis essentially a one-sample t-test of pairwise differences against \\(\\mu=0\\)\n\nreduces the influence of individual differences (“covariates”) by focusing on the change within each pair\n\n\n\nx1 &lt;- c(2, 3, 4, 5, 6)\nx2 &lt;- c(3, 4, 7, 6, 8)\nt.test(x1, x2, var.equal=TRUE)\n\n\n    Two Sample t-test\n\ndata:  x1 and x2\nt = -1.372, df = 8, p-value = 0.2073\nalternative hypothesis: true difference in means is not equal to 0\n95 percent confidence interval:\n -4.28924  1.08924\nsample estimates:\nmean of x mean of y \n      4.0       5.6 \n\n\np=0.20, not significant\n\n\nx1 &lt;- c(2, 3, 4, 5, 6)\nx2 &lt;- c(3, 4, 7, 6, 8)\nt.test(x1, x2, paired=TRUE)\n\n\n    Paired t-test\n\ndata:  x1 and x2\nt = -4, df = 4, p-value = 0.01613\nalternative hypothesis: true mean difference is not equal to 0\n95 percent confidence interval:\n -2.710578 -0.489422\nsample estimates:\nmean difference \n           -1.6 \n\n\np=0.016, significant\nIt can be seen that the paired t-test has a greater discriminatory power in this case.",
+    "section": "Paired t-test",
+    "text": "Paired t-test\n\nsometimes also called “t-test of dependent samples”\n\nthe term “dependent” can be misleading, “paired” is clearer\nvalues within samples must still be independent\n\nexamples: left arm / right arm; before / after\nis essentially a one-sample t-test of pairwise differences against \\(\\mu=0\\)\n\nreduces the influence of individual differences (“covariates”) by focusing on the change within each pair\n\n\n\nx1 &lt;- c(2, 3, 4, 5, 6)\nx2 &lt;- c(3, 4, 7, 6, 8)\nt.test(x1, x2, var.equal=TRUE)\n\n\n    Two Sample t-test\n\ndata:  x1 and x2\nt = -1.372, df = 8, p-value = 0.2073\nalternative hypothesis: true difference in means is not equal to 0\n95 percent confidence interval:\n -4.28924  1.08924\nsample estimates:\nmean of x mean of y \n      4.0       5.6 \n\n\np=0.20, not significant\n\n\nx1 &lt;- c(2, 3, 4, 5, 6)\nx2 &lt;- c(3, 4, 7, 6, 8)\nt.test(x1, x2, paired=TRUE)\n\n\n    Paired t-test\n\ndata:  x1 and x2\nt = -4, df = 4, p-value = 0.01613\nalternative hypothesis: true mean difference is not equal to 0\n95 percent confidence interval:\n -2.710578 -0.489422\nsample estimates:\nmean difference \n           -1.6 \n\n\np=0.016, significant\nIt can be seen that the paired t-test has a greater discriminatory power in this case.",
     "crumbs": [
       "Basic Statistics",
       "05-Classical Tests"
@@ -2750,11 +2750,33 @@
     ]
   },
   {
-    "objectID": "slides/05-classtests.html#permutation-methods",
-    "href": "slides/05-classtests.html#permutation-methods",
+    "objectID": "slides/05-classtests.html#comparing-two-groups-directly-a-permutation-test",
+    "href": "slides/05-classtests.html#comparing-two-groups-directly-a-permutation-test",
     "title": "05-Classical Tests",
-    "section": "Permutation methods",
-    "text": "Permutation methods\n\nBasic principle: Estimation of a test statistic \\(\\xi_{obs}\\) from sample,\nResampling: Simulate many \\(\\xi_{i, sim}\\) from randomly permuted data set (\\(n = 999\\) or more)\nWhere does \\(\\xi_{est}\\) appear within the ordered series of simulated values \\(\\xi_{i, sim}\\)?\n\n\nLet \\(\\xi_{obs}\\) be \\(4.5\\) in our example, then \\(\\Rightarrow\\) \\(p= 0.97\\).",
+    "section": "Comparing two groups directly: A permutation test",
+    "text": "Comparing two groups directly: A permutation test\n\nGroup 1: 10 observations from Gamma(2.3, 1)\nGroup 2: 10 observations from Gamma(1.0, 1)",
+    "crumbs": [
+      "Basic Statistics",
+      "05-Classical Tests"
+    ]
+  },
+  {
+    "objectID": "slides/05-classtests.html#permutation-test-the-algoritm",
+    "href": "slides/05-classtests.html#permutation-test-the-algoritm",
+    "title": "05-Classical Tests",
+    "section": "Permutation test: the algoritm",
+    "text": "Permutation test: the algoritm\n\nKey Idea\n\nCalculate a statistical parameter, e.g. difference of means \\(\\Delta\\).\nSimulate the null hypothesis: no group effect\n\nrandomly permute the group labels\nnull distribution of mean differences. \n\n\nThe algorithm (by example of a mean difference)\n\nCompute observed mean difference (\\(\\Delta_{obs} = \\bar{x}_1 - \\bar{x}_2\\)).\nRandomly shuffle all 20 values and reassign to two groups of 10.\nCompute new mean difference \\(\\Delta_{sim}\\).\nRepeat 999 times (or more) → get 999 permuted differences.\nCompare observed difference to the distribution of permuted differences.\nEstimate p-value as proportion of permuted differences ≥ observed.\n\n\\(\\rightarrow\\) Can be used to arbitrary statistical parameters and experimental designs.",
+    "crumbs": [
+      "Basic Statistics",
+      "05-Classical Tests"
+    ]
+  },
+  {
+    "objectID": "slides/05-classtests.html#permutation-test-in-practice",
+    "href": "slides/05-classtests.html#permutation-test-in-practice",
+    "title": "05-Classical Tests",
+    "section": "Permutation test in practice",
+    "text": "Permutation test in practice\n\nWhere does \\(\\Delta_{obs}\\) appear within the ordered series of simulated values \\(\\Delta_{i, sim}\\)?\n\n\nLet \\(\\Delta_{obs}\\) be \\(1.5\\) in our example, then \\(\\Rightarrow\\) \\(p= 0.01\\).",
     "crumbs": [
       "Basic Statistics",
       "05-Classical Tests"
@@ -2875,7 +2897,7 @@
     "href": "slides/05-classtests.html#chisquare-test",
     "title": "05-Classical Tests",
     "section": "Chisquare test",
-    "text": "Chisquare test\n\n\n\nobsfreq &lt;- c(1, 1, 6, 2, 2, 5, 8, 6, 3)\nchisq.test(obsfreq)\n\n\n    Chi-squared test for given probabilities\n\ndata:  obsfreq\nX-squared = 13.647, df = 8, p-value = 0.09144\n\nchisq.test(obsfreq, simulate.p.value=TRUE, B=1000)\n\n\n    Chi-squared test for given probabilities with simulated p-value (based\n    on 1000 replicates)\n\ndata:  obsfreq\nX-squared = 13.647, df = NA, p-value = 0.0969\n\n\n\n\n\none-sample \\(\\chi^2\\)-test. It tests for equality of frequency in all classes.\nThe simulation-based version of the test (with 1000 replicates) is slightly more precise than the standard \\(\\chi^2\\)-test, but both are not significant.",
+    "text": "Chisquare test\n\n\n\nobsfreq &lt;- c(1, 1, 6, 2, 2, 5, 8, 6, 3)\nchisq.test(obsfreq)\n\n\n    Chi-squared test for given probabilities\n\ndata:  obsfreq\nX-squared = 13.647, df = 8, p-value = 0.09144\n\nchisq.test(obsfreq, simulate.p.value=TRUE, B=1000)\n\n\n    Chi-squared test for given probabilities with simulated p-value (based\n    on 1000 replicates)\n\ndata:  obsfreq\nX-squared = 13.647, df = NA, p-value = 0.0959\n\n\n\n\n\none-sample \\(\\chi^2\\)-test. It tests for equality of frequency in all classes.\nThe simulation-based version of the test (with 1000 replicates) is slightly more precise than the standard \\(\\chi^2\\)-test, but both are not significant.",
     "crumbs": [
       "Basic Statistics",
       "05-Classical Tests"
@@ -2904,6 +2926,17 @@
     ]
   },
   {
+    "objectID": "slides/05-classtests.html#why-do-we-want-this",
+    "href": "slides/05-classtests.html#why-do-we-want-this",
+    "title": "05-Classical Tests",
+    "section": "Why do we want this?",
+    "text": "Why do we want this?\n\nSometimes we want to know whether a data set belongs to a specific type of distribution. Though this sounds easy, it appears quite difficult for theoretical reasons:\n\nstatistical tests check for deviations from the null hypothesis\nbut here we want to test the opposite, if \\(H_0\\) is true\n\nThis is in fact impossible, because “not significant” means only that a potential effect is either not existent or just too small to be detected. On the opposite, “significantly different” includes a certain probability of false positives.\nHowever, most statistical tests do not require perfect agreement with a certain distribution:\n\nt-test and ANOVA assume normality of residuals\ndue to the CLT, the distribution of sums and mean values converges to normal",
+    "crumbs": [
+      "Basic Statistics",
+      "05-Classical Tests"
+    ]
+  },
+  {
     "objectID": "slides/05-classtests.html#testing-or-checking",
     "href": "slides/05-classtests.html#testing-or-checking",
     "title": "05-Classical Tests",
@@ -2919,7 +2952,7 @@
     "href": "slides/05-classtests.html#shapiro-wilks-w-test",
     "title": "05-Classical Tests",
     "section": "Shapiro-Wilks-W-Test ?",
-    "text": "Shapiro-Wilks-W-Test ?\n\\(\\rightarrow\\) Aim: tests if a sample conforms to a normal distribution\n\nx &lt;- rnorm(100)\nshapiro.test(x)\n\n\n    Shapiro-Wilk normality test\n\ndata:  x\nW = 0.99064, p-value = 0.7165\n\n\n\n\\(\\rightarrow\\) the \\(p\\)-value is greater than 0.05, so we would keep \\(H_0\\) and conclude that nothing speaks against acceptance of the normal\n\nInterpration of the Shapiro-Wilks-test needs to be done with care:\n\nfor small \\(n\\), the test is not sensitive enough\nfar large \\(n\\), it is over-sensitive\nusing Shapiro-Wilks to check normality for t-test and ANOVA is not anymore recommended\n\n\n\nSimilarly, the \\(\\chi^2\\) (Chi-squared) or Kolmogorov-Smirnov-tests are not anymore recommended for normality testing, but still important for other test problems.",
+    "text": "Shapiro-Wilks-W-Test ?\n\\(\\rightarrow\\) Aim: tests if a sample conforms to a normal distribution\n\nx &lt;- runif(20)\nshapiro.test(x)\n\n\n    Shapiro-Wilk normality test\n\ndata:  x\nW = 0.93541, p-value = 0.1961\n\n\n\n\\(\\rightarrow\\) the \\(p\\)-value is greater than 0.05, so we would keep \\(H_0\\) and conclude that nothing speaks against acceptance of the normal\n\nInterpration of the Shapiro-Wilks-test needs to be done with care:\n\nfor small \\(n\\), the test is not sensitive enough\nfar large \\(n\\), it is over-sensitive\nusing Shapiro-Wilks to check normality for t-test and ANOVA is not anymore recommended\n\n\n\nSimilarly, the \\(\\chi^2\\) (Chi-squared) or Kolmogorov-Smirnov-tests are not anymore recommended for normality testing, but still important for other test problems.",
     "crumbs": [
       "Basic Statistics",
       "05-Classical Tests"
@@ -2948,11 +2981,22 @@
     ]
   },
   {
+    "objectID": "slides/05-classtests.html#checking-distributions-for-descriptive-purposes",
+    "href": "slides/05-classtests.html#checking-distributions-for-descriptive-purposes",
+    "title": "05-Classical Tests",
+    "section": "Checking distributions for descriptive purposes",
+    "text": "Checking distributions for descriptive purposes\nIn some disciplines, such as hydrology, it is occasionally necessary to know which distribution type best describes a dataset. This is especially critical for Extreme Value Analysis (e.g., the 100-year flood), as the Central Limit Theorem (CLT) does not apply here.\nProcedure\n\nVisual Inspection (Focus on the Tails)\n\nHistogram (first impression)\nQ-Q Plots (detailed goodness-of-fit)\n\nFormal Tests (exclusion principle)\n\nTests: Kolmogorov-Smirnov, Cramér-von Mises, Anderson-Darling\nReject the distribution type if the p-value is significant (p&lt;0.05).\n\nModel Selection (Choosing the best model)\n\nChoose the model that provides the best fit while also demonstrating Parsimony\nCriteria like AIC/BIC will be covered later\nConsider the physical plausibility of the parameters.",
+    "crumbs": [
+      "Basic Statistics",
+      "05-Classical Tests"
+    ]
+  },
+  {
     "objectID": "slides/05-classtests.html#transformations",
     "href": "slides/05-classtests.html#transformations",
     "title": "05-Classical Tests",
     "section": "Transformations",
-    "text": "Transformations\n\nallows to apply methods designed for normally distributed data to non-normal cases\nvery common in the in the past, still sometimes useful\nmodern methods (e.g. generalized linear models, GLM) can handle certain distributions directly, such as the Binomial, Gamma, or Poisson distribution.\n\nTransformations for right-skewed data\n\n\\(x'=\\log(x)\\)\n\\(x'=\\log(x + a)\\)\n\\(x'=(x+a)^c\\) (\\(a\\) between 0.5 and 1)\n\\(x'=1/x\\) (“very powerful”, i.e. to extreme in most cases)\n\\(x'=a - 1/\\sqrt{x}\\) (to make scale more convenient)\n\\(x'=1/\\sqrt{x}\\) (compromise between \\(\\ln\\) and \\(1/x\\))\n\\(x'=a+bx^c\\) (very general, includes powers and roots)",
+    "text": "Transformations\n\n\nallows to apply methods designed for normally distributed data to non-normal cases\nvery common in the in the past, still sometimes useful\nmodern methods (e.g. generalized linear models, GLM) can handle certain distributions directly, such as the Binomial, Gamma, or Poisson distribution.\n\nTransformations for right-skewed data\n\n\\(x'=\\log(x)\\)\n\\(x'=\\log(x + a)\\)\n\\(x'=(x+a)^c\\) (\\(a\\) between 0.5 and 1)\n\\(x'=1/x\\) (“very powerful”, i.e. to extreme in most cases)\n\\(x'=a - 1/\\sqrt{x}\\) (to make scale more convenient)\n\\(x'=1/\\sqrt{x}\\) (compromise between \\(\\ln\\) and \\(1/x\\))\n\\(x'=a+bx^c\\) (very general, includes powers and roots)",
     "crumbs": [
       "Basic Statistics",
       "05-Classical Tests"
@@ -2963,7 +3007,7 @@
     "href": "slides/05-classtests.html#transformations-ii",
     "title": "05-Classical Tests",
     "section": "Transformations II",
-    "text": "Transformations II\nTransformations for count data\n\n\\(x'=\\sqrt{3/8+x}\\) (counts: 1, 2, 3 \\(\\rightarrow\\) 0.61, 1.17, 1.54, 1.84, ) \n\\(x'=\\log(\\log(x))\\) for giant numbers\n\n\\(\\rightarrow\\) consider a GLM with family Poisson or quasi-Poisson instead\nRatios and percentages values between (0, 1)\n\n\\(x'=\\arcsin \\sqrt{x/n}\\)\n\\(x'=\\arcsin \\sqrt{\\frac{x+3/8}{n+3/4}}\\)\n\n\\(\\rightarrow\\) consider a GLM with family binomial instead",
+    "text": "Transformations II\n\nTransformations for count data\n\n\\(x'=\\sqrt{3/8+x}\\) (counts: 1, 2, 3 \\(\\rightarrow\\) 0.61, 1.17, 1.54, 1.84, ) \n\\(x'=\\log(\\log(x))\\) for giant numbers\n\n\\(\\rightarrow\\) consider a GLM with family Poisson or quasi-Poisson instead\nRatios and percentages values between (0, 1)\n\n\\(x'=\\arcsin \\sqrt{x/n}\\)\n\\(x'=\\arcsin \\sqrt{\\frac{x+3/8}{n+3/4}}\\)\n\n\\(\\rightarrow\\) consider a GLM with family binomial instead",
     "crumbs": [
       "Basic Statistics",
       "05-Classical Tests"
@@ -2974,7 +3018,7 @@
     "href": "slides/05-classtests.html#how-to-find-the-best-transformation",
     "title": "05-Classical Tests",
     "section": "How to find the best transformation?",
-    "text": "How to find the best transformation?\n\nExample: biovolumes of diatom algae cells (species Nitzschia acicularis).\n\n\n\n\ndat &lt;- read.csv(\"prk_nit.csv\")\n\nNit85 &lt;- dat$biovol[dat$group == \"nit85\"]\nNit90 &lt;- dat$biovol[dat$group == \"nit90\"]\n\nhist(Nit85, xlab=\"Biovolume (mm^3)\")\nhist(Nit90, xlab=\"Biovolume (mm^3)\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRight skewed distribution.\nBiovolume calculations used for foodweb studies and algae bloom prediction.\n\n\n\nMore about Nitzschia in Wikipedia\nData set prk_nit.csv and metadata prk_nit_info.txt available from https://github.com/tpetzoldt/datasets.",
+    "text": "How to find the best transformation?\n\n\nExample: biovolumes of diatom algae cells (species Nitzschia acicularis).\n\n\n\n\ndat &lt;- read.csv(\"prk_nit.csv\")\n\nNit85 &lt;- dat$biovol[dat$group == \"nit85\"]\nNit90 &lt;- dat$biovol[dat$group == \"nit90\"]\n\nhist(Nit85, xlab=\"Biovolume (mm^3)\")\nhist(Nit90, xlab=\"Biovolume (mm^3)\")\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nRight skewed distribution.\nBiovolume calculations used for foodweb studies and algae bloom prediction.\n\n\n\nMore about Nitzschia in Wikipedia\nData set prk_nit.csv and metadata prk_nit_info.txt available from https://github.com/tpetzoldt/datasets.",
     "crumbs": [
       "Basic Statistics",
       "05-Classical Tests"
@@ -2985,7 +3029,7 @@
     "href": "slides/05-classtests.html#box-cox-method",
     "title": "05-Classical Tests",
     "section": "Box-Cox method",
-    "text": "Box-Cox method\n\\[\ny' =\n\\begin{cases}\ny^\\lambda & | & \\lambda \\ne 0\\\\\n\\log(y) & | & \\lambda =0\n\\end{cases}\n\\] * Estimate optimal transformation from the class of powers and logarithms\n\n\n\n\nlibrary(MASS)\n\nboxcox(Nit90 ~ 1)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nArgument of boxcox is a so-called “model formula” or the outcome of a linear model (lm)\nMost basic form is the “null model” without explanation variables (~ 1).\nMore about model formulas, see the ANOVA chapter.",
+    "text": "Box-Cox method\n\nEstimate optimal transformation from the class of powers and logarithms\n\n\\[\ny' =\n\\begin{cases}\n\\frac{y^\\lambda -1}{\\lambda} & | & \\lambda \\ne 0\\\\\n\\log(y) & | & \\lambda =0\n\\end{cases}\n\\] In some practical cases, one can simply use \\(y^\\lambda\\) instead of \\(\\frac{y^\\lambda -1}{\\lambda}\\).\n\n\n\n\nlibrary(MASS)\n\nboxcox(Nit90 ~ 1)\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nArgument of boxcox is a “model formula” or the outcome of a linear model (lm)\nMost basic form is the “null model” without explanation variables (~ 1).\nMore about model formulas, see the ANOVA chapter.",
     "crumbs": [
       "Basic Statistics",
       "05-Classical Tests"
@@ -3205,7 +3249,7 @@
     "href": "slides/03-statparams.html#pseudomedian-hodges-lehmann-estimator",
     "title": "03-Statistical Parameters",
     "section": "Pseudomedian (Hodges-Lehmann estimator)",
-    "text": "Pseudomedian (Hodges-Lehmann estimator)\n\nThe pseudomedian (\\(\\tilde{x}^*\\)) is a robust and efficient estimator for the location parameter. It is calculated as the median of all possible means of two observations each, where the pairs include the self-pairs (\\(i=j\\)).\n\\[\\tilde{x}^* = \\text{median}\\left(M_{ij}\\right) \\text{ mit } M_{ij} = \\frac{x_i + x_j}{2} \\text{ für } 1 \\le i \\le j \\le n\\]\nExample\n\nlibrary(Hmisc) \n\n# Using the same sample as for the median\nset.seed(123)\nx &lt;- round(runif(7, max = 10), 1)\n\n# Sorting for better readability of the example (not part of the pMedian calculation)\nsort(x) \n\n[1] 0.5 2.9 4.1 5.3 7.9 8.8 9.4\n\n# arithmetic mean, median, pseudomedian\nc(mean(x), median(x), pMedian(x))\n\n[1] 5.557143 5.300000 5.625000\n\n\nNote: Strictly speaking, the population parameter is referred to as the ‘pseudomedian’ and the sample parameter as the ‘Hodges-Lehmann estimator’..",
+    "text": "Pseudomedian (Hodges-Lehmann estimator)\n\nThe pseudomedian (\\(\\tilde{x}^*\\)) is a robust and efficient estimator for the location parameter. It is calculated as the median of all possible means of two observations each, where the pairs include the self-pairs (\\(i=j\\)).\n\\[\\tilde{x}^* = \\text{median}\\left(M_{ij}\\right) \\text{ mit } M_{ij} = \\frac{x_i + x_j}{2} \\text{ für } 1 \\le i \\le j \\le n\\]\nExample\n\nlibrary(Hmisc) \n\n# Using the same sample as for the median\nset.seed(123)\nx &lt;- round(runif(7, max = 10), 1)\n\n# Sorting for better readability of the example (not part of the pMedian calculation)\nsort(x) \n\n[1] 0.5 2.9 4.1 5.3 7.9 8.8 9.4\n\n# arithmetic mean, median, pseudomedian\nc(mean(x), median(x), pMedian(x))\n\n[1] 5.557143 5.300000 5.625000\n\n\nNote: Strictly speaking, the population parameter is referred to as the ‘pseudomedian’ and the sample parameter as the ‘Hodges-Lehmann estimator’.",
     "crumbs": [
       "Basic Statistics",
       "03-Statistical Parameters"
@@ -3480,7 +3524,7 @@
     "href": "slides/01-introduction.html#which-data-structure-is-better",
     "title": "01-Introduction",
     "section": "Which data structure is better?",
-    "text": "Which data structure is better?\n\n\nWide format\n\n\n\n\n\n\nstation\n2021\n2022\n2023\n\n\n\n\nA\n3\n6\n16\n\n\nB\n12\n9\n20\n\n\nC\n20\n14\n14\n\n\nD\n10\n11\n14\n\n\nE\n15\n15\n3\n\n\n\n\n\n\nLong format\n\n\n\n\n\n\nyear\nstation\nvalue\n\n\n\n\n2021\nA\n3\n\n\n2021\nB\n12\n\n\n2021\nC\n20\n\n\n2021\nD\n10\n\n\n2021\nE\n15\n\n\n2022\nA\n6\n\n\n2022\nB\n9\n\n\n2022\nC\n14\n\n\n2022\nD\n11\n\n\n2022\nE\n15\n\n\n2023\nA\n16\n\n\n2023\nB\n20\n\n\n2023\nC\n14\n\n\n2023\nD\n14\n\n\n2023\nE\n3",
+    "text": "Which data structure is better?\n\n\nWide format\n\n\n\n\n\n\nstation\n2021\n2022\n2023\n\n\n\n\nA\n20\n1\n6\n\n\nB\n2\n17\n5\n\n\nC\n13\n1\n18\n\n\nD\n1\n13\n18\n\n\nE\n10\n16\n1\n\n\n\n\n\n\nLong format\n\n\n\n\n\n\nyear\nstation\nvalue\n\n\n\n\n2021\nA\n20\n\n\n2021\nB\n2\n\n\n2021\nC\n13\n\n\n2021\nD\n1\n\n\n2021\nE\n10\n\n\n2022\nA\n1\n\n\n2022\nB\n17\n\n\n2022\nC\n1\n\n\n2022\nD\n13\n\n\n2022\nE\n16\n\n\n2023\nA\n6\n\n\n2023\nB\n5\n\n\n2023\nC\n18\n\n\n2023\nD\n18\n\n\n2023\nE\n1",
     "crumbs": [
       "Basic Statistics",
       "01-Introduction"
@@ -3744,7 +3788,7 @@
     "href": "slides/04-distributions.html#continuos-uniform-distribution-mathbfu0-1",
     "title": "04-Distributions",
     "section": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)",
-    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.7543490 0.3742862 0.7793269 0.5062845 0.7014560 0.9209131 0.3238158\n [8] 0.5593060 0.1426554 0.5665669\n\n\n \n\nbinning: subdivide values into classes",
+    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.5114425 0.1479786 0.4758420 0.4116042 0.8703237 0.1085770 0.1970274\n [8] 0.8633014 0.9360339 0.5007363\n\n\n \n\nbinning: subdivide values into classes",
     "crumbs": [
       "Basic Statistics",
       "04-Distributions"
@@ -3965,72 +4009,6 @@
     "title": "04-Distributions",
     "section": "Confidence interval",
     "text": "Confidence interval\n– depends only on \\(\\lambda\\) resp. the number of counted units (\\(k\\))\n\nTypical error of cell counting: 95% confidence interval\n\n\n\n\n\ncounts\n2\n3\n5\n10\n50\n100\n200\n400\n1000\n\n\nlower\n0\n1\n2\n5\n37\n81\n173\n362\n939\n\n\nupper\n7\n9\n12\n18\n66\n122\n230\n441\n1064",
-    "crumbs": [
-      "Basic Statistics",
-      "04-Distributions"
-    ]
-  },
-  {
-    "objectID": "slides/04-distributions.html#testing-for-distribution",
-    "href": "slides/04-distributions.html#testing-for-distribution",
-    "title": "04-Distributions",
-    "section": "Testing for distribution",
-    "text": "Testing for distribution\n\nSometimes we want to know whether a data set belongs to a specific type of distribution. Though this sounds easy, it appears quite difficult for theoretical reasons:\n\nstatistical tests check for deviations from the null hypothesis\nbut here we want to test the opposite, if \\(H_0\\) is true\n\nThis is in fact impossible, because “not significant” means only that a potential effect is either not existent or just too small to be detected. On the opposite, “significantly different” includes a certain probability of false positives.\nHowever, most statistical tests do not require perfect agreement with a certain distribution:\n\nt-test and ANOVA assume normality of residuals\ndue to the CLT, the distribution of sums and mean values converges to normal",
-    "crumbs": [
-      "Basic Statistics",
-      "04-Distributions"
-    ]
-  },
-  {
-    "objectID": "slides/04-distributions.html#shapiro-wilks-w-test",
-    "href": "slides/04-distributions.html#shapiro-wilks-w-test",
-    "title": "04-Distributions",
-    "section": "Shapiro-Wilks-W-Test ?",
-    "text": "Shapiro-Wilks-W-Test ?\n\\(\\rightarrow\\) Aim: tests if a sample conforms to a normal distribution\n\nx &lt;- rnorm(100)\nshapiro.test(x)\n\n\n    Shapiro-Wilk normality test\n\ndata:  x\nW = 0.99064, p-value = 0.7165\n\n\n\n\\(\\rightarrow\\) the \\(p\\)-value is greater than 0.05, so we would keep \\(H_0\\) and conclude that nothing speaks against acceptance of the normal\n\nInterpration of the Shapiro-Wilks-test needs to be done with care:\n\nfor small \\(n\\), the tes is not sensitive enough\nfar large \\(n\\) it is over-sensitive\nusing Shapiro-Wilks to check normality for t-test and ANOVA is not anymore recommended\n\n\n\nSimilarly, the \\(\\chi^2\\) (Chi-squared) or Kolmogorov-Smirnov-tests are not anymore recommended for normality testing, but still important for other test problems.",
-    "crumbs": [
-      "Basic Statistics",
-      "04-Distributions"
-    ]
-  },
-  {
-    "objectID": "slides/04-distributions.html#graphical-examination-of-normality",
-    "href": "slides/04-distributions.html#graphical-examination-of-normality",
-    "title": "04-Distributions",
-    "section": "Graphical examination of normality",
-    "text": "Graphical examination of normality\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\\(x\\): theoretical quantiles where a value should be found if the distribution is normal\n\\(y\\): normalized and ordered measured values (\\(z\\)-scores)\nscaled in the unit of standard deviations\nnormal distribution if the points follow a straight line\n\nRecommendation: Use graphical checks. Don’t trust the Shapiro Wilks!",
-    "crumbs": [
-      "Basic Statistics",
-      "04-Distributions"
-    ]
-  },
-  {
-    "objectID": "slides/04-distributions.html#transformation",
-    "href": "slides/04-distributions.html#transformation",
-    "title": "04-Distributions",
-    "section": "Transformation",
-    "text": "Transformation\n\nallows to apply methods designed for normally distributed data\nmodern methods can handle specific distributions directly, such as binomial, gamma, or Poisson\n\nTransformations for right-skewed data\n\n\\(x'=\\log(x)\\)\n\\(x'=\\log(x + a)\\)\n\\(x'=(x+a)^c\\) (\\(a\\) between 0.5 and 1)\n\\(x'=1/x\\) (“very powerful”, i.e. to extreme in most cases)\n\\(x'=a - 1/\\sqrt{x}\\) (to make scale more convenient)\n\\(x'=1/\\sqrt{x}\\) (compromise between \\(\\ln\\) and \\(1/x\\))\n\\(x'=a+bx^c\\) (very general, includes powers and roots)",
-    "crumbs": [
-      "Basic Statistics",
-      "04-Distributions"
-    ]
-  },
-  {
-    "objectID": "slides/04-distributions.html#transformations-ii",
-    "href": "slides/04-distributions.html#transformations-ii",
-    "title": "04-Distributions",
-    "section": "Transformations II",
-    "text": "Transformations II\nTransformations for count data\n\n\\(x'=\\sqrt{3/8+x}\\) (counts: 1, 2, 3 \\(\\rightarrow\\) 0.61, 1.17, 1.54, 1.84, )\n\\(x'=\\lg(x+3/8)\\)\n\\(x'=\\log(\\log(x))\\) for giant numbers\n\n\\(\\rightarrow\\) consider a GLM with family Poisson or quasi-Poisson instead\nRatios and percentages\n\n\\(x'=\\arcsin \\sqrt{x/n}\\)\n\\(x'=\\arcsin \\sqrt{\\frac{x+3/8}{n+3/4}}\\)\n\n\\(\\rightarrow\\) consider a GLM with family binomial instead",
-    "crumbs": [
-      "Basic Statistics",
-      "04-Distributions"
-    ]
-  },
-  {
-    "objectID": "slides/04-distributions.html#rank-transformation",
-    "href": "slides/04-distributions.html#rank-transformation",
-    "title": "04-Distributions",
-    "section": "Rank transformation",
-    "text": "Rank transformation\nExample: Spearman correlation\n\n Data set\n\nx &lt;- c(1, 2, 3, 5, 4, 5 ,6,  7)\ny &lt;- c(1, 2, 4, 3, 4, 6, 8, 20)\n\nRanks\n\nrank(x)\n\n[1] 1.0 2.0 3.0 5.5 4.0 5.5 7.0 8.0\n\nrank(y)\n\n[1] 1.0 2.0 4.5 3.0 4.5 6.0 7.0 8.0\n\n\nTwo ways of calculation\n\ncor(x, y, method = \"spearman\")\n\n[1] 0.8915663\n\ncor(rank(x), rank(y))\n\n[1] 0.8915663",
     "crumbs": [
       "Basic Statistics",
       "04-Distributions"
@@ -4976,7 +4954,7 @@
     "href": "slides/12-multivariate-2.html#example",
     "title": "12-Multivariate methods II",
     "section": "Example",
-    "text": "Example\n\nbenthos &lt;- read.csv(\"../data/gauernitz.csv\")\nrow.names(benthos) &lt;- benthos$Site\nenv &lt;- benthos[c(\"Habitat\", \"Stream\", \"Flood\")] # required later\n\nbio &lt;- benthos[c(\"Mollusca\", \"Diptera\", \"Baetis\", \"Plecoptera\", \"Coleoptera\", \n         \"Turbellaria\", \"Heptageniidae\", \"Ephemeroptera\", \"Gammarus\", \n         \"Trichoptera\", \"Acari\", \"Nematoda\", \"Oligochaeta\")]\n\nord &lt;- metaMDS(bio)\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1102424 \nRun 1 stress 0.1858757 \nRun 2 stress 0.1105543 \n... Procrustes: rmse 0.02427231  max resid 0.07210348 \nRun 3 stress 0.2491381 \nRun 4 stress 0.1105543 \n... Procrustes: rmse 0.02419506  max resid 0.07184901 \nRun 5 stress 0.1105543 \n... Procrustes: rmse 0.024259  max resid 0.07206191 \nRun 6 stress 0.1102424 \n... Procrustes: rmse 7.871569e-06  max resid 2.184699e-05 \n... Similar to previous best\nRun 7 stress 0.1727865 \nRun 8 stress 0.1105543 \n... Procrustes: rmse 0.02421122  max resid 0.07189791 \nRun 9 stress 0.1102424 \n... Procrustes: rmse 4.921984e-06  max resid 1.300433e-05 \n... Similar to previous best\nRun 10 stress 0.2540404 \nRun 11 stress 0.1855539 \nRun 12 stress 0.1105543 \n... Procrustes: rmse 0.02427195  max resid 0.07210317 \nRun 13 stress 0.1102424 \n... Procrustes: rmse 5.547713e-06  max resid 1.566575e-05 \n... Similar to previous best\nRun 14 stress 0.1102424 \n... Procrustes: rmse 1.137468e-05  max resid 3.180843e-05 \n... Similar to previous best\nRun 15 stress 0.1102424 \n... Procrustes: rmse 3.388606e-06  max resid 6.928114e-06 \n... Similar to previous best\nRun 16 stress 0.1102424 \n... Procrustes: rmse 1.977793e-05  max resid 5.454078e-05 \n... Similar to previous best\nRun 17 stress 0.2346072 \nRun 18 stress 0.1102424 \n... Procrustes: rmse 4.906897e-06  max resid 7.873003e-06 \n... Similar to previous best\nRun 19 stress 0.1105543 \n... Procrustes: rmse 0.02425855  max resid 0.07205888 \nRun 20 stress 0.1105543 \n... Procrustes: rmse 0.02421141  max resid 0.07189827 \n*** Best solution repeated 7 times",
+    "text": "Example\n\nbenthos &lt;- read.csv(\"../data/gauernitz.csv\")\nrow.names(benthos) &lt;- benthos$Site\nenv &lt;- benthos[c(\"Habitat\", \"Stream\", \"Flood\")] # required later\n\nbio &lt;- benthos[c(\"Mollusca\", \"Diptera\", \"Baetis\", \"Plecoptera\", \"Coleoptera\", \n         \"Turbellaria\", \"Heptageniidae\", \"Ephemeroptera\", \"Gammarus\", \n         \"Trichoptera\", \"Acari\", \"Nematoda\", \"Oligochaeta\")]\n\nord &lt;- metaMDS(bio)\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1102424 \nRun 1 stress 0.1855539 \nRun 2 stress 0.1102424 \n... Procrustes: rmse 4.779238e-06  max resid 9.416625e-06 \n... Similar to previous best\nRun 3 stress 0.1102424 \n... Procrustes: rmse 5.508367e-06  max resid 1.54138e-05 \n... Similar to previous best\nRun 4 stress 0.1102424 \n... Procrustes: rmse 6.790668e-06  max resid 1.834581e-05 \n... Similar to previous best\nRun 5 stress 0.1102424 \n... Procrustes: rmse 5.81823e-06  max resid 1.368592e-05 \n... Similar to previous best\nRun 6 stress 0.1102424 \n... Procrustes: rmse 4.184917e-06  max resid 1.158679e-05 \n... Similar to previous best\nRun 7 stress 0.2385763 \nRun 8 stress 0.1102424 \n... Procrustes: rmse 4.732317e-06  max resid 1.263345e-05 \n... Similar to previous best\nRun 9 stress 0.1105544 \n... Procrustes: rmse 0.02431507  max resid 0.0722502 \nRun 10 stress 0.1102424 \n... Procrustes: rmse 3.745038e-06  max resid 1.026271e-05 \n... Similar to previous best\nRun 11 stress 0.1102424 \n... Procrustes: rmse 1.134064e-05  max resid 2.06755e-05 \n... Similar to previous best\nRun 12 stress 0.1102424 \n... Procrustes: rmse 4.433394e-06  max resid 1.22296e-05 \n... Similar to previous best\nRun 13 stress 0.1105544 \n... Procrustes: rmse 0.02432926  max resid 0.07229717 \nRun 14 stress 0.2333219 \nRun 15 stress 0.1102424 \n... New best solution\n... Procrustes: rmse 9.292042e-07  max resid 1.939065e-06 \n... Similar to previous best\nRun 16 stress 0.1105543 \n... Procrustes: rmse 0.02421889  max resid 0.07192425 \nRun 17 stress 0.1102424 \n... Procrustes: rmse 1.426271e-06  max resid 2.428513e-06 \n... Similar to previous best\nRun 18 stress 0.1105543 \n... Procrustes: rmse 0.02428574  max resid 0.07214951 \nRun 19 stress 0.1105544 \n... Procrustes: rmse 0.0242427  max resid 0.07199857 \nRun 20 stress 0.3592577 \n*** Best solution repeated 2 times",
     "crumbs": [
       "Basic Statistics",
       "12-Multivariate methods II"
@@ -4987,7 +4965,7 @@
     "href": "slides/12-multivariate-2.html#results-of-the-nmds",
     "title": "12-Multivariate methods II",
     "section": "Results of the NMDS",
-    "text": "Results of the NMDS\n\nord\n\n\nCall:\nmetaMDS(comm = bio) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     wisconsin(sqrt(bio)) \nDistance: bray \n\nDimensions: 2 \nStress:     0.1102424 \nStress type 1, weak ties\nBest solution was repeated 7 times in 20 tries\nThe best solution was from try 0 (metric scaling or null solution)\nScaling: centring, PC rotation, halfchange scaling \nSpecies: expanded scores based on 'wisconsin(sqrt(bio))' \n\n\n\nmetaMDS runs a series of NMDS trials and outputs the best\nmakes automatic decisions about transformation, distance and scaling\n\nRecommendation\n\nspecify distance, scaling and transformation explicitly\nconsider to increase try and trymax for big and/or difficult data sets, e.g.:\n\n\nord &lt;- metaMDS(bio, distance=\"bray\", autotransform=FALSE, try=40)",
+    "text": "Results of the NMDS\n\nord\n\n\nCall:\nmetaMDS(comm = bio) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     wisconsin(sqrt(bio)) \nDistance: bray \n\nDimensions: 2 \nStress:     0.1102424 \nStress type 1, weak ties\nBest solution was repeated 2 times in 20 tries\nThe best solution was from try 15 (random start)\nScaling: centring, PC rotation, halfchange scaling \nSpecies: expanded scores based on 'wisconsin(sqrt(bio))' \n\n\n\nmetaMDS runs a series of NMDS trials and outputs the best\nmakes automatic decisions about transformation, distance and scaling\n\nRecommendation\n\nspecify distance, scaling and transformation explicitly\nconsider to increase try and trymax for big and/or difficult data sets, e.g.:\n\n\nord &lt;- metaMDS(bio, distance=\"bray\", autotransform=FALSE, try=40)",
     "crumbs": [
       "Basic Statistics",
       "12-Multivariate methods II"
@@ -6127,36 +6105,36 @@
     ]
   },
   {
-    "objectID": "00-index.html",
-    "href": "00-index.html",
+    "objectID": "index.html",
+    "href": "index.html",
     "title": "Elements of Data Analysis and Statistics",
     "section": "",
     "text": "This website contains a collection of material for introductory statistics courses with R. The aim is to provide insight in fundamental principles and an overview to enable students to select and understand specialized books and online material to dig in deeper in the diverse and fascinating field of statistical computing.\nThe corresponding lab exercises are found at https://tpetzoldt.github.io/element-labs/."
   },
   {
-    "objectID": "00-index.html#status",
-    "href": "00-index.html#status",
+    "objectID": "index.html#status",
+    "href": "index.html#status",
     "title": "Elements of Data Analysis and Statistics",
     "section": "Status",
     "text": "Status\nThe selection of topics reflects what I think is useful as door-opener into various fields, useful in ecology and aquatic sciences. It is an ongoing project based on former PDF slides and other course material, constructive comments and suggestions for improvement are welcome."
   },
   {
-    "objectID": "00-index.html#further-reading",
-    "href": "00-index.html#further-reading",
+    "objectID": "index.html#further-reading",
+    "href": "index.html#further-reading",
     "title": "Elements of Data Analysis and Statistics",
     "section": "Further reading",
     "text": "Further reading\n\nDalgaard, P, 2008: Introductory Statistics with R. Springer Verlag, New York, 2nd edition. https://link.springer.com/book/10.1007/b97671\nKleiber, C and Zeileis, A, 2008: Applied Econometrics with R. Springer Verlag, New York. https://link.springer.com/book/10.1007/978-0-387-77318-6\nVerzani, J, 2014: Using R for introductory statistics. CRC press. https://www.routledge.com/Using-R-for-Introductory-Statistics/Verzani/p/book/9781466590731\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. https://r4ds.hadley.nz/"
   },
   {
-    "objectID": "00-index.html#related-pages",
-    "href": "00-index.html#related-pages",
+    "objectID": "index.html#related-pages",
+    "href": "index.html#related-pages",
     "title": "Elements of Data Analysis and Statistics",
     "section": "Related Pages",
     "text": "Related Pages\n\nGerman translation of the slides\nCollection of lab exercises\nDatasets\nSource code of the slides"
   },
   {
-    "objectID": "00-index.html#author",
-    "href": "00-index.html#author",
+    "objectID": "index.html#author",
+    "href": "index.html#author",
     "title": "Elements of Data Analysis and Statistics",
     "section": "Author",
     "text": "Author\nhomepage +++ github\n2025-09-16"
@@ -6221,7 +6199,7 @@
     "href": "tutorials/s2-multivar-3d.html#nonmetric-multi-dimensional-scaling-nmds",
     "title": "Ordination and Clustering",
     "section": "0.5 Nonmetric multi-dimensional scaling (NMDS)",
-    "text": "0.5 Nonmetric multi-dimensional scaling (NMDS)\nThe PCA is a very useful technique as it reduces dimensions without bias, but as we have seen, large proportions of information may still be found at higher dimensions.\nThis is, where the nonmetric dimensional scaling comes into play. Here, we can request a number of dimensions \\(k\\), typically \\(k=2\\) or \\(k=3\\) and then the computer tries hard to squeeze the information as much as possible into these dimensions. The aim is, that the distances between in all dimensions are represented in two or three dimensions only. Though it is done in an iterative way, it is clear, that this is not perfectly possible and will introduce considerable distortion, called stress.\n\nmds &lt;- metaMDS(A, distance=\"euclid\", scale=TRUE, autotransform = FALSE, k=2)\n\n'comm' has negative data: 'autotransform', 'noshare' and 'wascores' set to FALSE\n\n\nRun 0 stress 0.07782409 \nRun 1 stress 0.0778241 \n... Procrustes: rmse 6.175108e-06  max resid 4.004689e-05 \n... Similar to previous best\nRun 2 stress 0.0972286 \nRun 3 stress 0.09722253 \nRun 4 stress 0.07783593 \n... Procrustes: rmse 0.0003804096  max resid 0.003854329 \n... Similar to previous best\nRun 5 stress 0.09722861 \nRun 6 stress 0.09722861 \nRun 7 stress 0.07783594 \n... Procrustes: rmse 0.0003847878  max resid 0.003892716 \n... Similar to previous best\nRun 8 stress 0.07782409 \n... Procrustes: rmse 1.698278e-05  max resid 0.0001817883 \n... Similar to previous best\nRun 9 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 9.14501e-06  max resid 7.467697e-05 \n... Similar to previous best\nRun 10 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 7.841621e-06  max resid 4.794574e-05 \n... Similar to previous best\nRun 11 stress 0.07782411 \n... Procrustes: rmse 1.956095e-05  max resid 0.00019481 \n... Similar to previous best\nRun 12 stress 0.07782411 \n... Procrustes: rmse 1.899172e-05  max resid 0.0001924791 \n... Similar to previous best\nRun 13 stress 0.07783593 \n... Procrustes: rmse 0.0003814829  max resid 0.003868235 \n... Similar to previous best\nRun 14 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 5.666184e-06  max resid 4.704731e-05 \n... Similar to previous best\nRun 15 stress 0.0778241 \n... Procrustes: rmse 1.33636e-05  max resid 0.0001237828 \n... Similar to previous best\nRun 16 stress 0.0778241 \n... Procrustes: rmse 1.225242e-05  max resid 0.0001308233 \n... Similar to previous best\nRun 17 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 4.292724e-06  max resid 3.463446e-05 \n... Similar to previous best\nRun 18 stress 0.09722252 \nRun 19 stress 0.4151559 \nRun 20 stress 0.09722253 \n*** Best solution repeated 1 times\n\n\nThe resulting stress and the representation of distances in two (or three) dimensions can then be shown in a so-called stressplot. Here, one should not overestimate the hich \\(r^2\\) values, that are always big, even in bad cases. The shape of the step-line does not matter much either. However, the value of stress is most important and the data points should be close to the red line.\n\nstressplot(mds)\n\n\n\n\n\n\n\n\nThe stress itself shuld be small. As a rule of thumb, a stress value of \\(&gt;0.2\\) means that the NMDS was not successful, stress \\(&lt; 0.1\\) is considered as sufficient, \\(&lt;0.05\\) as good, \\(&lt;0.025\\) as very good and \\(\\approx 0\\) as perfect.\n\nmds\n\n\nCall:\nmetaMDS(comm = A, distance = \"euclid\", k = 2, autotransform = FALSE,      scale = TRUE) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     A \nDistance: euclidean \n\nDimensions: 2 \nStress:     0.07782409 \nStress type 1, weak ties\nBest solution was repeated 1 time in 20 tries\nThe best solution was from try 17 (random start)\nScaling: centring, PC rotation \nSpecies: scores missing\n\n\n\nxyz &lt;- as.data.frame(scores(mds, display=\"sites\"))\nxyz$. &lt;- 0\nordirgl(xyz, type=\"p\", ax.col = \"black\", col=mycolors)\nview3d(theta = 0, phi = 0, fov=0, zoom=0.7)\naxes3d(labels=FALSE, expand=1.5)\n\n\n\n\n\nHere, stress is \\(&lt;0.1\\). This is o.k., so that we now can have a look at the 2D representation. The figure is again technically 3D, so use the mouse to see that the data are now at a plane.",
+    "text": "0.5 Nonmetric multi-dimensional scaling (NMDS)\nThe PCA is a very useful technique as it reduces dimensions without bias, but as we have seen, large proportions of information may still be found at higher dimensions.\nThis is, where the nonmetric dimensional scaling comes into play. Here, we can request a number of dimensions \\(k\\), typically \\(k=2\\) or \\(k=3\\) and then the computer tries hard to squeeze the information as much as possible into these dimensions. The aim is, that the distances between in all dimensions are represented in two or three dimensions only. Though it is done in an iterative way, it is clear, that this is not perfectly possible and will introduce considerable distortion, called stress.\n\nmds &lt;- metaMDS(A, distance=\"euclid\", scale=TRUE, autotransform = FALSE, k=2)\n\n'comm' has negative data: 'autotransform', 'noshare' and 'wascores' set to FALSE\n\n\nRun 0 stress 0.07782409 \nRun 1 stress 0.09722252 \nRun 2 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 8.887936e-06  max resid 0.0001013535 \n... Similar to previous best\nRun 3 stress 0.07783594 \n... Procrustes: rmse 0.0003825129  max resid 0.003881444 \n... Similar to previous best\nRun 4 stress 0.07783593 \n... Procrustes: rmse 0.0003795139  max resid 0.003850443 \n... Similar to previous best\nRun 5 stress 0.0972286 \nRun 6 stress 0.0778241 \n... Procrustes: rmse 1.686029e-05  max resid 0.0001930628 \n... Similar to previous best\nRun 7 stress 0.0778241 \n... Procrustes: rmse 1.164513e-05  max resid 0.0001106299 \n... Similar to previous best\nRun 8 stress 0.0972286 \nRun 9 stress 0.07782409 \n... Procrustes: rmse 8.531175e-06  max resid 6.245818e-05 \n... Similar to previous best\nRun 10 stress 0.07783594 \n... Procrustes: rmse 0.0003824756  max resid 0.003879171 \n... Similar to previous best\nRun 11 stress 0.07783593 \n... Procrustes: rmse 0.0003806213  max resid 0.00386082 \n... Similar to previous best\nRun 12 stress 0.09722253 \nRun 13 stress 0.0778241 \n... Procrustes: rmse 1.096394e-05  max resid 0.0001118483 \n... Similar to previous best\nRun 14 stress 0.09722861 \nRun 15 stress 0.07783593 \n... Procrustes: rmse 0.0003814873  max resid 0.003870174 \n... Similar to previous best\nRun 16 stress 0.07783593 \n... Procrustes: rmse 0.0003797815  max resid 0.003854022 \n... Similar to previous best\nRun 17 stress 0.07783593 \n... Procrustes: rmse 0.0003816265  max resid 0.003871827 \n... Similar to previous best\nRun 18 stress 0.07783594 \n... Procrustes: rmse 0.000382518  max resid 0.003880524 \n... Similar to previous best\nRun 19 stress 0.07782409 \n... Procrustes: rmse 5.910956e-06  max resid 4.801722e-05 \n... Similar to previous best\nRun 20 stress 0.07782409 \n... Procrustes: rmse 4.046785e-06  max resid 3.504899e-05 \n... Similar to previous best\n*** Best solution repeated 15 times\n\n\nThe resulting stress and the representation of distances in two (or three) dimensions can then be shown in a so-called stressplot. Here, one should not overestimate the hich \\(r^2\\) values, that are always big, even in bad cases. The shape of the step-line does not matter much either. However, the value of stress is most important and the data points should be close to the red line.\n\nstressplot(mds)\n\n\n\n\n\n\n\n\nThe stress itself shuld be small. As a rule of thumb, a stress value of \\(&gt;0.2\\) means that the NMDS was not successful, stress \\(&lt; 0.1\\) is considered as sufficient, \\(&lt;0.05\\) as good, \\(&lt;0.025\\) as very good and \\(\\approx 0\\) as perfect.\n\nmds\n\n\nCall:\nmetaMDS(comm = A, distance = \"euclid\", k = 2, autotransform = FALSE,      scale = TRUE) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     A \nDistance: euclidean \n\nDimensions: 2 \nStress:     0.07782409 \nStress type 1, weak ties\nBest solution was repeated 15 times in 20 tries\nThe best solution was from try 2 (random start)\nScaling: centring, PC rotation \nSpecies: scores missing\n\n\n\nxyz &lt;- as.data.frame(scores(mds, display=\"sites\"))\nxyz$. &lt;- 0\nordirgl(xyz, type=\"p\", ax.col = \"black\", col=mycolors)\nview3d(theta = 0, phi = 0, fov=0, zoom=0.7)\naxes3d(labels=FALSE, expand=1.5)\n\n\n\n\n\nHere, stress is \\(&lt;0.1\\). This is o.k., so that we now can have a look at the 2D representation. The figure is again technically 3D, so use the mouse to see that the data are now at a plane.",
     "crumbs": [
       "Tutorials",
       "Ordination and Clustering"
@@ -6247,50 +6225,6 @@
     "crumbs": [
       "Tutorials",
       "Ordination and Clustering"
-    ]
-  },
-  {
-    "objectID": "slides/04-distributions.html#checking-distributions-for-descriptive-purposes",
-    "href": "slides/04-distributions.html#checking-distributions-for-descriptive-purposes",
-    "title": "04-Distributions",
-    "section": "Checking distributions for descriptive purposes",
-    "text": "Checking distributions for descriptive purposes\nIn some disciplines, such as hydrology, it is occasionally necessary to know which distribution type best describes a dataset. This is especially critical for Extreme Value Analysis (e.g., the 100-year flood), as the Central Limit Theorem (CLT) does not apply here.\nProcedure\n\nVisual Inspection (Focus on the Tails)\n\nHistogram (first impression)\nQ-Q Plots (detailed goodness-of-fit)\n\nFormal Tests (exclusion principle)\n\nTests: Kolmogorov-Smirnov, Cramér-von Mises, Anderson-Darling\nReject the distribution type if the p-value is significant (p&lt;0.05).\n\nModel Selection (Choosing the best model)\n\nChoose the model that provides the best fit while also demonstrating Parsimony\nCriteria like AIC/BIC will be covered later\nConsider the physical plausibility of the parameters.",
-    "crumbs": [
-      "Basic Statistics",
-      "04-Distributions"
-    ]
-  },
-  {
-    "objectID": "slides/04-distributions.html#box-cox-transformation",
-    "href": "slides/04-distributions.html#box-cox-transformation",
-    "title": "04-Distributions",
-    "section": "Box-Cox transformation",
-    "text": "Box-Cox transformation\nEstimate optimal transformation from the class of powers and logarithms\n\\[\ny' = y^\\lambda\n\\]\n\n\\(\\lambda=0\\): use logarithmic transformation\nboxcox requires a “model formula” or the outcome of a linear model (lm)\n\n\nlibrary(MASS)\ndat &lt;- read.csv(\"https://tpetzoldt.github.io/datasets/data/prk_nit.csv\")\nNit90 &lt;- dat$biovol[dat$group == \"nit90\"]\nboxcox(Nit90 ~ 1)",
-    "crumbs": [
-      "Basic Statistics",
-      "04-Distributions"
-    ]
-  },
-  {
-    "objectID": "slides/04-distributions.html#box-cox-transformation-ii",
-    "href": "slides/04-distributions.html#box-cox-transformation-ii",
-    "title": "04-Distributions",
-    "section": "Box-Cox transformation II",
-    "text": "Box-Cox transformation II\nThe dotted vertical lines and the horizontal 95,%-line show the confidence limits for possible transformations. Here we see that either a logarithmic transformation (\\(\\lambda=0\\)) or a power of approximately 0.5 are suitable.\nIt is also possible to obtain the numerical value directly:\n\nbc &lt;- boxcox(Nit90 ~ 1, plotit = FALSE)\nstr(bc)\n\nList of 2\n $ x: num [1:41] -2 -1.9 -1.8 -1.7 -1.6 -1.5 -1.4 -1.3 -1.2 -1.1 ...\n $ y: num [1:41] -237 -228 -220 -212 -204 ...\n\nbc$x[bc$y == max(bc$y)]\n\n[1] 0.2\n\n\nNote: these are approximate numbers so that it makes not much sense to use more than one decimal.",
-    "crumbs": [
-      "Basic Statistics",
-      "04-Distributions"
-    ]
-  },
-  {
-    "objectID": "slides/04-distributions.html#box-cox-transformation-iii",
-    "href": "slides/04-distributions.html#box-cox-transformation-iii",
-    "title": "04-Distributions",
-    "section": "Box-Cox transformation III",
-    "text": "Box-Cox transformation III\nIt is also possible to test for joint distribution of all groups at once by using explanatory variables (here group) on the right hand side of the model formula:\n\ndat &lt;- read.csv(\"https://tpetzoldt.github.io/datasets/data/prk_nit.csv\")\nboxcox(biovol ~ group, data=dat)\n\n\n\nFigure 1: Log-Likelihood profile of a Box-Cox-transformation for the pooled data sets Nit85 and Nit90.",
-    "crumbs": [
-      "Basic Statistics",
-      "04-Distributions"
     ]
   }
 ]
