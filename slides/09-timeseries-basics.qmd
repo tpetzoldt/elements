@@ -707,7 +707,7 @@ summary(m)
 
 * @kleiber_applied_2008: a very practical book about econometrics with well understandable time series chapters
 
-* @shumway_time_2019: a book with a time series good introduction and good balance between mathematics and R programming
+* @shumway_time_2019: a well understandable introductory book with a good balance between mathematics and R programming
 
 * @shumway_time_2000: contains additional methods and more mathematical background
 
