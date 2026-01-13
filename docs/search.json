@@ -6226,5 +6226,49 @@
       "Tutorials",
       "Ordination and Clustering"
     ]
+  },
+  {
+    "objectID": "slides/10-timeseries-outlook.html#comparison-to-segmented-regression",
+    "href": "slides/10-timeseries-outlook.html#comparison-to-segmented-regression",
+    "title": "10-Time Series Outlook",
+    "section": "Comparison to segmented regression",
+    "text": "Comparison to segmented regression\n\n\nShow the code\nlibrary(segmented)\n\n# 1. Create sample data with a breakpoint\n#    formula changes at x = 50\nset.seed(4123)\nx &lt;- 1:100\ndf &lt;- data.frame(\n  x = x,\n  y = c(2 * x[1:50], 100 + 0.5 * x[51:100]) + rnorm(100, 0, 10)\n)\n\n# 2. Fit a standard linear model first\nm1 &lt;- lm(y ~ x, data = df)\n\n# 3. Fit the segmented model\n# psi = 50 is an initial guess for the breakpoint\nm2 &lt;- segmented(m1, seg.Z = ~ x, psi = 50)\n\n# 4. Visualization\nplot(y ~ x, data = df, pch = 16, col=\"gray\")\nabline(m1, col=\"blue\", lwd=2, lty=\"dashed\")\nplot(m2, add = TRUE, col = \"red\", lwd = 4)\n\n# ===================================================\n\n# 5. Comparison with a strucchange model\nlibrary(strucchange)\n\nbp &lt;- breakpoints(y ~ x, data = df, breaks = 1)\nfac &lt;- breakfactor(bp)\nm3  &lt;- lm(y ~ x * fac, data = df)\n\n# Split data to avoid the vertical connecting line\ndf$p &lt;- predict(m3)\ns1 &lt;- subset(df, fac == \"segment1\")\ns2 &lt;- subset(df, fac == \"segment2\")\n\nlines(p ~ x, data = s1, lwd = 2, col = \"black\")\nlines(p ~ x, data = s2, lwd = 2, col = \"black\")\n\n# 6. Add legend\nlegend(\"topleft\", \n       legend = c(\"Linear Model\", \"Segmented (Connected)\", \"Strucchange (Jump)\"), \n       col = c(\"blue\", \"red\", \"black\"), \n       lwd = c(2, 4, 2), \n       lty = c(\"dashed\", \"solid\", \"solid\"),\n       bg = \"white\")",
+    "crumbs": [
+      "Basic Statistics",
+      "10-Time Series Outlook"
+    ]
+  },
+  {
+    "objectID": "slides/10-timeseries-outlook.html#model-results",
+    "href": "slides/10-timeseries-outlook.html#model-results",
+    "title": "10-Time Series Outlook",
+    "section": "Model results",
+    "text": "Model results\nEstimated changepoint and slopes\n\nsummary(m2)\n\n\n    ***Regression Model with Segmented Relationship(s)***\n\nCall: \nsegmented.lm(obj = m1, seg.Z = ~x, psi = 50)\n\nEstimated Break-Point(s):\n          Est. St.Err\npsi1.x 59.382  2.964\n\nCoefficients of the linear terms:\n            Estimate Std. Error t value Pr(&gt;|t|)    \n(Intercept) -5.95146    3.12427  -1.905   0.0598 .  \nx            2.25394    0.09057  24.887   &lt;2e-16 ***\nU1.x        -1.62792    0.18070  -9.009       NA    \n---\nSignif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1\n\nResidual standard error: 11.85 on 96 degrees of freedom\nMultiple R-Squared: 0.947,  Adjusted R-squared: 0.9453 \n\nBoot restarting based on 6 samples. Last fit:\nConvergence attained in 2 iterations (rel. change 9.5841e-12)\n\n\nLists the slopes of each segment\n\nslope(m2)\n\n$x\n          Est.  St.Err. t value CI(95%).l CI(95%).u\nslope1 2.25390 0.090568 24.8870   2.07420   2.43370\nslope2 0.62602 0.156370  4.0035   0.31563   0.93641",
+    "crumbs": [
+      "Basic Statistics",
+      "10-Time Series Outlook"
+    ]
+  },
+  {
+    "objectID": "slides/10-timeseries-outlook.html#comparison",
+    "href": "slides/10-timeseries-outlook.html#comparison",
+    "title": "10-Time Series Outlook",
+    "section": "Comparison",
+    "text": "Comparison\n\nContinuity\n\nsegmented models are connected\nstrucchange allows vertical jumps at the breakpoint\n\nParameter Shifts\n\nsegmented usually focuses on a change in slope\nstrucchange allows every parameter (intercept and all slopes) to change simultaneously\n\nEstimation\n\nsegmented uses an iterative approach (requires start value)\nstrucchange uses dynamic programming to find the globally optimal break locations.\n\n\nWhen to use “jumps”\n\nAppropriate for sudden “shocks”, (e.g., new dam, market crash).\nInappropriate for continuous processes (e.g., plant growth, aging), where a sudden jump is physically or biologically impossible.",
+    "crumbs": [
+      "Basic Statistics",
+      "10-Time Series Outlook"
+    ]
+  },
+  {
+    "objectID": "slides/10-timeseries-outlook.html#comparison-strucchange-vs.-segmented",
+    "href": "slides/10-timeseries-outlook.html#comparison-strucchange-vs.-segmented",
+    "title": "10-Time Series Outlook",
+    "section": "Comparison: strucchange vs. segmented",
+    "text": "Comparison: strucchange vs. segmented\n\nContinuity\n\nsegmented models are connected\nstrucchange allows vertical jumps at the breakpoint\n\nParameter Shifts\n\nsegmented usually focuses on a change in slope\nstrucchange allows every parameter (intercept and all slopes) to change simultaneously\n\nEstimation\n\nsegmented uses an iterative approach (requires start value)\nstrucchange uses dynamic programming to find the globally optimal break locations.\n\n\nWhen to use “jumps”\n\nAppropriate for sudden “shocks”, (e.g., new dam, market crash).\nInappropriate for continuous processes (e.g., plant growth, aging), where a sudden jump is physically or biologically impossible.",
+    "crumbs": [
+      "Basic Statistics",
+      "10-Time Series Outlook"
+    ]
   }
 ]

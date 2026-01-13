@@ -10,6 +10,8 @@ library(dplyr)
 library(readr)
 library(ggplot2)
 library(lubridate)
+library(segmented)
+library(strucchange)
 ```
 
 # Time series decomposition
@@ -499,6 +501,93 @@ qqnorm(residuals(fm1))
 #spectrum(residuals(fm0), log = "no",  spans = c(5, 5))
 #spectrum(residuals(fm1), log = "no",  spans = c(5, 5))
 -->
+
+## Comparison to segmented regression
+
+```{r segmented, echo=TRUE, fig.align='center'}
+#| code-fold: true
+#| code-summary: "Show the code"
+library(segmented)
+
+# 1. Create sample data with a breakpoint
+#    formula changes at x = 50
+set.seed(4123)
+x <- 1:100
+df <- data.frame(
+  x = x,
+  y = c(2 * x[1:50], 100 + 0.5 * x[51:100]) + rnorm(100, 0, 10)
+)
+
+# 2. Fit a standard linear model first
+m1 <- lm(y ~ x, data = df)
+
+# 3. Fit the segmented model
+# psi = 50 is an initial guess for the breakpoint
+m2 <- segmented(m1, seg.Z = ~ x, psi = 50)
+
+# 4. Visualization
+plot(y ~ x, data = df, pch = 16, col="gray")
+abline(m1, col="blue", lwd=2, lty="dashed")
+plot(m2, add = TRUE, col = "red", lwd = 4)
+
+# ===================================================
+
+# 5. Comparison with a strucchange model
+library(strucchange)
+
+bp <- breakpoints(y ~ x, data = df, breaks = 1)
+fac <- breakfactor(bp)
+m3  <- lm(y ~ x * fac, data = df)
+
+# Split data to avoid the vertical connecting line
+df$p <- predict(m3)
+s1 <- subset(df, fac == "segment1")
+s2 <- subset(df, fac == "segment2")
+
+lines(p ~ x, data = s1, lwd = 2, col = "black")
+lines(p ~ x, data = s2, lwd = 2, col = "black")
+
+# 6. Add legend
+legend("topleft", 
+       legend = c("Linear Model", "Segmented (Connected)", "Strucchange (Jump)"), 
+       col = c("blue", "red", "black"), 
+       lwd = c(2, 4, 2), 
+       lty = c("dashed", "solid", "solid"),
+       bg = "white")
+```
+
+## Model results
+
+**Estimated changepoint and slopes** 
+
+```{r segmented-summary, echo=TRUE}
+summary(m2)
+```
+
+**Lists the slopes of each segment**
+
+```{r segmented-slopes, echo=TRUE}
+slope(m2)
+```
+
+## Comparison: strucchange vs. segmented
+
+* **Continuity** 
+    - `segmented` models are connected
+    - `strucchange` allows vertical jumps at the breakpoint
+
+* **Parameter Shifts** 
+    - `segmented` usually focuses on a change in slope 
+    - `strucchange` allows every parameter (intercept and all slopes) to change simultaneously
+
+* **Estimation** 
+    - `segmented` uses an iterative approach (requires start value)
+    - `strucchange` uses dynamic programming to find the globally optimal break locations
+
+**When to use "jumps"?**
+
+* Appropriate for sudden "shocks", (e.g., new dam, market crash).
+* Inappropriate for continuous processes (e.g., plant growth, aging), where a sudden jump is physically or biologically impossible.
 
 
 ## References

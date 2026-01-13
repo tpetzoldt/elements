@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.42">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-11-20">
+  <meta name="dcterms.date" content="2026-01-13">
   <title>Elements of Data Analysis and Statistics – 10-Time Series Outlook</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -232,7 +232,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-11-20</p>
+  <p class="date">2026-01-13</p>
 </section>
 <section>
 <section id="time-series-decomposition" class="title-slide slide level1 center">
@@ -737,6 +737,129 @@ fm1  3 1257.663</code></pre>
 #spectrum(residuals(fm1), log = "no",  spans = c(5, 5))
 -->
 <img data-src="10-timeseries-outlook_files/figure-revealjs/nile-diagnostics-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="comparison-to-segmented-regression" class="slide level2">
+<h2>Comparison to segmented regression</h2>
+<div class="cell" data-layout-align="center">
+<details class="code-fold">
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(segmented)</span>
+<span id="cb28-2"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-3"><a aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Create sample data with a breakpoint</span></span>
+<span id="cb28-4"><a aria-hidden="true" tabindex="-1"></a><span class="co">#    formula changes at x = 50</span></span>
+<span id="cb28-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">4123</span>)</span>
+<span id="cb28-6"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
+<span id="cb28-7"><a aria-hidden="true" tabindex="-1"></a>df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb28-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> x,</span>
+<span id="cb28-9"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">2</span> <span class="sc">*</span> x[<span class="dv">1</span><span class="sc">:</span><span class="dv">50</span>], <span class="dv">100</span> <span class="sc">+</span> <span class="fl">0.5</span> <span class="sc">*</span> x[<span class="dv">51</span><span class="sc">:</span><span class="dv">100</span>]) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="dv">0</span>, <span class="dv">10</span>)</span>
+<span id="cb28-10"><a aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-11"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-12"><a aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Fit a standard linear model first</span></span>
+<span id="cb28-13"><a aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df)</span>
+<span id="cb28-14"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-15"><a aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Fit the segmented model</span></span>
+<span id="cb28-16"><a aria-hidden="true" tabindex="-1"></a><span class="co"># psi = 50 is an initial guess for the breakpoint</span></span>
+<span id="cb28-17"><a aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">segmented</span>(m1, <span class="at">seg.Z =</span> <span class="sc">~</span> x, <span class="at">psi =</span> <span class="dv">50</span>)</span>
+<span id="cb28-18"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-19"><a aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Visualization</span></span>
+<span id="cb28-20"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df, <span class="at">pch =</span> <span class="dv">16</span>, <span class="at">col=</span><span class="st">"gray"</span>)</span>
+<span id="cb28-21"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(m1, <span class="at">col=</span><span class="st">"blue"</span>, <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">lty=</span><span class="st">"dashed"</span>)</span>
+<span id="cb28-22"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m2, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">4</span>)</span>
+<span id="cb28-23"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-24"><a aria-hidden="true" tabindex="-1"></a><span class="co"># ===================================================</span></span>
+<span id="cb28-25"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-26"><a aria-hidden="true" tabindex="-1"></a><span class="co"># 5. Comparison with a strucchange model</span></span>
+<span id="cb28-27"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(strucchange)</span>
+<span id="cb28-28"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-29"><a aria-hidden="true" tabindex="-1"></a>bp <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(y <span class="sc">~</span> x, <span class="at">data =</span> df, <span class="at">breaks =</span> <span class="dv">1</span>)</span>
+<span id="cb28-30"><a aria-hidden="true" tabindex="-1"></a>fac <span class="ot">&lt;-</span> <span class="fu">breakfactor</span>(bp)</span>
+<span id="cb28-31"><a aria-hidden="true" tabindex="-1"></a>m3  <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x <span class="sc">*</span> fac, <span class="at">data =</span> df)</span>
+<span id="cb28-32"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-33"><a aria-hidden="true" tabindex="-1"></a><span class="co"># Split data to avoid the vertical connecting line</span></span>
+<span id="cb28-34"><a aria-hidden="true" tabindex="-1"></a>df<span class="sc">$</span>p <span class="ot">&lt;-</span> <span class="fu">predict</span>(m3)</span>
+<span id="cb28-35"><a aria-hidden="true" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">subset</span>(df, fac <span class="sc">==</span> <span class="st">"segment1"</span>)</span>
+<span id="cb28-36"><a aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> <span class="fu">subset</span>(df, fac <span class="sc">==</span> <span class="st">"segment2"</span>)</span>
+<span id="cb28-37"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-38"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(p <span class="sc">~</span> x, <span class="at">data =</span> s1, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span>
+<span id="cb28-39"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(p <span class="sc">~</span> x, <span class="at">data =</span> s2, <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"black"</span>)</span>
+<span id="cb28-40"><a aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-41"><a aria-hidden="true" tabindex="-1"></a><span class="co"># 6. Add legend</span></span>
+<span id="cb28-42"><a aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topleft"</span>, </span>
+<span id="cb28-43"><a aria-hidden="true" tabindex="-1"></a>       <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Linear Model"</span>, <span class="st">"Segmented (Connected)"</span>, <span class="st">"Strucchange (Jump)"</span>), </span>
+<span id="cb28-44"><a aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>, <span class="st">"black"</span>), </span>
+<span id="cb28-45"><a aria-hidden="true" tabindex="-1"></a>       <span class="at">lwd =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>), </span>
+<span id="cb28-46"><a aria-hidden="true" tabindex="-1"></a>       <span class="at">lty =</span> <span class="fu">c</span>(<span class="st">"dashed"</span>, <span class="st">"solid"</span>, <span class="st">"solid"</span>),</span>
+<span id="cb28-47"><a aria-hidden="true" tabindex="-1"></a>       <span class="at">bg =</span> <span class="st">"white"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+</div>
+<img data-src="10-timeseries-outlook_files/figure-revealjs/segmented-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
+<section id="model-results" class="slide level2">
+<h2>Model results</h2>
+<p><strong>Estimated changepoint and slopes</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    ***Regression Model with Segmented Relationship(s)***
+
+Call: 
+segmented.lm(obj = m1, seg.Z = ~x, psi = 50)
+
+Estimated Break-Point(s):
+          Est. St.Err
+psi1.x 59.382  2.964
+
+Coefficients of the linear terms:
+            Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept) -5.95146    3.12427  -1.905   0.0598 .  
+x            2.25394    0.09057  24.887   &lt;2e-16 ***
+U1.x        -1.62792    0.18070  -9.009       NA    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 11.85 on 96 degrees of freedom
+Multiple R-Squared: 0.947,  Adjusted R-squared: 0.9453 
+
+Boot restarting based on 6 samples. Last fit:
+Convergence attained in 2 iterations (rel. change 9.5841e-12)</code></pre>
+</div>
+</div>
+<p><strong>Lists the slopes of each segment</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">slope</span>(m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>$x
+          Est.  St.Err. t value CI(95%).l CI(95%).u
+slope1 2.25390 0.090568 24.8870   2.07420   2.43370
+slope2 0.62602 0.156370  4.0035   0.31563   0.93641</code></pre>
+</div>
+</div>
+</section>
+<section id="comparison-strucchange-vs.-segmented" class="slide level2">
+<h2>Comparison: strucchange vs.&nbsp;segmented</h2>
+<ul>
+<li><strong>Continuity</strong>
+<ul>
+<li><code>segmented</code> models are connected</li>
+<li><code>strucchange</code> allows vertical jumps at the breakpoint</li>
+</ul></li>
+<li><strong>Parameter Shifts</strong>
+<ul>
+<li><code>segmented</code> usually focuses on a change in slope</li>
+<li><code>strucchange</code> allows every parameter (intercept and all slopes) to change simultaneously</li>
+</ul></li>
+<li><strong>Estimation</strong>
+<ul>
+<li><code>segmented</code> uses an iterative approach (requires start value)</li>
+<li><code>strucchange</code> uses dynamic programming to find the globally optimal break locations.</li>
+</ul></li>
+</ul>
+<p><strong>When to use “jumps”</strong></p>
+<ul>
+<li>Appropriate for sudden “shocks”, (e.g., new dam, market crash).</li>
+<li>Inappropriate for continuous processes (e.g., plant growth, aging), where a sudden jump is physically or biologically impossible.</li>
+</ul>
+</section>
 <section id="references" class="slide level2 smaller scrollable">
 <h2>References</h2>
 <p><br></p>
