@@ -32,7 +32,6 @@ website:
         contents:
           - tutorials/s1-introductory-r-session.qmd
           - tutorials/s2-multivar-3d.qmd
-          - tutorials/s3-multivar-lakes.qmd
       - section: R Topics
         contents:
           - slides/x1-r-basics.qmd

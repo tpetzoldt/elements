@@ -10,7 +10,7 @@
   <meta name="generator" content="quarto-1.6.42">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2025-11-20">
+  <meta name="dcterms.date" content="2026-01-28">
   <title>Elements of Data Analysis and Statistics – x4-Pipelines in R</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -208,7 +208,7 @@
       margin-right: 0; 
     }
   </style>
-  <link href="../site_libs/htmltools-fill-0.5.8.1/fill.css" rel="stylesheet">
+  <link href="../site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet">
 
   <script src="../site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 
@@ -242,7 +242,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2025-11-20</p>
+  <p class="date">2026-01-28</p>
 </section>
 <section id="prerequisites" class="slide level2">
 <h2>Prerequisites</h2>
@@ -443,8 +443,8 @@ Thomas Petzoldt
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-867e28822ab83b9a34fa" style="width:432px;height:384px;"></div>
-<script type="application/json" data-for="htmlwidget-867e28822ab83b9a34fa">{"x":{"diagram":"digraph functional {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg1, arg2, ...)\"\n           edge [penwidth=1.5]\n              output -> \"function(arg1, arg2, ...)\"[dir=back]\n           edge [penwidth=0.7, tailport = \"e\", headport = \"n\", constraint = false, color=\"tomato\"]\n              \"input\" -> \"function(arg1, arg2, ...)\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-e639055b7f716d955ded" style="width:432px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-e639055b7f716d955ded">{"x":{"diagram":"digraph functional {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg1, arg2, ...)\"\n           edge [penwidth=1.5]\n              output -> \"function(arg1, arg2, ...)\"[dir=back]\n           edge [penwidth=0.7, tailport = \"e\", headport = \"n\", constraint = false, color=\"tomato\"]\n              \"input\" -> \"function(arg1, arg2, ...)\"\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div><div class="column" style="width:49%;">
@@ -454,8 +454,8 @@ Thomas Petzoldt
 </div>
 <div class="cell">
 <div class="cell-output-display">
-<div class="grViz html-widget html-fill-item" id="htmlwidget-cff90d7d4341f2c040f4" style="width:432px;height:384px;"></div>
-<script type="application/json" data-for="htmlwidget-cff90d7d4341f2c040f4">{"x":{"diagram":"digraph pipes {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg2, ...)\"\n           node [shape=none]\n             \"|>\"\n           edge [penwidth=1.5]\n              input -> \"|>\" -> \"function(arg2, ...)\" -> output\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
+<div class="grViz html-widget html-fill-item" id="htmlwidget-6280b3c74f92f6223e79" style="width:432px;height:384px;"></div>
+<script type="application/json" data-for="htmlwidget-6280b3c74f92f6223e79">{"x":{"diagram":"digraph pipes {\n         graph [rankdir = \"LR\", bgcolor=\"none\"]\n           node [shape = box, penwidth=2, fontname = \"Helvetica\"]\n             \"input\", \"output\"\n           node [shape = \"oval\"]\n             \"function(arg2, ...)\"\n           node [shape=none]\n             \"|>\"\n           edge [penwidth=1.5]\n              input -> \"|>\" -> \"function(arg2, ...)\" -> output\n}","config":{"engine":"dot","options":null}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </div></section>

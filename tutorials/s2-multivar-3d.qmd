@@ -1,7 +1,6 @@
 ---
 title: "Ordination and Clustering"
-author: "Thomas Petzoldt"
-date: "2024-10-22"
+date: "2026-01-27"
 date-format: "YYYY-MM-DD"
 format:
   html:
@@ -16,16 +15,6 @@ bibliography: ../bib.bib
 csl: ../apa.csl
 ---
 
-## Introduction
-
-The following demo demonstrates the reduction of a three dimensional data set into 
-two dimensions by principal component analysis (PCA) and nonmetric multidimensional scaling.
-
-The demo uses artificial data and a 3D plotting package, so the code may look somewhat 
-technical. But don't worry. This is for demonstration of the main principles.
-Practical demonstrations with real data will follow.
-
-
 ```{r setup, include=FALSE}
 ## this code chunk sets some technical details, it is not shown to the user
 library("rgl")
@@ -34,6 +23,14 @@ library("vegan3d")
 library("mvtnorm")
 setupKnitr(autoprint = TRUE)
 ```
+
+## Introduction
+
+The following demonstration shows how a three-dimensional dataset can be reduced to two dimensions using principal component analysis (PCA) and non-metric multidimensional scaling.
+
+As the demo uses artificial data and a 3D plotting package, the code may look somewhat technical. But don't worry! This is just to demonstrate the main principles.
+Practical demonstrations using real data are fond in separate documents.
+
 
 ## Packages and data set
 
@@ -89,7 +86,6 @@ analysis" (PCA).
 `princomp` and  `prcomp` in the **stats** package or function `rda` in the **vegan**
 package. The result is, that the coordinate system is rotated in the direction om maximum variance, using Eigen value calculations. The resulting "synthetic" new dimensions are then the principal components.
 
-
 Each principal component represents then a specific fraction of the total variance of the
 data in ascending order. This can be plotted as bar chart or printed with `summary`.
 
@@ -115,15 +111,12 @@ axes3d()
 
 ## Nonmetric multi-dimensional scaling (NMDS)
 
+PCA is a very useful technique because it reduces dimensions without introducing bias. However, as we have seen, large proportions of information may still be found in higher dimensions.
+
+This is where nonmetric multidimensional scaling comes into play. Here, we can request a number of dimensions $k$, typically $k=2$ or $k=3$, and the computer then tries to fit the information into these dimensions as much as possible. The aim is for the distances in all dimensions to be represented in two or three dimensions only. This process is iterative and it is clear that it cannot be done perfectly and will introduce considerable distortion, known as stress.
+
 The PCA is a very useful technique as it reduces dimensions without bias, but as 
 we have seen, large proportions of information may still be found at higher dimensions.
-
-
-This is, where the nonmetric dimensional scaling comes into play. Here, we can 
-request a number of dimensions $k$, typically $k=2$ or $k=3$ and then the
-computer tries hard to squeeze the information as much as possible into these
-dimensions. The aim is, that the distances between in all dimensions are represented in two or three dimensions only. Though it is done in an iterative way, it is clear, 
-that this is not perfectly possible and will introduce considerable distortion, called stress.
 
 ```{r}
 mds <- metaMDS(A, distance="euclid", scale=TRUE, autotransform = FALSE, k=2)
@@ -185,11 +178,7 @@ The plot can again be rotated and zoomed in. The x- and y axes show the NMDS coo
 
 <hr>
 
-# Glossary
-
-## Distance and dissimilarity measures
-
-
+## Appendix: Distance and dissimilarity measures
 
 ### Quantitative form
 
@@ -236,8 +225,6 @@ Bray-Curtis: $\frac{A+B-2J}{A+B}$
 
 Jaccard: $\frac{2b}{1+b}$ with $b$ = Bray-Curtis dissimilarity
 
-### Applications
 
-Additional distance measures and application suggestions are found in
-the  [`vegdist`](https://www.rdocumentation.org/packages/vegan/versions/2.4-2/topics/vegdist) help page.
+**Note:** Additional distance measures and application suggestions can be found in the [vegdist](https://cran.r-project.org/web/packages/vegan/refman/vegan.html#vegdist) help page.
 
