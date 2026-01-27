@@ -141,6 +141,19 @@ $$
 
 * more indices: species richness, species deficit, Fisher's $\alpha$ ...
 
+## Which index for what?
+
+:::{.smallfont}
+
+| Index | Theory & Focus | Sensitivity | Interpretation |
+| :--- | :--- | :--- | :--- |
+| **Species Richness (R)** | Simple count of the number of different species present in a sample or area. | Highly sensitive to the presence of any species, regardless of its abundance. | Does not account for how individuals are distributed; two sites with same richness can have different diversity. |
+| **Species Deficit** | Represents the gap between observed richness and the potential expected for a habitat. | Sensitive to environmental degradation or sampling effort. | Used to identify "missing" species in a community compared to a reference. |
+| **Shannon Index (H)** | Based on information theory; measures the uncertainty in predicting the identity of a random individual. | More sensitive to species richness and the presence of rare species. | Higher values indicate higher diversity and greater uncertainty. It increases as both richness and evenness increase. |
+| **Simpson Index (1-D)** | Based on probability. Likelihood that two randomly selected individuals belong to different species. | Highly sensitive to the most common or dominant species. | Focuses on dominance. High values close to 1 indicate high diversity and the absence of a single dominant species. |
+| **Evenness (E)** | Measures the equitability or distribution of individuals among the species present. | Sensitive to the relative abundance of species rather than the total number. | Range from 0 to 1. 1 indicates that all species have equal abundance. |
+:::
+
 ## Diversity indices
 
 :::{.column width="20%"}

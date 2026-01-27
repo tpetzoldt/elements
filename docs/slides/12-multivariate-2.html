@@ -624,6 +624,59 @@ H = -\sum_{i=1}^S p_i \log_b p_i
 <li>more indices: species richness, species deficit, Fisher’s <span class="math inline">\(\alpha\)</span> …</li>
 </ul>
 </section>
+<section id="which-index-for-what" class="slide level2">
+<h2>Which index for what?</h2>
+<div class="smallfont">
+<table class="caption-top">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Index</th>
+<th style="text-align: left;">Theory &amp; Focus</th>
+<th style="text-align: left;">Sensitivity</th>
+<th style="text-align: left;">Interpretation</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Species Richness (R)</strong></td>
+<td style="text-align: left;">Simple count of the number of different species present in a sample or area.</td>
+<td style="text-align: left;">Highly sensitive to the presence of any species, regardless of its abundance.</td>
+<td style="text-align: left;">Does not account for how individuals are distributed; two sites with same richness can have different diversity.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Species Deficit</strong></td>
+<td style="text-align: left;">Represents the gap between observed richness and the potential expected for a habitat.</td>
+<td style="text-align: left;">Sensitive to environmental degradation or sampling effort.</td>
+<td style="text-align: left;">Used to identify “missing” species in a community compared to a reference.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Shannon Index (H)</strong></td>
+<td style="text-align: left;">Based on information theory; measures the uncertainty in predicting the identity of a random individual.</td>
+<td style="text-align: left;">More sensitive to species richness and the presence of rare species.</td>
+<td style="text-align: left;">Higher values indicate higher diversity and greater uncertainty. It increases as both richness and evenness increase.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Simpson Index (1-D)</strong></td>
+<td style="text-align: left;">Based on probability. Likelihood that two randomly selected individuals belong to different species.</td>
+<td style="text-align: left;">Highly sensitive to the most common or dominant species.</td>
+<td style="text-align: left;">Focuses on dominance. High values close to 1 indicate high diversity and the absence of a single dominant species.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Evenness (E)</strong></td>
+<td style="text-align: left;">Measures the equitability or distribution of individuals among the species present.</td>
+<td style="text-align: left;">Sensitive to the relative abundance of species rather than the total number.</td>
+<td style="text-align: left;">Range from 0 to 1. 1 indicates that all species have equal abundance.</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
 <section id="diversity-indices-1" class="slide level2">
 <h2>Diversity indices</h2>
 <div class="column" style="width:20%;">
@@ -1197,51 +1250,48 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <pre><code>Square root transformation
 Wisconsin double standardization
 Run 0 stress 0.1102424 
-Run 1 stress 0.1105543 
-... Procrustes: rmse 0.02420926  max resid 0.07189178 
-Run 2 stress 0.2228715 
-Run 3 stress 0.1102424 
-... New best solution
-... Procrustes: rmse 8.941861e-07  max resid 1.843451e-06 
+Run 1 stress 0.1102424 
+... Procrustes: rmse 3.987625e-06  max resid 1.030191e-05 
 ... Similar to previous best
-Run 4 stress 0.1105544 
-... Procrustes: rmse 0.0243131  max resid 0.07224124 
+Run 2 stress 0.1105543 
+... Procrustes: rmse 0.02428622  max resid 0.07215017 
+Run 3 stress 0.2192927 
+Run 4 stress 0.1102424 
+... Procrustes: rmse 6.092371e-06  max resid 1.658189e-05 
+... Similar to previous best
 Run 5 stress 0.1105543 
-... Procrustes: rmse 0.02426671  max resid 0.07208327 
+... Procrustes: rmse 0.02427623  max resid 0.07211644 
 Run 6 stress 0.1727865 
-Run 7 stress 0.1102424 
-... Procrustes: rmse 2.041853e-06  max resid 4.795e-06 
-... Similar to previous best
+Run 7 stress 0.1105544 
+... Procrustes: rmse 0.02432214  max resid 0.07227173 
 Run 8 stress 0.1105543 
-... Procrustes: rmse 0.02423536  max resid 0.071979 
-Run 9 stress 0.1102424 
-... Procrustes: rmse 4.79045e-06  max resid 1.397922e-05 
-... Similar to previous best
+... Procrustes: rmse 0.02424285  max resid 0.07200517 
+Run 9 stress 0.1105543 
+... Procrustes: rmse 0.02420525  max resid 0.07187834 
 Run 10 stress 0.1105543 
-... Procrustes: rmse 0.02421826  max resid 0.07192132 
-Run 11 stress 0.1102424 
-... New best solution
-... Procrustes: rmse 2.91962e-06  max resid 7.479501e-06 
+... Procrustes: rmse 0.02420887  max resid 0.07190017 
+Run 11 stress 0.2192927 
+Run 12 stress 0.1102424 
+... Procrustes: rmse 2.66011e-06  max resid 4.7284e-06 
 ... Similar to previous best
-Run 12 stress 0.1105543 
-... Procrustes: rmse 0.02421826  max resid 0.07192048 
-Run 13 stress 0.1105543 
-... Procrustes: rmse 0.02425272  max resid 0.07203614 
-Run 14 stress 0.2377156 
-Run 15 stress 0.1105543 
-... Procrustes: rmse 0.0242299  max resid 0.07195909 
-Run 16 stress 0.1105543 
-... Procrustes: rmse 0.02426585  max resid 0.07208007 
+Run 13 stress 0.1736877 
+Run 14 stress 0.1105543 
+... Procrustes: rmse 0.02423465  max resid 0.0719766 
+Run 15 stress 0.2680828 
+Run 16 stress 0.1102424 
+... Procrustes: rmse 5.006839e-06  max resid 1.296036e-05 
+... Similar to previous best
 Run 17 stress 0.1102424 
-... Procrustes: rmse 3.737285e-06  max resid 8.718118e-06 
+... Procrustes: rmse 6.788124e-06  max resid 1.892755e-05 
 ... Similar to previous best
 Run 18 stress 0.1102424 
-... Procrustes: rmse 1.959273e-06  max resid 4.221286e-06 
+... Procrustes: rmse 8.597821e-06  max resid 2.439281e-05 
 ... Similar to previous best
-Run 19 stress 0.1105544 
-... Procrustes: rmse 0.02424732  max resid 0.07202345 
-Run 20 stress 0.1727865 
-*** Best solution repeated 3 times</code></pre>
+Run 19 stress 0.1102424 
+... Procrustes: rmse 2.269264e-06  max resid 5.374392e-06 
+... Similar to previous best
+Run 20 stress 0.2435577 
+*** Best solution repeated 7 times</code></pre>
 </div>
 </div>
 </section>
@@ -1262,8 +1312,8 @@ Distance: bray
 Dimensions: 2 
 Stress:     0.1102424 
 Stress type 1, weak ties
-Best solution was repeated 3 times in 20 tries
-The best solution was from try 11 (random start)
+Best solution was repeated 7 times in 20 tries
+The best solution was from try 0 (metric scaling or null solution)
 Scaling: centring, PC rotation, halfchange scaling 
 Species: expanded scores based on 'wisconsin(sqrt(bio))' </code></pre>
 </div>
