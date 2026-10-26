@@ -2778,7 +2778,7 @@
     "href": "slides/01-introduction.html#which-data-structure-is-better",
     "title": "01-Introduction",
     "section": "Which data structure is better?",
-    "text": "Which data structure is better?\n\n\nWide format\n\n\n\n\n\n\nstation\n2021\n2022\n2023\n\n\n\n\nA\n2\n9\n6\n\n\nB\n19\n8\n11\n\n\nC\n16\n1\n9\n\n\nD\n1\n11\n9\n\n\nE\n3\n19\n6\n\n\n\n\n\n\nLong format\n\n\n\n\n\n\nyear\nstation\nvalue\n\n\n\n\n2021\nA\n2\n\n\n2021\nB\n19\n\n\n2021\nC\n16\n\n\n2021\nD\n1\n\n\n2021\nE\n3\n\n\n2022\nA\n9\n\n\n2022\nB\n8\n\n\n2022\nC\n1\n\n\n2022\nD\n11\n\n\n2022\nE\n19\n\n\n2023\nA\n6\n\n\n2023\nB\n11\n\n\n2023\nC\n9\n\n\n2023\nD\n9\n\n\n2023\nE\n6",
+    "text": "Which data structure is better?\n\n\nWide format\n\n\n\n\n\n\nstation\n2021\n2022\n2023\n\n\n\n\nA\n1\n4\n1\n\n\nB\n1\n15\n8\n\n\nC\n10\n20\n11\n\n\nD\n8\n13\n18\n\n\nE\n15\n9\n18\n\n\n\n\n\n\nLong format\n\n\n\n\n\n\nyear\nstation\nvalue\n\n\n\n\n2021\nA\n1\n\n\n2021\nB\n1\n\n\n2021\nC\n10\n\n\n2021\nD\n8\n\n\n2021\nE\n15\n\n\n2022\nA\n4\n\n\n2022\nB\n15\n\n\n2022\nC\n20\n\n\n2022\nD\n13\n\n\n2022\nE\n9\n\n\n2023\nA\n1\n\n\n2023\nB\n8\n\n\n2023\nC\n11\n\n\n2023\nD\n18\n\n\n2023\nE\n18",
     "crumbs": [
       "Basic Statistics",
       "01-Introduction"
@@ -2789,7 +2789,7 @@
     "href": "slides/01-introduction.html#example-an-algae-growth-experiment",
     "title": "01-Introduction",
     "section": "Example: An algae growth experiment",
-    "text": "Example: An algae growth experiment\n\nWide format\n\n\n\n\nTable 1: Growth of algae within 4 days (relative units)\n\n\n\n\n\n\ntreat\nreplicate 1\nreplicate 2\nreplicate 3\n\n\n\n\nFertilizer\n0.020\n-0.217\n-0.273\n\n\nF. open\n0.940\n0.780\n0.555\n\n\nF.+sugar\n0.188\n-0.100\n0.020\n\n\nF.+CaCO3\n0.245\n0.236\n0.456\n\n\nBas.med.\n0.699\n0.727\n0.656\n\n\nA.dest\n-0.010\n0.000\n-0.010\n\n\nTap water\n0.030\n-0.070\nNA\n\n\n\n\n\n\n\n\n\n\n\nNA means “not available”, i.e. a missing value",
+    "text": "Example: An algae growth experiment\n\nWide format\n\n\n\n\nTable 1: Growth of algae within 4 days (relative units)\n\n\n\n\n\n\ntreat\nreplicate 1\nreplicate 2\nreplicate 3\n\n\n\n\nFertilizer\n0.020\n-0.217\n-0.273\n\n\nF. open\n0.940\n0.780\n0.555\n\n\nF.+sugar\n0.188\n-0.100\n0.020\n\n\nF.+CaCO3\n0.245\n0.236\n0.456\n\n\nBas.med.\n0.699\n0.727\n0.656\n\n\nA.dest\n-0.010\n0.000\n-0.010\n\n\nTap water\n0.030\n-0.070\nNA\n\n\n\n\n\n\n\n\n\nNA means “not available”, i.e. a missing value",
     "crumbs": [
       "Basic Statistics",
       "01-Introduction"
@@ -2855,7 +2855,7 @@
     "href": "slides/01-introduction.html#books",
     "title": "01-Introduction",
     "section": "Books",
-    "text": "Books\nStatistics\n\nWell-readable introductions\n\nDalgaard, P., 2008: Introductory Statistics with R. Springer, New York, 2nd edition. (fulltext of the 1st edition freely available)\nVerzani, J. (2019). Using R for introductory statistics. CRC press.\n\nA very well understandable introduction into many fields of statistics, especially regression and time series analysis:\n\nKleiber, C. and Zeileis, A., 2008: Applied Econometrics with R, Springer Verlag, New York. https://link.springer.com/book/10.1007/978-0-387-77318-6\n\n\nR Programming\n\nAn introduction to data science using the modern “tidyverse” approach:\n\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. Free ebook: https://r4ds.hadley.nz/\n\n\n\n\n\n\nAnd lots of material available freely on the internet …",
+    "text": "Books\nStatistics\n\nWell-readable introductions\n\nDalgaard, P., 2008: Introductory Statistics with R. Springer, New York, 2nd edition. https://doi.org/10.1007/978-0-387-79054-1\nVerzani, J. (2019). Using R for introductory statistics. CRC press. https://doi.org/10.1201/9781315373089\n\nA very well understandable introduction into many fields of statistics, especially regression and time series analysis:\n\nKleiber, C. and Zeileis, A., 2008: Applied Econometrics with R, Springer Verlag, New York. https://doi.org/10.1007/978-0-387-77318-6\n\n\nR Programming\n\nAn introduction to data science using the modern “tidyverse” approach:\n\nWickham, H., Çetinkaya-Rundel, M and Grolemund, G, 2023: R for Data Science. Free ebook: https://r4ds.hadley.nz/\n\n\n\n\n\n\nAnd lots of material available freely on the internet …",
     "crumbs": [
       "Basic Statistics",
       "01-Introduction"
@@ -6159,6 +6159,83 @@
     "crumbs": [
       "Basic Statistics",
       "12-Multivariate methods II"
+    ]
+  },
+  {
+    "objectID": "slides/01-introduction.html#working-with-ai-tools",
+    "href": "slides/01-introduction.html#working-with-ai-tools",
+    "title": "01-Introduction",
+    "section": "Working with AI Tools",
+    "text": "Working with AI Tools\nGeneral principle\n\nAI tools are part of today’s data science workflow\nThey are not forbidden — but they must support your learning, not replace it\n\nAllowed and encouraged\n\nAI as an interactive sparring partner\n\nChallenge your statistical reasoning\nAsk for explanations of concepts you are unsure about\n\nGrammar, style, and flow of your written text in the homework project\n\nNot acceptable\n\nSubmitting code you cannot explain line by line\n\nKeep it plain and to the point\n\nSolutions not based on the methods taught in class\n\nCreative additions are encouraged, but should not replace the standard methods\n\nAI generated text that does not reflect your own thinking and interpretation\n\nWrite the first draft yourself.\n\n\n\n\n\n\n\n\n⚠️ Exam rules\n\n\n\nAI tools and the general web are not allowed\nPermitted: course slides and your personal notes, electronically or on paper",
+    "crumbs": [
+      "Basic Statistics",
+      "01-Introduction"
+    ]
+  },
+  {
+    "objectID": "slides/01-introduction.html#working-with-ai-tools-i",
+    "href": "slides/01-introduction.html#working-with-ai-tools-i",
+    "title": "01-Introduction",
+    "section": "Working with AI Tools I",
+    "text": "Working with AI Tools I\n\nGeneral principle\n\nAI tools are part of today’s data science workflow\nThey are not forbidden – but they must support your learning, not replace it\n\nAllowed and encouraged\n\nAI as an interactive sparring partner\nChallenge your statistical reasoning\nAsk for explanations of concepts you are unsure about\nAsk about references – and check them independently (books, papers, R help files)\n\nAlso allowed\n\nGrammar, style, and flow of your written text in the homework project",
+    "crumbs": [
+      "Basic Statistics",
+      "01-Introduction"
+    ]
+  },
+  {
+    "objectID": "slides/01-introduction.html#working-with-ai-tools-ii",
+    "href": "slides/01-introduction.html#working-with-ai-tools-ii",
+    "title": "01-Introduction",
+    "section": "Working with AI Tools II",
+    "text": "Working with AI Tools II\n\nNot helpful for your learning\n\nWriting code you cannot explain line by line\n\nKeep it plain and to the point\n\nSolutions not based on the methods taught in class\n\nCreative additions are encouraged, but should not replace the standard methods\n\nAI generated text that does not reflect your own thinking and interpretation\n\nWrite the first draft yourself\nCritically revise the final version\n\n\n\n\n\n\n\n\n\nExam rules\n\n\n\nAI tools and the general web will not be allowed\nPermitted: course slides and your personal notes, electronically or on paper",
+    "crumbs": [
+      "Basic Statistics",
+      "01-Introduction"
+    ]
+  },
+  {
+    "objectID": "slides/01-introduction.html#recommended-workflow",
+    "href": "slides/01-introduction.html#recommended-workflow",
+    "title": "01-Introduction",
+    "section": "Recommended workflow",
+    "text": "Recommended workflow\n\nbasic understanding → AI help → critical evaluation & follow-up questions → final decision",
+    "crumbs": [
+      "Basic Statistics",
+      "01-Introduction"
+    ]
+  },
+  {
+    "objectID": "slides/01-introduction.html#working-with-ai-tools-iii",
+    "href": "slides/01-introduction.html#working-with-ai-tools-iii",
+    "title": "01-Introduction",
+    "section": "Working with AI Tools III",
+    "text": "Working with AI Tools III\n\nBest use: a four-step workflow\n\nBasic understanding → try to grasp the problem and methods yourself first\nAI help → use AI as an interactive sparring partner\n\nChallenge your statistical reasoning\nAsk for explanations of concepts you are unsure about\n\nCritical evaluation & follow-up questions → don’t take answers at face value\nFinal decision → you are responsible for the result",
+    "crumbs": [
+      "Basic Statistics",
+      "01-Introduction"
+    ]
+  },
+  {
+    "objectID": "slides/01-introduction.html#also-allowed",
+    "href": "slides/01-introduction.html#also-allowed",
+    "title": "01-Introduction",
+    "section": "Also allowed",
+    "text": "Also allowed\n\nGrammar, style, and flow of your written text in the homework project",
+    "crumbs": [
+      "Basic Statistics",
+      "01-Introduction"
+    ]
+  },
+  {
+    "objectID": "slides/01-introduction.html#best-use-a-four-step-workflow",
+    "href": "slides/01-introduction.html#best-use-a-four-step-workflow",
+    "title": "01-Introduction",
+    "section": "Best use: a four-step workflow",
+    "text": "Best use: a four-step workflow\n\n\n\nBasic understanding → try to grasp the problem and methods yourself first\nAI help → use AI as an interactive sparring partner\nCritical evaluation & follow-up questions → don’t take answers at face value – validate against trustworthy sources (books, help files, …)\nFinal decision → you are responsible for the result",
+    "crumbs": [
+      "Basic Statistics",
+      "01-Introduction"
     ]
   }
 ]

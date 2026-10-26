@@ -479,16 +479,83 @@ $\rightarrow$ Lab-exercise with Elbe River time series.
 In contrast to other systems Copy & Paste is allowed! – just cite it.
 
 
+## Working with AI Tools I
+
+<br>
+
+### General principle
+
+- AI tools are part of today's data science workflow
+- They are **not forbidden** -- but they must **support your learning, not replace it**
+
+### Allowed and encouraged
+
+- AI as an *interactive sparring partner*
+- Challenge your statistical reasoning
+- Ask for explanations of concepts you are unsure about
+- Ask about references -- and check them independently (books, papers, R help files) 
+
+### Also allowed
+
+- Grammar, style, and flow of your written text in the homework project
+
+
+
+## Working with AI Tools II
+
+<br>
+
+### Not helpful for your learning
+
+- Writing code you cannot explain **line by line**
+  - Keep it plain and to the point
+- Solutions not based on the methods taught in class
+  - Creative additions are encouraged, but should not replace the standard methods
+- AI generated text that does not reflect your own thinking and interpretation
+  - Write the first draft yourself
+  - Critically revise the final version
+
+<br>
+
+::: {.callout-important}
+## Exam rules
+
+- AI tools and the general web will **not be allowed**
+- Permitted: **course slides and your personal notes, electronically or on paper**
+:::
+
+
+## Best use: a four-step workflow
+
+<br>
+
+:::{.bigfont}
+
+1. **Basic understanding**<br>
+    → try to grasp the problem and methods yourself first
+2. **AI help**<br>
+    → use AI as an *interactive sparring partner*
+3. **Critical evaluation & follow-up questions**<br>
+    → don't take answers at face value -- validate against trustworthy sources (books, help files, ...)
+4. **Final decision**<br>
+    → *you* are responsible for the result
+
+:::
+
 ## Books
 
 **Statistics**
 
 * Well-readable introductions
-    - Dalgaard, P., 2008: Introductory Statistics with **R**. Springer, New York, 2nd edition. (fulltext of the 1st edition [freely available](https://link.springer.com/book/10.1007/b97671))
-    - Verzani, J. (2019). Using R for introductory statistics. CRC press.
-* A very well understandable introduction into many fields of statistics, especially regression and time series analysis:
-  - Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R,
-    Springer Verlag, New York. [https://link.springer.com/book/10.1007/978-0-387-77318-6](https://link.springer.com/book/10.1007/978-0-387-77318-6)
+    -   Dalgaard, P., 2008: Introductory Statistics with **R**.
+        Springer, New York, 2nd edition. <https://doi.org/10.1007/978-0-387-79054-1>
+    -   Verzani, J. (2019). Using R for introductory statistics. CRC
+        press. <https://doi.org/10.1201/9781315373089>
+* A very well understandable introduction into many fields of statistics, especially regression and time series analysis: 
+    -   Kleiber, C. and Zeileis, A., 2008: Applied Econometrics with R,
+        Springer Verlag, New York.
+        <https://doi.org/10.1007/978-0-387-77318-6>
+
 
 **R Programming**
     
@@ -500,5 +567,3 @@ In contrast to other systems Copy & Paste is allowed! – just cite it.
 ::: aside
 And lots of material available freely on the internet ...
 :::
-
-
