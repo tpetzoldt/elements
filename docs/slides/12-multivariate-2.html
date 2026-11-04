@@ -6,11 +6,11 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.42">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2026-01-28">
+  <meta name="dcterms.date" content="2026-11-04">
   <title>Elements of Data Analysis and Statistics – 12-Multivariate methods II</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,6 +18,9 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -30,8 +33,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -42,7 +46,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -115,7 +119,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-cb13c09ad5a7270edb89df8c4c84031f.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-9197ed92144eb5ba5731738e77b63148.css">
   <link rel="stylesheet" href="../thpe.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -232,7 +236,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2026-01-28</p>
+  <p class="date">2026-11-04</p>
 </section>
 <section id="data-sets-and-terms-of-use" class="slide level2">
 <h2>Data sets and terms of use</h2>
@@ -555,7 +559,7 @@ Thomas Petzoldt
 <!-- use local data -->
 
 <img data-src="12-multivariate-2_files/figure-revealjs/gau-barchart-1.png" width="1152" class="r-stretch"><div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyr"</span>)</span>
 <span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>benthos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://tpetzoldt.github.io/datasets/data/gauernitz.csv"</span>)</span>
@@ -564,7 +568,7 @@ Thomas Petzoldt
 <span id="cb1-7"><a aria-hidden="true" tabindex="-1"></a>  benthos <span class="sc">|&gt;</span></span>
 <span id="cb1-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols=</span><span class="dv">5</span><span class="sc">:</span><span class="dv">17</span>, <span class="at">names_to=</span><span class="st">"Taxon"</span>, <span class="at">values_to =</span> <span class="st">"Abundance"</span>)</span>
 <span id="cb1-9"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(benthos_long, <span class="fu">aes</span>(<span class="at">x=</span>Site, <span class="at">y=</span>Abundance, <span class="at">fill=</span>Taxon)) <span class="sc">+</span> <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-10"><a aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(benthos_long, <span class="fu">aes</span>(<span class="at">x=</span>Site, <span class="at">y=</span>Abundance, <span class="at">fill=</span>Taxon)) <span class="sc">+</span> <span class="fu">geom_col</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="how-to-analyse-this-kind-of-data" class="slide level2">
@@ -1164,17 +1168,17 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <div class="column add-space" style="width:54%;">
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"vegan"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"vegan"</span>)</span>
 <span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>benthos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/gauernitz.csv"</span>)</span>
 <span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(benthos) <span class="ot">&lt;-</span> benthos<span class="sc">$</span>Site</span>
 <span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a>species <span class="ot">&lt;-</span> benthos[<span class="sc">-</span><span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">4</span>)]</span>
 <span id="cb2-5"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-6"><a aria-hidden="true" tabindex="-1"></a>d   <span class="ot">&lt;-</span> <span class="fu">vegdist</span>(species, <span class="at">method=</span><span class="st">"bray"</span>)</span>
-<span id="cb2-7"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(d)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-7"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cmdscale</span>(d)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord, <span class="at">type=</span><span class="st">"n"</span>, <span class="at">xlab=</span><span class="st">"PCO 1"</span>, <span class="at">ylab=</span><span class="st">"PCO 2"</span>)</span>
-<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(ord, <span class="fu">row.names</span>(species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord, <span class="at">type=</span><span class="st">"n"</span>, <span class="at">xlab=</span><span class="st">"PCO 1"</span>, <span class="at">ylab=</span><span class="st">"PCO 2"</span>)</span>
+<span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(ord, <span class="fu">row.names</span>(species))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span class="red"><span class="math inline">\(\rightarrow\)</span></span> distance matrix (<code>d</code>) used as input<br> and not data matrix (<code>species</code>) directly</p>
 </div><div class="column" style="width:39%;">
@@ -1237,7 +1241,7 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <section id="example" class="slide level2">
 <h2>Example</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>benthos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/gauernitz.csv"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>benthos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/gauernitz.csv"</span>)</span>
 <span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">row.names</span>(benthos) <span class="ot">&lt;-</span> benthos<span class="sc">$</span>Site</span>
 <span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>env <span class="ot">&lt;-</span> benthos[<span class="fu">c</span>(<span class="st">"Habitat"</span>, <span class="st">"Stream"</span>, <span class="st">"Flood"</span>)] <span class="co"># required later</span></span>
 <span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a></span>
@@ -1245,60 +1249,63 @@ d_{jk} = \frac{\sum{|x_{ij}-x_{ik}|}}{\sum{(x_{ij}+x_{ik})}}
 <span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a>         <span class="st">"Turbellaria"</span>, <span class="st">"Heptageniidae"</span>, <span class="st">"Ephemeroptera"</span>, <span class="st">"Gammarus"</span>, </span>
 <span id="cb4-7"><a aria-hidden="true" tabindex="-1"></a>         <span class="st">"Trichoptera"</span>, <span class="st">"Acari"</span>, <span class="st">"Nematoda"</span>, <span class="st">"Oligochaeta"</span>)]</span>
 <span id="cb4-8"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-9"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Square root transformation
 Wisconsin double standardization
 Run 0 stress 0.1102424 
-Run 1 stress 0.1102424 
-... Procrustes: rmse 3.987625e-06  max resid 1.030191e-05 
-... Similar to previous best
-Run 2 stress 0.1105543 
-... Procrustes: rmse 0.02428622  max resid 0.07215017 
-Run 3 stress 0.2192927 
-Run 4 stress 0.1102424 
-... Procrustes: rmse 6.092371e-06  max resid 1.658189e-05 
-... Similar to previous best
+Run 1 stress 0.1105543 
+... Procrustes: rmse 0.02422925  max resid 0.07195893 
+Run 2 stress 0.1858758 
+Run 3 stress 0.1105543 
+... Procrustes: rmse 0.02422934  max resid 0.0719591 
+Run 4 stress 0.1857967 
 Run 5 stress 0.1105543 
-... Procrustes: rmse 0.02427623  max resid 0.07211644 
-Run 6 stress 0.1727865 
-Run 7 stress 0.1105544 
-... Procrustes: rmse 0.02432214  max resid 0.07227173 
+... Procrustes: rmse 0.02427363  max resid 0.07210948 
+Run 6 stress 0.1105543 
+... Procrustes: rmse 0.02416078  max resid 0.0717283 
+Run 7 stress 0.1102424 
+... Procrustes: rmse 1.768833e-05  max resid 4.806117e-05 
+... Similar to previous best
 Run 8 stress 0.1105543 
-... Procrustes: rmse 0.02424285  max resid 0.07200517 
-Run 9 stress 0.1105543 
-... Procrustes: rmse 0.02420525  max resid 0.07187834 
-Run 10 stress 0.1105543 
-... Procrustes: rmse 0.02420887  max resid 0.07190017 
-Run 11 stress 0.2192927 
+... Procrustes: rmse 0.024227  max resid 0.07195139 
+Run 9 stress 0.1102424 
+... Procrustes: rmse 5.42812e-06  max resid 1.491521e-05 
+... Similar to previous best
+Run 10 stress 0.1102424 
+... Procrustes: rmse 2.576307e-06  max resid 5.898354e-06 
+... Similar to previous best
+Run 11 stress 0.1102424 
+... Procrustes: rmse 6.909254e-06  max resid 1.921157e-05 
+... Similar to previous best
 Run 12 stress 0.1102424 
-... Procrustes: rmse 2.66011e-06  max resid 4.7284e-06 
+... Procrustes: rmse 2.990689e-06  max resid 7.862857e-06 
 ... Similar to previous best
-Run 13 stress 0.1736877 
-Run 14 stress 0.1105543 
-... Procrustes: rmse 0.02423465  max resid 0.0719766 
-Run 15 stress 0.2680828 
-Run 16 stress 0.1102424 
-... Procrustes: rmse 5.006839e-06  max resid 1.296036e-05 
+Run 13 stress 0.1102424 
+... Procrustes: rmse 3.838429e-06  max resid 8.311357e-06 
 ... Similar to previous best
-Run 17 stress 0.1102424 
-... Procrustes: rmse 6.788124e-06  max resid 1.892755e-05 
+Run 14 stress 0.1102424 
+... Procrustes: rmse 4.813022e-06  max resid 1.197666e-05 
 ... Similar to previous best
+Run 15 stress 0.1727865 
+Run 16 stress 0.1105543 
+... Procrustes: rmse 0.02426342  max resid 0.07207424 
+Run 17 stress 0.2221838 
 Run 18 stress 0.1102424 
-... Procrustes: rmse 8.597821e-06  max resid 2.439281e-05 
+... Procrustes: rmse 1.779083e-06  max resid 4.710867e-06 
 ... Similar to previous best
-Run 19 stress 0.1102424 
-... Procrustes: rmse 2.269264e-06  max resid 5.374392e-06 
-... Similar to previous best
-Run 20 stress 0.2435577 
-*** Best solution repeated 7 times</code></pre>
+Run 19 stress 0.1105543 
+... Procrustes: rmse 0.02422661  max resid 0.07195009 
+Run 20 stress 0.1105543 
+... Procrustes: rmse 0.02423569  max resid 0.07198056 
+*** Best solution repeated 8 times</code></pre>
 </div>
 </div>
 </section>
 <section id="results-of-the-nmds" class="slide level2">
 <h2>Results of the NMDS</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a>ord</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1312,7 +1319,7 @@ Distance: bray
 Dimensions: 2 
 Stress:     0.1102424 
 Stress type 1, weak ties
-Best solution was repeated 7 times in 20 tries
+Best solution was repeated 8 times in 20 tries
 The best solution was from try 0 (metric scaling or null solution)
 Scaling: centring, PC rotation, halfchange scaling 
 Species: expanded scores based on 'wisconsin(sqrt(bio))' </code></pre>
@@ -1328,16 +1335,16 @@ Species: expanded scores based on 'wisconsin(sqrt(bio))' </code></pre>
 <li>consider to increase <code>try</code> and <code>trymax</code> for big and/or difficult data sets, e.g.:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio, <span class="at">distance=</span><span class="st">"bray"</span>, <span class="at">autotransform=</span><span class="cn">FALSE</span>, <span class="at">try=</span><span class="dv">40</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio, <span class="at">distance=</span><span class="st">"bray"</span>, <span class="at">autotransform=</span><span class="cn">FALSE</span>, <span class="at">try=</span><span class="dv">40</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="nmds-plot" class="slide level2">
 <h2>NMDS Plot</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord, <span class="at">type=</span><span class="st">"text"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord, <span class="at">type=</span><span class="st">"text"</span>)</span>
 <span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="st">"dashed"</span>, <span class="at">col=</span><span class="st">"gray"</span>)</span>
 <span id="cb9-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v=</span><span class="dv">0</span>, <span class="at">lty=</span><span class="st">"dashed"</span>, <span class="at">col=</span><span class="st">"gray"</span>)</span>
-<span id="cb9-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">"Stress="</span>, <span class="fu">round</span>(ord<span class="sc">$</span>stress,<span class="dv">2</span>)), <span class="at">side=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">"Stress="</span>, <span class="fu">round</span>(ord<span class="sc">$</span>stress,<span class="dv">2</span>)), <span class="at">side=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="12-multivariate-2_files/figure-revealjs/gau-nmds-1.png" class="quarto-figure quarto-figure-center r-stretch" width="480"></section>
@@ -1393,8 +1400,8 @@ S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne 
 <section id="stressplot-shepherd-plot" class="slide level2">
 <h2>Stressplot (Shepherd plot)</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">stressplot</span>(ord)</span>
-<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">"Stress ="</span>, <span class="fu">round</span>(ord<span class="sc">$</span>stress,<span class="dv">2</span>)), <span class="at">side=</span><span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">stressplot</span>(ord)</span>
+<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">mtext</span>(<span class="fu">paste</span>(<span class="st">"Stress ="</span>, <span class="fu">round</span>(ord<span class="sc">$</span>stress,<span class="dv">2</span>)), <span class="at">side=</span><span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="12-multivariate-2_files/figure-revealjs/stressplot1-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
@@ -1432,10 +1439,10 @@ S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne 
 <section id="environmental-fitting" class="slide level2">
 <h2>Environmental fitting</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio, <span class="at">trace =</span> <span class="cn">FALSE</span>) <span class="co"># trace: show or suppress intermediate output</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(bio, <span class="at">trace =</span> <span class="cn">FALSE</span>) <span class="co"># trace: show or suppress intermediate output</span></span>
 <span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a>ef <span class="ot">&lt;-</span> <span class="fu">envfit</span>(ord, env, <span class="at">permu =</span> <span class="dv">1000</span>)</span>
 <span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord, <span class="at">type =</span> <span class="st">"t"</span>)</span>
-<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef, <span class="at">p.max =</span> <span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef, <span class="at">p.max =</span> <span class="fl">0.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="12-multivariate-2_files/figure-revealjs/envfit-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
@@ -1446,7 +1453,7 @@ S = \sqrt{\frac{\sum_{i \ne j} (\theta(d_{ij}) - \tilde{d}_{ij})^2}{\sum_{i \ne 
 <section id="numerical-results-and-p-values" class="slide level2">
 <h2>Numerical results and p-values</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>ef</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>ef</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ***FACTORS:
@@ -1480,11 +1487,11 @@ Number of permutations: 1000</code></pre>
 <section id="another-example-data-set-from-the-vegan-package" class="slide level2">
 <h2>Another example data set from the vegan package</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(varechem); <span class="fu">data</span>(varespec)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(varechem); <span class="fu">data</span>(varespec)</span>
 <span id="cb14-2"><a aria-hidden="true" tabindex="-1"></a>mds <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(varespec, <span class="at">trace=</span><span class="cn">FALSE</span>)</span>
 <span id="cb14-3"><a aria-hidden="true" tabindex="-1"></a>ef <span class="ot">&lt;-</span> <span class="fu">envfit</span>(mds, varechem, <span class="at">permu=</span><span class="dv">1000</span>)</span>
 <span id="cb14-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds, <span class="at">type=</span><span class="st">"t"</span>)</span>
-<span id="cb14-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef, <span class="at">p.max =</span><span class="fl">0.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef, <span class="at">p.max =</span><span class="fl">0.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="12-multivariate-2_files/figure-revealjs/vare-envfit-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><p>Data from <span class="citation" data-cites="vare_effects_1995">Väre et al. (<a href="#/references" role="doc-biblioref" onclick="">1995</a>)</span></p>
@@ -1521,11 +1528,11 @@ Number of permutations: 1000</code></pre>
 <h2>Surface fitting</h2>
 
 <img data-src="12-multivariate-2_files/figure-revealjs/vare-surf-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a>ef <span class="ot">&lt;-</span> <span class="fu">envfit</span>(mds <span class="sc">~</span> Al <span class="sc">+</span> Ca, varechem, <span class="at">permu =</span> <span class="dv">1000</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a>ef <span class="ot">&lt;-</span> <span class="fu">envfit</span>(mds <span class="sc">~</span> Al <span class="sc">+</span> Ca, varechem, <span class="at">permu =</span> <span class="dv">1000</span>)</span>
 <span id="cb17-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(mds, <span class="at">display =</span> <span class="st">"sites"</span>, <span class="at">type =</span> <span class="st">"text"</span>)</span>
 <span id="cb17-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ef)</span>
 <span id="cb17-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(varechem, <span class="fu">ordisurf</span>(mds, Al, <span class="at">add =</span> <span class="cn">TRUE</span>))</span>
-<span id="cb17-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(varechem, <span class="fu">ordisurf</span>(mds, Ca, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"green4"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(varechem, <span class="fu">ordisurf</span>(mds, Ca, <span class="at">add =</span> <span class="cn">TRUE</span>, <span class="at">col =</span> <span class="st">"green4"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="pros-and-cons-of-the-methods-discussed-so-far" class="slide level2">
@@ -1731,8 +1738,8 @@ Number of permutations: 1000</code></pre>
 <h2>CCA: Canonical Correspondence Analysis</h2>
 <p><strong>Example Gauernitzbach-data</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cca</span>(bio <span class="sc">~</span> ., <span class="at">data =</span> env) <span class="co"># ~ . is an abbreviation for all variables in env</span></span>
-<span id="cb18-2"><a aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cca</span>(bio <span class="sc">~</span> ., <span class="at">data =</span> env) <span class="co"># ~ . is an abbreviation for all variables in env</span></span>
+<span id="cb18-2"><a aria-hidden="true" tabindex="-1"></a>ord</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call: cca(formula = bio ~ Habitat + Stream + Flood, data = env)
@@ -1771,7 +1778,7 @@ Eigenvalues for unconstrained axes:
 <section id="triplot" class="slide level2">
 <h2>Triplot</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="12-multivariate-2_files/figure-revealjs/gau-cca-1.png" class="quarto-figure quarto-figure-center r-stretch" width="576"><p><strong>Important</strong></p>
@@ -1797,7 +1804,7 @@ Eigenvalues for unconstrained axes:
 <h2>Statistical significance: ANOVA like permutation test</h2>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ord, <span class="at">by =</span> <span class="st">"terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ord, <span class="at">by =</span> <span class="st">"terms"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Permutation test for cca under reduced model
 Terms added sequentially (first to last)
@@ -1822,7 +1829,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="adonis-test" class="slide level2">
 <h2>ADONIS test</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(bio <span class="sc">~</span> Habitat <span class="sc">*</span> Stream <span class="sc">*</span> Flood, <span class="at">data =</span> env, <span class="at">method =</span> <span class="st">"bray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">adonis2</span>(bio <span class="sc">~</span> Habitat <span class="sc">*</span> Stream <span class="sc">*</span> Flood, <span class="at">data =</span> env, <span class="at">method =</span> <span class="st">"bray"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Permutation test for adonis under reduced model
 Permutation: free
@@ -1863,10 +1870,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="example-dbrda-with-the-gauernitz-data" class="slide level2">
 <h2>Example dbRDA with the Gauernitz data</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">dbrda</span>(bio <span class="sc">~</span> ., <span class="at">data =</span> env, <span class="at">method=</span><span class="st">"bray"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">dbrda</span>(bio <span class="sc">~</span> ., <span class="at">data =</span> env, <span class="at">method=</span><span class="st">"bray"</span>)</span>
 <span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a>ord</span>
 <span id="cb25-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ord)</span>
-<span id="cb25-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ord, <span class="at">by=</span><span class="st">"terms"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb25-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(ord, <span class="at">by=</span><span class="st">"terms"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li><code>~ .</code> is an abbreviation for all variables in env</li>
@@ -1884,8 +1891,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><strong>Example</strong></p>
 <p>We know that pools and riffles are different and that the two streams differ somewhat, so we handle this as covariates</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cca</span>(bio <span class="sc">~</span> Flood <span class="sc">+</span> <span class="fu">Condition</span>(Habitat, Stream), <span class="at">data =</span> env)</span>
-<span id="cb26-2"><a aria-hidden="true" tabindex="-1"></a>ord</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" tabindex="-1"></a>ord <span class="ot">&lt;-</span> <span class="fu">cca</span>(bio <span class="sc">~</span> Flood <span class="sc">+</span> <span class="fu">Condition</span>(Habitat, Stream), <span class="at">data =</span> env)</span>
+<span id="cb26-2"><a aria-hidden="true" tabindex="-1"></a>ord</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call: cca(formula = bio ~ Flood + Condition(Habitat, Stream), data = env)
@@ -2182,33 +2189,33 @@ Eigenvalues for unconstrained axes:
 <section id="cluster-analysis-1" class="slide level2">
 <h2>Cluster analysis</h2>
 <div class="cell" data-layout-align="center" data-wig.width="12">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>))</span>
 <span id="cb28-2"><a aria-hidden="true" tabindex="-1"></a>hc <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(<span class="fu">scale</span>(lakedata2)), <span class="at">method=</span><span class="st">"complete"</span>) <span class="co"># the default</span></span>
 <span id="cb28-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc)</span>
 <span id="cb28-4"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb28-5"><a aria-hidden="true" tabindex="-1"></a>hc2 <span class="ot">&lt;-</span> <span class="fu">hclust</span>(<span class="fu">dist</span>(<span class="fu">scale</span>(lakedata2)), <span class="at">method=</span><span class="st">"ward.D2"</span>)</span>
-<span id="cb28-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="12-multivariate-2_files/figure-revealjs/lakes-cluster2 -1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="identification-of-clusters-in-the-tree" class="slide level2">
 <h2>Identification of clusters in the tree</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>)    <span class="co"># -1: extend vertical lines to the bottom</span></span>
-<span id="cb29-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(hc, <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span>)    <span class="co"># -1: extend vertical lines to the bottom</span></span>
+<span id="cb29-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">rect.hclust</span>(hc, <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a>grp <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hc, <span class="dv">5</span>)</span>
-<span id="cb30-2"><a aria-hidden="true" tabindex="-1"></a><span class="co"># grp                  # can be used to show the groups</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a>grp <span class="ot">&lt;-</span> <span class="fu">cutree</span>(hc, <span class="dv">5</span>)</span>
+<span id="cb30-2"><a aria-hidden="true" tabindex="-1"></a><span class="co"># grp                  # can be used to show the groups</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <img data-src="12-multivariate-2_files/figure-revealjs/lake-clusters2-1.png" width="960" class="r-stretch"></section>
 <section id="color-nmds-according-to-clusters" class="slide level2">
 <h2>Color NMDS according to clusters</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>md <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(lakedata2, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">distance =</span> <span class="st">"euclid"</span>, <span class="at">trace=</span><span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>md <span class="ot">&lt;-</span> <span class="fu">metaMDS</span>(lakedata2, <span class="at">scale =</span> <span class="cn">TRUE</span>, <span class="at">distance =</span> <span class="st">"euclid"</span>, <span class="at">trace=</span><span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md, <span class="at">type =</span> <span class="st">"n"</span>)</span>
-<span id="cb32-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(md<span class="sc">$</span>points, <span class="fu">row.names</span>(lakedata2), <span class="at">col =</span> grp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(md, <span class="at">type =</span> <span class="st">"n"</span>)</span>
+<span id="cb32-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">text</span>(md<span class="sc">$</span>points, <span class="fu">row.names</span>(lakedata2), <span class="at">col =</span> grp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="12-multivariate-2_files/figure-revealjs/lake-nmds-colored-1.png" width="960" class="r-stretch"></section>
@@ -2226,8 +2233,8 @@ Eigenvalues for unconstrained axes:
 <li>no dendrogramm</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(<span class="fu">log</span>(lakedata)), <span class="at">centers =</span> <span class="dv">5</span>)</span>
-<span id="cb33-2"><a aria-hidden="true" tabindex="-1"></a>cl<span class="sc">$</span>cluster</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-hidden="true" tabindex="-1"></a>cl <span class="ot">&lt;-</span> <span class="fu">kmeans</span>(<span class="fu">scale</span>(<span class="fu">log</span>(lakedata)), <span class="at">centers =</span> <span class="dv">5</span>)</span>
+<span id="cb33-2"><a aria-hidden="true" tabindex="-1"></a>cl<span class="sc">$</span>cluster</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Ammer   Arend   Boden   Chiem   Dober   Muegg   Ploen   Kumme Mueritz   MuerB 
       5       1       5       5       3       2       4       3       4       1 
@@ -2239,7 +2246,7 @@ Eigenvalues for unconstrained axes:
 <section id="scatterplot-of-data-and-clusters" class="slide level2">
 <h2>Scatterplot of data and clusters</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(lakedata), <span class="at">col =</span> cl<span class="sc">$</span>cluster, <span class="at">pch=</span><span class="dv">16</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">log</span>(lakedata), <span class="at">col =</span> cl<span class="sc">$</span>cluster, <span class="at">pch=</span><span class="dv">16</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="12-multivariate-2_files/figure-revealjs/kmeans-scatter-1.png" width="960" class="r-stretch"></section>
@@ -2463,7 +2470,7 @@ Winkelmann, C., Hellmann, C., Worischka, S., Petzoldt, T., &amp; Benndorf, J. (2
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -2566,190 +2573,173 @@ Winkelmann, C., Hellmann, C., Worischka, S., Petzoldt, T., &amp; Benndorf, J. (2
     
 
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>

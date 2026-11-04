@@ -6,11 +6,11 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.42">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2026-01-28">
+  <meta name="dcterms.date" content="2026-11-04">
   <title>Elements of Data Analysis and Statistics – 10-Time Series Outlook</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,6 +18,9 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -30,8 +33,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -42,7 +46,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -115,7 +119,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-cb13c09ad5a7270edb89df8c4c84031f.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-9197ed92144eb5ba5731738e77b63148.css">
   <link rel="stylesheet" href="../thpe.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -232,7 +236,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2026-01-28</p>
+  <p class="date">2026-11-04</p>
 </section>
 <section>
 <section id="time-series-decomposition" class="title-slide slide level1 center">
@@ -266,21 +270,21 @@ Thomas Petzoldt
 </ul>
 <p><strong>Example:</strong> Annual precipitation 1900-1986, Great Lakes</p>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Kendall)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Kendall)</span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(PrecipGL)</span>
 <span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PrecipGL, <span class="at">ylab=</span><span class="st">"Precipitation (inches)"</span>)</span>
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a><span class="co"># moving average with rectangular kernel</span></span>
 <span id="cb1-5"><a aria-hidden="true" tabindex="-1"></a>kernel <span class="ot">&lt;-</span> <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">10</span>)  <span class="co"># change second value to play with bandwidth</span></span>
-<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(stats<span class="sc">::</span><span class="fu">filter</span>(PrecipGL, kernel<span class="sc">/</span><span class="fu">sum</span>(kernel)), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(stats<span class="sc">::</span><span class="fu">filter</span>(PrecipGL, kernel<span class="sc">/</span><span class="fu">sum</span>(kernel)), <span class="at">lwd =</span> <span class="dv">2</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/filter1-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
 <section id="trend-corrected-series" class="slide level2">
 <h2>Trend corrected series</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a>smooth <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(PrecipGL, kernel<span class="sc">/</span><span class="fu">sum</span>(kernel))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a>smooth <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">filter</span>(PrecipGL, kernel<span class="sc">/</span><span class="fu">sum</span>(kernel))</span>
 <span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a>residuals <span class="ot">&lt;-</span> PrecipGL <span class="sc">-</span> smooth</span>
-<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(residuals)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(residuals)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/filter2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
@@ -296,14 +300,14 @@ Thomas Petzoldt
 <li>The data set is contained in the package <strong>boot</strong> <span class="citation" data-cites="canty_boot_2022">(<a href="#/references" role="doc-biblioref" onclick="">Canty &amp; Ripley, 2022</a>)</span>:</li>
 </ul>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(boot)</span>
 <span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(manaus)</span>
-<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tsp</span>(manaus) <span class="co"># shows time series properties</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">tsp</span>(manaus) <span class="co"># shows time series properties</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1903.000 1992.917   12.000</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus)</span>
-<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(stats<span class="sc">::</span><span class="fu">filter</span>(manaus, <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">11</span>), <span class="fl">0.5</span>)<span class="sc">/</span><span class="dv">12</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus)</span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(stats<span class="sc">::</span><span class="fu">filter</span>(manaus, <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fu">rep</span>(<span class="dv">1</span>, <span class="dv">11</span>), <span class="fl">0.5</span>)<span class="sc">/</span><span class="dv">12</span>), <span class="at">lwd=</span><span class="dv">2</span>, <span class="at">col=</span><span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/filter3-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
@@ -312,10 +316,10 @@ Thomas Petzoldt
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PrecipGL)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(PrecipGL)</span>
 <span id="cb6-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL, <span class="at">f =</span> <span class="dv">2</span><span class="sc">/</span><span class="dv">3</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
 <span id="cb6-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL, <span class="at">f =</span> <span class="dv">1</span><span class="sc">/</span><span class="dv">3</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"forestgreen"</span>)</span>
-<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL, <span class="at">f =</span> <span class="fl">0.1</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">lowess</span>(<span class="fu">time</span>(PrecipGL), PrecipGL, <span class="at">f =</span> <span class="fl">0.1</span>), <span class="at">lwd =</span> <span class="dv">3</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -386,7 +390,7 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># create an arbitrary time series</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="co"># create an arbitrary time series</span></span>
 <span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a>n   <span class="ot">&lt;-</span> <span class="dv">360</span></span>
 <span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a>t   <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span>(n<span class="dv">-1</span>)</span>
@@ -406,7 +410,7 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <span id="cb7-18"><a aria-hidden="true" tabindex="-1"></a>p       <span class="ot">&lt;-</span> <span class="fu">fft</span>(x)</span>
 <span id="cb7-19"><a aria-hidden="true" tabindex="-1"></a>p[(n<span class="sc">/</span><span class="dv">2</span>)<span class="sc">:</span>n] <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="co"># set only the "redundant frequencies" to zero</span></span>
 <span id="cb7-20"><a aria-hidden="true" tabindex="-1"></a>x_sim         <span class="ot">&lt;-</span> <span class="fu">fft</span>(p, <span class="at">inverse =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb7-21"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="dv">2</span> <span class="sc">*</span> <span class="fu">Re</span>(x_sim)<span class="sc">/</span>n <span class="sc">-</span> <span class="fu">Re</span>(p[<span class="dv">1</span>])<span class="sc">/</span>n, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-21"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(t, <span class="dv">2</span> <span class="sc">*</span> <span class="fu">Re</span>(x_sim)<span class="sc">/</span>n <span class="sc">-</span> <span class="fu">Re</span>(p[<span class="dv">1</span>])<span class="sc">/</span>n, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -415,8 +419,8 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <h2>Automatic time series decomposition</h2>
 <p>Function <code>decompose</code> implements the classical approach with symmetric moving average.</p>
 <div class="cell" data-layout-align="center" data-fig="true" width="10" height="10">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>manaus_dec <span class="ot">&lt;-</span> <span class="fu">decompose</span>(manaus)</span>
-<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus_dec)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>manaus_dec <span class="ot">&lt;-</span> <span class="fu">decompose</span>(manaus)</span>
+<span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus_dec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/decompose-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
@@ -431,8 +435,8 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <li>uses a LOESS filter</li>
 </ul>
 <div class="cell" data-layout-align="center" data-fig="true" width="10" height="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>manaus_stl <span class="ot">&lt;-</span> <span class="fu">stl</span>(manaus, <span class="at">s.window=</span><span class="dv">13</span>)</span>
-<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus_stl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>manaus_stl <span class="ot">&lt;-</span> <span class="fu">stl</span>(manaus, <span class="at">s.window=</span><span class="dv">13</span>)</span>
+<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(manaus_stl)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/stl-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section></section>
@@ -453,7 +457,7 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## read data directly from NOAA</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## read data directly from NOAA</span></span>
 <span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a><span class="co">#co2 &lt;- read_csv("https://gml.noaa.gov/webdata/ccgg/trends/co2/co2_mm_mlo.csv", </span></span>
 <span id="cb10-3"><a aria-hidden="true" tabindex="-1"></a><span class="co">#                skip = 40, show_col_types = FALSE)</span></span>
 <span id="cb10-4"><a aria-hidden="true" tabindex="-1"></a></span>
@@ -468,7 +472,7 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <span id="cb10-13"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, average)) <span class="sc">+</span> </span>
 <span id="cb10-14"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="fu">expression</span>(CO[<span class="dv">2</span>]<span class="sc">~</span><span class="st">"in the atmosphere (ppm)"</span>)) <span class="sc">+</span> </span>
 <span id="cb10-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Mauna Loa Observatory, Hawaii, Monthly Averages"</span>) <span class="sc">+</span></span>
-<span id="cb10-16"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-16"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -478,13 +482,13 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(astsa)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(astsa)</span>
 <span id="cb11-2"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-3"><a aria-hidden="true" tabindex="-1"></a><span class="do">## convert to a time series object</span></span>
 <span id="cb11-4"><a aria-hidden="true" tabindex="-1"></a>co2ts <span class="ot">&lt;-</span> <span class="fu">ts</span>(co2<span class="sc">$</span>average, <span class="at">start=</span><span class="dv">1959</span>, <span class="at">frequency =</span> <span class="dv">12</span>)</span>
 <span id="cb11-5"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb11-6"><a aria-hidden="true" tabindex="-1"></a><span class="do">## fit a SARIMA model and show the results</span></span>
-<span id="cb11-7"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">sarima</span>(co2ts, <span class="at">p =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">q =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">Q =</span> <span class="dv">1</span>, <span class="at">S =</span> <span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-7"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">sarima</span>(co2ts, <span class="at">p =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">q =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">Q =</span> <span class="dv">1</span>, <span class="at">S =</span> <span class="dv">12</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -495,9 +499,9 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">sarima.for</span>(co2ts, <span class="at">n.ahead =</span> <span class="dv">12</span> <span class="sc">*</span> <span class="dv">27</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">sarima.for</span>(co2ts, <span class="at">n.ahead =</span> <span class="dv">12</span> <span class="sc">*</span> <span class="dv">27</span>, </span>
 <span id="cb12-2"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">p =</span> <span class="dv">1</span>, <span class="at">d =</span> <span class="dv">1</span>, <span class="at">q =</span> <span class="dv">1</span>, <span class="at">P =</span> <span class="dv">0</span>, <span class="at">D =</span> <span class="dv">1</span>, <span class="at">Q =</span> <span class="dv">1</span>, <span class="at">S =</span> <span class="dv">12</span>, </span>
-<span id="cb12-3"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">plot.all =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a aria-hidden="true" tabindex="-1"></a>           <span class="at">plot.all =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -521,9 +525,9 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <h2>The Nile data set</h2>
 <p>The Nile data set contains measurements of annual discharge of the Nile at Aswan from 1871 to 1970 <span class="gray">(see help page ?Nile for data source):</span></p>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(strucchange)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(strucchange)</span>
 <span id="cb13-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(<span class="st">"Nile"</span>)</span>
-<span id="cb13-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/nile-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
@@ -535,10 +539,10 @@ b_p     &amp;= 2 \frac{\sum_{t=1}^{N} x_t \sin(2 \pi p t/N)}{N}
 <li><code>efp</code> = empirical fluctuation process,<code>sctest</code> = structural change test</li>
 </ul>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>ocus <span class="ot">&lt;-</span> <span class="fu">efp</span>(Nile <span class="sc">~</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"OLS-CUSUM"</span>)</span>
-<span id="cb14-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ocus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a>ocus <span class="ot">&lt;-</span> <span class="fu">efp</span>(Nile <span class="sc">~</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"OLS-CUSUM"</span>)</span>
+<span id="cb14-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(ocus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sctest</span>(ocus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">sctest</span>(ocus)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     OLS-based CUSUM test
@@ -614,8 +618,8 @@ BIC = - 2 \ln(L) + k \cdot \ln(n)
 <h2>Breakpoint analysis</h2>
 <p><br></p>
 <div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb17-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb17-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(bp.nile)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
      Optimal (m+1)-segment partition: 
@@ -655,8 +659,8 @@ BIC    1318    1270    1276    1285    1292    1311</code></pre>
 <section id="likelihood-profile-rightarrow-optimal-number-of-breaks" class="slide level2">
 <h2>Likelihood profile: <span class="math inline">\(\rightarrow\)</span> optimal number of breaks?</h2>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
-<span id="cb19-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bp.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>bp.nile <span class="ot">&lt;-</span> <span class="fu">breakpoints</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
+<span id="cb19-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bp.nile)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/bp-nile-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><ul>
@@ -668,7 +672,7 @@ BIC    1318    1270    1276    1285    1292    1311</code></pre>
 <section id="plot-breakpoints-and-confidence-interval" class="slide level2">
 <h2>Plot breakpoints and confidence interval</h2>
 <div class="cell" data-layout-align="center" data-fig="true">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## fit null hypothesis model and model with 1 breakpoint</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## fit null hypothesis model and model with 1 breakpoint</span></span>
 <span id="cb20-2"><a aria-hidden="true" tabindex="-1"></a>fm0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Nile <span class="sc">~</span> <span class="dv">1</span>)</span>
 <span id="cb20-3"><a aria-hidden="true" tabindex="-1"></a>fm1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(Nile <span class="sc">~</span> <span class="fu">breakfactor</span>(bp.nile,  <span class="at">breaks =</span> <span class="dv">1</span>))</span>
 <span id="cb20-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(Nile)</span>
@@ -679,7 +683,7 @@ BIC    1318    1270    1276    1285    1292    1311</code></pre>
 <span id="cb20-9"><a aria-hidden="true" tabindex="-1"></a><span class="do">## confidence interval</span></span>
 <span id="cb20-10"><a aria-hidden="true" tabindex="-1"></a>ci.nile <span class="ot">&lt;-</span> <span class="fu">confint</span>(bp.nile)</span>
 <span id="cb20-11"><a aria-hidden="true" tabindex="-1"></a><span class="co">#ci.nile  # output numerical results</span></span>
-<span id="cb20-12"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ci.nile)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-12"><a aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(ci.nile)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="10-timeseries-outlook_files/figure-revealjs/ci-nile-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section>
@@ -688,7 +692,7 @@ BIC    1318    1270    1276    1285    1292    1311</code></pre>
 <p><br></p>
 <p><strong>Likelihood ratio test</strong></p>
 <div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(fm0, fm1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -703,7 +707,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
 <p><strong>BIC based comparison</strong></p>
 <div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">BIC</span>(fm0, fm1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    df      BIC
 fm0  2 1318.242
@@ -712,7 +716,7 @@ fm1  3 1265.479</code></pre>
 </div>
 <p><strong>AIC based comparison</strong></p>
 <div class="cell" data-fig="false">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fm0, fm1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(fm0, fm1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    df      AIC
 fm0  2 1313.031
@@ -725,11 +729,11 @@ fm1  3 1257.663</code></pre>
 <h2>Diagnostics</h2>
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb27-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(fm0))     <span class="co"># model without breaks</span></span>
 <span id="cb27-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(<span class="fu">residuals</span>(fm1))     <span class="co"># model with 1 breakpoint</span></span>
 <span id="cb27-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm0))</span>
-<span id="cb27-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm1))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-5"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(fm1))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <!--
@@ -961,7 +965,7 @@ Zeileis, A., Leisch, F., Hornik, K., &amp; Kleiber, C. (2002). Strucchange: <spa
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1064,190 +1068,173 @@ Zeileis, A., Leisch, F., Hornik, K., &amp; Kleiber, C. (2002). Strucchange: <spa
     
 
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>

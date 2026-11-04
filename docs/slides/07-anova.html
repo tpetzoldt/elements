@@ -6,11 +6,11 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.42">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2026-01-28">
+  <meta name="dcterms.date" content="2026-11-04">
   <title>Elements of Data Analysis and Statistics – 07-One and two-way ANOVA</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,6 +18,9 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -30,8 +33,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -42,7 +46,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -115,7 +119,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-cb13c09ad5a7270edb89df8c4c84031f.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-9197ed92144eb5ba5731738e77b63148.css">
   <link rel="stylesheet" href="../thpe.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -236,7 +240,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2026-01-28</p>
+  <p class="date">2026-11-04</p>
 </section>
 <section id="anova-analysis-of-variances" class="slide level2">
 <h2>ANOVA – Analysis of Variances</h2>
@@ -321,7 +325,7 @@ Table&nbsp;1: Growth from day 2 to day 6 (relative units)
 </figcaption>
 <div aria-describedby="tbl-algae-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<table class="table table-striped do-not-create-environment cell caption-top" data-quarto-postprocess="true" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-striped cell caption-top" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">treat</th>
@@ -375,8 +379,6 @@ Table&nbsp;1: Growth from day 2 to day 6 (relative units)
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 </figure>
@@ -402,7 +404,7 @@ Table&nbsp;1: Growth from day 2 to day 6 (relative units)
 </div><div class="column" style="width:39%;">
 <div class="cell">
 <div class="cell-output-display">
-<table class="table table-striped caption-top" data-quarto-postprocess="true" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-striped caption-top" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr class="header">
 <th style="text-align: left;" data-quarto-table-cell-role="th">treat</th>
@@ -473,8 +475,6 @@ Table&nbsp;1: Growth from day 2 to day 6 (relative units)
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 </div></section>
@@ -482,7 +482,7 @@ Table&nbsp;1: Growth from day 2 to day 6 (relative units)
 <h2>The data in R</h2>
 <p><br><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a>algae <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a>algae <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">treat  =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Fertilizer"</span>, <span class="st">"Fertilizer"</span>, <span class="st">"Fertilizer"</span>, </span>
 <span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a>             <span class="st">"F. open"</span>, <span class="st">"F. open"</span>, <span class="st">"F. open"</span>, </span>
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a>             <span class="st">"F.+sugar"</span>, <span class="st">"F.+sugar"</span>, <span class="st">"F.+sugar"</span>, </span>
@@ -495,22 +495,22 @@ Table&nbsp;1: Growth from day 2 to day 6 (relative units)
 <span id="cb1-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">rep   =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">1</span>, <span class="dv">2</span>), </span>
 <span id="cb1-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">growth =</span> <span class="fu">c</span>(<span class="fl">0.02</span>, <span class="sc">-</span><span class="fl">0.217</span>, <span class="sc">-</span><span class="fl">0.273</span>, <span class="fl">0.94</span>, <span class="fl">0.78</span>, <span class="fl">0.555</span>, <span class="fl">0.188</span>, <span class="sc">-</span><span class="fl">0.1</span>, <span class="fl">0.02</span>, </span>
 <span id="cb1-13"><a aria-hidden="true" tabindex="-1"></a>             <span class="fl">0.245</span>, <span class="fl">0.236</span>, <span class="fl">0.456</span>, <span class="fl">0.699</span>, <span class="fl">0.727</span>, <span class="fl">0.656</span>, <span class="sc">-</span><span class="fl">0.01</span>, <span class="dv">0</span>, <span class="sc">-</span><span class="fl">0.01</span>, <span class="fl">0.03</span>, <span class="sc">-</span><span class="fl">0.07</span>)</span>
-<span id="cb1-14"><a aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>… can be entered directly in the code. A csv-file in long format is also possible.</p>
 </section>
 <section id="boxplot" class="slide level2">
 <h2>Boxplot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(growth <span class="sc">~</span> treat, <span class="at">data =</span> algae)</span>
-<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"grey"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(growth <span class="sc">~</span> treat, <span class="at">data =</span> algae)</span>
+<span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h =</span> <span class="dv">0</span>, <span class="at">lty =</span> <span class="st">"dashed"</span>, <span class="at">col =</span> <span class="st">"grey"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="07-anova_files/figure-revealjs/algae-boxplot-1.png" width="960" class="r-stretch"></section>
 <section id="stripchart" class="slide level2">
 <h2>Stripchart</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">stripchart</span>(growth <span class="sc">~</span> treat, <span class="at">data =</span> algae, <span class="at">vertical =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">stripchart</span>(growth <span class="sc">~</span> treat, <span class="at">data =</span> algae, <span class="at">vertical =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="07-anova_files/figure-revealjs/algae-stripchart-1.png" width="960" class="r-stretch"><p>Better, because we have only 2-3 replicates. Boxplot needs more.</p>
@@ -581,16 +581,16 @@ s_y^2 = s^2_\mathrm{effect} + s^2_{\varepsilon}
 <p><br></p>
 <p>Two brands of Clementine fruits from a shop “E”, that we encode as “EB” and “EP”. We want to know whether the premium brand (“P”) and the basic brand (“B”) have a different weight.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>clem <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>clem <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">brand =</span> <span class="fu">c</span>(<span class="st">"EP"</span>, <span class="st">"EB"</span>, <span class="st">"EB"</span>, <span class="st">"EB"</span>, <span class="st">"EB"</span>, <span class="st">"EB"</span>, <span class="st">"EB"</span>, <span class="st">"EB"</span>, <span class="st">"EB"</span>, <span class="st">"EB"</span>, <span class="st">"EB"</span>, </span>
 <span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>            <span class="st">"EB"</span>, <span class="st">"EB"</span>, <span class="st">"EB"</span>, <span class="st">"EP"</span>, <span class="st">"EP"</span>, <span class="st">"EP"</span>, <span class="st">"EP"</span>, <span class="st">"EP"</span>, <span class="st">"EP"</span>, <span class="st">"EP"</span>, <span class="st">"EB"</span>, <span class="st">"EP"</span>),</span>
 <span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">weight =</span> <span class="fu">c</span>(<span class="dv">88</span>, <span class="dv">96</span>, <span class="dv">100</span>, <span class="dv">96</span>, <span class="dv">90</span>, <span class="dv">100</span>, <span class="dv">92</span>, <span class="dv">92</span>, <span class="dv">102</span>, <span class="dv">99</span>, <span class="dv">86</span>, <span class="dv">89</span>, <span class="dv">99</span>, <span class="dv">89</span>, <span class="dv">75</span>, <span class="dv">80</span>, </span>
-<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>             <span class="dv">81</span>, <span class="dv">96</span>, <span class="dv">82</span>, <span class="dv">98</span>, <span class="dv">80</span>, <span class="dv">107</span>, <span class="dv">88</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>             <span class="dv">81</span>, <span class="dv">96</span>, <span class="dv">82</span>, <span class="dv">98</span>, <span class="dv">80</span>, <span class="dv">107</span>, <span class="dv">88</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br> We encode one sample (“EB”) with 1 and the other sample (“EP”) with 2:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>clem<span class="sc">$</span>code <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(clem<span class="sc">$</span>brand))</span>
-<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>clem<span class="sc">$</span>code</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a>clem<span class="sc">$</span>code <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">factor</span>(clem<span class="sc">$</span>brand))</span>
+<span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>clem<span class="sc">$</span>code</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 2 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 1 2</code></pre>
 </div>
@@ -599,10 +599,10 @@ s_y^2 = s^2_\mathrm{effect} + s^2_{\varepsilon}
 <section id="then-we-fit-a-linear-regression" class="slide level2">
 <h2>Then we fit a linear regression:</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(weight <span class="sc">~</span> code, <span class="at">data =</span> clem, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(weight <span class="sc">~</span> code, <span class="at">data =</span> clem, <span class="at">axes =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb7-2"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> code, <span class="at">data =</span> clem)</span>
 <span id="cb7-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">axis</span>(<span class="dv">1</span>, <span class="at">at =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"EB"</span>, <span class="st">"EP"</span>)); <span class="fu">axis</span>(<span class="dv">2</span>); <span class="fu">box</span>()</span>
-<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(m, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(m, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="07-anova_files/figure-revealjs/eb-ep-linear-1.png" width="960" class="r-stretch"></section>
@@ -611,25 +611,25 @@ s_y^2 = s^2_\mathrm{effect} + s^2_{\varepsilon}
 <p><br></p>
 <p>We fit a linear model and compare the variances:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> code, <span class="at">data =</span> clem)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> code, <span class="at">data =</span> clem)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>total variance</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>(var_tot <span class="ot">&lt;-</span> <span class="fu">var</span>(clem<span class="sc">$</span>weight))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>(var_tot <span class="ot">&lt;-</span> <span class="fu">var</span>(clem<span class="sc">$</span>weight))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 68.98814</code></pre>
 </div>
 </div>
 <p><strong>residual variance (= within variance)</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>(var_res <span class="ot">&lt;-</span> <span class="fu">var</span>(<span class="fu">residuals</span>(m)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a aria-hidden="true" tabindex="-1"></a>(var_res <span class="ot">&lt;-</span> <span class="fu">var</span>(<span class="fu">residuals</span>(m)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 43.25</code></pre>
 </div>
 </div>
 <p><strong>explained variance (= between variance)</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a>var_tot <span class="sc">-</span> var_res</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a aria-hidden="true" tabindex="-1"></a>var_tot <span class="sc">-</span> var_res</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 25.73814</code></pre>
 </div>
@@ -640,7 +640,7 @@ s_y^2 = s^2_\mathrm{effect} + s^2_{\varepsilon}
 <section id="anova" class="slide level2">
 <h2>ANOVA</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -655,7 +655,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><br></p>
 <p><strong>A t-test for comparison</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> code, <span class="at">data =</span> clem, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> code, <span class="at">data =</span> clem, <span class="at">var.equal=</span><span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -676,7 +676,7 @@ mean in group 1 mean in group 2
 <h2>ANOVA with more than 2 samples</h2>
 <p>Back to the algae growth data. Let’s call the linear model <code>m</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> treat, <span class="at">data =</span> algae)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> treat, <span class="at">data =</span> algae)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br></p>
 <ul>
@@ -684,7 +684,7 @@ mean in group 1 mean in group 2
 <li>But we are interested in the overall effect and use <code>anova</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -710,8 +710,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ul>
 <p><strong>Tukey HSD test</strong> is the most common.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a>tk <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(m))</span>
-<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a>tk</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a>tk <span class="ot">&lt;-</span> <span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(m))</span>
+<span id="cb22-2"><a aria-hidden="true" tabindex="-1"></a>tk</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Tukey multiple comparisons of means
     95% family-wise confidence level
@@ -747,9 +747,9 @@ Tap water-A.dest     -0.01333333 -0.40796806  0.38130140 0.9999997</code></pre>
 <section id="graphical-output" class="slide level2">
 <h2>Graphical output</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">las =</span> <span class="dv">1</span>)             <span class="co"># las = 1 make y annotation horizontal</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">las =</span> <span class="dv">1</span>)             <span class="co"># las = 1 make y annotation horizontal</span></span>
 <span id="cb24-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar =</span> <span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">10</span>, <span class="dv">3</span>, <span class="dv">1</span>)) <span class="co"># more space at the left for axis annotation</span></span>
-<span id="cb24-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tk)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(tk)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="07-anova_files/figure-revealjs/algae-tukey-1.png" width="960" class="r-stretch"></section>
@@ -766,8 +766,8 @@ Tap water-A.dest     -0.01333333 -0.40796806  0.38130140 0.9999997</code></pre>
 <p>Graphical checks are preferred.</p>
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
-<span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb25-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -788,8 +788,8 @@ Tap water-A.dest     -0.01333333 -0.40796806  0.38130140 0.9999997</code></pre>
 <li>Recommended: Fligner-Killeen-test</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">fligner.test</span>(growth <span class="sc">~</span> treat, </span>
-<span id="cb26-2"><a aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> algae)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">fligner.test</span>(growth <span class="sc">~</span> treat, </span>
+<span id="cb26-2"><a aria-hidden="true" tabindex="-1"></a>             <span class="at">data =</span> algae)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Fligner-Killeen test of homogeneity of variances
@@ -805,8 +805,8 @@ Fligner-Killeen:med chi-squared = 4.2095, df = 6, p-value = 0.6483</code></pre>
 <li>Use a graphical method!</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(m))</span>
-<span id="cb28-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(m))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(m))</span>
+<span id="cb28-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(m))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure>
@@ -824,7 +824,7 @@ Fligner-Killeen:med chi-squared = 4.2095, df = 6, p-value = 0.6483</code></pre>
 <li>in R called <code>oneway.test</code></li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(growth <span class="sc">~</span> treat, <span class="at">data =</span> algae)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">oneway.test</span>(growth <span class="sc">~</span> treat, <span class="at">data =</span> algae)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     One-way analysis of means (not assuming equal variances)
@@ -900,17 +900,17 @@ F = 115.09, num df = 6.0000, denom df = 4.6224, p-value = 6.57e-05</code></pre>
 <div class="column" style="width:59%;">
 <p><br><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>plants <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">No =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a aria-hidden="true" tabindex="-1"></a>plants <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">No =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
 <span id="cb31-2"><a aria-hidden="true" tabindex="-1"></a>                    <span class="at">growth =</span> <span class="fu">c</span>(<span class="fl">6.6</span>, <span class="fl">7.2</span>, <span class="fl">6.9</span>, <span class="fl">8.3</span>, <span class="fl">7.9</span>, <span class="fl">9.2</span>,</span>
 <span id="cb31-3"><a aria-hidden="true" tabindex="-1"></a>                               <span class="fl">8.3</span>, <span class="fl">8.7</span>, <span class="fl">8.1</span>, <span class="fl">8.5</span>, <span class="fl">9.1</span>, <span class="fl">9.0</span>),</span>
 <span id="cb31-4"><a aria-hidden="true" tabindex="-1"></a>                    <span class="at">fert   =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">each=</span><span class="dv">2</span>),</span>
 <span id="cb31-5"><a aria-hidden="true" tabindex="-1"></a>                    <span class="at">light   =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"high"</span>), <span class="at">each=</span><span class="dv">6</span>)</span>
-<span id="cb31-6"><a aria-hidden="true" tabindex="-1"></a>          )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-6"><a aria-hidden="true" tabindex="-1"></a>          )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div><div class="column" style="width:39%;">
 <div class="cell">
 <div class="cell-output-display">
-<table class="table table-striped caption-top" data-quarto-postprocess="true" style="width: auto !important; margin-left: auto; margin-right: auto;">
+<table class="table table-striped caption-top" style="width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr class="header">
 <th style="text-align: right;" data-quarto-table-cell-role="th">No</th>
@@ -994,8 +994,6 @@ F = 115.09, num df = 6.0000, denom df = 4.6224, p-value = 6.57e-05</code></pre>
 </tr>
 </tbody>
 </table>
-
-
 </div>
 </div>
 </div></section>
@@ -1077,8 +1075,8 @@ F = 115.09, num df = 6.0000, denom df = 4.6224, p-value = 6.57e-05</code></pre>
 
 <img data-src="07-anova_files/figure-revealjs/plants-boxplot-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><p><strong>ANOVA</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light <span class="sc">*</span> fert, <span class="at">data =</span> plants)</span>
-<span id="cb32-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light <span class="sc">*</span> fert, <span class="at">data =</span> plants)</span>
+<span id="cb32-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -1096,8 +1094,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="interaction-plot" class="slide level2">
 <h2>Interaction plot</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(plants, <span class="fu">interaction.plot</span>(fert, light, growth, </span>
-<span id="cb34-2"><a aria-hidden="true" tabindex="-1"></a>                            <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"brown"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">with</span>(plants, <span class="fu">interaction.plot</span>(fert, light, growth, </span>
+<span id="cb34-2"><a aria-hidden="true" tabindex="-1"></a>                            <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"orange"</span>, <span class="st">"brown"</span>), <span class="at">lty =</span> <span class="dv">1</span>, <span class="at">lwd =</span> <span class="dv">2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="07-anova_files/figure-revealjs/plants-interaction-1.png" width="960" class="r-stretch"></section>
@@ -1122,17 +1120,17 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="diagnostics-ii" class="slide level2">
 <h2>Diagnostics II</h2>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>))</span>
 <span id="cb35-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">cex=</span><span class="fl">1.2</span>, <span class="at">las=</span><span class="dv">1</span>)</span>
 <span id="cb35-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(<span class="fu">residuals</span>(m))</span>
 <span id="cb35-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(<span class="fu">residuals</span>(m))</span>
 <span id="cb35-5"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb35-6"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">residuals</span>(m)<span class="sc">~</span><span class="fu">fitted</span>(m))</span>
-<span id="cb35-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">h=</span><span class="dv">0</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="07-anova_files/figure-revealjs/plants-diagnostics-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"><div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">fligner.test</span>(growth <span class="sc">~</span> <span class="fu">interaction</span>(light, fert), <span class="at">data=</span>plants)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">fligner.test</span>(growth <span class="sc">~</span> <span class="fu">interaction</span>(light, fert), <span class="at">data=</span>plants)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Fligner-Killeen test of homogeneity of variances
@@ -1186,22 +1184,22 @@ Fligner-Killeen:med chi-squared = 10.788, df = 5, p-value = 0.05575</code></pre>
 <p>The original hypothesis was that Microcystin LR (MCYST) or a derivative of it (Substance A) inhibits growth.</p>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-hidden="true" tabindex="-1"></a>mcyst <span class="ot">&lt;-</span>  <span class="fu">data.frame</span>(<span class="at">treat =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Control"</span>, <span class="dv">5</span>),</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-hidden="true" tabindex="-1"></a>mcyst <span class="ot">&lt;-</span>  <span class="fu">data.frame</span>(<span class="at">treat =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"Control"</span>, <span class="dv">5</span>),</span>
 <span id="cb38-2"><a aria-hidden="true" tabindex="-1"></a>                                       <span class="fu">rep</span>(<span class="st">"MCYST"</span>, <span class="dv">5</span>),</span>
 <span id="cb38-3"><a aria-hidden="true" tabindex="-1"></a>                                       <span class="fu">rep</span>(<span class="st">"Subst A"</span>, <span class="dv">5</span>)),</span>
 <span id="cb38-4"><a aria-hidden="true" tabindex="-1"></a>                                <span class="at">levels=</span><span class="fu">c</span>(<span class="st">"Control"</span>, <span class="st">"MCYST"</span>, <span class="st">"Subst A"</span>)),</span>
 <span id="cb38-5"><a aria-hidden="true" tabindex="-1"></a>                      <span class="at">mu   =</span> <span class="fu">c</span>(<span class="fl">0.086</span>, <span class="fl">0.101</span>, <span class="fl">0.086</span>, <span class="fl">0.086</span>, <span class="fl">0.099</span>,</span>
 <span id="cb38-6"><a aria-hidden="true" tabindex="-1"></a>                               <span class="fl">0.092</span>, <span class="fl">0.088</span>, <span class="fl">0.093</span>, <span class="fl">0.088</span>, <span class="fl">0.086</span>,</span>
 <span id="cb38-7"><a aria-hidden="true" tabindex="-1"></a>                               <span class="fl">0.095</span>, <span class="fl">0.102</span>, <span class="fl">0.106</span>, <span class="fl">0.106</span>, <span class="fl">0.106</span>)</span>
-<span id="cb38-8"><a aria-hidden="true" tabindex="-1"></a>                     )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-8"><a aria-hidden="true" tabindex="-1"></a>                     )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="approach-1-one-way-anova" class="slide level2">
 <h2>Approach 1: one-way ANOVA</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mar=</span><span class="fu">c</span>(<span class="dv">4</span>, <span class="dv">8</span>, <span class="dv">2</span>, <span class="dv">1</span>), <span class="at">las=</span><span class="dv">1</span>)</span>
 <span id="cb39-2"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(mu <span class="sc">~</span> treat, <span class="at">data=</span>mcyst)</span>
-<span id="cb39-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -1212,7 +1210,7 @@ Residuals 12 0.00036440 3.0367e-05
 ---
 Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(m)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">TukeyHSD</span>(<span class="fu">aov</span>(m)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="07-anova_files/figure-revealjs/mcyst-tukey-1.png" width="960" class="r-stretch"></section>
@@ -1220,26 +1218,26 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <h2>Approach 2: multiple t-tests with sequential Bonferroni correction</h2>
 <p>We separate the data set in single subsets:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a>Control <span class="ot">&lt;-</span> mcyst<span class="sc">$</span>mu[mcyst<span class="sc">$</span>treat <span class="sc">==</span> <span class="st">"Control"</span>]</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a>Control <span class="ot">&lt;-</span> mcyst<span class="sc">$</span>mu[mcyst<span class="sc">$</span>treat <span class="sc">==</span> <span class="st">"Control"</span>]</span>
 <span id="cb42-2"><a aria-hidden="true" tabindex="-1"></a>MCYST   <span class="ot">&lt;-</span> mcyst<span class="sc">$</span>mu[mcyst<span class="sc">$</span>treat <span class="sc">==</span> <span class="st">"MCYST"</span>]</span>
-<span id="cb42-3"><a aria-hidden="true" tabindex="-1"></a>SubstA  <span class="ot">&lt;-</span> mcyst<span class="sc">$</span>mu[mcyst<span class="sc">$</span>treat <span class="sc">==</span> <span class="st">"Subst A"</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb42-3"><a aria-hidden="true" tabindex="-1"></a>SubstA  <span class="ot">&lt;-</span> mcyst<span class="sc">$</span>mu[mcyst<span class="sc">$</span>treat <span class="sc">==</span> <span class="st">"Subst A"</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>and perform 3 t-Tests:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(Control, MCYST)<span class="sc">$</span>p.value</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(Control, MCYST)<span class="sc">$</span>p.value</span>
 <span id="cb43-2"><a aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(Control, SubstA)<span class="sc">$</span>p.value</span>
-<span id="cb43-3"><a aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(MCYST, SubstA)<span class="sc">$</span>p.value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb43-3"><a aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">t.test</span>(MCYST, SubstA)<span class="sc">$</span>p.value</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The following shows the raw p-values without correction:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(p1, p2, p3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">c</span>(p1, p2, p3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.576275261 0.027378832 0.001190592</code></pre>
 </div>
 </div>
 <p>… and with Holm correction:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">p.adjust</span>(<span class="fu">c</span>(p1, p2, p3))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">p.adjust</span>(<span class="fu">c</span>(p1, p2, p3))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.576275261 0.054757664 0.003571775</code></pre>
 </div>
@@ -1279,7 +1277,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>The data set is found at different places on the internet and in different versions.</p>
 <p>Here the version that is found in an R demo: <code>demo(lm.glm)</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Birth Weight Data see stats/demo/lm.glm.R</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a aria-hidden="true" tabindex="-1"></a><span class="do">## Birth Weight Data see stats/demo/lm.glm.R</span></span>
 <span id="cb48-2"><a aria-hidden="true" tabindex="-1"></a>dobson <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb48-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">week =</span> <span class="fu">c</span>(<span class="dv">40</span>, <span class="dv">38</span>, <span class="dv">40</span>, <span class="dv">35</span>, <span class="dv">36</span>, <span class="dv">37</span>, <span class="dv">41</span>, <span class="dv">40</span>, <span class="dv">37</span>, <span class="dv">38</span>, <span class="dv">40</span>, <span class="dv">38</span>,</span>
 <span id="cb48-4"><a aria-hidden="true" tabindex="-1"></a>     <span class="dv">40</span>, <span class="dv">36</span>, <span class="dv">40</span>, <span class="dv">38</span>, <span class="dv">42</span>, <span class="dv">39</span>, <span class="dv">40</span>, <span class="dv">37</span>, <span class="dv">36</span>, <span class="dv">38</span>, <span class="dv">39</span>, <span class="dv">40</span>),</span>
@@ -1287,7 +1285,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <span id="cb48-6"><a aria-hidden="true" tabindex="-1"></a>        <span class="dv">3421</span>, <span class="dv">2975</span>, <span class="dv">3317</span>, <span class="dv">2729</span>, <span class="dv">2935</span>, <span class="dv">2754</span>, <span class="dv">3210</span>, <span class="dv">2817</span>, <span class="dv">3126</span>, <span class="dv">2539</span>,</span>
 <span id="cb48-7"><a aria-hidden="true" tabindex="-1"></a>        <span class="dv">2412</span>, <span class="dv">2991</span>, <span class="dv">2875</span>, <span class="dv">3231</span>),</span>
 <span id="cb48-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="at">gender =</span> <span class="fu">gl</span>(<span class="dv">2</span>, <span class="dv">12</span>, <span class="at">labels=</span><span class="fu">c</span>(<span class="st">"M"</span>, <span class="st">"F"</span>))</span>
-<span id="cb48-9"><a aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb48-9"><a aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br></p>
 <p>Note: This is an artificial data set, not the reality.</p>
@@ -1310,9 +1308,9 @@ linear models (GLM).
 <h2>Anette Dobson’s birthweight data</h2>
 <p>Why not just using a t-test?</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(weight <span class="sc">~</span> gender,<span class="at">data =</span> dobson, <span class="at">ylab =</span> <span class="st">"weight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(weight <span class="sc">~</span> gender,<span class="at">data =</span> dobson, <span class="at">ylab =</span> <span class="st">"weight"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> gender, <span class="at">data =</span> dobson, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(weight <span class="sc">~</span> gender, <span class="at">data =</span> dobson, <span class="at">var.equal =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Two Sample t-test
@@ -1332,8 +1330,8 @@ mean in group M mean in group F
 <section id="ancova-makes-use-of-covariates" class="slide level2">
 <h2>ANCOVA makes use of covariates</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> week <span class="sc">*</span> gender, <span class="at">data =</span> dobson)</span>
-<span id="cb52-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(weight <span class="sc">~</span> week <span class="sc">*</span> gender, <span class="at">data =</span> dobson)</span>
+<span id="cb52-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -1350,8 +1348,6 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 
 <!---------------------
 ## How this works
-
-
 
 
 ::: {.cell}
@@ -1373,8 +1369,6 @@ abline(fem, col="black", lty="dashed")
 abline(mal, col="black", lty="dashed")
 ```
 :::
-
-
 
 --------------------------->
 <img data-src="07-anova_files/figure-revealjs/dobson-ancova-1.png" class="quarto-figure quarto-figure-center r-stretch" width="960"></section></section>
@@ -1418,9 +1412,9 @@ abline(mal, col="black", lty="dashed")
 <h2>Type II ANOVA: Example</h2>
 
 <img data-src="07-anova_files/figure-revealjs/plants-boxplot-ancova-1.png" width="960" class="r-stretch"><div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"car"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"car"</span>)</span>
 <span id="cb54-2"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light <span class="sc">*</span> fert, <span class="at">data =</span> plants)</span>
-<span id="cb54-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(m, <span class="at">type=</span><span class="st">"II"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb54-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">Anova</span>(m, <span class="at">type=</span><span class="st">"II"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Anova Table (Type II tests)
 
@@ -1485,17 +1479,17 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ol>
 <p><strong>Data and example</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-hidden="true" tabindex="-1"></a>plants <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">No=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a aria-hidden="true" tabindex="-1"></a>plants <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">No=</span><span class="dv">1</span><span class="sc">:</span><span class="dv">12</span>,</span>
 <span id="cb56-2"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">growth=</span><span class="fu">c</span>(<span class="fl">6.6</span>, <span class="fl">7.2</span>, <span class="fl">6.9</span>, <span class="fl">8.3</span>, <span class="fl">7.9</span>, <span class="fl">9.2</span>,</span>
 <span id="cb56-3"><a aria-hidden="true" tabindex="-1"></a>                            <span class="fl">8.3</span>, <span class="fl">8.7</span>, <span class="fl">8.1</span>, <span class="fl">8.5</span>, <span class="fl">9.1</span>, <span class="fl">9.0</span>),</span>
 <span id="cb56-4"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">fert=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>), <span class="at">each=</span><span class="dv">2</span>),</span>
 <span id="cb56-5"><a aria-hidden="true" tabindex="-1"></a>                   <span class="at">light=</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"low"</span>, <span class="st">"high"</span>), <span class="at">each=</span><span class="dv">6</span>)</span>
-<span id="cb56-6"><a aria-hidden="true" tabindex="-1"></a>                   )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb56-6"><a aria-hidden="true" tabindex="-1"></a>                   )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">*</span> light, <span class="at">data=</span>plants)  <span class="co"># f1 + f2 + f1:f2</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a aria-hidden="true" tabindex="-1"></a>m3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">*</span> light, <span class="at">data=</span>plants)  <span class="co"># f1 + f2 + f1:f2</span></span>
 <span id="cb57-2"><a aria-hidden="true" tabindex="-1"></a>m2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">+</span> light, <span class="at">data=</span>plants)  <span class="co"># f1 + f2</span></span>
-<span id="cb57-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m3, m2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m3, m2)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -1519,13 +1513,13 @@ Model 2: growth ~ fert + light
 <li>use <span class="blue">smallest AIC</span> to select the <span class="blue">minimal adequate</span> model.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-hidden="true" tabindex="-1"></a>m3  <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light <span class="sc">*</span> fert, <span class="at">data =</span> plants) <span class="co"># full model</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb59"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a aria-hidden="true" tabindex="-1"></a>m3  <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light <span class="sc">*</span> fert, <span class="at">data =</span> plants) <span class="co"># full model</span></span>
 <span id="cb59-2"><a aria-hidden="true" tabindex="-1"></a>m2  <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light <span class="sc">+</span> fert, <span class="at">data =</span> plants)</span>
 <span id="cb59-3"><a aria-hidden="true" tabindex="-1"></a>m1a <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert, <span class="at">data =</span> plants)</span>
 <span id="cb59-4"><a aria-hidden="true" tabindex="-1"></a>m1b <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> light, <span class="at">data =</span> plants)</span>
 <span id="cb59-5"><a aria-hidden="true" tabindex="-1"></a>m0  <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> plants)            <span class="co"># null model</span></span>
 <span id="cb59-6"><a aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb59-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m0, m1a, m1b, m2, m3)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb59-7"><a aria-hidden="true" tabindex="-1"></a><span class="fu">AIC</span>(m0, m1a, m1b, m2, m3)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    df      AIC
 m0   2 33.38238
@@ -1550,8 +1544,8 @@ m3   7 27.53237</code></pre>
 </ul>
 <div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">*</span> light, <span class="at">data=</span>plants)</span>
-<span id="cb61-2"><a aria-hidden="true" tabindex="-1"></a>opt <span class="ot">&lt;-</span> <span class="fu">step</span>(m1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb61"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a aria-hidden="true" tabindex="-1"></a>m1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(growth <span class="sc">~</span> fert <span class="sc">*</span> light, <span class="at">data=</span>plants)</span>
+<span id="cb61-2"><a aria-hidden="true" tabindex="-1"></a>opt <span class="ot">&lt;-</span> <span class="fu">step</span>(m1)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Start:  AIC=-8.52
 growth ~ fert * light
@@ -1574,7 +1568,7 @@ growth ~ fert + light
 </ul>
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(opt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(opt)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Analysis of Variance Table
 
@@ -1606,8 +1600,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>If you want to get a p-value, compare the optimal model with further reduced models, but still interpret the p-values with care:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2, m1a) <span class="co"># fert</span></span>
-<span id="cb65-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2, m1b) <span class="co"># light</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb65"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2, m1a) <span class="co"># fert</span></span>
+<span id="cb65-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">anova</span>(m2, m1b) <span class="co"># light</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <ul>
 <li>In any case: focus on practical implications and don’t forget to report the effect sizes!</li>
@@ -1879,7 +1873,7 @@ Zilliges, Y., Kehr, J.-C., Meissner, S., Ishida, K., Mikkat, S., Hagemann, M., K
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1982,190 +1976,173 @@ Zilliges, Y., Kehr, J.-C., Meissner, S., Ishida, K., Mikkat, S., Hagemann, M., K
     
 
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>

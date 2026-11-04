@@ -6,11 +6,11 @@
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
-  <meta name="generator" content="quarto-1.6.42">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-7f8f88aac4f3542376d5c11b86a4c14d.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.9.37">
 
   <meta name="author" content="Thomas Petzoldt">
-  <meta name="dcterms.date" content="2026-01-28">
+  <meta name="dcterms.date" content="2026-11-04">
   <title>Elements of Data Analysis and Statistics – 09-Time Series Basics</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -18,6 +18,9 @@
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
   <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
   <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -30,8 +33,9 @@
       vertical-align: middle;
     }
     /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -42,7 +46,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -115,7 +119,7 @@
     div.csl-indent {
       margin-left: 2em;
     }  </style>
-  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-cb13c09ad5a7270edb89df8c4c84031f.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto-9197ed92144eb5ba5731738e77b63148.css">
   <link rel="stylesheet" href="../thpe.css">
   <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
   <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
@@ -232,7 +236,7 @@ Thomas Petzoldt
 </div>
 </div>
 
-  <p class="date">2026-01-28</p>
+  <p class="date">2026-11-04</p>
 </section>
 <section>
 <section id="introductory-examples" class="title-slide slide level1 center">
@@ -245,7 +249,7 @@ Thomas Petzoldt
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb1-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
 <span id="cb1-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
@@ -258,7 +262,7 @@ Thomas Petzoldt
 <span id="cb1-11"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, average)) <span class="sc">+</span> </span>
 <span id="cb1-12"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> <span class="fu">ylab</span>(<span class="fu">expression</span>(CO[<span class="dv">2</span>]<span class="sc">~</span><span class="st">"in the atmosphere (ppm)"</span>)) <span class="sc">+</span> </span>
 <span id="cb1-13"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Mauna Loa Observatory, Hawaii, Monthly Averages"</span>) <span class="sc">+</span></span>
-<span id="cb1-14"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-14"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <!-- slides use locally cached data -->
@@ -275,7 +279,7 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb2-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
 <span id="cb2-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb2-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
@@ -292,7 +296,7 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <span id="cb2-15"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(date, temp)) <span class="sc">+</span> </span>
 <span id="cb2-16"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb2-17"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Temperature (°C)"</span>) <span class="sc">+</span> </span>
-<span id="cb2-18"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Monthly mean air temperature in Dresden"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-18"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Monthly mean air temperature in Dresden"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -303,7 +307,7 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"dplyr"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"dplyr"</span>)</span>
 <span id="cb3-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"ggplot2"</span>)</span>
 <span id="cb3-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"lubridate"</span>)</span>
 <span id="cb3-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"readr"</span>)</span>
@@ -321,7 +325,7 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <span id="cb3-16"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
 <span id="cb3-17"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method=</span><span class="st">"lm"</span>) <span class="sc">+</span></span>
 <span id="cb3-18"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">"Temperature (°C)"</span>) <span class="sc">+</span> </span>
-<span id="cb3-19"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Annual average air temperature in Dresden"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-19"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Annual average air temperature in Dresden"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -390,13 +394,13 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
 <span id="cb4-2"><a aria-hidden="true" tabindex="-1"></a>  x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
 <span id="cb4-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="at">cex=</span><span class="fl">1.4</span>)</span>
 <span id="cb4-4"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, <span class="fu">rnorm</span>(x), <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"stationary"</span>, <span class="at">xlab=</span><span class="st">"time"</span>, <span class="at">ylab=</span><span class="st">"x"</span>)</span>
 <span id="cb4-5"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, <span class="fl">0.01</span> <span class="sc">*</span> x <span class="sc">+</span> <span class="fu">rnorm</span>(x), <span class="at">type=</span><span class="st">"l"</span>, <span class="at">main=</span><span class="st">"linear trend"</span>, <span class="at">xlab=</span><span class="st">"time"</span>, <span class="at">ylab=</span><span class="st">"x"</span>)</span>
 <span id="cb4-6"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">plot</span>(x, <span class="fu">rnorm</span>(x, <span class="at">sd=</span><span class="fu">seq</span>(<span class="fl">0.1</span>,<span class="dv">1</span>,<span class="at">length=</span><span class="dv">100</span>)), <span class="at">type=</span><span class="st">"l"</span>,</span>
-<span id="cb4-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">"increasing variance"</span>, <span class="at">xlab=</span><span class="st">"time"</span>, <span class="at">ylab=</span><span class="st">"x"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-7"><a aria-hidden="true" tabindex="-1"></a>    <span class="at">main=</span><span class="st">"increasing variance"</span>, <span class="at">xlab=</span><span class="st">"time"</span>, <span class="at">ylab=</span><span class="st">"x"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -463,7 +467,7 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <div class="cell">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1237</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">1237</span>)</span>
 <span id="cb5-2"><a aria-hidden="true" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
 <span id="cb5-3"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-4"><a aria-hidden="true" tabindex="-1"></a>LSP <span class="ot">&lt;-</span> <span class="dv">4</span> <span class="sc">+</span> <span class="fu">rnorm</span>(time)</span>
@@ -478,7 +482,7 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <span id="cb5-13"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-14"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ts</span>(LSP), <span class="at">ylim=</span><span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">8</span>), <span class="at">main=</span><span class="st">"LSP"</span>, <span class="at">col =</span> <span class="st">"forestgreen"</span>)</span>
 <span id="cb5-15"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ts</span>(TSP), <span class="at">main=</span><span class="st">"TSP"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
-<span id="cb5-16"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ts</span>(DSP), <span class="at">main=</span><span class="st">"DSP"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-16"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">ts</span>(DSP), <span class="at">main=</span><span class="st">"DSP"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -613,7 +617,7 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <p><br></p>
 <p><strong>Correlation between <span class="math inline">\(x_t\)</span> and <span class="math inline">\(x_{t+1}\)</span> and <span class="math inline">\(x_{t+2}\)</span>:</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)[<span class="dv">1</span>,]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(df, <span class="at">use =</span> <span class="st">"pairwise.complete.obs"</span>)[<span class="dv">1</span>,]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       x_t      x_t+1      x_t+2 
  1.0000000  0.1847131 -0.1411872 </code></pre>
@@ -671,14 +675,14 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow=</span><span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
 <span id="cb8-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(LSP, <span class="at">main =</span> <span class="st">"level stationary"</span>)</span>
 <span id="cb8-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(TSP, <span class="at">main =</span> <span class="st">"trend stationary"</span>)</span>
 <span id="cb8-4"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(DSP, <span class="at">main =</span> <span class="st">"difference stationary"</span>)</span>
 <span id="cb8-5"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-6"><a aria-hidden="true" tabindex="-1"></a>time <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span> <span class="sc">*</span> pi, <span class="at">length.out =</span> <span class="dv">100</span>)</span>
 <span id="cb8-7"><a aria-hidden="true" tabindex="-1"></a>periodic <span class="ot">&lt;-</span> <span class="fu">ts</span>(<span class="fu">cos</span>(time) <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">sd =</span> <span class="fl">0.1</span>))</span>
-<span id="cb8-8"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(periodic, <span class="at">lag =</span> <span class="dv">100</span>, <span class="at">main =</span> <span class="st">"periodic"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-8"><a aria-hidden="true" tabindex="-1"></a><span class="fu">acf</span>(periodic, <span class="at">lag =</span> <span class="dv">100</span>, <span class="at">main =</span> <span class="st">"periodic"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
@@ -691,8 +695,8 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 </ul>
 <p>Example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(TSP <span class="sc">~</span> <span class="fu">time</span>(TSP))</span>
-<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(TSP <span class="sc">~</span> <span class="fu">time</span>(TSP))</span>
+<span id="cb9-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">residuals</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><br></p>
 <ul>
@@ -700,8 +704,8 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 </ul>
 <p>Example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">9</span>)</span>
-<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">8</span>, <span class="dv">5</span>, <span class="dv">9</span>)</span>
+<span id="cb10-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">diff</span>(x)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1]  1  1 -1  3 -2 -1  5 -3  4</code></pre>
 </div>
@@ -746,7 +750,7 @@ License of the data: CC BY 4.0 (see https://scrippsco2.ucsd.edu/data/atmospheric
 
 <img data-src="09-timeseries-basics_files/figure-revealjs/kpss-hypotheses-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1344"><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(TSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(TSP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     KPSS Test for Level Stationarity
@@ -758,7 +762,7 @@ KPSS Level = 2.0877, Truncation lag parameter = 4, p-value = 0.01</code></pre>
 <p><span class="math inline">\(\rightarrow\)</span> non-stationary</p>
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(TSP, <span class="at">null =</span> <span class="st">"Trend"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(TSP, <span class="at">null =</span> <span class="st">"Trend"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     KPSS Test for Trend Stationarity
@@ -775,7 +779,7 @@ KPSS Trend = 0.10306, Truncation lag parameter = 4, p-value = 0.1</code></pre>
 
 <img data-src="09-timeseries-basics_files/figure-revealjs/kpss-hypotheses2-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1344"><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(DSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(DSP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     KPSS Test for Level Stationarity
@@ -787,7 +791,7 @@ KPSS Level = 1.5869, Truncation lag parameter = 4, p-value = 0.01</code></pre>
 <p><span class="math inline">\(\rightarrow\)</span> non-stationary</p>
 </div><div class="column" style="width:49%;">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(DSP, <span class="at">null =</span> <span class="st">"Trend"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(DSP, <span class="at">null =</span> <span class="st">"Trend"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     KPSS Test for Trend Stationarity
@@ -828,8 +832,8 @@ KPSS Trend = 0.30063, Truncation lag parameter = 4, p-value = 0.01</code></pre>
 <h2>Mann-Kendall-Trend-Test</h2>
 <p><br><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Kendall"</span>)</span>
-<span id="cb20-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(TSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"Kendall"</span>)</span>
+<span id="cb20-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(TSP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tau = 0.906, 2-sided pvalue =&lt; 2.22e-16</code></pre>
 </div>
@@ -837,7 +841,7 @@ KPSS Trend = 0.30063, Truncation lag parameter = 4, p-value = 0.01</code></pre>
 <p><span class="math inline">\(\rightarrow\)</span> significant trend</p>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(DSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(DSP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tau = 0.682, 2-sided pvalue =&lt; 2.22e-16</code></pre>
 </div>
@@ -848,9 +852,9 @@ KPSS Trend = 0.30063, Truncation lag parameter = 4, p-value = 0.01</code></pre>
 <h2>Application: trend of air temperature</h2>
 <p><br></p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://tpetzoldt.github.io/datasets/data/airtemp_april.csv"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://tpetzoldt.github.io/datasets/data/airtemp_april.csv"</span>)</span>
 <span id="cb24-2"><a aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> <span class="fu">ts</span>(temp<span class="sc">$</span>T, <span class="at">start=</span>temp<span class="sc">$</span>Year[<span class="dv">1</span>])</span>
-<span id="cb24-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 
 </div>
 <img data-src="09-timeseries-basics_files/figure-revealjs/temp-april-1.png" class="quarto-figure quarto-figure-center r-stretch" width="864"><p><span class="gray">Data: Air temperature in April, station Dresden-Klotsche (Germany), data source: Deutscher Wetterdienst (https://www.dwd.de), data aggregated and modified.</span></p>
@@ -860,7 +864,7 @@ KPSS Trend = 0.30063, Truncation lag parameter = 4, p-value = 0.01</code></pre>
 <p><br></p>
 <p>Check for stationarity</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(temp, <span class="at">null =</span> <span class="st">"Trend"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">kpss.test</span>(temp, <span class="at">null =</span> <span class="st">"Trend"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     KPSS Test for Trend Stationarity
@@ -872,8 +876,8 @@ KPSS Trend = 0.097853, Truncation lag parameter = 3, p-value = 0.1</code></pre>
 <p><br></p>
 <p>Mann-Kendall-Trend-test</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Kendall)</span>
-<span id="cb27-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(temp)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(Kendall)</span>
+<span id="cb27-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">MannKendall</span>(temp)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tau = 0.449, 2-sided pvalue =1.5855e-05</code></pre>
 </div>
@@ -889,14 +893,14 @@ KPSS Trend = 0.097853, Truncation lag parameter = 3, p-value = 0.1</code></pre>
 <div class="cell" data-layout-align="center">
 <details class="code-fold">
 <summary>Show the code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(temp)</span>
 <span id="cb29-2"><a aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">lm</span>(temp <span class="sc">~</span> <span class="fu">time</span>(temp))</span>
-<span id="cb29-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(m, <span class="at">col=</span><span class="st">"red"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(m, <span class="at">col=</span><span class="st">"red"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 
 </div>
 <img data-src="09-timeseries-basics_files/figure-revealjs/temp-trend-1.png" class="quarto-figure quarto-figure-center r-stretch" width="1152"><div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(m)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -941,8 +945,6 @@ F-statistic: 24.73 on 1 and 43 DF,  p-value: 1.106e-05</code></pre>
 
 
 
-
-
 ::: {.cell layout-align="center"}
 
 ```{.r .cell-code}
@@ -961,8 +963,6 @@ plot(DSP, main="difference stationary process")
 :::
 :::
 
-
-
 -->
 </section>
 <section id="a-simulation-experiment" class="slide level2">
@@ -975,7 +975,7 @@ plot(DSP, main="difference stationary process")
 <li>Define two functions to generate time series with specific properties:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a>genTSP <span class="ot">&lt;-</span> <span class="cf">function</span>(time, beta0, beta1)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a aria-hidden="true" tabindex="-1"></a>genTSP <span class="ot">&lt;-</span> <span class="cf">function</span>(time, beta0, beta1)</span>
 <span id="cb32-2"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.ts</span>(beta0 <span class="sc">+</span> beta1 <span class="sc">*</span> time <span class="sc">+</span> <span class="fu">rnorm</span>(time))</span>
 <span id="cb32-3"><a aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb32-4"><a aria-hidden="true" tabindex="-1"></a>genDSP <span class="ot">&lt;-</span> <span class="cf">function</span>(time, c) {</span>
@@ -983,13 +983,13 @@ plot(DSP, main="difference stationary process")
 <span id="cb32-6"><a aria-hidden="true" tabindex="-1"></a>  DSP[<span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
 <span id="cb32-7"><a aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (tt <span class="cf">in</span> time[<span class="sc">-</span><span class="dv">1</span>]) DSP[tt] <span class="ot">&lt;-</span> DSP[tt<span class="dv">-1</span>] <span class="sc">+</span> c <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="dv">1</span>)</span>
 <span id="cb32-8"><a aria-hidden="true" tabindex="-1"></a>  <span class="fu">ts</span>(DSP)</span>
-<span id="cb32-9"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb32-9"><a aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="count-significant-tests" class="slide level2">
 <h2>Count significant tests</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-hidden="true" tabindex="-1"></a>count.signif <span class="ot">&lt;-</span> <span class="cf">function</span>(N, time, FUN, ...) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a aria-hidden="true" tabindex="-1"></a>count.signif <span class="ot">&lt;-</span> <span class="cf">function</span>(N, time, FUN, ...) {</span>
 <span id="cb33-2"><a aria-hidden="true" tabindex="-1"></a>  a <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb33-3"><a aria-hidden="true" tabindex="-1"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span>N) {</span>
 <span id="cb33-4"><a aria-hidden="true" tabindex="-1"></a>    x <span class="ot">&lt;-</span> <span class="fu">FUN</span>(time, ...)</span>
@@ -1000,7 +1000,7 @@ plot(DSP, main="difference stationary process")
 <span id="cb33-9"><a aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> (p.value <span class="sc">&lt;</span> <span class="fl">0.05</span>) a <span class="ot">&lt;-</span> a <span class="sc">+</span> <span class="dv">1</span></span>
 <span id="cb33-10"><a aria-hidden="true" tabindex="-1"></a>  }</span>
 <span id="cb33-11"><a aria-hidden="true" tabindex="-1"></a>  a</span>
-<span id="cb33-12"><a aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-12"><a aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><strong>Run the experiment</strong></p>
 <ul>
@@ -1009,13 +1009,13 @@ plot(DSP, main="difference stationary process")
 <li>run loop 100 (or better: 1000) times for both types of time series</li>
 </ul>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a>Nruns <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a aria-hidden="true" tabindex="-1"></a>Nruns <span class="ot">&lt;-</span> <span class="dv">100</span> </span>
 <span id="cb34-2"><a aria-hidden="true" tabindex="-1"></a>time  <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span></span>
-<span id="cb34-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">count.signif</span>(<span class="at">N=</span>Nruns, <span class="at">time=</span>time, <span class="at">FUN=</span>genTSP, <span class="at">beta0=</span><span class="dv">0</span>, <span class="at">beta1=</span><span class="dv">0</span>) <span class="sc">/</span> Nruns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb34-3"><a aria-hidden="true" tabindex="-1"></a><span class="fu">count.signif</span>(<span class="at">N=</span>Nruns, <span class="at">time=</span>time, <span class="at">FUN=</span>genTSP, <span class="at">beta0=</span><span class="dv">0</span>, <span class="at">beta1=</span><span class="dv">0</span>) <span class="sc">/</span> Nruns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.05</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">count.signif</span>(<span class="at">N=</span>Nruns, <span class="at">time=</span>time, <span class="at">FUN=</span>genDSP, <span class="at">c=</span><span class="dv">0</span>) <span class="sc">/</span> Nruns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">count.signif</span>(<span class="at">N=</span>Nruns, <span class="at">time=</span>time, <span class="at">FUN=</span>genDSP, <span class="at">c=</span><span class="dv">0</span>) <span class="sc">/</span> Nruns</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.91</code></pre>
 </div>
@@ -1034,8 +1034,8 @@ plot(DSP, main="difference stationary process")
 </ul>
 <p><br></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
-<span id="cb38-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(TSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tseries)</span>
+<span id="cb38-2"><a aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(TSP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Augmented Dickey-Fuller Test
@@ -1044,7 +1044,7 @@ data:  TSP
 Dickey-Fuller = -3.87, Lag order = 4, p-value = 0.01831
 alternative hypothesis: stationary</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(DSP)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(DSP)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Augmented Dickey-Fuller Test
@@ -1064,7 +1064,7 @@ alternative hypothesis: stationary</code></pre>
 <li>But, after differencing, there are no objections against stationarity:</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(<span class="fu">diff</span>(DSP))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a aria-hidden="true" tabindex="-1"></a><span class="fu">adf.test</span>(<span class="fu">diff</span>(DSP))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Augmented Dickey-Fuller Test
@@ -1296,7 +1296,7 @@ Tans, P., &amp; Keeling, C. D. (2023). <em>Trends in atmospheric carbon dioxide,
         margin: 0.1,
 
         math: {
-          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/MathJax.js',
+          mathjax: 'https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js',
           config: 'TeX-AMS_HTML-full',
           tex2jax: {
             inlineMath: [['\\(','\\)']],
@@ -1399,190 +1399,173 @@ Tans, P., &amp; Keeling, C. D. (2023). <em>Trends in atmospheric carbon dioxide,
     
 
     <script id="quarto-html-after-body" type="application/javascript">
-    window.document.addEventListener("DOMContentLoaded", function (event) {
-      const toggleBodyColorMode = (bsSheetEl) => {
-        const mode = bsSheetEl.getAttribute("data-mode");
-        const bodyEl = window.document.querySelector("body");
-        if (mode === "dark") {
-          bodyEl.classList.add("quarto-dark");
-          bodyEl.classList.remove("quarto-light");
-        } else {
-          bodyEl.classList.add("quarto-light");
-          bodyEl.classList.remove("quarto-dark");
-        }
-      }
-      const toggleBodyColorPrimary = () => {
-        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-        if (bsSheetEl) {
-          toggleBodyColorMode(bsSheetEl);
-        }
-      }
-      toggleBodyColorPrimary();  
-      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
-      tabsets.forEach(function(tabset) {
-        const tabby = new Tabby('#' + tabset.id);
-      });
-      const isCodeAnnotation = (el) => {
-        for (const clz of el.classList) {
-          if (clz.startsWith('code-annotation-')) {                     
-            return true;
+      window.document.addEventListener("DOMContentLoaded", function (event) {
+        const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+        tabsets.forEach(function(tabset) {
+          const tabby = new Tabby('#' + tabset.id);
+        });
+        const isCodeAnnotation = (el) => {
+          for (const clz of el.classList) {
+            if (clz.startsWith('code-annotation-')) {                     
+              return true;
+            }
           }
+          return false;
         }
-        return false;
-      }
-      const onCopySuccess = function(e) {
-        // button target
-        const button = e.trigger;
-        // don't keep focus
-        button.blur();
-        // flash "checked"
-        button.classList.add('code-copy-button-checked');
-        var currentTitle = button.getAttribute("title");
-        button.setAttribute("title", "Copied!");
-        let tooltip;
-        if (window.bootstrap) {
-          button.setAttribute("data-bs-toggle", "tooltip");
-          button.setAttribute("data-bs-placement", "left");
-          button.setAttribute("data-bs-title", "Copied!");
-          tooltip = new bootstrap.Tooltip(button, 
-            { trigger: "manual", 
-              customClass: "code-copy-button-tooltip",
-              offset: [0, -8]});
-          tooltip.show();    
-        }
-        setTimeout(function() {
-          if (tooltip) {
-            tooltip.hide();
-            button.removeAttribute("data-bs-title");
-            button.removeAttribute("data-bs-toggle");
-            button.removeAttribute("data-bs-placement");
+        const onCopySuccess = function(e) {
+          // button target
+          const button = e.trigger;
+          // don't keep focus
+          button.blur();
+          // flash "checked"
+          button.classList.add('code-copy-button-checked');
+          var currentTitle = button.getAttribute("title");
+          button.setAttribute("title", "Copied!");
+          let tooltip;
+          if (window.bootstrap) {
+            button.setAttribute("data-bs-toggle", "tooltip");
+            button.setAttribute("data-bs-placement", "left");
+            button.setAttribute("data-bs-title", "Copied!");
+            tooltip = new bootstrap.Tooltip(button, 
+              { trigger: "manual", 
+                customClass: "code-copy-button-tooltip",
+                offset: [0, -8]});
+            tooltip.show();    
           }
-          button.setAttribute("title", currentTitle);
-          button.classList.remove('code-copy-button-checked');
-        }, 1000);
-        // clear code selection
-        e.clearSelection();
-      }
-      const getTextToCopy = function(trigger) {
-          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          setTimeout(function() {
+            if (tooltip) {
+              tooltip.hide();
+              button.removeAttribute("data-bs-title");
+              button.removeAttribute("data-bs-toggle");
+              button.removeAttribute("data-bs-placement");
+            }
+            button.setAttribute("title", currentTitle);
+            button.classList.remove('code-copy-button-checked');
+          }, 1000);
+          // clear code selection
+          e.clearSelection();
+        }
+        const getTextToCopy = function(trigger) {
+          const outerScaffold = trigger.parentElement.cloneNode(true);
+          const codeEl = outerScaffold.querySelector('code');
           for (const childEl of codeEl.children) {
             if (isCodeAnnotation(childEl)) {
               childEl.remove();
             }
           }
           return codeEl.innerText;
-      }
-      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-        text: getTextToCopy
-      });
-      clipboard.on('success', onCopySuccess);
-      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-          text: getTextToCopy,
-          container: window.document.getElementById('quarto-embedded-source-code-modal')
-        });
-        clipboardModal.on('success', onCopySuccess);
-      }
-        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-        var mailtoRegex = new RegExp(/^mailto:/);
-          var filterRegex = new RegExp('/' + window.location.host + '/');
-        var isInternal = (href) => {
-            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
         }
-        // Inspect non-navigation links and adorn them if external
-     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-        for (var i=0; i<links.length; i++) {
-          const link = links[i];
-          if (!isInternal(link.href)) {
-            // undo the damage that might have been done by quarto-nav.js in the case of
-            // links that we want to consider external
-            if (link.dataset.originalHref !== undefined) {
-              link.href = link.dataset.originalHref;
+        const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+          text: getTextToCopy
+        });
+        clipboard.on('success', onCopySuccess);
+        if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+          const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+            text: getTextToCopy,
+            container: window.document.getElementById('quarto-embedded-source-code-modal')
+          });
+          clipboardModal.on('success', onCopySuccess);
+        }
+          var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+          var mailtoRegex = new RegExp(/^mailto:/);
+            var filterRegex = new RegExp('/' + window.location.host + '/');
+          var isInternal = (href) => {
+              return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+          }
+          // Inspect non-navigation links and adorn them if external
+         var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+          for (var i=0; i<links.length; i++) {
+            const link = links[i];
+            if (!isInternal(link.href)) {
+              // undo the damage that might have been done by quarto-nav.js in the case of
+              // links that we want to consider external
+              if (link.dataset.originalHref !== undefined) {
+                link.href = link.dataset.originalHref;
+              }
             }
           }
-        }
-      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-        const config = {
-          allowHTML: true,
-          maxWidth: 500,
-          delay: 100,
-          arrow: false,
-          appendTo: function(el) {
-              return el.closest('section.slide') || el.parentElement;
-          },
-          interactive: true,
-          interactiveBorder: 10,
-          theme: 'light-border',
-          placement: 'bottom-start',
-        };
-        if (contentFn) {
-          config.content = contentFn;
-        }
-        if (onTriggerFn) {
-          config.onTrigger = onTriggerFn;
-        }
-        if (onUntriggerFn) {
-          config.onUntrigger = onUntriggerFn;
-        }
-          config['offset'] = [0,0];
-          config['maxWidth'] = 700;
-        window.tippy(el, config); 
-      }
-      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-      for (var i=0; i<noterefs.length; i++) {
-        const ref = noterefs[i];
-        tippyHover(ref, function() {
-          // use id or data attribute instead here
-          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-          try { href = new URL(href).hash; } catch {}
-          const id = href.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note) {
-            return note.innerHTML;
-          } else {
-            return "";
+        function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+          const config = {
+            allowHTML: true,
+            maxWidth: 500,
+            delay: 100,
+            arrow: false,
+            appendTo: function(el) {
+                return el.closest('section.slide') || el.parentElement;
+            },
+            interactive: true,
+            interactiveBorder: 10,
+            theme: 'light-border',
+            placement: 'bottom-start',
+          };
+          if (contentFn) {
+            config.content = contentFn;
           }
-        });
-      }
-      const findCites = (el) => {
-        const parentEl = el.parentElement;
-        if (parentEl) {
-          const cites = parentEl.dataset.cites;
-          if (cites) {
-            return {
-              el,
-              cites: cites.split(' ')
-            };
-          } else {
-            return findCites(el.parentElement)
+          if (onTriggerFn) {
+            config.onTrigger = onTriggerFn;
           }
-        } else {
-          return undefined;
+          if (onUntriggerFn) {
+            config.onUntrigger = onUntriggerFn;
+          }
+            config['offset'] = [0,0];
+            config['maxWidth'] = 700;
+          window.tippy(el, config); 
         }
-      };
-      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-      for (var i=0; i<bibliorefs.length; i++) {
-        const ref = bibliorefs[i];
-        const citeInfo = findCites(ref);
-        if (citeInfo) {
-          tippyHover(citeInfo.el, function() {
-            var popup = window.document.createElement('div');
-            citeInfo.cites.forEach(function(cite) {
-              var citeDiv = window.document.createElement('div');
-              citeDiv.classList.add('hanging-indent');
-              citeDiv.classList.add('csl-entry');
-              var biblioDiv = window.document.getElementById('ref-' + cite);
-              if (biblioDiv) {
-                citeDiv.innerHTML = biblioDiv.innerHTML;
-              }
-              popup.appendChild(citeDiv);
-            });
-            return popup.innerHTML;
+        const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+        for (var i=0; i<noterefs.length; i++) {
+          const ref = noterefs[i];
+          tippyHover(ref, function() {
+            // use id or data attribute instead here
+            let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+            try { href = new URL(href).hash; } catch {}
+            const id = href.replace(/^#\/?/, "");
+            const note = window.document.getElementById(id);
+            if (note) {
+              return note.innerHTML;
+            } else {
+              return "";
+            }
           });
         }
-      }
-    });
-    </script>
+        const findCites = (el) => {
+          const parentEl = el.parentElement;
+          if (parentEl) {
+            const cites = parentEl.dataset.cites;
+            if (cites) {
+              return {
+                el,
+                cites: cites.split(' ')
+              };
+            } else {
+              return findCites(el.parentElement)
+            }
+          } else {
+            return undefined;
+          }
+        };
+        var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+        for (var i=0; i<bibliorefs.length; i++) {
+          const ref = bibliorefs[i];
+          const citeInfo = findCites(ref);
+          if (citeInfo) {
+            tippyHover(citeInfo.el, function() {
+              var popup = window.document.createElement('div');
+              citeInfo.cites.forEach(function(cite) {
+                var citeDiv = window.document.createElement('div');
+                citeDiv.classList.add('hanging-indent');
+                citeDiv.classList.add('csl-entry');
+                var biblioDiv = window.document.getElementById('ref-' + cite);
+                if (biblioDiv) {
+                  citeDiv.innerHTML = biblioDiv.innerHTML;
+                }
+                popup.appendChild(citeDiv);
+              });
+              return popup.innerHTML;
+            });
+          }
+        }
+      });
+      </script>
     
 
 </body></html>

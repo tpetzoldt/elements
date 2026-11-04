@@ -20,7 +20,7 @@ The corresponding lab exercises are found at [https://tpetzoldt.github.io/elemen
 ## Status
 
 The selection of topics reflects what I think is useful as door-opener into 
-various fields, useful in ecology and aquatic sciences. It is an ongoing project 
+various fields, useful in aquatic sciences and ecology. It is an ongoing project 
 based on former PDF slides and other course material, constructive comments and 
 suggestions for improvement are welcome.
 
@@ -41,11 +41,11 @@ suggestions for improvement are welcome.
 
 * [**German translation of the slides**](../elements-de/)
 * [**Collection of lab exercises**](../element-labs/)
-* [**Datasets**](https://github.com/tpetzoldt/datasets/)
-* [Source code of the slides](https://github.com/tpetzoldt/elements)
+* [**Datasets**](../datasets/)
+* [Source code of the slides](https://github.com/tpetzoldt/elements/)
 
 ## Author
 
 [homepage](https://tu-dresden.de/Members/thomas.petzoldt) +++ [github](https://github.com/tpetzoldt)
 
-2025-09-16
+2026-1-04

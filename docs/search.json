@@ -59,7 +59,7 @@
     "href": "tutorials/s2-multivar-3d.html#nonmetric-multi-dimensional-scaling-nmds",
     "title": "Ordination and Clustering",
     "section": "5 Nonmetric multi-dimensional scaling (NMDS)",
-    "text": "5 Nonmetric multi-dimensional scaling (NMDS)\nPCA is a very useful technique because it reduces dimensions without introducing bias. However, as we have seen, large proportions of information may still be found in higher dimensions.\nThis is where nonmetric multidimensional scaling comes into play. Here, we can request a number of dimensions \\(k\\), typically \\(k=2\\) or \\(k=3\\), and the computer then tries to fit the information into these dimensions as much as possible. The aim is for the distances in all dimensions to be represented in two or three dimensions only. This process is iterative and it is clear that it cannot be done perfectly and will introduce considerable distortion, known as stress.\nThe PCA is a very useful technique as it reduces dimensions without bias, but as we have seen, large proportions of information may still be found at higher dimensions.\n\nmds &lt;- metaMDS(A, distance=\"euclid\", scale=TRUE, autotransform = FALSE, k=2)\n\n'comm' has negative data: 'autotransform', 'noshare' and 'wascores' set to FALSE\n\n\nRun 0 stress 0.07782409 \nRun 1 stress 0.4150783 \nRun 2 stress 0.07783596 \n... Procrustes: rmse 0.0003810918  max resid 0.003861876 \n... Similar to previous best\nRun 3 stress 0.07782409 \n... Procrustes: rmse 1.766838e-06  max resid 1.229478e-05 \n... Similar to previous best\nRun 4 stress 0.07783594 \n... Procrustes: rmse 0.0003812531  max resid 0.003867161 \n... Similar to previous best\nRun 5 stress 0.0972286 \nRun 6 stress 0.09722861 \nRun 7 stress 0.07783593 \n... Procrustes: rmse 0.0003799539  max resid 0.003850425 \n... Similar to previous best\nRun 8 stress 0.09722861 \nRun 9 stress 0.0778241 \n... Procrustes: rmse 5.841525e-06  max resid 6.121818e-05 \n... Similar to previous best\nRun 10 stress 0.09722252 \nRun 11 stress 0.07782409 \n... Procrustes: rmse 1.763314e-05  max resid 0.0001992527 \n... Similar to previous best\nRun 12 stress 0.09722252 \nRun 13 stress 0.0778241 \n... Procrustes: rmse 7.029226e-06  max resid 5.077993e-05 \n... Similar to previous best\nRun 14 stress 0.07782411 \n... Procrustes: rmse 1.190357e-05  max resid 0.0001053558 \n... Similar to previous best\nRun 15 stress 0.0778241 \n... Procrustes: rmse 9.503467e-06  max resid 0.000111097 \n... Similar to previous best\nRun 16 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 8.496246e-06  max resid 9.703059e-05 \n... Similar to previous best\nRun 17 stress 0.0778241 \n... Procrustes: rmse 1.251286e-05  max resid 0.000143273 \n... Similar to previous best\nRun 18 stress 0.0778241 \n... Procrustes: rmse 1.485662e-05  max resid 0.000174713 \n... Similar to previous best\nRun 19 stress 0.09722252 \nRun 20 stress 0.0778241 \n... Procrustes: rmse 1.714199e-05  max resid 0.0001955238 \n... Similar to previous best\n*** Best solution repeated 4 times\n\n\nThe resulting stress and the representation of distances in two (or three) dimensions can then be shown in a so-called stressplot. Here, one should not overestimate the hich \\(r^2\\) values, that are always big, even in bad cases. The shape of the step-line does not matter much either. However, the value of stress is most important and the data points should be close to the red line.\n\nstressplot(mds)\n\n\n\n\n\n\n\n\nThe stress itself shuld be small. As a rule of thumb, a stress value of \\(&gt;0.2\\) means that the NMDS was not successful, stress \\(&lt; 0.1\\) is considered as sufficient, \\(&lt;0.05\\) as good, \\(&lt;0.025\\) as very good and \\(\\approx 0\\) as perfect.\n\nmds\n\n\nCall:\nmetaMDS(comm = A, distance = \"euclid\", k = 2, autotransform = FALSE,      scale = TRUE) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     A \nDistance: euclidean \n\nDimensions: 2 \nStress:     0.07782409 \nStress type 1, weak ties\nBest solution was repeated 4 times in 20 tries\nThe best solution was from try 16 (random start)\nScaling: centring, PC rotation \nSpecies: scores missing\n\n\n\nxyz &lt;- as.data.frame(scores(mds, display=\"sites\"))\nxyz$. &lt;- 0\nordirgl(xyz, type=\"p\", ax.col = \"black\", col=mycolors)\nview3d(theta = 0, phi = 0, fov=0, zoom=0.7)\naxes3d(labels=FALSE, expand=1.5)\n\n\n\n\n\nHere, stress is \\(&lt;0.1\\). This is o.k., so that we now can have a look at the 2D representation. The figure is again technically 3D, so use the mouse to see that the data are now at a plane.",
+    "text": "5 Nonmetric multi-dimensional scaling (NMDS)\nPCA is a very useful technique because it reduces dimensions without introducing bias. However, as we have seen, large proportions of information may still be found in higher dimensions.\nThis is where nonmetric multidimensional scaling comes into play. Here, we can request a number of dimensions \\(k\\), typically \\(k=2\\) or \\(k=3\\), and the computer then tries to fit the information into these dimensions as much as possible. The aim is for the distances in all dimensions to be represented in two or three dimensions only. This process is iterative and it is clear that it cannot be done perfectly and will introduce considerable distortion, known as stress.\nThe PCA is a very useful technique as it reduces dimensions without bias, but as we have seen, large proportions of information may still be found at higher dimensions.\n\nmds &lt;- metaMDS(A, distance=\"euclid\", scale=TRUE, autotransform = FALSE, k=2)\n\n'comm' has negative data: 'autotransform', 'noshare' and 'wascores' set to FALSE\n\n\nRun 0 stress 0.07782409 \nRun 1 stress 0.07783593 \n... Procrustes: rmse 0.0003822391  max resid 0.003872924 \n... Similar to previous best\nRun 2 stress 0.07783593 \n... Procrustes: rmse 0.0003829733  max resid 0.003879601 \n... Similar to previous best\nRun 3 stress 0.09722861 \nRun 4 stress 0.07782409 \n... Procrustes: rmse 2.007098e-05  max resid 0.0002263344 \n... Similar to previous best\nRun 5 stress 0.0972286 \nRun 6 stress 0.07782409 \n... Procrustes: rmse 3.133258e-06  max resid 1.746407e-05 \n... Similar to previous best\nRun 7 stress 0.07783593 \n... Procrustes: rmse 0.0003830374  max resid 0.003879524 \n... Similar to previous best\nRun 8 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 1.469751e-05  max resid 0.0001612373 \n... Similar to previous best\nRun 9 stress 0.07783593 \n... Procrustes: rmse 0.0003806618  max resid 0.003859192 \n... Similar to previous best\nRun 10 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 1.339431e-05  max resid 0.000143393 \n... Similar to previous best\nRun 11 stress 0.07782409 \n... New best solution\n... Procrustes: rmse 4.203968e-06  max resid 4.512273e-05 \n... Similar to previous best\nRun 12 stress 0.0972286 \nRun 13 stress 0.07783594 \n... Procrustes: rmse 0.0003822914  max resid 0.003874786 \n... Similar to previous best\nRun 14 stress 0.07783594 \n... Procrustes: rmse 0.0003820843  max resid 0.003873698 \n... Similar to previous best\nRun 15 stress 0.0972286 \nRun 16 stress 0.07783593 \n... Procrustes: rmse 0.0003803281  max resid 0.003856187 \n... Similar to previous best\nRun 17 stress 0.07783593 \n... Procrustes: rmse 0.0003800142  max resid 0.003853765 \n... Similar to previous best\nRun 18 stress 0.09722252 \nRun 19 stress 0.07783593 \n... Procrustes: rmse 0.0003809216  max resid 0.003862294 \n... Similar to previous best\nRun 20 stress 0.07783594 \n... Procrustes: rmse 0.0003820479  max resid 0.00387311 \n... Similar to previous best\n*** Best solution repeated 7 times\n\n\nThe resulting stress and the representation of distances in two (or three) dimensions can then be shown in a so-called stressplot. Here, one should not overestimate the hich \\(r^2\\) values, that are always big, even in bad cases. The shape of the step-line does not matter much either. However, the value of stress is most important and the data points should be close to the red line.\n\nstressplot(mds)\n\n\n\n\n\n\n\n\nThe stress itself shuld be small. As a rule of thumb, a stress value of \\(&gt;0.2\\) means that the NMDS was not successful, stress \\(&lt; 0.1\\) is considered as sufficient, \\(&lt;0.05\\) as good, \\(&lt;0.025\\) as very good and \\(\\approx 0\\) as perfect.\n\nmds\n\n\nCall:\nmetaMDS(comm = A, distance = \"euclid\", k = 2, autotransform = FALSE,      scale = TRUE) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     A \nDistance: euclidean \n\nDimensions: 2 \nStress:     0.07782409 \nStress type 1, weak ties\nBest solution was repeated 7 times in 20 tries\nThe best solution was from try 11 (random start)\nScaling: centring, PC rotation \nSpecies: scores missing\n\n\n\nxyz &lt;- as.data.frame(scores(mds, display=\"sites\"))\nxyz$. &lt;- 0\nordirgl(xyz, type=\"p\", ax.col = \"black\", col=mycolors)\nview3d(theta = 0, phi = 0, fov=0, zoom=0.7)\naxes3d(labels=FALSE, expand=1.5)\n\n\n\n\n\nHere, stress is \\(&lt;0.1\\). This is o.k., so that we now can have a look at the 2D representation. The figure is again technically 3D, so use the mouse to see that the data are now at a plane.",
     "crumbs": [
       "Tutorials",
       "Ordination and Clustering"
@@ -99,7 +99,7 @@
     "href": "index.html#status",
     "title": "Elements of Data Analysis and Statistics",
     "section": "Status",
-    "text": "Status\nThe selection of topics reflects what I think is useful as door-opener into various fields, useful in ecology and aquatic sciences. It is an ongoing project based on former PDF slides and other course material, constructive comments and suggestions for improvement are welcome."
+    "text": "Status\nThe selection of topics reflects what I think is useful as door-opener into various fields, useful in aquatic sciences and ecology. It is an ongoing project based on former PDF slides and other course material, constructive comments and suggestions for improvement are welcome."
   },
   {
     "objectID": "index.html#further-reading",
@@ -120,7 +120,7 @@
     "href": "index.html#author",
     "title": "Elements of Data Analysis and Statistics",
     "section": "Author",
-    "text": "Author\nhomepage +++ github\n2025-09-16"
+    "text": "Author\nhomepage +++ github\n2026-1-04"
   },
   {
     "objectID": "slides/x4-pipes-intro.html#prerequisites",
@@ -160,7 +160,7 @@
     "href": "slides/x4-pipes-intro.html#summary-statistics",
     "title": "x4-Pipelines in R",
     "section": "Summary statistics",
-    "text": "Summary statistics\n\n\nsummary(leaves)\n\n    group                 no             length           width      \n Length:126         Min.   :  1.00   Min.   : 37.00   Min.   : 44.0  \n Class :character   1st Qu.: 32.25   1st Qu.: 72.00   1st Qu.: 96.0  \n Mode  :character   Median : 63.50   Median : 90.00   Median :118.5  \n                    Mean   : 63.50   Mean   : 95.83   Mean   :117.4  \n                    3rd Qu.: 94.75   3rd Qu.:102.00   3rd Qu.:138.5  \n                    Max.   :126.00   Max.   :250.00   Max.   :199.0  \n     stalk       \n Min.   : 29.00  \n 1st Qu.: 62.00  \n Median : 82.00  \n Mean   : 81.89  \n 3rd Qu.:101.00  \n Max.   :175.00",
+    "text": "Summary statistics\n\n\nsummary(leaves)\n\n       group           no             length           width      \n Length   :126   Min.   :  1.00   Min.   : 37.00   Min.   : 44.0  \n N.unique :  2   1st Qu.: 32.25   1st Qu.: 72.00   1st Qu.: 96.0  \n N.blank  :  0   Median : 63.50   Median : 90.00   Median :118.5  \n Min.nchar:  3   Mean   : 63.50   Mean   : 95.83   Mean   :117.4  \n Max.nchar:  3   3rd Qu.: 94.75   3rd Qu.:102.00   3rd Qu.:138.5  \n                 Max.   :126.00   Max.   :250.00   Max.   :199.0  \n     stalk       \n Min.   : 29.00  \n 1st Qu.: 62.00  \n Median : 82.00  \n Mean   : 81.89  \n 3rd Qu.:101.00  \n Max.   :175.00",
     "crumbs": [
       "R Topics",
       "x4-Pipelines in R"
@@ -992,6 +992,17 @@
     ]
   },
   {
+    "objectID": "slides/12-multivariate-2.html#which-index-for-what",
+    "href": "slides/12-multivariate-2.html#which-index-for-what",
+    "title": "12-Multivariate methods II",
+    "section": "Which index for what?",
+    "text": "Which index for what?\n\n\n\n\n\n\n\n\n\n\nIndex\nTheory & Focus\nSensitivity\nInterpretation\n\n\n\n\nSpecies Richness (R)\nSimple count of the number of different species present in a sample or area.\nHighly sensitive to the presence of any species, regardless of its abundance.\nDoes not account for how individuals are distributed; two sites with same richness can have different diversity.\n\n\nSpecies Deficit\nRepresents the gap between observed richness and the potential expected for a habitat.\nSensitive to environmental degradation or sampling effort.\nUsed to identify “missing” species in a community compared to a reference.\n\n\nShannon Index (H)\nBased on information theory; measures the uncertainty in predicting the identity of a random individual.\nMore sensitive to species richness and the presence of rare species.\nHigher values indicate higher diversity and greater uncertainty. It increases as both richness and evenness increase.\n\n\nSimpson Index (1-D)\nBased on probability. Likelihood that two randomly selected individuals belong to different species.\nHighly sensitive to the most common or dominant species.\nFocuses on dominance. High values close to 1 indicate high diversity and the absence of a single dominant species.\n\n\nEvenness (E)\nMeasures the equitability or distribution of individuals among the species present.\nSensitive to the relative abundance of species rather than the total number.\nRange from 0 to 1. 1 indicates that all species have equal abundance.",
+    "crumbs": [
+      "Basic Statistics",
+      "12-Multivariate methods II"
+    ]
+  },
+  {
     "objectID": "slides/12-multivariate-2.html#diversity-indices-1",
     "href": "slides/12-multivariate-2.html#diversity-indices-1",
     "title": "12-Multivariate methods II",
@@ -1139,7 +1150,7 @@
     "href": "slides/12-multivariate-2.html#example",
     "title": "12-Multivariate methods II",
     "section": "Example",
-    "text": "Example\n\nbenthos &lt;- read.csv(\"../data/gauernitz.csv\")\nrow.names(benthos) &lt;- benthos$Site\nenv &lt;- benthos[c(\"Habitat\", \"Stream\", \"Flood\")] # required later\n\nbio &lt;- benthos[c(\"Mollusca\", \"Diptera\", \"Baetis\", \"Plecoptera\", \"Coleoptera\", \n         \"Turbellaria\", \"Heptageniidae\", \"Ephemeroptera\", \"Gammarus\", \n         \"Trichoptera\", \"Acari\", \"Nematoda\", \"Oligochaeta\")]\n\nord &lt;- metaMDS(bio)\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1102424 \nRun 1 stress 0.1102424 \n... Procrustes: rmse 3.987625e-06  max resid 1.030191e-05 \n... Similar to previous best\nRun 2 stress 0.1105543 \n... Procrustes: rmse 0.02428622  max resid 0.07215017 \nRun 3 stress 0.2192927 \nRun 4 stress 0.1102424 \n... Procrustes: rmse 6.092371e-06  max resid 1.658189e-05 \n... Similar to previous best\nRun 5 stress 0.1105543 \n... Procrustes: rmse 0.02427623  max resid 0.07211644 \nRun 6 stress 0.1727865 \nRun 7 stress 0.1105544 \n... Procrustes: rmse 0.02432214  max resid 0.07227173 \nRun 8 stress 0.1105543 \n... Procrustes: rmse 0.02424285  max resid 0.07200517 \nRun 9 stress 0.1105543 \n... Procrustes: rmse 0.02420525  max resid 0.07187834 \nRun 10 stress 0.1105543 \n... Procrustes: rmse 0.02420887  max resid 0.07190017 \nRun 11 stress 0.2192927 \nRun 12 stress 0.1102424 \n... Procrustes: rmse 2.66011e-06  max resid 4.7284e-06 \n... Similar to previous best\nRun 13 stress 0.1736877 \nRun 14 stress 0.1105543 \n... Procrustes: rmse 0.02423465  max resid 0.0719766 \nRun 15 stress 0.2680828 \nRun 16 stress 0.1102424 \n... Procrustes: rmse 5.006839e-06  max resid 1.296036e-05 \n... Similar to previous best\nRun 17 stress 0.1102424 \n... Procrustes: rmse 6.788124e-06  max resid 1.892755e-05 \n... Similar to previous best\nRun 18 stress 0.1102424 \n... Procrustes: rmse 8.597821e-06  max resid 2.439281e-05 \n... Similar to previous best\nRun 19 stress 0.1102424 \n... Procrustes: rmse 2.269264e-06  max resid 5.374392e-06 \n... Similar to previous best\nRun 20 stress 0.2435577 \n*** Best solution repeated 7 times",
+    "text": "Example\n\nbenthos &lt;- read.csv(\"../data/gauernitz.csv\")\nrow.names(benthos) &lt;- benthos$Site\nenv &lt;- benthos[c(\"Habitat\", \"Stream\", \"Flood\")] # required later\n\nbio &lt;- benthos[c(\"Mollusca\", \"Diptera\", \"Baetis\", \"Plecoptera\", \"Coleoptera\", \n         \"Turbellaria\", \"Heptageniidae\", \"Ephemeroptera\", \"Gammarus\", \n         \"Trichoptera\", \"Acari\", \"Nematoda\", \"Oligochaeta\")]\n\nord &lt;- metaMDS(bio)\n\nSquare root transformation\nWisconsin double standardization\nRun 0 stress 0.1102424 \nRun 1 stress 0.1105543 \n... Procrustes: rmse 0.02422925  max resid 0.07195893 \nRun 2 stress 0.1858758 \nRun 3 stress 0.1105543 \n... Procrustes: rmse 0.02422934  max resid 0.0719591 \nRun 4 stress 0.1857967 \nRun 5 stress 0.1105543 \n... Procrustes: rmse 0.02427363  max resid 0.07210948 \nRun 6 stress 0.1105543 \n... Procrustes: rmse 0.02416078  max resid 0.0717283 \nRun 7 stress 0.1102424 \n... Procrustes: rmse 1.768833e-05  max resid 4.806117e-05 \n... Similar to previous best\nRun 8 stress 0.1105543 \n... Procrustes: rmse 0.024227  max resid 0.07195139 \nRun 9 stress 0.1102424 \n... Procrustes: rmse 5.42812e-06  max resid 1.491521e-05 \n... Similar to previous best\nRun 10 stress 0.1102424 \n... Procrustes: rmse 2.576307e-06  max resid 5.898354e-06 \n... Similar to previous best\nRun 11 stress 0.1102424 \n... Procrustes: rmse 6.909254e-06  max resid 1.921157e-05 \n... Similar to previous best\nRun 12 stress 0.1102424 \n... Procrustes: rmse 2.990689e-06  max resid 7.862857e-06 \n... Similar to previous best\nRun 13 stress 0.1102424 \n... Procrustes: rmse 3.838429e-06  max resid 8.311357e-06 \n... Similar to previous best\nRun 14 stress 0.1102424 \n... Procrustes: rmse 4.813022e-06  max resid 1.197666e-05 \n... Similar to previous best\nRun 15 stress 0.1727865 \nRun 16 stress 0.1105543 \n... Procrustes: rmse 0.02426342  max resid 0.07207424 \nRun 17 stress 0.2221838 \nRun 18 stress 0.1102424 \n... Procrustes: rmse 1.779083e-06  max resid 4.710867e-06 \n... Similar to previous best\nRun 19 stress 0.1105543 \n... Procrustes: rmse 0.02422661  max resid 0.07195009 \nRun 20 stress 0.1105543 \n... Procrustes: rmse 0.02423569  max resid 0.07198056 \n*** Best solution repeated 8 times",
     "crumbs": [
       "Basic Statistics",
       "12-Multivariate methods II"
@@ -1150,7 +1161,7 @@
     "href": "slides/12-multivariate-2.html#results-of-the-nmds",
     "title": "12-Multivariate methods II",
     "section": "Results of the NMDS",
-    "text": "Results of the NMDS\n\nord\n\n\nCall:\nmetaMDS(comm = bio) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     wisconsin(sqrt(bio)) \nDistance: bray \n\nDimensions: 2 \nStress:     0.1102424 \nStress type 1, weak ties\nBest solution was repeated 7 times in 20 tries\nThe best solution was from try 0 (metric scaling or null solution)\nScaling: centring, PC rotation, halfchange scaling \nSpecies: expanded scores based on 'wisconsin(sqrt(bio))' \n\n\n\nmetaMDS runs a series of NMDS trials and outputs the best\nmakes automatic decisions about transformation, distance and scaling\n\nRecommendation\n\nspecify distance, scaling and transformation explicitly\nconsider to increase try and trymax for big and/or difficult data sets, e.g.:\n\n\nord &lt;- metaMDS(bio, distance=\"bray\", autotransform=FALSE, try=40)",
+    "text": "Results of the NMDS\n\nord\n\n\nCall:\nmetaMDS(comm = bio) \n\nglobal Multidimensional Scaling using monoMDS\n\nData:     wisconsin(sqrt(bio)) \nDistance: bray \n\nDimensions: 2 \nStress:     0.1102424 \nStress type 1, weak ties\nBest solution was repeated 8 times in 20 tries\nThe best solution was from try 0 (metric scaling or null solution)\nScaling: centring, PC rotation, halfchange scaling \nSpecies: expanded scores based on 'wisconsin(sqrt(bio))' \n\n\n\nmetaMDS runs a series of NMDS trials and outputs the best\nmakes automatic decisions about transformation, distance and scaling\n\nRecommendation\n\nspecify distance, scaling and transformation explicitly\nconsider to increase try and trymax for big and/or difficult data sets, e.g.:\n\n\nord &lt;- metaMDS(bio, distance=\"bray\", autotransform=FALSE, try=40)",
     "crumbs": [
       "Basic Statistics",
       "12-Multivariate methods II"
@@ -2151,7 +2162,7 @@
     "href": "slides/04-distributions.html#continuos-uniform-distribution-mathbfu0-1",
     "title": "04-Distributions",
     "section": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)",
-    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.8753059 0.4118662 0.4445771 0.7118754 0.1885591 0.7365963 0.9926510\n [8] 0.7101854 0.8830810 0.2917783\n\n\n \n\nbinning: subdivide values into classes",
+    "text": "Continuos uniform distribution \\(\\mathbf{U}(0, 1)\\)\n\n\nsame probability of occurence in a given interval\ne.g. \\([0, 1]\\)\nin R: runif, random, uniform\n\n\nrunif(10)\n\n [1] 0.01115178 0.16389392 0.40276725 0.32470025 0.85475383 0.19150523\n [7] 0.03161901 0.82528704 0.67910376 0.81676894\n\n\n \n\nbinning: subdivide values into classes",
     "crumbs": [
       "Basic Statistics",
       "04-Distributions"
@@ -2778,7 +2789,7 @@
     "href": "slides/01-introduction.html#which-data-structure-is-better",
     "title": "01-Introduction",
     "section": "Which data structure is better?",
-    "text": "Which data structure is better?\n\n\nWide format\n\n\n\n\n\n\nstation\n2021\n2022\n2023\n\n\n\n\nA\n1\n4\n1\n\n\nB\n1\n15\n8\n\n\nC\n10\n20\n11\n\n\nD\n8\n13\n18\n\n\nE\n15\n9\n18\n\n\n\n\n\n\nLong format\n\n\n\n\n\n\nyear\nstation\nvalue\n\n\n\n\n2021\nA\n1\n\n\n2021\nB\n1\n\n\n2021\nC\n10\n\n\n2021\nD\n8\n\n\n2021\nE\n15\n\n\n2022\nA\n4\n\n\n2022\nB\n15\n\n\n2022\nC\n20\n\n\n2022\nD\n13\n\n\n2022\nE\n9\n\n\n2023\nA\n1\n\n\n2023\nB\n8\n\n\n2023\nC\n11\n\n\n2023\nD\n18\n\n\n2023\nE\n18",
+    "text": "Which data structure is better?\n\n\nWide format\n\n\n\n\n\n\nstation\n2021\n2022\n2023\n\n\n\n\nA\n20\n3\n6\n\n\nB\n17\n12\n16\n\n\nC\n8\n19\n6\n\n\nD\n6\n15\n4\n\n\nE\n12\n15\n14\n\n\n\n\n\n\nLong format\n\n\n\n\n\n\nyear\nstation\nvalue\n\n\n\n\n2021\nA\n20\n\n\n2021\nB\n17\n\n\n2021\nC\n8\n\n\n2021\nD\n6\n\n\n2021\nE\n12\n\n\n2022\nA\n3\n\n\n2022\nB\n12\n\n\n2022\nC\n19\n\n\n2022\nD\n15\n\n\n2022\nE\n15\n\n\n2023\nA\n6\n\n\n2023\nB\n16\n\n\n2023\nC\n6\n\n\n2023\nD\n4\n\n\n2023\nE\n14",
     "crumbs": [
       "Basic Statistics",
       "01-Introduction"
@@ -2845,6 +2856,39 @@
     "title": "01-Introduction",
     "section": "Why R?",
     "text": "Why R?\n\n\nStatisticians call it “lingua franca” in computational statistics.\n\nExtremely powerful\nNo other system has so much statistics\nUsed in statistical research\n\nFree (OpenSource)\n\nFree to use\nFree to modify\nFree to contribute\n\nLess complicated than its first appearance:\n\nYes, it needs command line programming\nbut: already a single line can do much\nhuge number of books and online scripts\n\n\n\n\nIn contrast to other systems Copy & Paste is allowed! – just cite it.",
+    "crumbs": [
+      "Basic Statistics",
+      "01-Introduction"
+    ]
+  },
+  {
+    "objectID": "slides/01-introduction.html#working-with-ai-tools-i",
+    "href": "slides/01-introduction.html#working-with-ai-tools-i",
+    "title": "01-Introduction",
+    "section": "Working with AI Tools I",
+    "text": "Working with AI Tools I\n\nGeneral principle\n\nAI tools are part of today’s data science workflow\nThey are not forbidden – but they must support your learning, not replace it\n\nAllowed and encouraged\n\nAI as an interactive sparring partner\nChallenge your statistical reasoning\nAsk for explanations of concepts you are unsure about\nAsk about references – and check them independently (books, papers, R help files)\n\nAlso allowed\n\nGrammar, style, and flow of your written text in the homework project",
+    "crumbs": [
+      "Basic Statistics",
+      "01-Introduction"
+    ]
+  },
+  {
+    "objectID": "slides/01-introduction.html#working-with-ai-tools-ii",
+    "href": "slides/01-introduction.html#working-with-ai-tools-ii",
+    "title": "01-Introduction",
+    "section": "Working with AI Tools II",
+    "text": "Working with AI Tools II\n\nNot helpful for your learning\n\nWriting code you cannot explain line by line\n\nKeep it plain and to the point\n\nSolutions not based on the methods taught in class\n\nCreative additions are encouraged, but should not replace the standard methods\n\nAI generated text that does not reflect your own thinking and interpretation\n\nWrite the first draft yourself\nCritically revise the final version\n\n\n\n\n\n\n\n\n\nExam rules\n\n\n\nAI tools and the general web will not be allowed\nPermitted: course slides and your personal notes, electronically or on paper",
+    "crumbs": [
+      "Basic Statistics",
+      "01-Introduction"
+    ]
+  },
+  {
+    "objectID": "slides/01-introduction.html#best-use-a-four-step-workflow",
+    "href": "slides/01-introduction.html#best-use-a-four-step-workflow",
+    "title": "01-Introduction",
+    "section": "Best use: a four-step workflow",
+    "text": "Best use: a four-step workflow\n\n\n\nBasic understanding → try to grasp the problem and methods yourself first\nAI help → use AI as an interactive sparring partner\nCritical evaluation & follow-up questions → don’t take answers at face value – validate against trustworthy sources (books, help files, …)\nFinal decision → you are responsible for the result",
     "crumbs": [
       "Basic Statistics",
       "01-Introduction"
@@ -3790,7 +3834,7 @@
     "href": "slides/07-anova.html#the-data-set",
     "title": "07-One and two-way ANOVA",
     "section": "The data set",
-    "text": "The data set\n\n\n\n\n\nTable 1: Growth from day 2 to day 6 (relative units)\n\n\n\n\n\n\ntreat\nreplicate 1\nreplicate 2\nreplicate 3\n\n\n\n\nFertilizer\n0.020\n-0.217\n-0.273\n\n\nF. open\n0.940\n0.780\n0.555\n\n\nF.+sugar\n0.188\n-0.100\n0.020\n\n\nF.+CaCO3\n0.245\n0.236\n0.456\n\n\nBas.med.\n0.699\n0.727\n0.656\n\n\nA.dest\n-0.010\n0.000\n-0.010\n\n\nTap water\n0.030\n-0.070\nNA\n\n\n\n\n\n\n\n\n\n\n\nNA means “not available”, i.e. a missing value\nthe crosstable structure is compact and easy to read, but not ideal for data analysis\n\\(\\Rightarrow\\) convert it to long format",
+    "text": "The data set\n\n\n\n\n\nTable 1: Growth from day 2 to day 6 (relative units)\n\n\n\n\n\n\ntreat\nreplicate 1\nreplicate 2\nreplicate 3\n\n\n\n\nFertilizer\n0.020\n-0.217\n-0.273\n\n\nF. open\n0.940\n0.780\n0.555\n\n\nF.+sugar\n0.188\n-0.100\n0.020\n\n\nF.+CaCO3\n0.245\n0.236\n0.456\n\n\nBas.med.\n0.699\n0.727\n0.656\n\n\nA.dest\n-0.010\n0.000\n-0.010\n\n\nTap water\n0.030\n-0.070\nNA\n\n\n\n\n\n\n\n\n\nNA means “not available”, i.e. a missing value\nthe crosstable structure is compact and easy to read, but not ideal for data analysis\n\\(\\Rightarrow\\) convert it to long format",
     "crumbs": [
       "Basic Statistics",
       "07-One and two-way ANOVA"
@@ -5297,7 +5341,7 @@
     "href": "slides/x1-r-basics.html#lists-1",
     "title": "x1-R Basics",
     "section": "Lists",
-    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL &lt;- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:12] -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 2 ...\n $ counts  : int [1:11] 4 2 8 21 18 17 9 7 8 3 ...\n $ density : num [1:11] 0.08 0.04 0.16 0.42 0.36 0.34 0.18 0.14 0.16 0.06 ...\n $ mids    : num [1:11] -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75 2.25 ...\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\"",
+    "text": "Lists\n\nmost flexible data type in R\ncan contain arbitrary data objects as elements of the list\nallows tree-like structure\n\nExamples\n\nOutput of many R functions, e.g. return value of hist:\n\n\nL &lt;- hist(rnorm(100), plot=FALSE)\nstr(L)\n\nList of 6\n $ breaks  : num [1:11] -3 -2.5 -2 -1.5 -1 -0.5 0 0.5 1 1.5 ...\n $ counts  : int [1:10] 1 3 5 4 14 26 14 23 8 2\n $ density : num [1:10] 0.02 0.06 0.1 0.08 0.28 0.52 0.28 0.46 0.16 0.04\n $ mids    : num [1:10] -2.75 -2.25 -1.75 -1.25 -0.75 -0.25 0.25 0.75 1.25 1.75\n $ xname   : chr \"rnorm(100)\"\n $ equidist: logi TRUE\n - attr(*, \"class\")= chr \"histogram\"",
     "crumbs": [
       "R Topics",
       "x1-R Basics"
@@ -5682,7 +5726,7 @@
     "href": "slides/x5-quarto-intro.html#exercise",
     "title": "x05-Creation of Reports with Quarto",
     "section": "Exercise",
-    "text": "Exercise\n\n\nWrite your first Quarto document in RStudio.\nRender it to HTML and Word\n\nOptional without warranty\n\nCreate PDF output\nNeeds LaTeX type setting system installed\nCan be done with R’s tinytex package:\n\n::: {.cell}\n\n:::\n… or by installing tinytex from the Terminal of RStudio\nquarto install tinytex\nand then include format: pdf in the YAML header\ntitle: \"My document\"\nformat: pdf\nSee more at: https://quarto.org/docs/output-formats/pdf-basics.html",
+    "text": "Exercise\n\n\nWrite your first Quarto document in RStudio.\nRender it to HTML and Word\n\nOptional without warranty\n\nCreate PDF output\nNeeds LaTeX type setting system installed\nCan be done with R’s tinytex package:\n\n\n::: {.cell}\n\n:::\n\n… or by installing tinytex from the Terminal of RStudio\nquarto install tinytex\nand then include format: pdf in the YAML header\ntitle: \"My document\"\nformat: pdf\nSee more at: https://quarto.org/docs/output-formats/pdf-basics.html",
     "crumbs": [
       "R Topics",
       "x05-Creation of Reports with Quarto"
@@ -5704,7 +5748,18 @@
     "href": "slides/x5-quarto-intro.html#weblinks",
     "title": "x05-Creation of Reports with Quarto",
     "section": "Weblinks",
-    "text": "Weblinks\n\nFormatted weblinks\n[further reading](https://rmarkdown.rstudio.com)\nis then formatted as: further reading\nExample\nThe [*Markdown Wikipedia page*](https://de.wikipedia.org/wiki/Markdown) contains examples.\nThe Markdown Wikipedia page contains examples.",
+    "text": "Weblinks\n\nFormatted weblinks\n[further reading](https://rmarkdown.rstudio.com)\nis then formatted as: further reading\nExample\nThe [*Markdown Wikipedia page*](https://de.wikipedia.org/wiki/Markdown) contains examples.",
+    "crumbs": [
+      "R Topics",
+      "x05-Creation of Reports with Quarto"
+    ]
+  },
+  {
+    "objectID": "slides/x5-quarto-intro.html#the-markdown-wikipedia-page-contains-examples.",
+    "href": "slides/x5-quarto-intro.html#the-markdown-wikipedia-page-contains-examples.",
+    "title": "x05-Creation of Reports with Quarto",
+    "section": "The Markdown Wikipedia page contains examples.",
+    "text": "The Markdown Wikipedia page contains examples.",
     "crumbs": [
       "R Topics",
       "x05-Creation of Reports with Quarto"
@@ -6148,94 +6203,6 @@
     "crumbs": [
       "Tutorials",
       "An Introductory R Session"
-    ]
-  },
-  {
-    "objectID": "slides/12-multivariate-2.html#which-index-for-what",
-    "href": "slides/12-multivariate-2.html#which-index-for-what",
-    "title": "12-Multivariate methods II",
-    "section": "Which index for what?",
-    "text": "Which index for what?\n\n\n\n\n\n\n\n\n\n\nIndex\nTheory & Focus\nSensitivity\nInterpretation\n\n\n\n\nSpecies Richness (R)\nSimple count of the number of different species present in a sample or area.\nHighly sensitive to the presence of any species, regardless of its abundance.\nDoes not account for how individuals are distributed; two sites with same richness can have different diversity.\n\n\nSpecies Deficit\nRepresents the gap between observed richness and the potential expected for a habitat.\nSensitive to environmental degradation or sampling effort.\nUsed to identify “missing” species in a community compared to a reference.\n\n\nShannon Index (H)\nBased on information theory; measures the uncertainty in predicting the identity of a random individual.\nMore sensitive to species richness and the presence of rare species.\nHigher values indicate higher diversity and greater uncertainty. It increases as both richness and evenness increase.\n\n\nSimpson Index (1-D)\nBased on probability. Likelihood that two randomly selected individuals belong to different species.\nHighly sensitive to the most common or dominant species.\nFocuses on dominance. High values close to 1 indicate high diversity and the absence of a single dominant species.\n\n\nEvenness (E)\nMeasures the equitability or distribution of individuals among the species present.\nSensitive to the relative abundance of species rather than the total number.\nRange from 0 to 1. 1 indicates that all species have equal abundance.",
-    "crumbs": [
-      "Basic Statistics",
-      "12-Multivariate methods II"
-    ]
-  },
-  {
-    "objectID": "slides/01-introduction.html#working-with-ai-tools",
-    "href": "slides/01-introduction.html#working-with-ai-tools",
-    "title": "01-Introduction",
-    "section": "Working with AI Tools",
-    "text": "Working with AI Tools\nGeneral principle\n\nAI tools are part of today’s data science workflow\nThey are not forbidden — but they must support your learning, not replace it\n\nAllowed and encouraged\n\nAI as an interactive sparring partner\n\nChallenge your statistical reasoning\nAsk for explanations of concepts you are unsure about\n\nGrammar, style, and flow of your written text in the homework project\n\nNot acceptable\n\nSubmitting code you cannot explain line by line\n\nKeep it plain and to the point\n\nSolutions not based on the methods taught in class\n\nCreative additions are encouraged, but should not replace the standard methods\n\nAI generated text that does not reflect your own thinking and interpretation\n\nWrite the first draft yourself.\n\n\n\n\n\n\n\n\n⚠️ Exam rules\n\n\n\nAI tools and the general web are not allowed\nPermitted: course slides and your personal notes, electronically or on paper",
-    "crumbs": [
-      "Basic Statistics",
-      "01-Introduction"
-    ]
-  },
-  {
-    "objectID": "slides/01-introduction.html#working-with-ai-tools-i",
-    "href": "slides/01-introduction.html#working-with-ai-tools-i",
-    "title": "01-Introduction",
-    "section": "Working with AI Tools I",
-    "text": "Working with AI Tools I\n\nGeneral principle\n\nAI tools are part of today’s data science workflow\nThey are not forbidden – but they must support your learning, not replace it\n\nAllowed and encouraged\n\nAI as an interactive sparring partner\nChallenge your statistical reasoning\nAsk for explanations of concepts you are unsure about\nAsk about references – and check them independently (books, papers, R help files)\n\nAlso allowed\n\nGrammar, style, and flow of your written text in the homework project",
-    "crumbs": [
-      "Basic Statistics",
-      "01-Introduction"
-    ]
-  },
-  {
-    "objectID": "slides/01-introduction.html#working-with-ai-tools-ii",
-    "href": "slides/01-introduction.html#working-with-ai-tools-ii",
-    "title": "01-Introduction",
-    "section": "Working with AI Tools II",
-    "text": "Working with AI Tools II\n\nNot helpful for your learning\n\nWriting code you cannot explain line by line\n\nKeep it plain and to the point\n\nSolutions not based on the methods taught in class\n\nCreative additions are encouraged, but should not replace the standard methods\n\nAI generated text that does not reflect your own thinking and interpretation\n\nWrite the first draft yourself\nCritically revise the final version\n\n\n\n\n\n\n\n\n\nExam rules\n\n\n\nAI tools and the general web will not be allowed\nPermitted: course slides and your personal notes, electronically or on paper",
-    "crumbs": [
-      "Basic Statistics",
-      "01-Introduction"
-    ]
-  },
-  {
-    "objectID": "slides/01-introduction.html#recommended-workflow",
-    "href": "slides/01-introduction.html#recommended-workflow",
-    "title": "01-Introduction",
-    "section": "Recommended workflow",
-    "text": "Recommended workflow\n\nbasic understanding → AI help → critical evaluation & follow-up questions → final decision",
-    "crumbs": [
-      "Basic Statistics",
-      "01-Introduction"
-    ]
-  },
-  {
-    "objectID": "slides/01-introduction.html#working-with-ai-tools-iii",
-    "href": "slides/01-introduction.html#working-with-ai-tools-iii",
-    "title": "01-Introduction",
-    "section": "Working with AI Tools III",
-    "text": "Working with AI Tools III\n\nBest use: a four-step workflow\n\nBasic understanding → try to grasp the problem and methods yourself first\nAI help → use AI as an interactive sparring partner\n\nChallenge your statistical reasoning\nAsk for explanations of concepts you are unsure about\n\nCritical evaluation & follow-up questions → don’t take answers at face value\nFinal decision → you are responsible for the result",
-    "crumbs": [
-      "Basic Statistics",
-      "01-Introduction"
-    ]
-  },
-  {
-    "objectID": "slides/01-introduction.html#also-allowed",
-    "href": "slides/01-introduction.html#also-allowed",
-    "title": "01-Introduction",
-    "section": "Also allowed",
-    "text": "Also allowed\n\nGrammar, style, and flow of your written text in the homework project",
-    "crumbs": [
-      "Basic Statistics",
-      "01-Introduction"
-    ]
-  },
-  {
-    "objectID": "slides/01-introduction.html#best-use-a-four-step-workflow",
-    "href": "slides/01-introduction.html#best-use-a-four-step-workflow",
-    "title": "01-Introduction",
-    "section": "Best use: a four-step workflow",
-    "text": "Best use: a four-step workflow\n\n\n\nBasic understanding → try to grasp the problem and methods yourself first\nAI help → use AI as an interactive sparring partner\nCritical evaluation & follow-up questions → don’t take answers at face value – validate against trustworthy sources (books, help files, …)\nFinal decision → you are responsible for the result",
-    "crumbs": [
-      "Basic Statistics",
-      "01-Introduction"
     ]
   }
 ]
