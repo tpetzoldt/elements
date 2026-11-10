@@ -160,7 +160,7 @@ $$
 [and for $\mathbf{U}(x_{min}, x_{max})$ in the interval $[x_{min}, y_{max}]$]{.gray}
 
 
-## Cumulative distribution function of $\mathbf{U}(x_{min}, x_{max})$
+## Distribution function of $\mathbf{U}(x_{min}, x_{max})$
 
 <br>
 
@@ -208,13 +208,13 @@ box()
 
 <br>
 
-... the inverse of the cumulative distribution function.
+... the inverse of the distribution function.
 
 ::: {.column width="49%"}
 
 ```{r uniform-cdf, fig.width=4, fig.height=4}
 ```
-[Cumulative distribution function]{.blue}
+[Distribution function]{.blue}
 :::
 
 ::: {.column width="49%"}
@@ -370,7 +370,7 @@ lines(x, dnorm(x), lwd=2, col="red")
 ![](../img/normal-density-quantiles.png)
 
 
-## Cumulative distribution function -- Quantile function
+## Distribution function -- Quantile function
 
 ```{r normal-cdf, echo=FALSE, fig.align='center'}
 par(mfrow=c(1, 2), las=1)
