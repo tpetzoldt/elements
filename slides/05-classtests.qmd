@@ -46,7 +46,7 @@ In case of relative mean differences, the relative effect size is:
 
 :::{.bigfont}
 $$
-  \delta = \frac{\bar{\mu}_1-\bar{\mu}_2}{\sigma}=\frac{\Delta}{\sigma}
+  \delta = \frac{\mu_1-\mu_2}{\sigma}=\frac{\Delta}{\sigma}
 $$
 :::
 
